@@ -130,13 +130,6 @@ export const OutroChecklist: React.FC = () => {
       ? interpolate(Math.sin((frame - ctaDelay) * 0.3), [-1, 1], [-18, 18])
       : 0;
 
-  // Logo
-  const logoIn = spring({
-    frame: frame - ctaDelay - 12,
-    fps,
-    config: { damping: 20, stiffness: 60, mass: 1 },
-  });
-
   return (
     <AbsoluteFill>
       <CameraMove zoomStart={1.03} zoomEnd={1.0} panY={4}>
@@ -145,6 +138,7 @@ export const OutroChecklist: React.FC = () => {
             justifyContent: "center",
             alignItems: "center",
             padding: 100,
+            /* Overlay — transparent background */
           }}
         >
           <GoldParticles count={25} mode="ambient" />
@@ -224,25 +218,7 @@ export const OutroChecklist: React.FC = () => {
             />
           </div>
 
-          {/* LOCOS Logo */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: 55,
-              opacity: logoIn,
-              fontFamily: FONT_FAMILY.headline,
-              fontWeight: 700,
-              fontSize: 30,
-              letterSpacing: "0.25em",
-              backgroundImage: `linear-gradient(90deg, ${LOCOS.goldDim}, ${LOCOS.gold}, ${LOCOS.goldDim})`,
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              filter: `drop-shadow(0 0 15px ${LOCOS.gold}30)`,
-            }}
-          >
-            LOCOS
-          </div>
+          {/* LOCOS Logo removed per client request */}
         </AbsoluteFill>
       </CameraMove>
 

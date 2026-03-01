@@ -149,7 +149,11 @@ export const KrisenTimeline: React.FC = () => {
     <AbsoluteFill>
       <CameraMove zoomEnd={1.02} panX={-8}>
         <AbsoluteFill
-          style={{ justifyContent: "center", alignItems: "center" }}
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            background: `radial-gradient(ellipse at center, ${LOCOS.black}E0 0%, ${LOCOS.black}90 60%, transparent 100%)`,
+          }}
         >
           {/* Seismograph BG — spikes at each crisis event */}
           <Seismograph

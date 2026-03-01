@@ -101,21 +101,15 @@ const WorldMap: React.FC<{
         </filter>
       </defs>
 
-      {/* Non-EU continents — path drawing animation */}
+      {/* Non-EU continents */}
       {nonEuPaths.map(([key, d]) => (
         <path
           key={key}
           d={d}
-          fill={`${LOCOS.silver}12`}
+          fill={`${LOCOS.silver}20`}
           stroke={LOCOS.silver}
           strokeWidth="1.5"
-          opacity={0.35}
-          strokeDasharray="3000"
-          strokeDashoffset={interpolate(
-            mapDrawProgress,
-            [0, 1],
-            [3000, 0]
-          )}
+          opacity={mapDrawProgress * 0.5}
         />
       ))}
 
@@ -125,33 +119,19 @@ const WorldMap: React.FC<{
           {/* Glow layer */}
           <path
             d={d}
-            fill={`${LOCOS.red}${Math.round(15 + euPulse * 20)
-              .toString(16)
-              .padStart(2, "0")}`}
+            fill={`${LOCOS.red}30`}
             stroke={LOCOS.red}
             strokeWidth="3"
-            opacity={0.3 + euPulse * 0.3}
+            opacity={(0.3 + euPulse * 0.3) * mapDrawProgress}
             filter="url(#eu-glow)"
-            strokeDasharray="3000"
-            strokeDashoffset={interpolate(
-              mapDrawProgress,
-              [0, 1],
-              [3000, 0]
-            )}
           />
           {/* Main */}
           <path
             d={d}
-            fill={`${LOCOS.red}25`}
+            fill={`${LOCOS.red}40`}
             stroke={LOCOS.red}
             strokeWidth="1.5"
-            opacity={0.5 + euPulse * 0.3}
-            strokeDasharray="3000"
-            strokeDashoffset={interpolate(
-              mapDrawProgress,
-              [0, 1],
-              [3000, 0]
-            )}
+            opacity={(0.5 + euPulse * 0.3) * mapDrawProgress}
           />
         </React.Fragment>
       ))}
@@ -278,9 +258,13 @@ export const Weltkarte: React.FC = () => {
   return (
     <AbsoluteFill>
       <CameraMove zoomStart={1.05} zoomEnd={1.0} panX={-5} panY={3}>
-        <AbsoluteFill>
-          {/* Radar sweep on EU danger zone */}
-          <RadarSweep centerX={920} centerY={340} radius={180} delay={10} color={LOCOS.red} speed={4} />
+        <AbsoluteFill
+          style={{
+            background: `radial-gradient(ellipse at center, ${LOCOS.black}D0 0%, ${LOCOS.black}80 60%, transparent 100%)`,
+          }}
+        >
+          {/* Radar sweep on EU danger zone — subtle */}
+          <RadarSweep centerX={920} centerY={340} radius={140} delay={15} color={`${LOCOS.red}80`} speed={2.5} />
           <GoldParticles count={12} mode="ambient" />
 
           {/* World map with path drawing */}

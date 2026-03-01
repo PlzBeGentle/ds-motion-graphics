@@ -155,6 +155,7 @@ export const DreiSaeulen: React.FC = () => {
             justifyContent: "flex-end",
             alignItems: "center",
             paddingBottom: 90,
+            background: `radial-gradient(ellipse at center, ${LOCOS.black}E0 0%, ${LOCOS.black}90 60%, transparent 100%)`,
           }}
         >
           <HexGrid delay={0} opacity={0.05} />

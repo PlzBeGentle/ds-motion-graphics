@@ -27,7 +27,7 @@ export const QuoteCard: React.FC<QuoteCardProps> = ({
   const cardOpacity = cardIn;
 
   // Typewriter effect
-  const charsPerFrame = 1.2;
+  const charsPerFrame = 2;
   const typedFrame = Math.max(0, frame - delay - 10);
   const visibleChars = Math.min(
     Math.floor(typedFrame * charsPerFrame),

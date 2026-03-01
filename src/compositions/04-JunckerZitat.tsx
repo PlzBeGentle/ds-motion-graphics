@@ -124,7 +124,9 @@ export const JunckerZitat: React.FC = () => {
   const QUOTE =
     "Wir beschliessen etwas, stellen das dann in den Raum und warten einige Zeit ab, was passiert. Wenn es dann kein grosses Geschrei gibt, weil die meisten gar nicht begreifen, was da beschlossen wurde, dann machen wir weiter.";
 
-  const phase2Start = 120;
+  // Quote: 225 chars at 2 chars/frame ≈ 113 frames to type
+  // + delay 5 + 10 + author ~8 + hold 60 = ~196
+  const phase2Start = 200;
 
   // Phase 1 fade out
   const phase1Opacity = interpolate(
@@ -149,7 +151,11 @@ export const JunckerZitat: React.FC = () => {
         panY={frame < phase2Start ? -4 : 3}
       >
         <AbsoluteFill
-          style={{ justifyContent: "center", alignItems: "center" }}
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            background: `radial-gradient(ellipse at center, ${LOCOS.black}E0 0%, ${LOCOS.black}90 60%, transparent 100%)`,
+          }}
         >
           <HexGrid delay={0} opacity={0.06} />
           <GoldParticles count={15} mode="ambient" />

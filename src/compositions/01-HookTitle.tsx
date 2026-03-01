@@ -12,6 +12,8 @@ import { SHADOW } from "../theme/styles";
 import { GoldParticles } from "../components/GoldParticles";
 import { FilmGrain } from "../components/FilmGrain";
 import { CameraMove } from "../components/CameraMove";
+import { ScreenCrack } from "../components/ScreenCrack";
+import { GlitchEffect } from "../components/GlitchEffect";
 
 export const HookTitle: React.FC = () => {
   const frame = useCurrentFrame();
@@ -59,6 +61,7 @@ export const HookTitle: React.FC = () => {
 
   return (
     <AbsoluteFill>
+      <GlitchEffect triggerFrame={18} duration={8} intensity={0.8}>
       <CameraMove zoomStart={1.02} zoomEnd={1.0} panY={3}>
         <AbsoluteFill
           style={{
@@ -164,7 +167,9 @@ export const HookTitle: React.FC = () => {
           />
         </AbsoluteFill>
       </CameraMove>
+      </GlitchEffect>
 
+      <ScreenCrack triggerFrame={20} originX={960} originY={480} />
       <FilmGrain opacity={0.05} vignette vignetteIntensity={0.5} />
     </AbsoluteFill>
   );

@@ -13,6 +13,7 @@ import { GoldParticles } from "../components/GoldParticles";
 import { FilmGrain } from "../components/FilmGrain";
 import { CameraMove } from "../components/CameraMove";
 import { GradientShine } from "../components/GradientShine";
+import { ImpactShockwave } from "../components/ImpactShockwave";
 
 const CheckItem: React.FC<{
   text: string;
@@ -155,16 +156,25 @@ export const OutroChecklist: React.FC = () => {
             ))}
           </div>
 
-          {/* Particle burst on each check */}
+          {/* Particle burst + shockwave on each check */}
           {CHECKLIST_ITEMS.map((_, i) => (
-            <GoldParticles
-              key={`check-burst-${i}`}
-              count={12}
-              mode="burst"
-              burstX={540}
-              burstY={340 + i * 60}
-              burstFrame={i * 28 + 18}
-            />
+            <React.Fragment key={`check-effects-${i}`}>
+              <GoldParticles
+                count={12}
+                mode="burst"
+                burstX={540}
+                burstY={340 + i * 60}
+                burstFrame={i * 28 + 18}
+              />
+              <ImpactShockwave
+                triggerFrame={i * 28 + 18}
+                x={540}
+                y={340 + i * 60}
+                color={LOCOS.gold}
+                maxRadius={60}
+                duration={15}
+              />
+            </React.Fragment>
           ))}
 
           {/* CTA */}

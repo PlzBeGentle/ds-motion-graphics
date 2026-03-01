@@ -14,6 +14,8 @@ import { GoldParticles } from "../components/GoldParticles";
 import { FilmGrain } from "../components/FilmGrain";
 import { CameraMove } from "../components/CameraMove";
 import { GradientShine } from "../components/GradientShine";
+import { HexGrid } from "../components/HexGrid";
+import { ImpactShockwave } from "../components/ImpactShockwave";
 
 const Pillar: React.FC<{
   title: string;
@@ -155,6 +157,7 @@ export const DreiSaeulen: React.FC = () => {
             paddingBottom: 90,
           }}
         >
+          <HexGrid delay={0} opacity={0.05} />
           <GoldParticles count={20} mode="ambient" />
 
           {/* Title */}
@@ -199,16 +202,24 @@ export const DreiSaeulen: React.FC = () => {
             ))}
           </div>
 
-          {/* Particle bursts per pillar */}
+          {/* Particle bursts + shockwaves per pillar */}
           {DREI_SAEULEN.map((_, i) => (
-            <GoldParticles
-              key={`burst-${i}`}
-              count={15}
-              mode="burst"
-              burstX={480 + i * 390}
-              burstY={450}
-              burstFrame={i * 22 + 30}
-            />
+            <React.Fragment key={`effects-${i}`}>
+              <GoldParticles
+                count={15}
+                mode="burst"
+                burstX={480 + i * 390}
+                burstY={450}
+                burstFrame={i * 22 + 30}
+              />
+              <ImpactShockwave
+                triggerFrame={i * 22 + 28}
+                x={480 + i * 390}
+                y={450}
+                color={LOCOS.gold}
+                maxRadius={80}
+              />
+            </React.Fragment>
           ))}
 
           {/* Counter section */}

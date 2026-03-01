@@ -13,6 +13,9 @@ import { BuzzwordLowerThird } from "../components/BuzzwordLowerThird";
 import { GoldParticles } from "../components/GoldParticles";
 import { FilmGrain } from "../components/FilmGrain";
 import { CameraMove } from "../components/CameraMove";
+import { ScreenCrack } from "../components/ScreenCrack";
+import { ChromaticAberration } from "../components/ChromaticAberration";
+import { ImpactShockwave } from "../components/ImpactShockwave";
 
 // Animated bar with glow
 const Bar: React.FC<{
@@ -196,22 +199,24 @@ export const Zwangsverkauf: React.FC = () => {
           {/* Step 3: KEIN CASH + Arrow + VERKAUFEN */}
           {frame > step3 && (
             <>
-              <div
-                style={{
-                  position: "absolute",
-                  left: 680,
-                  top: 340,
-                  fontFamily: FONT_FAMILY.headline,
-                  fontWeight: 700,
-                  fontSize: 46,
-                  color: LOCOS.red,
-                  opacity: cashPulse,
-                  textShadow: `0 0 40px ${LOCOS.red}AA, 0 0 80px ${LOCOS.red}50`,
-                  letterSpacing: "0.08em",
-                }}
-              >
-                KEIN CASH
-              </div>
+              <ChromaticAberration triggerFrame={step3} duration={10} maxOffset={5}>
+                <div
+                  style={{
+                    position: "absolute",
+                    left: 680,
+                    top: 340,
+                    fontFamily: FONT_FAMILY.headline,
+                    fontWeight: 700,
+                    fontSize: 46,
+                    color: LOCOS.red,
+                    opacity: cashPulse,
+                    textShadow: `0 0 40px ${LOCOS.red}AA, 0 0 80px ${LOCOS.red}50`,
+                    letterSpacing: "0.08em",
+                  }}
+                >
+                  KEIN CASH
+                </div>
+              </ChromaticAberration>
               {/* Animated arrow */}
               <svg
                 style={{
@@ -332,6 +337,9 @@ export const Zwangsverkauf: React.FC = () => {
               <Domino key={i} delay={step5 + i * 4} x={380 + i * 45} index={i} />
             ))}
 
+          {/* Impact shockwave when dominoes start */}
+          <ImpactShockwave triggerFrame={step5} x={560} y={380} color={LOCOS.red} maxRadius={100} />
+
           {/* Buzzword */}
           {frame > buzzwordDelay && (
             <BuzzwordLowerThird text="ZWANGSLIQUIDATION" delay={buzzwordDelay} />
@@ -339,6 +347,7 @@ export const Zwangsverkauf: React.FC = () => {
         </AbsoluteFill>
       </CameraMove>
 
+      <ScreenCrack triggerFrame={step4} originX={1325} originY={380} />
       <FilmGrain opacity={0.04} vignette vignetteIntensity={0.4} />
     </AbsoluteFill>
   );

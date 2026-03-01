@@ -14,6 +14,7 @@ import { GoldParticles } from "../components/GoldParticles";
 import { FilmGrain } from "../components/FilmGrain";
 import { CameraMove } from "../components/CameraMove";
 import { GradientShine } from "../components/GradientShine";
+import { HexGrid } from "../components/HexGrid";
 
 // Playbook step icons as SVG with path drawing
 const PlaybookIcon: React.FC<{
@@ -150,6 +151,7 @@ export const JunckerZitat: React.FC = () => {
         <AbsoluteFill
           style={{ justifyContent: "center", alignItems: "center" }}
         >
+          <HexGrid delay={0} opacity={0.06} />
           <GoldParticles count={15} mode="ambient" />
 
           {/* Phase 1: Quote */}

@@ -13,6 +13,8 @@ import { GoldParticles } from "../components/GoldParticles";
 import { FilmGrain } from "../components/FilmGrain";
 import { CameraMove } from "../components/CameraMove";
 import { GradientShine } from "../components/GradientShine";
+import { ImpactShockwave } from "../components/ImpactShockwave";
+import { ChromaticAberration } from "../components/ChromaticAberration";
 
 // Animated chart line with drawing effect
 const ChartLine: React.FC<{ progress: number; frame: number }> = ({
@@ -115,13 +117,71 @@ const ChartLine: React.FC<{ progress: number; frame: number }> = ({
   );
 };
 
+// SVG icons for asset types
+const AssetSvgIcon: React.FC<{ type: string; size?: number }> = ({ type, size = 48 }) => {
+  const stroke = LOCOS.goldLight;
+  const props = { width: size, height: size, viewBox: "0 0 48 48", fill: "none" as const };
+  switch (type) {
+    case "stock":
+      return (
+        <svg {...props}>
+          <polyline points="4,38 14,26 22,32 30,14 38,20 44,8" stroke={stroke} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          <polyline points="36,8 44,8 44,16" stroke={stroke} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          <line x1="4" y1="42" x2="44" y2="42" stroke={LOCOS.silver} strokeWidth="1" opacity={0.3} />
+        </svg>
+      );
+    case "gold":
+      return (
+        <svg {...props}>
+          <path d="M8,36 L14,16 L34,16 L40,36 Z" stroke={stroke} strokeWidth="2.5" strokeLinejoin="round" />
+          <line x1="14" y1="16" x2="24" y2="6" stroke={stroke} strokeWidth="2" strokeLinecap="round" />
+          <line x1="34" y1="16" x2="24" y2="6" stroke={stroke} strokeWidth="2" strokeLinecap="round" />
+          <line x1="18" y1="26" x2="30" y2="26" stroke={stroke} strokeWidth="1.5" opacity={0.4} />
+        </svg>
+      );
+    case "btc":
+      return (
+        <svg {...props}>
+          <circle cx="24" cy="24" r="18" stroke={stroke} strokeWidth="2.5" />
+          <path d="M18,14 L18,34 M18,14 L27,14 Q32,14 32,19 Q32,24 27,24 M18,24 L28,24 Q34,24 34,29 Q34,34 28,34 L18,34" stroke={stroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <line x1="20" y1="10" x2="20" y2="14" stroke={stroke} strokeWidth="1.5" />
+          <line x1="26" y1="10" x2="26" y2="14" stroke={stroke} strokeWidth="1.5" />
+          <line x1="20" y1="34" x2="20" y2="38" stroke={stroke} strokeWidth="1.5" />
+          <line x1="26" y1="34" x2="26" y2="38" stroke={stroke} strokeWidth="1.5" />
+        </svg>
+      );
+    case "house":
+      return (
+        <svg {...props}>
+          <path d="M6,24 L24,8 L42,24" stroke={stroke} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M10,22 L10,40 L38,40 L38,22" stroke={stroke} strokeWidth="2.5" strokeLinejoin="round" />
+          <rect x="20" y="28" width="8" height="12" stroke={stroke} strokeWidth="2" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+};
+
+// Empty wallet icon (replaces 🤲 emoji)
+const EmptyWalletIcon: React.FC = () => (
+  <svg width={72} height={72} viewBox="0 0 72 72" fill="none">
+    <rect x="8" y="20" width="56" height="40" rx="4" stroke={LOCOS.silver} strokeWidth="2.5" />
+    <path d="M8,20 L36,8 L64,20" stroke={LOCOS.silver} strokeWidth="2" strokeLinecap="round" />
+    <rect x="44" y="32" width="20" height="16" rx="3" stroke={LOCOS.silver} strokeWidth="2" />
+    <circle cx="54" cy="40" r="3" stroke={LOCOS.silver} strokeWidth="1.5" />
+    <line x1="20" y1="36" x2="36" y2="36" stroke={LOCOS.silver} strokeWidth="1" opacity={0.3} strokeDasharray="4 3" />
+    <line x1="20" y1="42" x2="32" y2="42" stroke={LOCOS.silver} strokeWidth="1" opacity={0.3} strokeDasharray="4 3" />
+  </svg>
+);
+
 // Asset icon with tax overlay
 const AssetIcon: React.FC<{
   label: string;
-  emoji: string;
+  icon: string;
   delay: number;
   showTax: boolean;
-}> = ({ label, emoji, delay, showTax }) => {
+}> = ({ label, icon, delay, showTax }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -151,7 +211,7 @@ const AssetIcon: React.FC<{
         position: "relative",
       }}
     >
-      <div style={{ fontSize: 56 }}>{emoji}</div>
+      <AssetSvgIcon type={icon} size={56} />
       <div
         style={{
           fontFamily: FONT_FAMILY.body,
@@ -308,7 +368,7 @@ export const BuchgewinnErklaerung: React.FC = () => {
                 )}px)`,
               }}
             >
-              <div style={{ fontSize: 84 }}>🤲</div>
+              <EmptyWalletIcon />
               <div
                 style={{
                   fontFamily: FONT_FAMILY.headline,
@@ -369,31 +429,36 @@ export const BuchgewinnErklaerung: React.FC = () => {
 
           {/* TROTZDEM ZAHLEN blink */}
           {blinkPhase && (
-            <div
-              style={{
-                fontFamily: FONT_FAMILY.headline,
-                fontWeight: 700,
-                fontSize: 52,
-                color: LOCOS.red,
-                opacity: blinkOn ? 1 : 0.15,
-                textShadow: blinkOn
-                  ? `0 0 40px ${LOCOS.red}CC, 0 0 80px ${LOCOS.red}60, 0 0 120px ${LOCOS.red}30`
-                  : "none",
-                letterSpacing: "0.1em",
-                marginBottom: 45,
-              }}
-            >
-              TROTZDEM ZAHLEN!
-            </div>
+            <ChromaticAberration triggerFrame={105} duration={10} maxOffset={4}>
+              <div
+                style={{
+                  fontFamily: FONT_FAMILY.headline,
+                  fontWeight: 700,
+                  fontSize: 52,
+                  color: LOCOS.red,
+                  opacity: blinkOn ? 1 : 0.15,
+                  textShadow: blinkOn
+                    ? `0 0 40px ${LOCOS.red}CC, 0 0 80px ${LOCOS.red}60, 0 0 120px ${LOCOS.red}30`
+                    : "none",
+                  letterSpacing: "0.1em",
+                  marginBottom: 45,
+                }}
+              >
+                TROTZDEM ZAHLEN!
+              </div>
+            </ChromaticAberration>
           )}
 
           {/* Asset row */}
           <div style={{ display: "flex", gap: 70, justifyContent: "center" }}>
-            <AssetIcon emoji="📈" label="AKTIE" delay={assetsDelay} showTax />
-            <AssetIcon emoji="🥇" label="GOLD" delay={assetsDelay + 6} showTax />
-            <AssetIcon emoji="₿" label="BTC" delay={assetsDelay + 12} showTax />
-            <AssetIcon emoji="🏠" label="HAUS" delay={assetsDelay + 18} showTax />
+            <AssetIcon icon="stock" label="AKTIE" delay={assetsDelay} showTax />
+            <AssetIcon icon="gold" label="GOLD" delay={assetsDelay + 6} showTax />
+            <AssetIcon icon="btc" label="BTC" delay={assetsDelay + 12} showTax />
+            <AssetIcon icon="house" label="HAUS" delay={assetsDelay + 18} showTax />
           </div>
+
+          {/* Impact shockwave on tax notice */}
+          <ImpactShockwave triggerFrame={88} x={960} y={500} color={LOCOS.red} maxRadius={150} />
         </AbsoluteFill>
       </CameraMove>
 

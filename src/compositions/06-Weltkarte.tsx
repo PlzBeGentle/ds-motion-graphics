@@ -12,6 +12,7 @@ import { DIVERSIFICATION_TARGETS } from "../data/transcript";
 import { GoldParticles } from "../components/GoldParticles";
 import { FilmGrain } from "../components/FilmGrain";
 import { CameraMove } from "../components/CameraMove";
+import { RadarSweep } from "../components/RadarSweep";
 
 // Simplified but recognizable continent SVG paths (scaled to 1920x1080 viewport)
 const CONTINENT_PATHS = {
@@ -278,6 +279,8 @@ export const Weltkarte: React.FC = () => {
     <AbsoluteFill>
       <CameraMove zoomStart={1.05} zoomEnd={1.0} panX={-5} panY={3}>
         <AbsoluteFill>
+          {/* Radar sweep on EU danger zone */}
+          <RadarSweep centerX={920} centerY={340} radius={180} delay={10} color={LOCOS.red} speed={4} />
           <GoldParticles count={12} mode="ambient" />
 
           {/* World map with path drawing */}

@@ -14,6 +14,7 @@ import { GoldParticles } from "../components/GoldParticles";
 import { FilmGrain } from "../components/FilmGrain";
 import { CameraMove } from "../components/CameraMove";
 import { GradientShine } from "../components/GradientShine";
+import { Seismograph } from "../components/Seismograph";
 
 // Enhanced timeline item with connection line
 const TimelinePoint: React.FC<{
@@ -150,6 +151,12 @@ export const KrisenTimeline: React.FC = () => {
         <AbsoluteFill
           style={{ justifyContent: "center", alignItems: "center" }}
         >
+          {/* Seismograph BG — spikes at each crisis event */}
+          <Seismograph
+            spikeFrames={[48, 76, 104, 132, 160]}
+            y={800}
+            color={`${LOCOS.red}60`}
+          />
           <GoldParticles count={18} mode="ambient" />
 
           {/* Title */}

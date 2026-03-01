@@ -199,24 +199,23 @@ export const Zwangsverkauf: React.FC = () => {
           {/* Step 3: KEIN CASH + Arrow + VERKAUFEN */}
           {frame > step3 && (
             <>
-              <ChromaticAberration triggerFrame={step3} duration={10} maxOffset={5}>
-                <div
-                  style={{
-                    position: "absolute",
-                    left: 680,
-                    top: 340,
-                    fontFamily: FONT_FAMILY.headline,
-                    fontWeight: 700,
-                    fontSize: 46,
-                    color: LOCOS.red,
-                    opacity: cashPulse,
-                    textShadow: `0 0 40px ${LOCOS.red}AA, 0 0 80px ${LOCOS.red}50`,
-                    letterSpacing: "0.08em",
-                  }}
-                >
-                  KEIN CASH
-                </div>
-              </ChromaticAberration>
+              <div style={{ position: "absolute", left: 680, top: 340 }}>
+                <ChromaticAberration triggerFrame={step3} duration={10} maxOffset={5}>
+                  <div
+                    style={{
+                      fontFamily: FONT_FAMILY.headline,
+                      fontWeight: 700,
+                      fontSize: 46,
+                      color: LOCOS.red,
+                      opacity: cashPulse,
+                      textShadow: `0 0 40px ${LOCOS.red}AA, 0 0 80px ${LOCOS.red}50`,
+                      letterSpacing: "0.08em",
+                    }}
+                  >
+                    KEIN CASH
+                  </div>
+                </ChromaticAberration>
+              </div>
               {/* Animated arrow */}
               <svg
                 style={{

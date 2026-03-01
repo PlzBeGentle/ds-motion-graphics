@@ -19,8 +19,7 @@ export const HookTitle: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const text = "ENTEIGNUNG DURCH DIE HINTERTUER?";
-  const letters = text.split("");
+  const lines = ["ENTEIGNUNG DURCH", "DIE HINTERTUER?"];
 
   // Shake effect (brief, at frame ~20)
   const shakeX = interpolate(
@@ -67,6 +66,7 @@ export const HookTitle: React.FC = () => {
             justifyContent: "center",
             alignItems: "center",
             opacity: fadeOut,
+            background: `radial-gradient(ellipse at center, ${LOCOS.black}E0 0%, ${LOCOS.black}90 60%, transparent 100%)`,
           }}
         >
           {/* Ambient particles */}
@@ -83,76 +83,94 @@ export const HookTitle: React.FC = () => {
 
           {/* Main text with glitch on shake */}
           <GlitchEffect triggerFrame={18} duration={8} intensity={0.8}>
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              maxWidth: 1400,
-              transform: `translate(${shakeX}px, ${shakeY}px)`,
-            }}
-          >
-            {letters.map((letter, i) => {
-              const letterDelay = i * 0.5;
-              const letterProgress = spring({
-                frame: frame - letterDelay,
-                fps,
-                config: { damping: 8, stiffness: 140, mass: 0.4 },
-              });
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 8,
+                transform: `translate(${shakeX}px, ${shakeY}px)`,
+              }}
+            >
+              {lines.map((line, lineIdx) => {
+                const lineOffset = lineIdx === 0 ? 0 : lines[0].length + 1;
+                return (
+                  <div
+                    key={lineIdx}
+                    style={{ display: "flex", justifyContent: "center" }}
+                  >
+                    {line.split("").map((letter, i) => {
+                      const globalIdx = lineOffset + i;
+                      const letterDelay = globalIdx * 0.5;
+                      const letterProgress = spring({
+                        frame: frame - letterDelay,
+                        fps,
+                        config: { damping: 8, stiffness: 140, mass: 0.4 },
+                      });
 
-              const y = interpolate(letterProgress, [0, 1], [50, 0]);
-              const scale = interpolate(letterProgress, [0, 0.5, 1], [0.6, 1.1, 1]);
-              const letterOpacity = interpolate(letterProgress, [0, 0.3], [0, 1], {
-                extrapolateRight: "clamp",
-              });
+                      const y = interpolate(letterProgress, [0, 1], [50, 0]);
+                      const scale = interpolate(
+                        letterProgress,
+                        [0, 0.5, 1],
+                        [0.6, 1.1, 1]
+                      );
+                      const letterOpacity = interpolate(
+                        letterProgress,
+                        [0, 0.3],
+                        [0, 1],
+                        { extrapolateRight: "clamp" }
+                      );
 
-              const isQuestion = letter === "?";
-              const letterColor = isQuestion ? LOCOS.red : LOCOS.white;
+                      const isQuestion = letter === "?";
 
-              // Gold gradient shine on each letter
-              const shinePos = interpolate(
-                frame,
-                [20, 50],
-                [-50 + i * 5, 150 + i * 5],
-                { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
-              );
-
-              return (
-                <span
-                  key={i}
-                  style={{
-                    fontFamily: FONT_FAMILY.headline,
-                    fontWeight: 700,
-                    fontSize: 96,
-                    display: "inline-block",
-                    opacity: letterOpacity,
-                    transform: `translateY(${y}px) scale(${scale})`,
-                    marginRight: letter === " " ? 22 : 2,
-                    ...(isQuestion
-                      ? {
-                          color: LOCOS.red,
-                          textShadow: `0 0 ${40 + questionGlow * 60}px ${LOCOS.red}AA, 0 0 80px ${LOCOS.red}40`,
+                      const shinePos = interpolate(
+                        frame,
+                        [20, 50],
+                        [-50 + globalIdx * 5, 150 + globalIdx * 5],
+                        {
+                          extrapolateLeft: "clamp",
+                          extrapolateRight: "clamp",
                         }
-                      : {
-                          backgroundImage: `linear-gradient(
-                            90deg,
-                            ${LOCOS.white} ${shinePos - 10}%,
-                            ${LOCOS.goldLight} ${shinePos}%,
-                            ${LOCOS.white} ${shinePos + 10}%
-                          )`,
-                          WebkitBackgroundClip: "text",
-                          backgroundClip: "text",
-                          WebkitTextFillColor: "transparent",
-                          filter: `drop-shadow(0 0 30px ${LOCOS.gold}50)`,
-                        }),
-                  }}
-                >
-                  {letter === " " ? "\u00A0" : letter}
-                </span>
-              );
-            })}
-          </div>
+                      );
 
+                      return (
+                        <span
+                          key={i}
+                          style={{
+                            fontFamily: FONT_FAMILY.headline,
+                            fontWeight: 700,
+                            fontSize: 96,
+                            display: "inline-block",
+                            opacity: letterOpacity,
+                            transform: `translateY(${y}px) scale(${scale})`,
+                            marginRight: letter === " " ? 18 : 0,
+                            ...(isQuestion
+                              ? {
+                                  color: LOCOS.red,
+                                  textShadow: `0 0 ${40 + questionGlow * 60}px ${LOCOS.red}AA, 0 0 80px ${LOCOS.red}40`,
+                                }
+                              : {
+                                  backgroundImage: `linear-gradient(
+                                    90deg,
+                                    ${LOCOS.white} ${shinePos - 10}%,
+                                    ${LOCOS.goldLight} ${shinePos}%,
+                                    ${LOCOS.white} ${shinePos + 10}%
+                                  )`,
+                                  WebkitBackgroundClip: "text",
+                                  backgroundClip: "text",
+                                  WebkitTextFillColor: "transparent",
+                                  filter: `drop-shadow(0 0 30px ${LOCOS.gold}50)`,
+                                }),
+                          }}
+                        >
+                          {letter === " " ? "\u00A0" : letter}
+                        </span>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
           </GlitchEffect>
 
           {/* Red accent line with glow */}

@@ -10,22 +10,26 @@ import { LOCOS } from "../theme/colors";
 import { FONT_FAMILY } from "../theme/fonts";
 import { SHADOW } from "../theme/styles";
 import { BuzzwordLowerThird } from "../components/BuzzwordLowerThird";
+import { GoldParticles } from "../components/GoldParticles";
+import { FilmGrain } from "../components/FilmGrain";
+import { CameraMove } from "../components/CameraMove";
 
-// Animated bar component
+// Animated bar with glow
 const Bar: React.FC<{
   label: string;
   color: string;
   maxHeight: number;
   delay: number;
   x: number;
-}> = ({ label, color, maxHeight, delay, x }) => {
+  width?: number;
+}> = ({ label, color, maxHeight, delay, x, width = 90 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
   const grow = spring({
     frame: frame - delay,
     fps,
-    config: { damping: 15, stiffness: 60, mass: 1 },
+    config: { damping: 12, stiffness: 50, mass: 1.2 },
   });
 
   const height = interpolate(grow, [0, 1], [0, maxHeight]);
@@ -35,36 +39,36 @@ const Bar: React.FC<{
       style={{
         position: "absolute",
         left: x,
-        bottom: 400,
+        bottom: 380,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 12,
       }}
     >
       {/* Label */}
       <div
         style={{
-          fontFamily: FONT_FAMILY.body,
+          fontFamily: FONT_FAMILY.headline,
           fontWeight: 700,
           fontSize: 18,
           color,
           opacity: grow,
-          letterSpacing: "0.04em",
+          letterSpacing: "0.05em",
           whiteSpace: "nowrap",
-          transform: `translateY(${-height - 10}px)`,
+          position: "absolute",
+          bottom: height + 14,
         }}
       >
         {label}
       </div>
-      {/* Bar */}
+      {/* Bar with gradient */}
       <div
         style={{
-          width: 80,
+          width,
           height,
-          backgroundColor: color,
-          borderRadius: "4px 4px 0 0",
-          boxShadow: `0 0 20px ${color}40`,
+          background: `linear-gradient(180deg, ${color}DD 0%, ${color} 100%)`,
+          borderRadius: "6px 6px 0 0",
+          boxShadow: `0 0 25px ${color}40, inset 0 2px 0 ${color}80`,
           position: "absolute",
           bottom: 0,
         }}
@@ -73,35 +77,63 @@ const Bar: React.FC<{
   );
 };
 
-// Domino piece
-const Domino: React.FC<{ delay: number; x: number }> = ({ delay, x }) => {
+// Domino with realistic shadow
+const Domino: React.FC<{ delay: number; x: number; index: number }> = ({
+  delay,
+  x,
+  index,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
   const fall = spring({
     frame: frame - delay,
     fps,
-    config: { damping: 8, stiffness: 100, mass: 0.8 },
+    config: { damping: 7, stiffness: 80, mass: 0.6 },
   });
 
-  const rotation = interpolate(fall, [0, 1], [0, 80]);
+  const rotation = interpolate(fall, [0, 1], [0, 75]);
 
   return (
     <div
       style={{
         position: "absolute",
         left: x,
-        bottom: 160,
-        width: 30,
-        height: 80,
-        backgroundColor: LOCOS.white,
-        border: `2px solid ${LOCOS.silver}`,
+        bottom: 140,
+        width: 28,
+        height: 75,
+        background: `linear-gradient(135deg, ${LOCOS.white} 0%, #CCC 100%)`,
+        border: `1.5px solid ${LOCOS.silver}60`,
         borderRadius: 4,
         transformOrigin: "bottom right",
         transform: `rotate(${rotation}deg)`,
-        boxShadow: "0 2px 10px rgba(0,0,0,0.3)",
+        boxShadow: `2px 4px 15px rgba(0,0,0,${0.2 + fall * 0.2})`,
       }}
-    />
+    >
+      {/* Dots on domino */}
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          gap: 4,
+          padding: "12px 6px",
+        }}
+      >
+        {Array.from({ length: Math.min(index + 1, 4) }, (_, i) => (
+          <div
+            key={i}
+            style={{
+              width: 5,
+              height: 5,
+              borderRadius: "50%",
+              backgroundColor: LOCOS.black,
+              opacity: 0.4,
+            }}
+          />
+        ))}
+      </div>
+    </div>
   );
 };
 
@@ -109,172 +141,205 @@ export const Zwangsverkauf: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Step timings
-  const step1 = 5;    // Buchgewinn grows
-  const step2 = 40;   // Steuerforderung appears
-  const step3 = 80;   // KEIN CASH blinks
-  const step4 = 120;  // Price falls
-  const step5 = 160;  // Dominos fall
+  const step1 = 5;
+  const step2 = 40;
+  const step3 = 80;
+  const step4 = 120;
+  const step5 = 160;
+  const buzzwordDelay = 210;
 
-  // "KEIN CASH" blink
-  const blinkOn = frame > step3 && frame < step4 && Math.sin(frame * 0.4) > 0;
+  // "KEIN CASH" pulse
+  const cashPulse =
+    frame > step3 && frame < step4
+      ? interpolate(Math.sin(frame * 0.4), [-1, 1], [0.1, 1])
+      : 0;
 
-  // Arrow
+  // Arrow animation
   const arrowIn = spring({
-    frame: frame - step3 - 15,
+    frame: frame - step3 - 12,
     fps,
-    config: { damping: 12, stiffness: 100, mass: 0.8 },
+    config: { damping: 10, stiffness: 120, mass: 0.6 },
   });
 
-  // Falling price bar
+  // Falling price
   const priceFall = spring({
     frame: frame - step4,
     fps,
-    config: { damping: 12, stiffness: 60, mass: 1 },
+    config: { damping: 10, stiffness: 50, mass: 1.2 },
   });
-  const priceHeight = interpolate(priceFall, [0, 1], [250, 60]);
-
-  // Buzzword timing
-  const buzzwordDelay = 200;
+  const priceHeight = interpolate(priceFall, [0, 1], [250, 50]);
 
   return (
     <AbsoluteFill>
-      {/* Step 1: Green bar (Buchgewinn) */}
-      <Bar
-        label="BUCHGEWINN"
-        color="#4CAF50"
-        maxHeight={250}
-        delay={step1}
-        x={350}
-      />
+      <CameraMove zoomEnd={1.03} panX={5} panY={-3}>
+        <AbsoluteFill>
+          <GoldParticles count={12} mode="ambient" />
 
-      {/* Step 2: Red bar (Steuerforderung) */}
-      <Bar
-        label="STEUERFORDERUNG"
-        color={LOCOS.red}
-        maxHeight={180}
-        delay={step2}
-        x={500}
-      />
-
-      {/* Step 3: KEIN CASH + Arrow */}
-      {frame > step3 && (
-        <>
-          <div
-            style={{
-              position: "absolute",
-              left: 700,
-              top: 350,
-              fontFamily: FONT_FAMILY.headline,
-              fontWeight: 700,
-              fontSize: 42,
-              color: LOCOS.red,
-              opacity: blinkOn ? 1 : 0.3,
-              textShadow: SHADOW.textRed,
-              letterSpacing: "0.06em",
-            }}
-          >
-            KEIN CASH
-          </div>
-          {/* Arrow */}
-          <svg
-            style={{
-              position: "absolute",
-              left: 940,
-              top: 355,
-              opacity: arrowIn,
-            }}
-            width="80"
-            height="40"
-            viewBox="0 0 80 40"
-          >
-            <path
-              d="M5 20 L60 20 M50 10 L65 20 L50 30"
-              stroke={LOCOS.gold}
-              strokeWidth="3"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <div
-            style={{
-              position: "absolute",
-              left: 1040,
-              top: 350,
-              fontFamily: FONT_FAMILY.headline,
-              fontWeight: 700,
-              fontSize: 36,
-              color: LOCOS.gold,
-              opacity: arrowIn,
-              letterSpacing: "0.06em",
-            }}
-          >
-            VERKAUFEN!
-          </div>
-        </>
-      )}
-
-      {/* Step 4: Price falls */}
-      {frame > step4 && (
-        <div
-          style={{
-            position: "absolute",
-            left: 1250,
-            bottom: 400,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 8,
-          }}
-        >
-          <div
-            style={{
-              fontFamily: FONT_FAMILY.body,
-              fontWeight: 700,
-              fontSize: 18,
-              color: LOCOS.red,
-              letterSpacing: "0.04em",
-            }}
-          >
-            PREIS
-          </div>
-          <div
-            style={{
-              width: 80,
-              height: priceHeight,
-              backgroundColor: LOCOS.red,
-              borderRadius: "4px 4px 0 0",
-              boxShadow: `0 0 20px ${LOCOS.red}40`,
-              transition: "height 0.1s",
-            }}
+          {/* Step 1: Green bar */}
+          <Bar
+            label="BUCHGEWINN"
+            color="#4CAF50"
+            maxHeight={260}
+            delay={step1}
+            x={320}
           />
-          {/* Down arrow */}
-          <svg width="40" height="40" viewBox="0 0 40 40">
-            <path
-              d="M20 5 L20 30 M10 22 L20 32 L30 22"
-              stroke={LOCOS.red}
-              strokeWidth="3"
-              fill="none"
-              strokeLinecap="round"
-            />
-          </svg>
-        </div>
-      )}
 
-      {/* Step 5: Dominos */}
-      {frame > step5 && (
-        <>
-          {[0, 1, 2, 3, 4].map((i) => (
-            <Domino key={i} delay={step5 + i * 5} x={400 + i * 50} />
-          ))}
-        </>
-      )}
+          {/* Step 2: Red bar */}
+          <Bar
+            label="STEUERFORDERUNG"
+            color={LOCOS.red}
+            maxHeight={190}
+            delay={step2}
+            x={480}
+          />
 
-      {/* Buzzword at end */}
-      {frame > buzzwordDelay && (
-        <BuzzwordLowerThird text="ZWANGSLIQUIDATION" delay={buzzwordDelay} />
-      )}
+          {/* Step 3: KEIN CASH + Arrow + VERKAUFEN */}
+          {frame > step3 && (
+            <>
+              <div
+                style={{
+                  position: "absolute",
+                  left: 680,
+                  top: 340,
+                  fontFamily: FONT_FAMILY.headline,
+                  fontWeight: 700,
+                  fontSize: 46,
+                  color: LOCOS.red,
+                  opacity: cashPulse,
+                  textShadow: `0 0 40px ${LOCOS.red}AA, 0 0 80px ${LOCOS.red}50`,
+                  letterSpacing: "0.08em",
+                }}
+              >
+                KEIN CASH
+              </div>
+              {/* Animated arrow */}
+              <svg
+                style={{
+                  position: "absolute",
+                  left: 920,
+                  top: 348,
+                  opacity: arrowIn,
+                  transform: `translateX(${interpolate(arrowIn, [0, 1], [-20, 0])}px)`,
+                }}
+                width="90"
+                height="40"
+                viewBox="0 0 90 40"
+              >
+                <defs>
+                  <linearGradient id="arrow-grad">
+                    <stop offset="0%" stopColor={LOCOS.goldDim} />
+                    <stop offset="100%" stopColor={LOCOS.goldLight} />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M5 20 L65 20 M55 8 L70 20 L55 32"
+                  stroke="url(#arrow-grad)"
+                  strokeWidth="3.5"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <div
+                style={{
+                  position: "absolute",
+                  left: 1030,
+                  top: 340,
+                  opacity: arrowIn,
+                  transform: `translateX(${interpolate(arrowIn, [0, 1], [15, 0])}px)`,
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: FONT_FAMILY.headline,
+                    fontWeight: 700,
+                    fontSize: 40,
+                    backgroundImage: `linear-gradient(90deg, ${LOCOS.gold}, ${LOCOS.goldLight})`,
+                    WebkitBackgroundClip: "text",
+                    backgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    letterSpacing: "0.06em",
+                  }}
+                >
+                  VERKAUFEN!
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Step 4: Price falls */}
+          {frame > step4 && (
+            <div
+              style={{
+                position: "absolute",
+                left: 1280,
+                bottom: 380,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: FONT_FAMILY.headline,
+                  fontWeight: 700,
+                  fontSize: 18,
+                  color: LOCOS.red,
+                  letterSpacing: "0.06em",
+                  position: "absolute",
+                  bottom: priceHeight + 14,
+                }}
+              >
+                PREIS
+              </div>
+              <div
+                style={{
+                  width: 90,
+                  height: priceHeight,
+                  background: `linear-gradient(180deg, ${LOCOS.red}DD 0%, ${LOCOS.red} 100%)`,
+                  borderRadius: "6px 6px 0 0",
+                  boxShadow: `0 0 25px ${LOCOS.red}40`,
+                  position: "absolute",
+                  bottom: 0,
+                }}
+              />
+              {/* Animated down arrow */}
+              <svg
+                style={{ position: "absolute", bottom: -45 }}
+                width="40"
+                height="40"
+                viewBox="0 0 40 40"
+              >
+                <path
+                  d="M20 5 L20 30 M10 22 L20 32 L30 22"
+                  stroke={LOCOS.red}
+                  strokeWidth="3"
+                  fill="none"
+                  strokeLinecap="round"
+                  opacity={interpolate(
+                    Math.sin(frame * 0.15),
+                    [-1, 1],
+                    [0.4, 1]
+                  )}
+                />
+              </svg>
+            </div>
+          )}
+
+          {/* Step 5: Dominos */}
+          {frame > step5 &&
+            [0, 1, 2, 3, 4, 5, 6].map((i) => (
+              <Domino key={i} delay={step5 + i * 4} x={380 + i * 45} index={i} />
+            ))}
+
+          {/* Buzzword */}
+          {frame > buzzwordDelay && (
+            <BuzzwordLowerThird text="ZWANGSLIQUIDATION" delay={buzzwordDelay} />
+          )}
+        </AbsoluteFill>
+      </CameraMove>
+
+      <FilmGrain opacity={0.04} vignette vignetteIntensity={0.4} />
     </AbsoluteFill>
   );
 };

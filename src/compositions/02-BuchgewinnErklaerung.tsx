@@ -9,44 +9,84 @@ import {
 import { LOCOS } from "../theme/colors";
 import { FONT_FAMILY } from "../theme/fonts";
 import { SHADOW } from "../theme/styles";
+import { GoldParticles } from "../components/GoldParticles";
+import { FilmGrain } from "../components/FilmGrain";
+import { CameraMove } from "../components/CameraMove";
+import { GradientShine } from "../components/GradientShine";
 
-// Simple chart line component
-const ChartLine: React.FC<{ progress: number }> = ({ progress }) => {
-  const points = [
+// Animated chart line with drawing effect
+const ChartLine: React.FC<{ progress: number; frame: number }> = ({
+  progress,
+  frame,
+}) => {
+  const points: [number, number][] = [
     [0, 180],
-    [40, 160],
-    [80, 140],
-    [120, 100],
-    [160, 120],
-    [200, 70],
-    [240, 50],
-    [280, 30],
-    [320, 40],
-    [360, 20],
+    [30, 170],
+    [60, 155],
+    [90, 130],
+    [120, 140],
+    [150, 110],
+    [180, 85],
+    [210, 70],
+    [240, 55],
+    [270, 65],
+    [300, 45],
+    [330, 30],
+    [360, 35],
+    [380, 20],
   ];
 
-  const visiblePoints = Math.floor(progress * points.length);
   const pathData = points
-    .slice(0, visiblePoints)
     .map((p, i) => `${i === 0 ? "M" : "L"} ${p[0]} ${p[1]}`)
     .join(" ");
 
+  const totalLength = 500;
+  const dashOffset = interpolate(progress, [0, 1], [totalLength, 0]);
+
+  // Glow dot at the tip
+  const visibleIdx = Math.min(
+    Math.floor(progress * (points.length - 1)),
+    points.length - 1
+  );
+  const tipX = points[visibleIdx][0];
+  const tipY = points[visibleIdx][1];
+
   return (
-    <svg width="380" height="200" viewBox="0 0 380 200">
+    <svg width="400" height="210" viewBox="0 0 400 210">
       {/* Grid lines */}
       {[50, 100, 150].map((y) => (
         <line
           key={y}
           x1="0"
           y1={y}
-          x2="380"
+          x2="400"
           y2={y}
           stroke={LOCOS.silver}
           strokeWidth="0.5"
-          opacity="0.3"
+          opacity="0.15"
         />
       ))}
-      {/* Chart line */}
+      {/* Area fill */}
+      <path
+        d={`${pathData} L 380 210 L 0 210 Z`}
+        fill={`${LOCOS.gold}08`}
+        strokeDasharray={totalLength + 600}
+        strokeDashoffset={dashOffset}
+      />
+      {/* Glow line */}
+      <path
+        d={pathData}
+        stroke={LOCOS.gold}
+        strokeWidth="6"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeDasharray={totalLength}
+        strokeDashoffset={dashOffset}
+        opacity={0.2}
+        style={{ filter: "blur(4px)" }}
+      />
+      {/* Main line */}
       <path
         d={pathData}
         stroke={LOCOS.goldLight}
@@ -54,13 +94,22 @@ const ChartLine: React.FC<{ progress: number }> = ({ progress }) => {
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
+        strokeDasharray={totalLength}
+        strokeDashoffset={dashOffset}
       />
-      {/* Area fill */}
-      {visiblePoints > 1 && (
-        <path
-          d={`${pathData} L ${points[visiblePoints - 1][0]} 200 L 0 200 Z`}
-          fill={`${LOCOS.gold}15`}
-        />
+      {/* Tip glow dot */}
+      {progress > 0.05 && (
+        <>
+          <circle
+            cx={tipX}
+            cy={tipY}
+            r={8}
+            fill={LOCOS.goldLight}
+            opacity={0.3}
+            style={{ filter: "blur(4px)" }}
+          />
+          <circle cx={tipX} cy={tipY} r={4} fill={LOCOS.goldLight} />
+        </>
       )}
     </svg>
   );
@@ -79,14 +128,16 @@ const AssetIcon: React.FC<{
   const pop = spring({
     frame: frame - delay,
     fps,
-    config: { damping: 10, stiffness: 120, mass: 0.6 },
+    config: { damping: 8, stiffness: 150, mass: 0.5 },
   });
 
   const taxPop = spring({
-    frame: frame - delay - 10,
+    frame: frame - delay - 8,
     fps,
-    config: { damping: 8, stiffness: 150, mass: 0.5 },
+    config: { damping: 6, stiffness: 200, mass: 0.4 },
   });
+
+  const taxScale = interpolate(taxPop, [0, 1], [3, 1]);
 
   return (
     <div
@@ -94,42 +145,43 @@ const AssetIcon: React.FC<{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 8,
+        gap: 10,
         opacity: pop,
-        transform: `scale(${interpolate(pop, [0, 1], [0.5, 1])})`,
+        transform: `scale(${interpolate(pop, [0, 1], [0.3, 1])})`,
         position: "relative",
       }}
     >
-      <div style={{ fontSize: 52 }}>{emoji}</div>
+      <div style={{ fontSize: 56 }}>{emoji}</div>
       <div
         style={{
           fontFamily: FONT_FAMILY.body,
-          fontSize: 16,
+          fontSize: 17,
           fontWeight: 700,
           color: LOCOS.textLight,
-          letterSpacing: "0.04em",
+          letterSpacing: "0.06em",
         }}
       >
         {label}
       </div>
-      {/* Tax overlay */}
       {showTax && (
         <div
           style={{
             position: "absolute",
-            top: -5,
-            right: -10,
-            width: 30,
-            height: 30,
+            top: -8,
+            right: -12,
+            width: 32,
+            height: 32,
             borderRadius: "50%",
-            backgroundColor: `${LOCOS.red}DD`,
+            backgroundColor: LOCOS.red,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            transform: `scale(${interpolate(taxPop, [0, 1], [0, 1])})`,
-            fontSize: 16,
+            transform: `scale(${taxScale})`,
+            opacity: taxPop,
+            fontSize: 17,
             fontWeight: 700,
             color: LOCOS.white,
+            boxShadow: `0 0 15px ${LOCOS.red}80`,
           }}
         >
           %
@@ -143,201 +195,209 @@ export const BuchgewinnErklaerung: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Phase timings
   const chartProgress = spring({
-    frame: frame - 5,
+    frame: frame - 8,
     fps,
-    config: { damping: 30, stiffness: 40, mass: 1.5 },
+    config: { damping: 30, stiffness: 30, mass: 2 },
   });
 
-  // Labels
+  // Labels stagger
   const labelInLeft = spring({
-    frame: frame - 40,
+    frame: frame - 45,
     fps,
-    config: { damping: 12, stiffness: 100, mass: 0.8 },
+    config: { damping: 10, stiffness: 100, mass: 0.7 },
   });
 
   const labelInRight = spring({
-    frame: frame - 50,
+    frame: frame - 55,
     fps,
-    config: { damping: 12, stiffness: 100, mass: 0.8 },
+    config: { damping: 10, stiffness: 100, mass: 0.7 },
   });
 
-  // Tax notice drop
+  // Tax notice with heavy bounce
   const taxDrop = spring({
-    frame: frame - 80,
+    frame: frame - 85,
     fps,
-    config: { damping: 8, stiffness: 180, mass: 0.8 },
+    config: { damping: 6, stiffness: 200, mass: 0.6 },
   });
 
-  // "TROTZDEM ZAHLEN" blink
-  const blinkOn =
-    frame > 100 && Math.sin(frame * 0.3) > 0;
+  // Blink faster, more aggressive
+  const blinkPhase = frame > 105;
+  const blinkOn = blinkPhase && Math.sin(frame * 0.4) > -0.2;
 
-  // Assets section
-  const assetsDelay = 130;
+  const assetsDelay = 135;
 
   return (
-    <AbsoluteFill
-      style={{
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 80,
-      }}
-    >
-      {/* Split screen container */}
-      <div
-        style={{
-          display: "flex",
-          gap: 80,
-          alignItems: "center",
-          marginBottom: 60,
-        }}
-      >
-        {/* Left: Chart */}
-        <div
+    <AbsoluteFill>
+      <CameraMove zoomEnd={1.025} panX={-3}>
+        <AbsoluteFill
           style={{
-            display: "flex",
-            flexDirection: "column",
+            justifyContent: "center",
             alignItems: "center",
-            gap: 16,
+            padding: 80,
           }}
         >
-          <ChartLine progress={chartProgress} />
+          <GoldParticles count={15} mode="ambient" />
+
+          {/* Split screen */}
           <div
             style={{
-              fontFamily: FONT_FAMILY.headline,
-              fontWeight: 700,
-              fontSize: 28,
-              color: LOCOS.goldLight,
-              opacity: labelInLeft,
+              display: "flex",
+              gap: 100,
+              alignItems: "center",
+              marginBottom: 50,
+            }}
+          >
+            {/* Left: Chart */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 18,
+              }}
+            >
+              <ChartLine progress={chartProgress} frame={frame} />
+              <div
+                style={{
+                  opacity: labelInLeft,
+                  transform: `translateY(${interpolate(
+                    labelInLeft,
+                    [0, 1],
+                    [25, 0]
+                  )}px)`,
+                }}
+              >
+                <GradientShine
+                  text="Buchgewinn +40%"
+                  fontSize={30}
+                  delay={45}
+                />
+              </div>
+            </div>
+
+            {/* Divider — animated line */}
+            <div
+              style={{
+                width: 2,
+                height: interpolate(
+                  spring({
+                    frame: frame - 40,
+                    fps,
+                    config: { damping: 15, stiffness: 60, mass: 1 },
+                  }),
+                  [0, 1],
+                  [0, 220]
+                ),
+                background: `linear-gradient(180deg, transparent, ${LOCOS.silver}40, transparent)`,
+              }}
+            />
+
+            {/* Right: Empty hand */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 18,
+                opacity: labelInRight,
+                transform: `translateY(${interpolate(
+                  labelInRight,
+                  [0, 1],
+                  [25, 0]
+                )}px)`,
+              }}
+            >
+              <div style={{ fontSize: 84 }}>🤲</div>
+              <div
+                style={{
+                  fontFamily: FONT_FAMILY.headline,
+                  fontWeight: 700,
+                  fontSize: 30,
+                  color: LOCOS.silver,
+                  letterSpacing: "0.04em",
+                }}
+              >
+                Verkauft: 0 EUR
+              </div>
+            </div>
+          </div>
+
+          {/* Tax notice dropping */}
+          <div
+            style={{
               transform: `translateY(${interpolate(
-                labelInLeft,
+                taxDrop,
                 [0, 1],
-                [20, 0]
-              )}px)`,
-              letterSpacing: "0.04em",
+                [-250, 0]
+              )}px) scale(${interpolate(taxDrop, [0, 1], [1.5, 1])}) rotate(${interpolate(
+                taxDrop,
+                [0, 0.5, 1],
+                [-3, 1, 0]
+              )}deg)`,
+              opacity: interpolate(taxDrop, [0, 0.2], [0, 1], {
+                extrapolateRight: "clamp",
+              }),
+              backgroundColor: `${LOCOS.red}15`,
+              border: `2px solid ${LOCOS.red}`,
+              padding: "18px 48px",
+              marginBottom: 35,
+              boxShadow: `0 0 40px ${LOCOS.red}30`,
             }}
           >
-            Buchgewinn +40%
+            <div
+              style={{
+                fontFamily: FONT_FAMILY.headline,
+                fontWeight: 700,
+                fontSize: 26,
+                color: LOCOS.red,
+                letterSpacing: "0.08em",
+              }}
+            >
+              STEUERBESCHEID
+            </div>
           </div>
-        </div>
 
-        {/* Divider */}
-        <div
-          style={{
-            width: 2,
-            height: 200,
-            backgroundColor: `${LOCOS.silver}40`,
-          }}
-        />
+          {/* Particle burst when tax drops */}
+          <GoldParticles
+            count={25}
+            mode="burst"
+            burstX={960}
+            burstY={500}
+            burstFrame={88}
+          />
 
-        {/* Right: Empty hand */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 16,
-            opacity: labelInRight,
-            transform: `translateY(${interpolate(
-              labelInRight,
-              [0, 1],
-              [20, 0]
-            )}px)`,
-          }}
-        >
-          <div style={{ fontSize: 80 }}>🤲</div>
-          <div
-            style={{
-              fontFamily: FONT_FAMILY.headline,
-              fontWeight: 700,
-              fontSize: 28,
-              color: LOCOS.silver,
-              letterSpacing: "0.04em",
-            }}
-          >
-            Verkauft: 0 EUR
+          {/* TROTZDEM ZAHLEN blink */}
+          {blinkPhase && (
+            <div
+              style={{
+                fontFamily: FONT_FAMILY.headline,
+                fontWeight: 700,
+                fontSize: 52,
+                color: LOCOS.red,
+                opacity: blinkOn ? 1 : 0.15,
+                textShadow: blinkOn
+                  ? `0 0 40px ${LOCOS.red}CC, 0 0 80px ${LOCOS.red}60, 0 0 120px ${LOCOS.red}30`
+                  : "none",
+                letterSpacing: "0.1em",
+                marginBottom: 45,
+              }}
+            >
+              TROTZDEM ZAHLEN!
+            </div>
+          )}
+
+          {/* Asset row */}
+          <div style={{ display: "flex", gap: 70, justifyContent: "center" }}>
+            <AssetIcon emoji="📈" label="AKTIE" delay={assetsDelay} showTax />
+            <AssetIcon emoji="🥇" label="GOLD" delay={assetsDelay + 6} showTax />
+            <AssetIcon emoji="₿" label="BTC" delay={assetsDelay + 12} showTax />
+            <AssetIcon emoji="🏠" label="HAUS" delay={assetsDelay + 18} showTax />
           </div>
-        </div>
-      </div>
+        </AbsoluteFill>
+      </CameraMove>
 
-      {/* Tax notice dropping in */}
-      <div
-        style={{
-          transform: `translateY(${interpolate(
-            taxDrop,
-            [0, 1],
-            [-200, 0]
-          )}px) scale(${interpolate(taxDrop, [0, 1], [1.3, 1])})`,
-          opacity: interpolate(taxDrop, [0, 0.3], [0, 1], {
-            extrapolateRight: "clamp",
-          }),
-          backgroundColor: `${LOCOS.red}20`,
-          border: `2px solid ${LOCOS.red}`,
-          padding: "16px 40px",
-          marginBottom: 40,
-        }}
-      >
-        <div
-          style={{
-            fontFamily: FONT_FAMILY.headline,
-            fontWeight: 700,
-            fontSize: 24,
-            color: LOCOS.red,
-            letterSpacing: "0.06em",
-          }}
-        >
-          STEUERBESCHEID
-        </div>
-      </div>
-
-      {/* TROTZDEM ZAHLEN blink */}
-      {frame > 100 && (
-        <div
-          style={{
-            fontFamily: FONT_FAMILY.headline,
-            fontWeight: 700,
-            fontSize: 48,
-            color: LOCOS.red,
-            opacity: blinkOn ? 1 : 0.3,
-            textShadow: SHADOW.textRed,
-            letterSpacing: "0.08em",
-            marginBottom: 50,
-          }}
-        >
-          TROTZDEM ZAHLEN!
-        </div>
-      )}
-
-      {/* Asset row */}
-      <div
-        style={{
-          display: "flex",
-          gap: 60,
-          justifyContent: "center",
-        }}
-      >
-        <AssetIcon emoji="📈" label="AKTIE" delay={assetsDelay} showTax />
-        <AssetIcon
-          emoji="🥇"
-          label="GOLD"
-          delay={assetsDelay + 8}
-          showTax
-        />
-        <AssetIcon
-          emoji="₿"
-          label="BTC"
-          delay={assetsDelay + 16}
-          showTax
-        />
-        <AssetIcon
-          emoji="🏠"
-          label="HAUS"
-          delay={assetsDelay + 24}
-          showTax
-        />
-      </div>
+      <FilmGrain opacity={0.04} vignette vignetteIntensity={0.35} />
     </AbsoluteFill>
   );
 };

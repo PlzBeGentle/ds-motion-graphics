@@ -5,66 +5,89 @@ import {
   spring,
   interpolate,
   AbsoluteFill,
-  Sequence,
 } from "remotion";
 import { LOCOS } from "../theme/colors";
 import { FONT_FAMILY } from "../theme/fonts";
 import { CHECKLIST_ITEMS } from "../data/transcript";
+import { GoldParticles } from "../components/GoldParticles";
+import { FilmGrain } from "../components/FilmGrain";
+import { CameraMove } from "../components/CameraMove";
+import { GradientShine } from "../components/GradientShine";
 
 const CheckItem: React.FC<{
   text: string;
   delay: number;
-}> = ({ text, delay }) => {
+  index: number;
+}> = ({ text, delay, index }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
   const itemIn = spring({
     frame: frame - delay,
     fps,
-    config: { damping: 12, stiffness: 100, mass: 0.8 },
+    config: { damping: 10, stiffness: 100, mass: 0.7 },
   });
 
   const checkIn = spring({
-    frame: frame - delay - 12,
+    frame: frame - delay - 10,
     fps,
-    config: { damping: 8, stiffness: 200, mass: 0.5 },
+    config: { damping: 6, stiffness: 200, mass: 0.4 },
   });
 
-  const translateX = interpolate(itemIn, [0, 1], [60, 0]);
-  const checkScale = interpolate(checkIn, [0, 1], [0, 1]);
+  const translateX = interpolate(itemIn, [0, 1], [80, 0]);
+  const checkScale = interpolate(checkIn, [0, 1], [3, 1]);
+  const checkOpacity = interpolate(checkIn, [0, 0.3], [0, 1], {
+    extrapolateRight: "clamp",
+  });
 
   return (
     <div
       style={{
         display: "flex",
         alignItems: "center",
-        gap: 24,
+        gap: 28,
         opacity: itemIn,
         transform: `translateX(${translateX}px)`,
-        marginBottom: 28,
+        marginBottom: 32,
       }}
     >
-      {/* Checkbox */}
+      {/* Checkbox with animated check */}
       <div
         style={{
-          width: 44,
-          height: 44,
+          width: 48,
+          height: 48,
           border: `3px solid ${LOCOS.gold}`,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           flexShrink: 0,
+          boxShadow: checkIn > 0.5 ? `0 0 15px ${LOCOS.gold}40` : "none",
         }}
       >
         <svg
-          width="28"
-          height="28"
-          viewBox="0 0 28 28"
-          style={{ transform: `scale(${checkScale})` }}
+          width="30"
+          height="30"
+          viewBox="0 0 30 30"
+          style={{
+            transform: `scale(${checkScale})`,
+            opacity: checkOpacity,
+          }}
         >
+          {/* Glow */}
           <path
-            d="M5 14L11 20L23 8"
+            d="M5 15L12 22L25 8"
             stroke={LOCOS.gold}
+            strokeWidth="8"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity="0.3"
+            style={{ filter: "blur(3px)" }}
+          />
+          {/* Check */}
+          <path
+            d="M5 15L12 22L25 8"
+            stroke={LOCOS.goldLight}
             strokeWidth="3.5"
             fill="none"
             strokeLinecap="round"
@@ -77,9 +100,10 @@ const CheckItem: React.FC<{
         style={{
           fontFamily: FONT_FAMILY.body,
           fontWeight: 700,
-          fontSize: 36,
+          fontSize: 38,
           color: LOCOS.white,
           letterSpacing: "0.02em",
+          textShadow: `0 0 20px ${LOCOS.gold}10`,
         }}
       >
         {text}
@@ -92,99 +116,127 @@ export const OutroChecklist: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // CTA section
   const ctaDelay = 100;
   const ctaIn = spring({
     frame: frame - ctaDelay,
     fps,
-    config: { damping: 12, stiffness: 80, mass: 1 },
+    config: { damping: 10, stiffness: 80, mass: 0.8 },
   });
 
   // Bell animation
-  const bellSwing = interpolate(
-    Math.sin((frame - ctaDelay) * 0.25),
-    [-1, 1],
-    [-15, 15]
-  );
+  const bellSwing =
+    frame > ctaDelay
+      ? interpolate(Math.sin((frame - ctaDelay) * 0.3), [-1, 1], [-18, 18])
+      : 0;
 
-  // Logo fade
+  // Logo
   const logoIn = spring({
-    frame: frame - ctaDelay - 15,
+    frame: frame - ctaDelay - 12,
     fps,
     config: { damping: 20, stiffness: 60, mass: 1 },
   });
 
   return (
-    <AbsoluteFill
-      style={{
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 100,
-      }}
-    >
-      {/* Checklist */}
-      <div style={{ marginBottom: 60 }}>
-        {CHECKLIST_ITEMS.map((item, i) => (
-          <CheckItem key={i} text={item} delay={i * 25 + 5} />
-        ))}
-      </div>
-
-      {/* CTA */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 20,
-          opacity: ctaIn,
-          transform: `translateY(${interpolate(ctaIn, [0, 1], [30, 0])}px)`,
-        }}
-      >
-        {/* Bell icon */}
-        <svg
-          width="40"
-          height="40"
-          viewBox="0 0 24 24"
+    <AbsoluteFill>
+      <CameraMove zoomStart={1.03} zoomEnd={1.0} panY={4}>
+        <AbsoluteFill
           style={{
-            transform: `rotate(${frame > ctaDelay ? bellSwing : 0}deg)`,
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 100,
           }}
         >
-          <path
-            d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"
-            stroke={LOCOS.gold}
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-        <div
-          style={{
-            fontFamily: FONT_FAMILY.headline,
-            fontWeight: 700,
-            fontSize: 32,
-            color: LOCOS.gold,
-            letterSpacing: "0.06em",
-          }}
-        >
-          KANAL ABONNIEREN
-        </div>
-      </div>
+          <GoldParticles count={25} mode="ambient" />
 
-      {/* LOCOS Logo text */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: 60,
-          opacity: logoIn,
-          fontFamily: FONT_FAMILY.headline,
-          fontWeight: 700,
-          fontSize: 28,
-          color: LOCOS.goldDim,
-          letterSpacing: "0.2em",
-        }}
-      >
-        LOCOS
-      </div>
+          {/* Checklist */}
+          <div style={{ marginBottom: 55 }}>
+            {CHECKLIST_ITEMS.map((item, i) => (
+              <CheckItem key={i} text={item} delay={i * 28 + 5} index={i} />
+            ))}
+          </div>
+
+          {/* Particle burst on each check */}
+          {CHECKLIST_ITEMS.map((_, i) => (
+            <GoldParticles
+              key={`check-burst-${i}`}
+              count={12}
+              mode="burst"
+              burstX={540}
+              burstY={340 + i * 60}
+              burstFrame={i * 28 + 18}
+            />
+          ))}
+
+          {/* CTA */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 22,
+              opacity: ctaIn,
+              transform: `translateY(${interpolate(ctaIn, [0, 1], [35, 0])}px)`,
+            }}
+          >
+            {/* Bell icon */}
+            <svg
+              width="44"
+              height="44"
+              viewBox="0 0 24 24"
+              style={{
+                transform: `rotate(${bellSwing}deg)`,
+                transformOrigin: "top center",
+              }}
+            >
+              <path
+                d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"
+                stroke={LOCOS.goldLight}
+                strokeWidth="2"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              {/* Glow */}
+              <path
+                d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"
+                stroke={LOCOS.gold}
+                strokeWidth="5"
+                fill="none"
+                opacity="0.15"
+                style={{ filter: "blur(3px)" }}
+              />
+            </svg>
+            <GradientShine
+              text="KANAL ABONNIEREN"
+              fontSize={34}
+              delay={ctaDelay}
+              loop
+              shineDuration={40}
+            />
+          </div>
+
+          {/* LOCOS Logo */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: 55,
+              opacity: logoIn,
+              fontFamily: FONT_FAMILY.headline,
+              fontWeight: 700,
+              fontSize: 30,
+              letterSpacing: "0.25em",
+              backgroundImage: `linear-gradient(90deg, ${LOCOS.goldDim}, ${LOCOS.gold}, ${LOCOS.goldDim})`,
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              filter: `drop-shadow(0 0 15px ${LOCOS.gold}30)`,
+            }}
+          >
+            LOCOS
+          </div>
+        </AbsoluteFill>
+      </CameraMove>
+
+      <FilmGrain opacity={0.05} vignette vignetteIntensity={0.5} />
     </AbsoluteFill>
   );
 };

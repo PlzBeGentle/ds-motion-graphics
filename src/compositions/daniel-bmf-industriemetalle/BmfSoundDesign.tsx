@@ -366,6 +366,13 @@ const sfxEnvelope = (
 
 // ─── Players ─────────────────────────────────────────────────────────────
 
+// NOTE: `loop` prop removed 2026-04-15 — triggers Remotion Studio's
+// draw-peaks.js IndexSizeError ("createImageData: source width is zero")
+// during waveform visualization when source duration is still being fetched.
+// Trade-off: mb-02 (PARTICLE_EMISSION 163s vs 196s slot) and mb-03
+// (CONFIDENTIALITY 139s vs 164s slot) fall silent after source ends.
+// Phase B placeholder quality — longer source tracks arrive with proper
+// Epidemic Sound bed sourcing before final render.
 const MusicBedPlayer: React.FC<{ bed: BmfBed }> = ({ bed }) => {
   const duration = bed.to - bed.from;
   return (
@@ -373,7 +380,6 @@ const MusicBedPlayer: React.FC<{ bed: BmfBed }> = ({ bed }) => {
       <Audio
         src={staticFile(`sfx/${bed.src}`)}
         volume={(f) => interpolateAutomation(bed.from + f, bed.automation)}
-        loop
       />
     </Sequence>
   );

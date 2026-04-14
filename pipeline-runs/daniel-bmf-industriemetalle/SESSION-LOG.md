@@ -1307,6 +1307,151 @@ Map-Loop auch geaendert: key nutzt `slot.slot` statt array index, label zeigt ca
 **Commits (Phase B in progress):**
 - `22c2923` feat(bmf): Phase B start - BROLL_SLOTS fix + slot-11 icons collage
 
+### 25e) Nano-Banana-2 Still Generation (7 Slots)
+
+**Script:** `scripts/bmf-broll-gen.py` (Python, urllib-only, no external deps)
+**Prompts:** `scripts/bmf-broll-prompts.json` (7 structured JSON prompts fuer Slot 1/2/3/6/7/9/10)
+**API:** fal.ai queue `https://queue.fal.run/fal-ai/nano-banana-2`, submit → poll → fetch result → download
+**Params:** aspect_ratio 16:9, resolution 2K, output_format png, safety_tolerance 4
+**Cost:** $0.35 ($0.05 x 7 images)
+**Time:** 5:14 min total (slot generation times 50.7s / 83.2s / 43.1s / 46.1s / 50.3s / 29.6s / 31.1s)
+**FAL_API_KEY source:** fallback lookup in `~/ds-content-studio/.env.local` weil ds-motion-graphics selber keine .env hat
+
+**JSON prompt structure** (per slot):
+```
+{
+  "title": "...",
+  "category": "architectural/industrial/landscape documentary photograph",
+  "description": "natural language paragraph",
+  "environment": { "location_type", "time_of_day", "lighting", "background_colors" },
+  "photography_details": { "style", "composition", "focus", "mood", "color_grade", "film_quality" },
+  "avoid": "comma-list of failure zones"
+}
+```
+Stringified als `prompt` parameter an den endpoint submitted. Pattern destilliert aus awesome-nano-banana-pro-prompts repo (example #21 "Cinematic Evening Street Elegance").
+
+**Ergebnisse (alle 7 beim ersten Take production-ready, keine Iteration noetig):**
+- Slot 1 BMF Berlin — 3/4 corner view, blue hour, faint warm interior glow, neoclassical, leer authoritaer
+- Slot 2 PDF BMF-Schreiben — federal eagle silhouette visible but unreadable, Text absichtlich blurred, tungsten rembrandt lighting, pen am edge
+- Slot 3 Zollfreilager — symmetric one-point perspective entlang metal ingot stacks, cold fluorescent + skylight
+- Slot 6 Strafzettel — parking ticket unter Wischerblatt, German cobblestone street, Herbst-Blaetter, overcast grey
+- Slot 7 Shanghai Port — aerial view container ships, blue gantry cranes, industrial haze, Reuters-style
+- Slot 9 Strategic Reserves Bunker — receding barrel rows, warm amber lamp pools against cold concrete, volumetric dust particles
+- Slot 10 Schweiz Alpen — golden hour panorama, warm rim-lit peaks, cool blue shadow valleys, National Geographic style
+
+**Key learning:** Die `avoid` liste mit explizit "no readable text, no visible logos, no people" eliminated die typischen NB2 failure modes (garbled text, face hallucination, stock-photo bias). Structured JSON prompts outperformed freeform text bei cinematic documentary style requests.
+
+### 25f) Veo 3.1 Video Generation (3 Slots)
+
+**Script:** `scripts/bmf-veo-gen.py` (analog zu broll-gen aber mit laengerem poll timeout 600s)
+**Prompts:** `scripts/bmf-veo-prompts.json` (3 plain-text paragraph prompts fuer Slot 4/5/8)
+**API:** fal.ai queue `https://queue.fal.run/fal-ai/veo3.1`
+**Params:** aspect_ratio 16:9, duration 8s, resolution 1080p, **generate_audio false**, auto_fix true, safety_tolerance 4, negative_prompt per slot
+**Cost:** $4.80 ($1.60 x 3 clips; 8s x $0.20/s no-audio — audio disabled saves 50%)
+**Time:** ~9 min total (slot generation times 170s / 210s / 144s)
+
+**Warum plain text statt JSON:** Veo 3.1 laut research (Google Cloud blog, Replicate docs, Skywork guides) bevorzugt natural-language paragraphs in der Reihenfolge: camera -> subject -> action -> setting -> lighting -> style -> mood. 100-175 word optimal. Negative prompt als comma-list in separatem field.
+
+**Warum audio disabled:** Veo 3.1 native audio matcht nicht zum BmfSoundDesign sound layer der in Phase A gebaut wurde. Muten im edit ist pflicht, also disable at generation = 50% cost save.
+
+**Failure-zone avoidance pro slot:**
+- Slot 4 Telefon — NO faces in frame (hand + phone + desk only, Rembrandt shadow) → verhindert Veo face-warping
+- Slot 5 Kobalt — 3 distant silhouetted figures statt "dozens of workers", no close-up faces, no hands → verhindert multi-figure morphing
+- Slot 8 Cleanroom — NO humans anywhere (statt bunny-suited workers), robotic arm + wafer als single-subject slow motion → low-risk scene
+
+**Ergebnisse (alle 3 beim ersten Take keeper, ein mild feedback):**
+- Slot 4: Dario: "bischen langsam mit dem handy" — wird NICHT regeneriert, stattdessen im refactor `startFrom={30}` gesetzt (skip first 1s), Master-Slot ist 7s und Veo-Clip ist 8s, passt perfekt
+- Slot 5: Clean, keine multi-figure morphing, gritty photojournalist feel
+- Slot 8: Clean robotic arm motion, low motion = low failure risk
+
+### 25g) BRollPlaceholder Refactor → 11 Real Components
+
+**File:** `src/compositions/daniel-bmf-industriemetalle/BmfIndustriemetalleVideo.tsx`
+
+`BROLL_SLOTS` array wurde mit einem discriminated union type erweitert:
+```ts
+type BRollSlot = { slot, start, duration, topic } & (
+  | { type: "still", asset, zoomStart, zoomEnd, driftX, driftY }
+  | { type: "video", asset, startFrom }
+  | { type: "motion-graphics" }
+);
+```
+
+Pro slot optimierte KenBurns params:
+- Slot 1 BMF: zoomEnd 1.08, driftY -20 (push-in + up to reveal facade height)
+- Slot 2 PDF: zoomEnd 1.12, driftY -15 (push toward eagle emblem)
+- Slot 3 Zollfreilager: zoomEnd 1.10, no drift (symmetric vanishing point)
+- Slot 6 Strafzettel: zoomEnd 1.14, driftX -20 (push toward ticket with slight left)
+- Slot 7 Shanghai: zoomEnd 1.08, driftX 25 (right drift across port span)
+- Slot 9 Bunker: zoomEnd 1.12, no drift (push down central aisle)
+- Slot 10 Schweiz: zoomEnd 1.10, driftX 20, driftY -8 (warm push right-up into sunset)
+
+Video slot startFrom (Veo drift-compensation):
+- Slot 4: startFrom 30 (skip 1s slow hand reach per Dario feedback)
+- Slot 5: startFrom 15 (skip 0.5s typical Veo drift)
+- Slot 8: startFrom 15 (skip 0.5s typical Veo drift)
+
+Render-Loop conditional switch auf `slot.type`:
+- `motion-graphics` → `<BmfBRoll11IconsCollage />`
+- `still` → `<KenBurns src={...} zoomStart={...} zoomEnd={...} driftX={...} driftY={...} duration={slot.duration} />`
+- `video` → `<OffthreadVideo src={...} startFrom={...} muted style={{objectFit: cover}} />`
+
+Unused `BRollPlaceholder` import entfernt (file bleibt bestehen fuer future use).
+
+**TypeScript:** 0 Errors in daniel-bmf-industriemetalle/. **Studio:** localhost:3006 HTTP 200.
+
+### 25h) Binary Assets Strategy
+
+`public/bmf/b-roll/` enthaelt 73 MB generated binaries (7 PNGs ~46 MB + 3 MP4s ~28 MB + daniel-master symlink). Diese werden NICHT in git committed — stattdessen `.gitignore` Eintraege fuer `public/bmf/b-roll/*.png`, `public/bmf/b-roll/*.mp4`, `public/bmf/daniel-master.mp4`. Die `scripts/bmf-broll-prompts.json` + `scripts/bmf-veo-prompts.json` werden committed sodass jede Zukunfts-Session die Assets regenerieren kann mit `python scripts/bmf-broll-gen.py` + `python scripts/bmf-veo-gen.py`. NB2 Regeneration ist nahe deterministisch, Veo nicht ganz aber der structured prompt approach liefert stabile results.
+
+### 25z) Phase B End-State
+
+**Fertig:**
+- BROLL_SLOTS auf canonical 11 slot frame ranges fixed
+- BmfBRoll11IconsCollage motion-graphics component
+- 7 nano-banana-2 stills generated ($0.35)
+- 3 Veo 3.1 videos generated ($4.80)
+- Master-Composition Refactor: 10 placeholder slots → 10 real components (7 KenBurns + 3 OffthreadVideo)
+- TypeScript clean, Studio running, all asset paths resolving
+- .gitignore updated fuer AI-generated binaries
+
+**Total Phase B Cost:** $5.15 (vs estimated $10-16 classification.md)
+**Total Phase B Time:** ~45 min build + ~15 min generation + ~10 min refactor = ~70 min
+
+**Next:**
+- Studio-Scrub durch Dario auf jeder Slot-Frame-Range (1170, 1800, 2280, 3750, 6750, 7860, 12210, 13650, 14790, 17850, 20640) um visuell zu verifizieren dass alle 11 B-Roll slots korrekt rendern
+- Phase D (ovl-003 Face-Safe-Zone, 5 min)
+- Phase E (4C Brand-Warnings, 10 min)
+- Phase F (22 Components Frame-by-Frame Review, 3-5h mit Dario)
+
+**Commits Phase B:**
+- `22c2923` feat(bmf): Phase B start - BROLL_SLOTS fix + slot-11 icons collage
+- (pending — kommt jetzt)
+
+### 25i) Late-Session Bugfix: Remotion Studio draw-peaks IndexSizeError
+
+**User-Report:** Screenshot of Studio error panel — `IndexSizeError: Failed to execute 'createImageData' on 'CanvasRenderingContext2D': The source width is zero or not a number.` at `@remotion/studio/dist/components/draw-peaks.js:18` in `drawBars` function.
+
+**Root cause analysis:**
+- `draw-peaks.js` is Studio's internal audio-waveform visualizer
+- `createImageData(w, height)` fails when `w=0`
+- w=0 occurs when Studio tries to render a waveform for an `<Audio loop>` element whose source duration is still being resolved. Remotion's Audio component has a separate code path for `loop` that fetches duration asynchronously (`audio/Audio.js:43 if (loop) { ... }`), and during that fetch window the Studio waveform pipeline can crash.
+- Triggered by my `BmfSoundDesign.tsx` MusicBedPlayer which had `<Audio loop>` on all 6 music beds
+
+**Fix:** Remove `loop` prop from MusicBedPlayer. Studio waveform pipeline no longer crashes.
+
+**Trade-off (documented in code comment + session log):**
+- mb-01 TRACKER (178s source) >= 158s slot → fine
+- mb-02 PARTICLE_EMISSION (163s source) < 196s slot → **silent after 163s** (~33s gap)
+- mb-03 CONFIDENTIALITY (139s source) < 164s slot → **silent after 139s** (~25s gap)
+- mb-04/05/06 CURTAINS_FALL (193s source) >= all their slots → fine
+
+**Phase B Audio is placeholder quality** anyway. Before final render, Dario needs to source longer Epidemic Sound bed tracks (> 200s each) for mb-02 and mb-03 to eliminate the silence gaps. Alternative: re-implement loop as sequential sub-Sequences which doesn't trigger the Studio bug.
+
+**Post-fix:** TypeScript 0 errors, Studio HTTP 200, no draw-peaks crash on timeline scrubbing.
+
+---
+
 ---
 
 **Letzte Update:** 2026-04-14 post-Phase-6-Iteration (Zoom-Layer + Bug-Fixes live in Studio)

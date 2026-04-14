@@ -2,3 +2,10 @@ node_modules/
 dist/
 output/
 .cache/
+
+# BMF Industriemetalle AI-generated B-roll assets — regeneratable via
+# scripts/bmf-broll-gen.py + scripts/bmf-veo-gen.py from the committed
+# prompts.json files. Binaries kept local to avoid bloating the repo.
+public/bmf/b-roll/*.png
+public/bmf/b-roll/*.mp4
+public/bmf/daniel-master.mp4

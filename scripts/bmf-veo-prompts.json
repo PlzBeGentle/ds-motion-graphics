@@ -1,0 +1,49 @@
+{
+  "_readme": "BMF Industriemetalle Veo 3.1 prompts for 3 video B-Roll slots via fal.ai. Unlike nano-banana which takes structured JSON, Veo 3.1 works best with plain-text paragraphs (100-175 words) in the order: camera -> subject -> action -> setting -> lighting -> style -> mood. Negative prompts as comma-lists. Audio is disabled (generate_audio=false) because we mute Veo audio in the edit — sound design is handled by BmfSoundDesign.tsx separately. Duration fixed at 8s (Veo only supports 4/6/8), we use the middle 5-6 seconds in the edit because first/last frames drift. Generated videos land in public/bmf/b-roll/slot-XX-*.mp4.",
+  "_meta": {
+    "model": "fal-ai/veo3.1",
+    "endpoint": "https://queue.fal.run/fal-ai/veo3.1",
+    "aspect_ratio": "16:9",
+    "duration": "8s",
+    "resolution": "1080p",
+    "generate_audio": false,
+    "auto_fix": true,
+    "safety_tolerance": "4",
+    "output_dir": "public/bmf/b-roll",
+    "cost_per_clip": "$1.60 (8s * $0.20 no-audio)",
+    "total_cost_estimate": "$4.80",
+    "generation_time_per_clip": "~2-3 minutes"
+  },
+  "prompts": [
+    {
+      "slot": 4,
+      "filename": "slot-04-telefon-donnerstag.mp4",
+      "frame_range": "3750-3960",
+      "timestamp": "125-132s",
+      "caption_context": "Er hat es ueber einen Kontakt erhalten am Donnerstagabend gegen 20 Uhr. Einen Tag, nachdem das BMF es per E-Mail an die Finanzbehoerden rausgeschickt hat.",
+      "intent": "The moment a tax advisor gets an unofficial contact on Thursday 8pm. Emotional beat: private weight, something is wrong. Hand + phone + desk, face OUT of frame to avoid Veo face-warping.",
+      "prompt": "Medium close-up shot, slow 8-second steady dolly-in toward a dark wooden desk. Focus subject: a silver-framed smartphone lying face-up on the desk with its screen glowing soft white, just illuminating. A man's hand — middle-aged, plain wedding band and a subtle dark watch visible on the wrist — is mid-reach toward the phone from the right edge of the frame, moving deliberately and slowly. Background: unfocused silhouette of a tax advisor's private study — blurred bookshelves with thick binders, a desktop monitor out of focus showing a dim unreadable financial chart, a closed window revealing evening blackness outside. Single warm tungsten desk lamp at 3200K from upper camera-right creates deep Rembrandt shadow across most of the frame, with only the phone screen and the reaching hand properly lit. Atmosphere of quiet private evening, Thursday 8pm, the weight of an unexpected contact. Shot on 35mm film with natural grain, muted desaturated warm color palette, cinematic letterboxed feel. Very slow deliberate camera movement, steady. No faces in frame, no readable text on the phone screen or any surface.",
+      "negative_prompt": "readable text on phone screen, notification text visible, numbers visible, face in frame, profile shot, face warping, finger morphing, duplicated fingers, hand distortion, brand logos, apple logo, visible screen content, bright fluorescent lighting, cool blue lighting, motion blur on hand, erratic camera movement, zoom wobble, multiple hands"
+    },
+    {
+      "slot": 5,
+      "filename": "slot-05-kobalt-mine.mp4",
+      "frame_range": "6750-6960",
+      "timestamp": "225-232s",
+      "caption_context": "Eisen, Kupfer, Zink, Aluminium, Nickel, irgendwas Neutrales, sie haben sich Kobalt ausgesucht. Kobalt, das Metall, das auf der EU-Liste der kritischen Rohstoffe steht.",
+      "intent": "SIGNATURE PEAK MOMENT. The Smoking Gun moment. DRC cobalt mine, gritty photojournalist aesthetic — geopolitical weight. Wide shot with distant small figures to avoid multi-figure morphing and face-warping failure zones.",
+      "prompt": "Wide establishing shot, steady with subtle natural handheld organic drift over 8 seconds. An open-pit cobalt mine in central Africa at midday under harsh directional overhead sun. Terraced red-orange earthen walls recede diagonally into the distance, showing the scale of extraction. Three distant silhouetted human figures in rough dark work clothing are carrying heavy loads along a middle terrace, intentionally tiny in the frame, scale dwarfed by the enormity of the excavation around them. Foreground: scattered chunks of raw blue-grey dark cobalt ore on dusty red earth, catching the hard light. No machinery, no vehicles, no close-up faces, no corporate equipment. Atmosphere of physical extraction, oppressive equatorial heat, geopolitical weight of critical raw materials. Gritty photojournalist editorial aesthetic — desaturated color grade with visible dust haze in the air, high contrast shadows, 16mm documentary film grain, no glamour, no polish. Hard overhead sun at noon casts short hard shadows directly beneath figures and terraces. Very slow organic camera breath, no tracking motion, no zoom. Shot as if by a Reuters photographer allowed a single site visit.",
+      "negative_prompt": "close-up faces, close-up workers, face in frame, identifiable person, finger distortion, hand close-up, readable text, any text, signage, logos, corporate branding, clean modern machinery, yellow safety helmets, hi-vis vests, modern vehicles, trucks, cartoon colors, saturated orange, cheerful tone, morphing figures, duplicated people, AI shimmer, oversaturation, stock photo brightness, travel video aesthetic, drone lens distortion, fisheye"
+    },
+    {
+      "slot": 8,
+      "filename": "slot-08-cleanroom-wafer.mp4",
+      "frame_range": "13650-13860",
+      "timestamp": "455-462s",
+      "caption_context": "weil die europaeische Industrie nicht mehr weiss, wie sie ihre Chipfabrik versorgen soll. Und im April 26, exakt in diesem Bild hinein, entscheidet sich Deutschland.",
+      "intent": "Geopolitical anchor — European semiconductor vulnerability. ASML-vibe without naming the brand. Robotic arm + wafer = low-risk subject for Veo (slow singular motion, controlled frame). No humans in frame to avoid bunny-suit face-shield morphing.",
+      "prompt": "Slow steady 8-second dolly-in, starting at a wide establishing shot pushing smoothly to medium close-up. Interior of a semiconductor cleanroom — extreme precision manufacturing environment. Centered subject: a single pristine white industrial robotic arm with a delicate vacuum manipulator end-effector, very slowly lifting a circular mirror-polished silicon wafer from a loading carrier with millimeter precision. The wafer surface reflects a faint cyan-purple rainbow sheen under the lighting. Background: softly blurred rows of industrial lithography and inspection machines, cyan-white indicator LEDs glowing softly through the depth, geometric machine surfaces with fine technical detail receding into perspective. Overhead lighting is cool fluorescent 5600K with subtle blue-ultraviolet highlights on metallic surfaces and deep shadows in the corners of the frame. No humans visible anywhere in the frame. No readable text on any display screens or machine panels. No logos or brand names on equipment. Atmosphere of extreme precision, silent control, geopolitical technological stakes. Shot as high-end industrial documentary in National Geographic aesthetic, with very subtle handheld micro-jitter suggesting reportage access. Film grain, neutral-cool editorial color grade, slightly underexposed. Very deliberate slow camera push, no zoom pulse.",
+      "negative_prompt": "humans in frame, people, workers, bunny suits, face shields, hazmat suits, gloves, hands, readable text, display screen content, brand logos, ASML text, TSMC text, Intel text, Samsung text, any corporate branding, warm golden lighting, orange tones, color banding, heavy motion blur, jittery handheld, morphing robotic arm, duplicated arms, wafer distortion, reflective face warping, fisheye lens, drone footage"
+    }
+  ]
+}

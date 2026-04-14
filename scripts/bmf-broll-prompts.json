@@ -1,0 +1,211 @@
+{
+  "_readme": "BMF Industriemetalle B-Roll Prompts for fal.ai nano-banana-2. Each entry is submitted as a structured JSON string (stringified) to the prompt parameter. 7 cinematic documentary stills for 7 slots — Slot 4/5/8 are generated via Veo 3.1 separately, Slot 11 is pure motion-graphics. Prompts are tuned to match Daniel's exact caption context at each slot frame range. Review freely, then run scripts/bmf-broll-gen.py.",
+  "_meta": {
+    "model": "fal-ai/nano-banana-2",
+    "endpoint": "https://queue.fal.run/fal-ai/nano-banana-2",
+    "aspect_ratio": "16:9",
+    "resolution": "2K",
+    "output_format": "png",
+    "output_dir": "public/bmf/b-roll",
+    "cost_per_image": "~$0.05",
+    "total_cost_estimate": "~$0.35"
+  },
+  "prompts": [
+    {
+      "slot": 1,
+      "filename": "slot-01-bmf-berlin.png",
+      "frame_range": "1170-1380",
+      "timestamp": "39-46s",
+      "caption_context": "Und das Verrueckte daran, Deutschland bekommt dadurch exakt keinen Cent mehr Steuereinnahmen, nicht einen.",
+      "intent": "Cold authoritarian BMF building exterior as ironic contrast to 0-Cent paradox. No warmth, empty power.",
+      "json": {
+        "title": "Bundesministerium der Finanzen Berlin Exterior Blue Hour",
+        "category": "architectural documentary photograph",
+        "description": "Wide establishing shot of an imposing neoclassical German federal government ministry building facade in Berlin's government district at blue hour. Austere grey limestone facade with tall rectangular windows in strict grid, heavy stone cornices, imposing vertical columns flanking the main entrance. The building stands cold and empty against a deep indigo post-sunset sky. A few faint warm interior lights glow from random windows inside. No people. No readable signage. Mood of bureaucratic distance, state power, institutional coldness.",
+        "environment": {
+          "location_type": "government ministry building exterior, Berlin Wilhelmstrasse government district",
+          "time_of_day": "blue hour, just after sunset, winter",
+          "lighting": "deep indigo sky, cold ambient fill, faint warm yellow 2700K glow from interior windows, no direct sun, subtle street lamps",
+          "background_colors": ["deep indigo blue sky", "cold limestone grey", "faint warm yellow window lights", "dark slate shadows"]
+        },
+        "photography_details": {
+          "style": "architectural documentary, editorial journalism, shot on Sony A7 with 24mm wide lens",
+          "composition": "slightly low angle looking up at facade to emphasize state authority, leading lines of windows, symmetrical framing, rule of thirds",
+          "focus": "deep focus, entire facade sharp front to back",
+          "mood": ["austere", "authoritarian", "cold", "empty", "bureaucratic", "imposing"],
+          "color_grade": "cold cyan-steel shadows with faint warm window accents, desaturated limestone, editorial cold look",
+          "film_quality": "clean digital photojournalism, subtle sensor grain, Reuters editorial style"
+        },
+        "avoid": "readable text on any signs or plaques, national flags with readable text, tourists, warm golden daylight, cheerful postcard aesthetic, CGI look, any Bundesadler eagle detail sharp enough to read"
+      }
+    },
+    {
+      "slot": 2,
+      "filename": "slot-02-pdf-bmf-schreiben.png",
+      "frame_range": "1800-2010",
+      "timestamp": "60-67s",
+      "caption_context": "Ich habe es hier vor mir liegen und ich verlinke euch das Ganze auch hier natuerlich unter dem Video, damit ihr das selber schwarz auf weiss lesen koennt.",
+      "intent": "Intimate close-up of official German document. Daniel says 'ich habe es hier vor mir liegen'. Warm tungsten, private moment, paper weight.",
+      "json": {
+        "title": "Official German Government Document Close-Up on Desk",
+        "category": "intimate documentary still",
+        "description": "Extreme close-up of an official printed German government letter lying on a dark wooden desk. Multiple printed pages of an official letter are slightly fanned, held flat. The top page shows a faint silhouette of the federal eagle emblem at the upper margin, intentionally soft-focused so never sharply readable. Paper texture visible with subtle fiber grain. Dark wood desk surface with warm grain surrounds the document. Text on pages is blurred into abstract horizontal lines, unreadable, only the shape of paragraphs visible. A fine pen rests at the edge of the frame. No computer, no phone.",
+        "environment": {
+          "location_type": "private study desk, dark wood surface",
+          "time_of_day": "evening, private",
+          "lighting": "single warm tungsten desk lamp 3200K from upper camera-left, strong directional light across paper, deep shadow edges on the right side of the frame, low fill ratio, moody",
+          "background_colors": ["warm tungsten amber", "deep sepia shadow", "paper cream off-white", "dark wood brown"]
+        },
+        "photography_details": {
+          "style": "intimate documentary product photography, 50mm macro",
+          "composition": "overhead slightly tilted top-down angle, document filling 65 percent of frame, wood grain visible in margins, pen diagonal at edge",
+          "focus": "tack-sharp focus on paper texture and eagle silhouette, pages receding into natural focus falloff",
+          "mood": ["intimate", "serious", "private", "investigative", "weighty", "confidential"],
+          "color_grade": "warm tungsten with deep sepia shadow, filmic contrast, subtle chroma grain",
+          "film_quality": "shot on Sony A7 with 50mm macro, natural grain, documentary realism, not stock photography"
+        },
+        "avoid": "readable text on pages, sharp legible letters, recognizable logos, corporate stock photo feel, bright daylight, colorful highlights, hands in frame, computer screens"
+      }
+    },
+    {
+      "slot": 3,
+      "filename": "slot-03-zollfreilager-ingots.png",
+      "frame_range": "2280-2460",
+      "timestamp": "76-82s",
+      "caption_context": "der die Ware ueber einen Partner in einem Zollfreilager gelagert hat in Deutschland.",
+      "intent": "Industrial storage warehouse with metal ingots. Cold institutional feel, bonded warehouse.",
+      "json": {
+        "title": "Industrial Metal Ingots Bonded Warehouse Interior",
+        "category": "industrial documentary photograph",
+        "description": "Interior of a massive bonded warehouse in an industrial zone. Long rows of neatly stacked silvery-grey industrial metal ingots sit on heavy wooden pallets, extending into the depth of the frame. The metal has a dull brushed finish. Raw polished concrete floor, exposed steel rafters and ventilation pipes running above, cold industrial atmosphere. No workers visible, empty and still, suggesting strategic inventory. Pale cold overhead fluorescent lighting mixed with faint daylight from high skylight windows. Scale is imposing.",
+        "environment": {
+          "location_type": "large industrial bonded warehouse interior, storage facility",
+          "time_of_day": "late afternoon, overcast daylight through skylights",
+          "lighting": "overhead pale cold fluorescent 5000K mixed with dim grey daylight from high windows, long shadows under pallets, cold cyan cast",
+          "background_colors": ["cold steel grey", "pallet wood brown", "concrete beige", "faint cyan window light", "deep shadow black"]
+        },
+        "photography_details": {
+          "style": "editorial industrial documentary photography",
+          "composition": "deep one-point perspective down the central aisle with metal stacks receding, strong leading lines, slight low angle, vanishing point in upper center",
+          "focus": "sharp front-to-back deep focus, every ingot stack in sharp detail",
+          "mood": ["industrial", "cold", "strategic", "abandoned", "still", "weighty"],
+          "color_grade": "cool cyan-grey palette, slightly desaturated, editorial industrial cold look",
+          "film_quality": "digital photojournalism, clean sharp, subtle grain"
+        },
+        "avoid": "people, forklifts in motion, warm lighting, messy storage, consumer packaging, any visible brand names or logos, readable labels on ingots, cheerful aesthetic"
+      }
+    },
+    {
+      "slot": 6,
+      "filename": "slot-06-strafzettel-windschutzscheibe.png",
+      "frame_range": "7860-8040",
+      "timestamp": "262-268s",
+      "caption_context": "Als wuerde die Polizei euch einen Strafzettel in die Windschutzscheibe oder hinter die Scheibe klemmen",
+      "intent": "Literal visualization of Daniel's parking ticket metaphor. Paper ticket under wiper blade, bureaucratic small violation.",
+      "json": {
+        "title": "Parking Ticket Paper Under Windshield Wiper German Car",
+        "category": "editorial documentary close-up",
+        "description": "Extreme close-up of a white paper parking ticket folded and wedged under the black rubber windshield wiper blade of a parked dark-coloured German car. The ticket paper is slightly crumpled from being folded, partially raised by the wiper blade tension. The car is parked on a cobblestone street with autumn leaves scattered. Background is softly out of focus but suggests a quiet European street. The ticket appears official with fine print but text is never readable, only the shape of paragraphs visible. Mood of quiet bureaucratic confrontation, arbitrary state authority, small everyday frustration.",
+        "environment": {
+          "location_type": "German urban residential street, parked car close-up",
+          "time_of_day": "overcast midday, grey sky",
+          "lighting": "soft overcast diffused daylight, flat even shadows, cold grey ambient, slight highlights on the wet car paint",
+          "background_colors": ["cold grey overcast", "dark car body almost black", "bright paper white ticket", "faint autumn brown cobblestones"]
+        },
+        "photography_details": {
+          "style": "editorial street documentary, 50mm natural perspective",
+          "composition": "close-up of windshield lower corner, wiper blade diagonal across frame, ticket as main subject occupying center, car body filling background, shallow street bokeh beyond",
+          "focus": "tack sharp focus on ticket paper texture and wiper blade, slight bokeh behind",
+          "mood": ["bureaucratic", "frustrating", "small grievance", "anonymous authority", "mundane"],
+          "color_grade": "cold overcast grey with bright paper white highlight, desaturated",
+          "film_quality": "50mm photojournalism, clean sharp digital, subtle grain"
+        },
+        "avoid": "readable text on the ticket, visible license plate numbers, people, hands, smiling, warm golden tones, traffic signs in frame, cartoonish colors, oversized ticket"
+      }
+    },
+    {
+      "slot": 7,
+      "filename": "slot-07-shanghai-port.png",
+      "frame_range": "12210-12420",
+      "timestamp": "407-414s",
+      "caption_context": "Im August 23 hat China Exportkontrollen fuer Gallium und Germanium eingefuehrt.",
+      "intent": "Shanghai port geopolitical scale. Container ships, cranes, industrial dominance of Chinese export power.",
+      "json": {
+        "title": "Shanghai Container Port Aerial Late Afternoon",
+        "category": "documentary aerial photograph",
+        "description": "High aerial wide shot of the Port of Shanghai from approximately 400 meters altitude. Massive container ships stacked high with thousands of multicolored shipping containers are docked at enormous concrete quays. Gigantic blue harbor gantry cranes loom above like skeletal giants. In the background a faint industrial haze softens the horizon. Scale is oppressive — one of the largest ports in the world. No people visible at this altitude. Late afternoon sun cuts through the haze at a low angle casting long shadows across the quays. The visual tells geopolitical dominance.",
+        "environment": {
+          "location_type": "Shanghai Yangshan deep-water port, aerial view 400 meters altitude",
+          "time_of_day": "late afternoon, approaching golden hour, hazy",
+          "lighting": "low-angle sun through industrial smog, warm directional light, long cool shadows on concrete quays, volumetric haze",
+          "background_colors": ["hazy amber orange sunset", "industrial crane steel blue", "muted container red blue green yellow", "dark concrete quay", "grey harbor water"]
+        },
+        "photography_details": {
+          "style": "documentary aerial photojournalism, editorial journalism Reuters style",
+          "composition": "high diagonal angle, ships and cranes filling middle of frame, scale emphasized by tiny detail near bottom, horizon in upper third",
+          "focus": "sharp front-to-back, slight atmospheric haze softens distant depth naturally",
+          "mood": ["geopolitical", "vast scale", "industrial dominance", "hazy oppressive", "strategic"],
+          "color_grade": "teal shadow with amber sky haze, desaturated mids, editorial journalism look",
+          "film_quality": "aerial photojournalism, clean digital, subtle grain, Reuters documentary aesthetic"
+        },
+        "avoid": "readable Chinese text banners, specific ship names visible, watermarks, stock-photo cheerful brightness, cartoon saturation, people visible, drone in frame"
+      }
+    },
+    {
+      "slot": 9,
+      "filename": "slot-09-strategic-reserves-bunker.png",
+      "frame_range": "14790-15000",
+      "timestamp": "493-500s",
+      "caption_context": "wer jetzt am Ende dieses Tanzes die einzige Seite ist, die ihre strategischen Reserven nicht aufbaut. China baut Reserven auf, Russland baut Reserven auf.",
+      "intent": "Secretive state-level storage. Rows of sealed metal barrels in a vast underground facility. Cold war secrecy.",
+      "json": {
+        "title": "Strategic Reserve Underground Storage Facility",
+        "category": "documentary industrial photograph",
+        "description": "Interior of a vast underground strategic reserve storage bunker. Long receding rows of sealed cylindrical industrial metal barrels stretch deep into darkness, hundreds visible. Raw concrete walls with exposed overhead pipe infrastructure, dim institutional industrial lighting. No people visible. Mood of state secrecy, cold war depth, quiet massive scale. A single subtle hazard symbol silhouette on one closer barrel (not readable). Atmospheric dust particles catch the light rays from overhead lamps.",
+        "environment": {
+          "location_type": "underground strategic petroleum or metal reserve storage facility",
+          "time_of_day": "timeless interior, no daylight, subterranean",
+          "lighting": "dim warm-yellow 3000K industrial overhead lamps every 30 meters casting pools of hot light surrounded by deep shadow, visible volumetric light rays through fine dust particles, high contrast",
+          "background_colors": ["deep shadow black", "warm amber pools of light", "cold concrete grey", "oil-dark rusted barrel tops", "dust particle haze"]
+        },
+        "photography_details": {
+          "style": "documentary industrial photojournalism, cold war aesthetic",
+          "composition": "deep one-point perspective down central aisle, vanishing point into darkness, strong leading lines, barrel rows filling frame from foreground to background",
+          "focus": "sharp foreground barrels, receding into soft shadow, deep depth of field with natural shadow falloff",
+          "mood": ["paranoid", "secretive", "strategic", "cold war", "oppressive stillness", "massive scale"],
+          "color_grade": "warm amber-yellow highlights against cold blue-grey shadows, film noir contrast, dark cinematic",
+          "film_quality": "low-light digital photojournalism, visible grain in shadows, atmospheric volumetric dust"
+        },
+        "avoid": "people, readable labels, any text, cartoon colors, cheerful bright lighting, safety equipment close-up, warm daylight, cozy atmosphere"
+      }
+    },
+    {
+      "slot": 10,
+      "filename": "slot-10-schweiz-alpen.png",
+      "frame_range": "17850-18060",
+      "timestamp": "595-602s",
+      "caption_context": "Nur eben nicht mehr in Deutschland, sondern in der Schweiz.",
+      "intent": "Warm golden payoff moment. The emotional resolution. Swiss Alps panorama in golden hour. Refuge, stability, ancient safety.",
+      "json": {
+        "title": "Swiss Alps Panoramic Vista Golden Hour",
+        "category": "landscape documentary photograph",
+        "description": "Wide panoramic aerial view of the Swiss Alps from a high altitude vantage point, perhaps from a mountain peak or small aircraft. Snow-capped jagged mountain peaks stretch across the entire frame, bathed in warm golden-hour light. Deep valleys cast in cool blue shadow below. A single distant alpine village suggested in a valley as tiny specks but not detailed. Sky is clear with warm amber gradient transitioning to pale blue at zenith. Mood of safety, refuge, stability, ancient timelessness, emotional resolution. Pristine clean air, no industrial elements, no human presence visible.",
+        "environment": {
+          "location_type": "Swiss Alps aerial panorama, Bernese Oberland region",
+          "time_of_day": "golden hour, 20 minutes before sunset",
+          "lighting": "warm low-angle sun from camera-right, strong directional rim light catching snow on peaks, deep cool blue shadow in valleys, volumetric alpine atmosphere, crystal clear",
+          "background_colors": ["warm amber gold sky", "snow white peaks rim-lit pink-orange", "cool blue valley shadow", "pine green lower slopes", "distant hazy blue ridges"]
+        },
+        "photography_details": {
+          "style": "landscape documentary, editorial travel photojournalism, National Geographic aesthetic",
+          "composition": "horizontal panoramic wide, jagged mountain peaks filling middle and upper thirds, sky breathing in top, shadowed valley foreground, leading ridge lines",
+          "focus": "deep front-to-back sharpness, slight natural atmospheric softening on most distant peaks",
+          "mood": ["warm", "safe", "eternal", "refuge", "resolution", "hopeful", "stable", "timeless"],
+          "color_grade": "warm golden highlights with cool blue shadow, rich but not oversaturated, high dynamic range editorial",
+          "film_quality": "high-resolution photojournalism, clean digital, subtle grain, documentary realism not fantasy"
+        },
+        "avoid": "fake CGI look, oversaturated tourist postcard, people, paragliders, airplanes, visible buildings with signage, readable text anywhere, cartoon colors, fantasy dragons, unrealistic lighting"
+      }
+    }
+  ]
+}

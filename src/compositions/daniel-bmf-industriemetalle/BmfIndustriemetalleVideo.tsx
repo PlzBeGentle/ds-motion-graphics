@@ -34,10 +34,10 @@ import DanielZoomLayer from "./DanielZoomLayer";
 // Utility / layer components
 import ChapterCard from "./ChapterCard";
 import KineticMoment from "./KineticMoment";
-import BRollPlaceholder from "./BRollPlaceholder";
 import BmfBRoll11IconsCollage from "./BmfBRoll11IconsCollage";
 import LocosColorGrade from "./LocosColorGrade";
 import BmfSoundDesign from "./BmfSoundDesign";
+import { KenBurns } from "../../components/KenBurns";
 // import BmfCaptions from "./BmfCaptions"; // DISABLED 2026-04-14 per user request
 
 // Shared library components
@@ -135,18 +135,83 @@ const CHAPTERS = [
 // (source: phase-1/1D-pacing-plan.json b_roll_targets[], 11 targets, ~74s total)
 // Fixed 2026-04-15 — Phase 6 build agent had mismatched frame ranges that
 // didn't align with Daniel's caption timing at the slot beats.
-const BROLL_SLOTS = [
-  { slot: 1, start: 1170, duration: 210, topic: "BMF Berlin · 0-Cent-Ironie" },          // 39-46s
-  { slot: 2, start: 1800, duration: 210, topic: "PDF BMF-Schreiben Close-Up" },          // 60-67s
-  { slot: 3, start: 2280, duration: 180, topic: "Zollfreilager · Industriemetall-Barren" }, // 76-82s
-  { slot: 4, start: 3750, duration: 210, topic: "Telefon · Donnerstagabend 20 Uhr" },    // 125-132s
-  { slot: 5, start: 6750, duration: 210, topic: "Kobalt · EU-Liste kritische Rohstoffe" }, // 225-232s
-  { slot: 6, start: 7860, duration: 180, topic: "Verkehrsschild · Strafzettel-Metapher" }, // 262-268s
-  { slot: 7, start: 12210, duration: 210, topic: "China Shanghai Hafen · Exportkontrollen" }, // 407-414s
-  { slot: 8, start: 13650, duration: 210, topic: "Chipfabrik Reinraum · Wafer-Robotik" }, // 455-462s
-  { slot: 9, start: 14790, duration: 210, topic: "Strategische Reserven · Bunker" },     // 493-500s
-  { slot: 10, start: 17850, duration: 210, topic: "Schweiz Alpen · Warm Payoff" },       // 595-602s
-  { slot: 11, start: 20640, duration: 180, topic: "Branchen-Icons · Halbleiter/Maschinen/PV/Medizin" }, // 688-694s
+//
+// Asset types (Phase B 2026-04-15):
+//   still            — nano-banana-2 generated PNG, animated via <KenBurns>
+//   video            — fal.ai Veo 3.1 generated mp4, rendered via <OffthreadVideo>
+//   motion-graphics  — pure inline Remotion component (no external asset)
+type BRollSlot = {
+  slot: number;
+  start: number;
+  duration: number;
+  topic: string;
+} & (
+  | {
+      type: "still";
+      asset: string;
+      // KenBurns params — fine-tuned per slot (direction of drift matches the
+      // visual storytelling beat, zoom amount matches desired intensity).
+      zoomStart: number;
+      zoomEnd: number;
+      driftX: number;
+      driftY: number;
+    }
+  | {
+      type: "video";
+      asset: string;
+      // Frames to skip from the start of the Veo clip. Veo clips drift on
+      // their first/last frames; trimming the opening also lets us place the
+      // punchier middle section inside the master slot window.
+      startFrom: number;
+    }
+  | {
+      type: "motion-graphics";
+    }
+);
+
+const BROLL_SLOTS: BRollSlot[] = [
+  { slot: 1, start: 1170, duration: 210, topic: "BMF Berlin · 0-Cent-Ironie",
+    type: "still", asset: "bmf/b-roll/slot-01-bmf-berlin.png",
+    zoomStart: 1.00, zoomEnd: 1.08, driftX: 0, driftY: -20 },                       // 39-46s, push-in + drift up to reveal facade height
+
+  { slot: 2, start: 1800, duration: 210, topic: "PDF BMF-Schreiben Close-Up",
+    type: "still", asset: "bmf/b-roll/slot-02-pdf-bmf-schreiben.png",
+    zoomStart: 1.00, zoomEnd: 1.12, driftX: 0, driftY: -15 },                       // 60-67s, push-in toward eagle emblem
+
+  { slot: 3, start: 2280, duration: 180, topic: "Zollfreilager · Industriemetall-Barren",
+    type: "still", asset: "bmf/b-roll/slot-03-zollfreilager-ingots.png",
+    zoomStart: 1.00, zoomEnd: 1.10, driftX: 0, driftY: 0 },                         // 76-82s, symmetric push-in along vanishing point
+
+  { slot: 4, start: 3750, duration: 210, topic: "Telefon · Donnerstagabend 20 Uhr",
+    type: "video", asset: "bmf/b-roll/slot-04-telefon-donnerstag.mp4",
+    startFrom: 30 },                                                                 // 125-132s, skip first 1s of slow hand reach (per Dario feedback)
+
+  { slot: 5, start: 6750, duration: 210, topic: "Kobalt · EU-Liste kritische Rohstoffe",
+    type: "video", asset: "bmf/b-roll/slot-05-kobalt-mine.mp4",
+    startFrom: 15 },                                                                 // 225-232s, skip first 0.5s typical Veo drift
+
+  { slot: 6, start: 7860, duration: 180, topic: "Verkehrsschild · Strafzettel-Metapher",
+    type: "still", asset: "bmf/b-roll/slot-06-strafzettel-windschutzscheibe.png",
+    zoomStart: 1.00, zoomEnd: 1.14, driftX: -20, driftY: 0 },                       // 262-268s, push-in toward ticket, slight left drift
+
+  { slot: 7, start: 12210, duration: 210, topic: "China Shanghai Hafen · Exportkontrollen",
+    type: "still", asset: "bmf/b-roll/slot-07-shanghai-port.png",
+    zoomStart: 1.00, zoomEnd: 1.08, driftX: 25, driftY: 0 },                        // 407-414s, slight right drift across the port span
+
+  { slot: 8, start: 13650, duration: 210, topic: "Chipfabrik Reinraum · Wafer-Robotik",
+    type: "video", asset: "bmf/b-roll/slot-08-cleanroom-wafer.mp4",
+    startFrom: 15 },                                                                 // 455-462s, skip first 0.5s drift
+
+  { slot: 9, start: 14790, duration: 210, topic: "Strategische Reserven · Bunker",
+    type: "still", asset: "bmf/b-roll/slot-09-strategic-reserves-bunker.png",
+    zoomStart: 1.00, zoomEnd: 1.12, driftX: 0, driftY: 0 },                         // 493-500s, slow push down central aisle
+
+  { slot: 10, start: 17850, duration: 210, topic: "Schweiz Alpen · Warm Payoff",
+    type: "still", asset: "bmf/b-roll/slot-10-schweiz-alpen.png",
+    zoomStart: 1.00, zoomEnd: 1.10, driftX: 20, driftY: -8 },                       // 595-602s, warm slow push with slight right-up drift into the sunset
+
+  { slot: 11, start: 20640, duration: 180, topic: "Branchen-Icons · Halbleiter/Maschinen/PV/Medizin",
+    type: "motion-graphics" },                                                       // 688-694s, BmfBRoll11IconsCollage
 ];
 
 // Letterboxes — pattern-interrupts idx 8 + 18
@@ -274,17 +339,44 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
           Dario: replace these with real footage later.
           ═══════════════════════════════════════════════════════════════════ */}
       {BROLL_SLOTS.map((slot) => {
-        // Slot 11 is a pure motion-graphics component (no external asset)
-        if (slot.slot === 11) {
+        const key = `broll-${slot.slot}`;
+        if (slot.type === "motion-graphics") {
           return (
-            <Sequence key={`broll-${slot.slot}`} from={slot.start} durationInFrames={slot.duration}>
+            <Sequence key={key} from={slot.start} durationInFrames={slot.duration}>
               <BmfBRoll11IconsCollage />
             </Sequence>
           );
         }
+        if (slot.type === "still") {
+          return (
+            <Sequence key={key} from={slot.start} durationInFrames={slot.duration}>
+              <KenBurns
+                src={staticFile(slot.asset)}
+                zoomStart={slot.zoomStart}
+                zoomEnd={slot.zoomEnd}
+                driftX={slot.driftX}
+                driftY={slot.driftY}
+                duration={slot.duration}
+              />
+            </Sequence>
+          );
+        }
+        // video
         return (
-          <Sequence key={`broll-${slot.slot}`} from={slot.start} durationInFrames={slot.duration}>
-            <BRollPlaceholder topic={slot.topic} label={`B-ROLL ${String(slot.slot).padStart(2, "0")}`} />
+          <Sequence key={key} from={slot.start} durationInFrames={slot.duration}>
+            <OffthreadVideo
+              src={staticFile(slot.asset)}
+              startFrom={slot.startFrom}
+              muted
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
           </Sequence>
         );
       })}

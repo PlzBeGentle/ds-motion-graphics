@@ -1,9 +1,8 @@
-// Phase F.9 — HardCTALowerThird rewritten with 3-phase animation + BorderBeam
-// ovl-036: 23.7s hold. Phases:
-//   1 (0-300f, 10s): "ERSTGESPRÄCH · LINK IN BESCHREIBUNG" primary CTA
-//   2 (300-500f, ~6.7s): subtitle shift "KOSTENFREI · DIREKT VON DANIEL"
-//   3 (500-710f, ~7s): arrow bounce + final CTA hold
-// Range 19980-20697 → 19980-20690
+// Iter2.14 — HardCTALowerThird single-phase rewrite
+// ovl-036: 8.5s hold (20385-20640). Word-synced to Daniel's
+// "Und wer darüber hinaus konkret wissen will..." @ 679.52s (frame 20385).
+// Hard cut before B-roll slot-11 @ frame 20640.
+// Collapsed 3-phase animation → single clear CTA (shorter hold).
 
 import React from "react";
 import {
@@ -12,12 +11,8 @@ import {
   spring,
   interpolate,
   useVideoConfig,
-  Easing,
 } from "remotion";
 import { BorderBeam } from "../../components/library/effects/BorderBeam";
-
-const PHASE_1_END = 300;
-const PHASE_2_END = 500;
 
 export const HardCTALowerThird: React.FC = () => {
   const frame = useCurrentFrame();
@@ -25,7 +20,7 @@ export const HardCTALowerThird: React.FC = () => {
 
   // Entry
   const entrance = spring({
-    frame: frame - 6,
+    frame: frame - 4,
     fps,
     config: { damping: 14, stiffness: 120, mass: 1 },
   });
@@ -33,28 +28,8 @@ export const HardCTALowerThird: React.FC = () => {
   const slideY = interpolate(entrance, [0, 1], [60, 0]);
   const breathe = 1 + 0.003 * Math.sin((frame / 100) * 2 * Math.PI);
 
-  // Phase transitions (crossfade between the 3 subtitle states)
-  const phase1Opacity = interpolate(
-    frame,
-    [0, 24, PHASE_1_END - 24, PHASE_1_END],
-    [0, 1, 1, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-  );
-  const phase2Opacity = interpolate(
-    frame,
-    [PHASE_1_END - 18, PHASE_1_END + 12, PHASE_2_END - 18, PHASE_2_END + 12],
-    [0, 1, 1, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-  );
-  const phase3Opacity = interpolate(
-    frame,
-    [PHASE_2_END - 18, PHASE_2_END + 12],
-    [0, 1],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-  );
-
-  // Arrow bounce (phase 3+)
-  const arrowBounce = Math.sin((frame / 18) * 2 * Math.PI) * 8;
+  // Arrow bounce continuous
+  const arrowBounce = Math.sin((frame / 18) * 2 * Math.PI) * 6;
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
@@ -107,7 +82,7 @@ export const HardCTALowerThird: React.FC = () => {
             color: "#f5d37a",
             fontSize: 72,
             fontWeight: 900,
-            transform: `translateY(${phase3Opacity * arrowBounce}px)`,
+            transform: `translateY(${arrowBounce}px)`,
             boxShadow: "0 0 32px rgba(245, 211, 122, 0.68)",
             flexShrink: 0,
           }}
@@ -115,121 +90,40 @@ export const HardCTALowerThird: React.FC = () => {
           →
         </div>
 
-        {/* Multi-phase content column */}
-        <div style={{ flex: 1, position: "relative", minHeight: 150 }}>
-          {/* Phase 1 */}
+        {/* Single-phase content */}
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            gap: 10,
+          }}
+        >
           <div
             style={{
-              position: "absolute",
-              inset: 0,
-              opacity: phase1Opacity,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              gap: 8,
+              fontFamily: '"Montserrat", sans-serif',
+              fontWeight: 900,
+              fontSize: 72,
+              color: "#f5d37a",
+              letterSpacing: "-0.01em",
+              lineHeight: 1,
+              textShadow: "0 0 32px rgba(245, 211, 122, 0.42)",
             }}
           >
-            <div
-              style={{
-                fontFamily: '"Montserrat", sans-serif',
-                fontWeight: 900,
-                fontSize: 64,
-                color: "#f5d37a",
-                letterSpacing: "-0.01em",
-                lineHeight: 1,
-                textShadow: "0 0 32px rgba(245, 211, 122, 0.42)",
-              }}
-            >
-              ERSTGESPRÄCH
-            </div>
-            <div
-              style={{
-                fontFamily: '"Montserrat", sans-serif',
-                fontWeight: 900,
-                fontSize: 48,
-                color: "#fff5e0",
-                letterSpacing: "-0.01em",
-                lineHeight: 1,
-              }}
-            >
-              LINK IN DER VIDEOBESCHREIBUNG
-            </div>
+            ERSTGESPRÄCH
           </div>
-
-          {/* Phase 2 */}
           <div
             style={{
-              position: "absolute",
-              inset: 0,
-              opacity: phase2Opacity,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              gap: 8,
+              fontFamily: '"Montserrat", sans-serif',
+              fontWeight: 900,
+              fontSize: 44,
+              color: "#fff5e0",
+              letterSpacing: "-0.01em",
+              lineHeight: 1,
             }}
           >
-            <div
-              style={{
-                fontFamily: '"Montserrat", sans-serif',
-                fontWeight: 900,
-                fontSize: 64,
-                color: "#f5d37a",
-                letterSpacing: "-0.01em",
-                lineHeight: 1,
-              }}
-            >
-              KOSTENFREI
-            </div>
-            <div
-              style={{
-                fontFamily: '"Montserrat", sans-serif',
-                fontWeight: 900,
-                fontSize: 48,
-                color: "#fff5e0",
-                letterSpacing: "-0.01em",
-                lineHeight: 1,
-              }}
-            >
-              UNVERBINDLICH · TERMINE BEGRENZT
-            </div>
-          </div>
-
-          {/* Phase 3 */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              opacity: phase3Opacity,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              gap: 8,
-            }}
-          >
-            <div
-              style={{
-                fontFamily: '"Montserrat", sans-serif',
-                fontWeight: 900,
-                fontSize: 64,
-                color: "#f5d37a",
-                letterSpacing: "-0.01em",
-                lineHeight: 1,
-              }}
-            >
-              JETZT HANDELN
-            </div>
-            <div
-              style={{
-                fontFamily: '"Montserrat", sans-serif',
-                fontWeight: 900,
-                fontSize: 48,
-                color: "#fff5e0",
-                letterSpacing: "-0.01em",
-                lineHeight: 1,
-              }}
-            >
-              BEVOR ES VORBEI IST
-            </div>
+            LINK IN DER VIDEOBESCHREIBUNG
           </div>
         </div>
       </div>

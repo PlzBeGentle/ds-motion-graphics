@@ -95,9 +95,9 @@ const CUES: SfxCue[] = [
   { frame: 4920, src: ES_SFX.POP, volume: 0.3, note: "counter 1/4 scramble" },
   { frame: 4930, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.4, note: "VIER DINGE" },
 
-  // ovl-014 counter #1 DAS WORT
-  { frame: 5385, src: ES_SFX.GLITCH_HIT, volume: 0.36, note: "ovl-014 #1 scramble" },
-  { frame: 5400, src: ES_SFX.POP, volume: 0.3, note: "#1 reveal" },
+  // ovl-014 DAS WORT (Iter2.14: word-sync "Das eine Wort" @177.44s=5323)
+  { frame: 5323, src: ES_SFX.GLITCH_HIT, volume: 0.36, note: "ovl-014 Das Wort scramble" },
+  { frame: 5340, src: ES_SFX.POP, volume: 0.3, note: "Das Wort reveal" },
 
   // ovl-015 KOBALT FULLSCREEN — the centerpiece
   { frame: 5820, src: ES_SFX.RISER_LONG_TRAILER, volume: 0.42, durationInFrames: 300, note: "KOBALT hero build" },
@@ -189,27 +189,25 @@ const CUES: SfxCue[] = [
   { frame: 17278, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.48, note: "ovl-034 SCHWEIZ payoff" },
   { frame: 17278, src: ES_SFX.BOOM_LOW, volume: 0.38, note: "SCHWEIZ warm sub" },
 
-  // ovl-035 CoreMessage ANTIZYKLISCH
-  { frame: 18200, src: ES_SFX.GLASS_CLINK, volume: 0.32, note: "ovl-035 ANTIZYKLISCH" },
-  { frame: 18200, src: ES_SFX.POP, volume: 0.28, note: "core message reveal" },
+  // ovl-035 CoreMessage ANTIZYKLISCH (Iter2.14: word-sync "antizyklisch" @619.54s=18586)
+  { frame: 18586, src: ES_SFX.GLASS_CLINK, volume: 0.32, note: "ovl-035 ANTIZYKLISCH" },
+  { frame: 18586, src: ES_SFX.POP, volume: 0.28, note: "core message reveal" },
 
-  // ovl-new-001 Steuer-Fachpresse
-  { frame: 19350, src: ES_SFX.WHOOSH_DEEP, volume: 0.3, note: "ovl-new-001 press entry" },
-  { frame: 19362, src: ES_SFX.POP, volume: 0.28, note: "PwC card" },
-  { frame: 19376, src: ES_SFX.POP, volume: 0.28, note: "DATEV card" },
-  { frame: 19390, src: ES_SFX.POP, volume: 0.28, note: "Haufe card" },
-  { frame: 19404, src: ES_SFX.POP, volume: 0.28, note: "RP card" },
-  { frame: 19414, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.38, note: "rotes X stamp 1" },
-  { frame: 19420, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.36, note: "rotes X stamp 2" },
-  { frame: 19426, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.36, note: "rotes X stamp 3" },
-  { frame: 19432, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.36, note: "rotes X stamp 4" },
+  // ovl-new-001 Steuer-Fachpresse (Iter2.14: word-sync "Handelsblatt, FAZ" @648.14s=19444)
+  { frame: 19444, src: ES_SFX.WHOOSH_DEEP, volume: 0.3, note: "ovl-new-001 press entry" },
+  { frame: 19456, src: ES_SFX.POP, volume: 0.28, note: "PwC card" },
+  { frame: 19470, src: ES_SFX.POP, volume: 0.28, note: "DATEV card" },
+  { frame: 19484, src: ES_SFX.POP, volume: 0.28, note: "Haufe card" },
+  { frame: 19498, src: ES_SFX.POP, volume: 0.28, note: "RP card" },
+  { frame: 19508, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.38, note: "rotes X stamp 1" },
+  { frame: 19514, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.36, note: "rotes X stamp 2" },
+  { frame: 19520, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.36, note: "rotes X stamp 3" },
+  { frame: 19526, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.36, note: "rotes X stamp 4" },
 
-  // ovl-036 HardCTA
-  { frame: 19970, src: ES_SFX.RISER_TRAILER, volume: 0.4, durationInFrames: 240, note: "HardCTA build" },
-  { frame: 19980, src: ES_SFX.IMPACT_DEEP_HIT, volume: 0.48, note: "ovl-036 HardCTA hit" },
-  { frame: 19980, src: ES_SFX.BOOM_LOW, volume: 0.4, note: "HardCTA sub" },
-  { frame: 20280, src: ES_SFX.WHOOSH_DEEP, volume: 0.24, note: "HardCTA phase 2" },
-  { frame: 20480, src: ES_SFX.WHOOSH_DEEP, volume: 0.24, note: "HardCTA phase 3" },
+  // ovl-036 HardCTA (Iter2.14: word-sync "Und wer darüber hinaus..." @679.52s=20385, single phase)
+  { frame: 20375, src: ES_SFX.RISER_GRITTY, volume: 0.38, note: "HardCTA build" },
+  { frame: 20385, src: ES_SFX.IMPACT_DEEP_HIT, volume: 0.48, note: "ovl-036 HardCTA hit" },
+  { frame: 20385, src: ES_SFX.BOOM_LOW, volume: 0.4, note: "HardCTA sub" },
 
   // ovl-037 Authority timeline 20 Jahre
   { frame: 21262, src: ES_SFX.RISER_SHARP, volume: 0.3, note: "ovl-037 build" },

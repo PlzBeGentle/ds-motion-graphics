@@ -95,7 +95,7 @@ const O = {
   "ovl-011": { start: 3750, end: 4104 },      // DonnerstagNewsCard
   "ovl-012": { start: 4690, end: 4900 },      // Kinetic BRUCH NICHT UPDATE (F.2 word-sync)
   "ovl-013": { start: 4910, end: 5200 },      // Kinetic Counter 1/4 VIER DINGE (F.2 was ListicleCounterStatCard)
-  "ovl-014": { start: 5385, end: 5475 },      // Kinetic Counter #1 DAS WORT (F.2 word-sync)
+  "ovl-014": { start: 5323, end: 5475 },      // Kinetic Counter #1 DAS WORT (Iter2.14: word-sync "Das" @177.44s=5323)
   "ovl-015": { start: 5838, end: 6500 },      // KobaltFullscreen (Iter2.13: Dario shorter, ~22s instead of 40s)
   "ovl-016": { start: 6909, end: 7278 },      // EUCriticalIconRow
   "ovl-017": { start: 7300, end: 7570 },      // Kinetic Counter #2 RÜCKWIRKUNG (F.2 word-sync)
@@ -116,11 +116,11 @@ const O = {
   "ovl-032": { start: 15660, end: 15800 },    // TrustCheckmarkStatCard → Safe3D (F.5 word-sync "Vertrauensschutz")
   "ovl-033": { start: 15950, end: 16400 },    // BigQuoteCard3D Nicht-Beanstandung (F.6)
   "ovl-034": { start: 17278, end: 17550 },    // SchweizLocationCard (F.7 word-sync "Schweiz")
-  "ovl-035": { start: 18200, end: 18540 },    // CoreMessageStatCard → GlareCard3D (F.5)
-  "ovl-036": { start: 19980, end: 20640 },    // HardCTALowerThird (Iter2.8: end 20690→20640 to avoid overlap with slot-11 @ 20640)
+  "ovl-035": { start: 18586, end: 18900 },    // CoreMessageStatCard (Iter2.14: word-sync "antizyklisch" @619.54s=18586)
+  "ovl-036": { start: 20385, end: 20640 },    // HardCTALowerThird (Iter2.14: word-sync "Und wer darüber hinaus..." @679.52s=20385, before slot-11 @20640)
   "ovl-037": { start: 21262, end: 21790 },    // AuthorityTimeline → GlareCard3D (F.3 word-sync "20")
   "ovl-038": { start: 22620, end: 22800 },    // Kinetic DANKE DEUTSCHLAND via AuroraTextEffect (F.2)
-  "ovl-new-001": { start: 19350, end: 19980 }, // HandelsblattFAZNewsCard
+  "ovl-new-001": { start: 19444, end: 20380 }, // HandelsblattFAZNewsCard (Iter2.14: word-sync "Handelsblatt" @648.14s=19444)
 } as const;
 
 // Chapter title cards (Iter2.7: KAP01 removed — broke the hook immediately)

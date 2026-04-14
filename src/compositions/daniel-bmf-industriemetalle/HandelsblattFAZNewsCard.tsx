@@ -155,7 +155,7 @@ const HandelsblattFAZNewsCard: React.FC = () => {
           transform: `scale(${interpolate(headlineReveal, [0, 1], [0.95, 1])})`,
         }}
       >
-        DEUTSCHE WIRTSCHAFTSPRESSE
+        STEUER-FACHPRESSE · TAG 1
       </div>
 
       {/* Layer 4: Headline Underline */}
@@ -172,8 +172,8 @@ const HandelsblattFAZNewsCard: React.FC = () => {
         }}
       />
 
-      {/* Layer 5-8: Press Cards */}
-      {/* Card 1: Handelsblatt */}
+      {/* Layer 5-8: Press Cards (F.4 content rewrite → Steuer-Fachpresse) */}
+      {/* Card 1: PwC */}
       <div
         style={{
           position: "absolute",
@@ -198,20 +198,25 @@ const HandelsblattFAZNewsCard: React.FC = () => {
           style={{
             fontFamily: '"Inter", system-ui, sans-serif',
             fontWeight: 900,
-            fontSize: 60,
-            color: "rgba(255, 245, 224, 0.78)",
+            fontSize: 70,
+            color: "rgba(255, 245, 224, 0.82)",
             letterSpacing: "0.02em",
             textAlign: "center",
             lineHeight: 1.1,
             opacity: logo1Opacity,
           }}
         >
-          <div>HANDELS</div>
-          <div>BLATT</div>
+          <div>PwC</div>
+          <div style={{ fontSize: 26, fontWeight: 700, marginTop: 8, letterSpacing: "0.14em" }}>
+            STEUERN &amp; RECHT
+          </div>
+          <div style={{ fontSize: 18, fontWeight: 600, marginTop: 10, color: "rgba(245, 211, 122, 0.72)" }}>
+            13.04.2026
+          </div>
         </div>
       </div>
 
-      {/* Card 2: FAZ */}
+      {/* Card 2: DATEV Magazin */}
       <div
         style={{
           position: "absolute",
@@ -235,22 +240,26 @@ const HandelsblattFAZNewsCard: React.FC = () => {
         <div
           style={{
             fontFamily: '"Inter", system-ui, sans-serif',
-            fontWeight: 800,
-            fontSize: 38,
-            color: "rgba(255, 245, 224, 0.78)",
-            letterSpacing: "-0.01em",
+            fontWeight: 900,
+            fontSize: 54,
+            color: "rgba(255, 245, 224, 0.82)",
+            letterSpacing: "0.02em",
             textAlign: "center",
             lineHeight: 1.1,
             opacity: logo2Opacity,
           }}
         >
-          <div>FRANK-</div>
-          <div>FURTER</div>
-          <div>ALLG.</div>
+          <div>DATEV</div>
+          <div style={{ fontSize: 22, fontWeight: 700, marginTop: 10, letterSpacing: "0.14em" }}>
+            MAGAZIN
+          </div>
+          <div style={{ fontSize: 18, fontWeight: 600, marginTop: 10, color: "rgba(245, 211, 122, 0.72)" }}>
+            APRIL 2026
+          </div>
         </div>
       </div>
 
-      {/* Card 3: Die Welt */}
+      {/* Card 3: Haufe Steuern */}
       <div
         style={{
           position: "absolute",
@@ -275,20 +284,25 @@ const HandelsblattFAZNewsCard: React.FC = () => {
           style={{
             fontFamily: '"Inter", system-ui, sans-serif',
             fontWeight: 900,
-            fontSize: 80,
-            color: "rgba(255, 245, 224, 0.78)",
-            letterSpacing: "0.04em",
+            fontSize: 68,
+            color: "rgba(255, 245, 224, 0.82)",
+            letterSpacing: "0.02em",
             textAlign: "center",
             lineHeight: 1.1,
             opacity: logo3Opacity,
           }}
         >
-          <div>DIE</div>
-          <div>WELT</div>
+          <div>HAUFE</div>
+          <div style={{ fontSize: 24, fontWeight: 700, marginTop: 10, letterSpacing: "0.14em" }}>
+            STEUERN
+          </div>
+          <div style={{ fontSize: 18, fontWeight: 600, marginTop: 10, color: "rgba(245, 211, 122, 0.72)" }}>
+            § 4 NR. 4B
+          </div>
         </div>
       </div>
 
-      {/* Card 4: Manager Magazin */}
+      {/* Card 4: RP Steuerberatung */}
       <div
         style={{
           position: "absolute",
@@ -312,17 +326,25 @@ const HandelsblattFAZNewsCard: React.FC = () => {
         <div
           style={{
             fontFamily: '"Inter", system-ui, sans-serif',
-            fontWeight: 800,
-            fontSize: 50,
-            color: "rgba(255, 245, 224, 0.78)",
+            fontWeight: 900,
+            fontSize: 62,
+            color: "rgba(255, 245, 224, 0.82)",
             letterSpacing: "0.02em",
             textAlign: "center",
             lineHeight: 1.1,
             opacity: logo4Opacity,
           }}
         >
-          <div>MANAGER</div>
-          <div>MAGAZIN</div>
+          <div>RP</div>
+          <div style={{ fontSize: 24, fontWeight: 700, marginTop: 8, letterSpacing: "0.14em" }}>
+            STEUER-
+          </div>
+          <div style={{ fontSize: 24, fontWeight: 700, letterSpacing: "0.14em" }}>
+            BERATUNG
+          </div>
+          <div style={{ fontSize: 18, fontWeight: 600, marginTop: 10, color: "rgba(245, 211, 122, 0.72)" }}>
+            10.04.2026
+          </div>
         </div>
       </div>
 

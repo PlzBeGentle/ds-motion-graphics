@@ -17,7 +17,7 @@ type NewspaperMockup3DProps = {
   clusterOffsetX?: number;
 };
 
-const NewspaperMockup3D: React.FC<NewspaperMockup3DProps> = ({
+export const NewspaperMockup3D: React.FC<NewspaperMockup3DProps> = ({
   newspaperName,
   dateStamp,
   issueNumber,

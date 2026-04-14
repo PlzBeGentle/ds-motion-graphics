@@ -1,20 +1,23 @@
-import React from "react";
-import { DonnerstagNewsCard } from "./DonnerstagNewsCard";
-import { BMF_COLORS } from "./bmf-theme";
+// Phase F.4 — EUKrisendialogNewsCard rewritten as NewspaperMockup3D editorial
+// ovl-029: EU Krisendialog Oktober 2025. Editorial (no press release asset).
 
-/**
- * EUKrisendialogNewsCard (ovl-029) — Variant of DonnerstagNewsCard
- * with gold accent for EU-bridge context.
- */
+import React from "react";
+import { NewspaperMockup3D } from "../../components/library/remotion-coder/NewspaperMockup3D";
+
 export const EUKrisendialogNewsCard: React.FC = () => (
-  <DonnerstagNewsCard
-    headline="EU KRISENDIALOG"
-    sub="BRÜSSEL · OKT 2025"
-    accentColor={BMF_COLORS.goldAccent}
-    showClockIcon={false}
-    x={1200}
-    y={300}
-    w={660}
+  <NewspaperMockup3D
+    newspaperName="EUROPÄISCHE KOMMISSION · BRÜSSEL"
+    dateStamp="OKTOBER 2025 · KRISENDIALOG"
+    headline="EU SCHLÄGT ALARM — KRITISCHE ROHSTOFFE"
+    subheadline="Hochrangiges Treffen zu China-Exportkontrollen & strategischen Lieferketten"
+    bodyParagraphs={[
+      "Nach fünf Exportbeschränkungen in zwei Jahren fordert die EU-Kommission einen gemeinsamen Krisenplan für Gallium, Germanium, Antimon, Graphit und Rare Earths.",
+      "Mitgliedsstaaten diskutieren nationale Reserven, Zolllager-Privilegien und Rückverlagerung kritischer Industrien.",
+    ]}
+    pullQuote="Europas Abhängigkeit ist strukturell — nicht konjunkturell."
+    pullQuoteAttribution="Handelsblatt, 12. Okt 2025"
+    variant="overlay"
+    clusterOffsetX={280}
   />
 );
 

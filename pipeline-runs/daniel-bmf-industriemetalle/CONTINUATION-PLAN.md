@@ -330,7 +330,85 @@ Wir arbeiten weiter am BMF-Industriemetalle Video. Bitte lies zuerst
 
 Dann machen wir mit Phase A (Sound-Design-Layer) weiter. Oder sag mir wenn
 du eine andere Phase zuerst willst.
+
+PFLICHT: Dokumentiere jeden Meilenstein in SESSION-LOG.md (neue Section
+"24. Session 2 — YYYY-MM-DD" etc.) und committe nach jedem Phase-Abschluss.
+Siehe "Log-Pflege" Abschnitt im CONTINUATION-PLAN.
 ```
+
+---
+
+## 📝 Log-Pflege — PFLICHT für kommende Sessions
+
+**Wichtig:** Provenance-Logging passiert NICHT automatisch. Jede zukünftige Session
+muss aktiv den Log pflegen, sonst geht die Nachvollziehbarkeit verloren. Das ist der
+ganze Grund warum diese Session so verlässlich dokumentiert ist.
+
+### Regeln für jede Continuation-Session
+
+1. **Am Session-Start:** In `SESSION-LOG.md` eine neue Section anlegen
+   ```markdown
+   ## 24. Session 2 — 2026-04-15 (Phase A Sound-Design)
+
+   **Operator:** Dario + Claude Opus 4.6
+   **Started:** 2026-04-15 HH:MM
+   **Goal:** BmfSoundDesign.tsx bauen, 70 SFX + 6 Music-Beds wire up
+   ```
+
+2. **Nach jedem Phase-Abschluss:** Unter-Section mit konkreten Outputs
+   ```markdown
+   ### 24a) BmfSoundDesign.tsx gebaut
+
+   - File: `src/compositions/daniel-bmf-industriemetalle/BmfSoundDesign.tsx` (XXX Zeilen)
+   - 70 SFX-Cues wired, X missing files als TODO markiert
+   - 6 Music-Beds mit Fm→GM shift bei 8:20
+   - Voice-Chain applied (HPF 90 → EQ → Comp 3-stage → De-Esser → Limiter)
+   - TypeScript: 0 errors
+   - Studio-check: Scrub bei Frame 5868 (Kobalt) → Deep Boom #2 hörbar ✓
+   ```
+
+3. **Bei jedem Bug/Iteration:** Dokumentiere den Fix chronologisch
+   ```markdown
+   ### 24b) Bug-Fix: SFX-Volume zu leise bei Frame XXXX
+   Problem: ...
+   Root cause: ...
+   Fix: ...
+   ```
+
+4. **Bei jedem git commit:** Commit-Hash in den Log eintragen
+   ```markdown
+   **Commits:**
+   - `abc1234` feat: BmfSoundDesign layer with 70 SFX + 6 music beds
+   - `def5678` fix: sfx volume calibration post-kobalt
+   ```
+
+5. **Am Session-Ende:** Status-Update + Offene TODOs für nächste Session
+   ```markdown
+   ### 24z) Session 2 End-State
+
+   **Fertig:** Phase A komplett, BmfSoundDesign im Master-Stack
+   **Offen:** Phase B (B-Roll), Phase F (Component Review)
+   **Next:** Phase B — siehe CONTINUATION-PLAN Section B
+   ```
+
+### Mindest-Dokumentations-Check vor Session-Ende
+
+- [ ] SESSION-LOG.md hat neue Section für diese Session
+- [ ] Alle neuen/geänderten Files sind in Git committed (ds-motion-graphics + knowledge)
+- [ ] Commit-Hashes sind im Log verlinkt
+- [ ] CONTINUATION-PLAN.md status-field ist aktualisiert (`status: phase-A-complete` etc.)
+- [ ] Bei größeren Findings: Knowledge-Hub Session-Log (`~/knowledge/log/sessions/`) bekommt Update oder neues File
+- [ ] Bei Brand-Fixes: relevantes Atom in `~/knowledge/atoms/` wird angepasst
+- [ ] Bei neuen Learnings: CONTINUATION-PLAN Section "Session-Learnings" wird erweitert
+
+### Warum das kritisch ist
+
+Ohne diesen Log entsteht nach 3-4 Sessions **exakt die Situation die wir gerade haben**:
+eine Session die so bloated ist dass sie nicht mehr ohne Context-Overhead fortgesetzt
+werden kann. Plus: die Retro-Analyse für Workflow-Verbesserung (Section 22 im SESSION-LOG)
+funktioniert nur wenn die Session-History lesbar bleibt.
+
+**Disziplin > Token-Ersparnis.** Logge alles, auch wenn es sich redundant anfühlt.
 
 ---
 

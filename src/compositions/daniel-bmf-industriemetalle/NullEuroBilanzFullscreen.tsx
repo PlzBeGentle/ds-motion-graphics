@@ -29,11 +29,12 @@ export const NullEuroBilanzFullscreen: React.FC = () => {
     extrapolateRight: "clamp",
   });
 
-  // Custom de-DE format CountUp: 100,00 → 0,00 EUR
+  // Custom de-DE format CountUp — Iter2.13: faster snap to 0 so it lands
+  // exactly when Daniel says "0" (367.70s). Spring resolves in ~8 frames.
   const countSpring = spring({
-    frame: frame - 8,
+    frame: frame - 2,
     fps,
-    config: { damping: 16, stiffness: 100, mass: 1 },
+    config: { damping: 200, stiffness: 300, mass: 0.6 },
   });
   const currentVal = interpolate(countSpring, [0, 1], [100, 0]);
   const deEurStr = currentVal.toLocaleString("de-DE", {

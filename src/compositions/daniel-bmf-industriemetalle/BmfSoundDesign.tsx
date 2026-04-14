@@ -77,9 +77,9 @@ const CUES: SfxCue[] = [
   { frame: 3390, src: ES_SFX.BOOM_ULTRA_LOW, volume: 0.58, note: "ovl-010 AUFGEHOBEN slam" },
   { frame: 3390, src: ES_SFX.IMPACT_DEEP_HIT, volume: 0.42, note: "AUFGEHOBEN layered impact" },
 
-  // ovl-011 Donnerstag news
+  // ovl-011 Donnerstag news (Iter2.13: keyboard volume 0.3 → 0.14 per user at 2:12)
   { frame: 3844, src: ES_SFX.WHOOSH_SPACEY, volume: 0.36, note: "ovl-011 news entry" },
-  { frame: 3858, src: ES_SFX.KEYBOARD_CLICK, volume: 0.3, durationInFrames: 180, note: "news typing" },
+  { frame: 3858, src: ES_SFX.KEYBOARD_CLICK, volume: 0.14, durationInFrames: 180, note: "news typing" },
 
   // ovl-012 BRUCH kinetic
   { frame: 4690, src: ES_SFX.GLITCH_HIT, volume: 0.42, note: "ovl-012 BRUCH" },
@@ -143,9 +143,9 @@ const CUES: SfxCue[] = [
   { frame: 11268, src: ES_SFX.POP, volume: 0.28, note: "2025 node" },
   { frame: 11304, src: ES_SFX.POP, volume: 0.28, note: "2026 node" },
 
-  // ovl-026 China Bekanntmachung
+  // ovl-026 China Bekanntmachung (Iter2.13: keyboard lower)
   { frame: 11535, src: ES_SFX.PAPER_RUSTLE, volume: 0.4, durationInFrames: 150, note: "ovl-026 china doc" },
-  { frame: 11555, src: ES_SFX.KEYBOARD_CLICK, volume: 0.22, durationInFrames: 240, note: "china metal chips" },
+  { frame: 11555, src: ES_SFX.KEYBOARD_CLICK, volume: 0.11, durationInFrames: 240, note: "china metal chips" },
 
   // ovl-028 China chronology timeline bottom bar
   { frame: 12230, src: ES_SFX.WHOOSH_DEEP, volume: 0.32, note: "ovl-028 timeline entry" },
@@ -160,9 +160,9 @@ const CUES: SfxCue[] = [
   { frame: 12356, src: ES_SFX.GLASS_CLINK, volume: 0.35, note: "GERMANIUM chart" },
   { frame: 12378, src: ES_SFX.GLASS_CLINK, volume: 0.35, note: "ANTIMON chart" },
 
-  // ovl-029 EU Krisendialog
+  // ovl-029 EU Krisendialog (Iter2.13: keyboard volume matched lower)
   { frame: 13434, src: ES_SFX.WHOOSH_SPACEY, volume: 0.32, note: "ovl-029 news entry" },
-  { frame: 13448, src: ES_SFX.KEYBOARD_CLICK, volume: 0.26, durationInFrames: 180, note: "EU news typing" },
+  { frame: 13448, src: ES_SFX.KEYBOARD_CLICK, volume: 0.13, durationInFrames: 180, note: "EU news typing" },
 
   // ovl-030 GENAU JETZT glitch
   { frame: 14035, src: ES_SFX.GLITCH_TRANSITION, volume: 0.42, durationInFrames: 150, note: "ovl-030 glitch" },

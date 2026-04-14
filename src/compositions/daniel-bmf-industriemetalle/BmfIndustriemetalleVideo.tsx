@@ -96,7 +96,7 @@ const O = {
   "ovl-012": { start: 4690, end: 4900 },      // Kinetic BRUCH NICHT UPDATE (F.2 word-sync)
   "ovl-013": { start: 4910, end: 5200 },      // Kinetic Counter 1/4 VIER DINGE (F.2 was ListicleCounterStatCard)
   "ovl-014": { start: 5385, end: 5475 },      // Kinetic Counter #1 DAS WORT (F.2 word-sync)
-  "ovl-015": { start: 5838, end: 7035 },      // KobaltFullscreen + passsage backdrop (F.7 D5 cap, shortened)
+  "ovl-015": { start: 5838, end: 6500 },      // KobaltFullscreen (Iter2.13: Dario shorter, ~22s instead of 40s)
   "ovl-016": { start: 6909, end: 7278 },      // EUCriticalIconRow
   "ovl-017": { start: 7300, end: 7570 },      // Kinetic Counter #2 RÜCKWIRKUNG (F.2 word-sync)
   "ovl-018": { start: 7495, end: 7980 },      // HighlighterDocumentExcerpt (F.1 word-sync: "wörtlich")
@@ -128,7 +128,7 @@ const O = {
 // Iter2.11: KAP05 moved 11100-11280 → 14400-14580 (was overlapping ovl-024
 // NullEuroBilanz 11031-11210 AND was not word-synced to "Zufall" @ 486.3s=14589)
 const CHAPTERS = [
-  { start: 4620, end: 4800, num: "KAPITEL 02", title: "DAS WORT DAS ALLES VERRÄT", sub: "#1 · KOBALT · DIE SMOKING GUN" },
+  { start: 4620, end: 4800, num: "KAPITEL 02", title: "DAS WORT DAS ALLES VERRÄT", sub: "#1 · KOBALT" },
   { start: 7257, end: 7437, num: "KAPITEL 03", title: "DIE VERBOTENE RÜCKWIRKUNG", sub: "#2 · 22 JAHRE · GESTOPPT" },
   { start: 8640, end: 8820, num: "KAPITEL 04", title: "DAS NULL-CENT-PARADOX", sub: "#3 · DEUTSCHLAND BEKOMMT GAR NICHTS" },
   { start: 14400, end: 14580, num: "KAPITEL 05", title: "KEIN ZUFALL", sub: "#4 · EINE KETTE · DAS MUSTER" },
@@ -231,17 +231,17 @@ const LETTERBOXES = [
 // Frame ranges live in the O map above; per-word startFrames are relative
 // to each Sequence.
 
-// Phase F.7 — KobaltBackdropPassage: ghosted passage.png behind Kobalt centerpiece
+// Phase F.7 / Iter2.13 — KobaltBackdropPassage: ghosted passage.png behind Kobalt centerpiece
 const KobaltBackdropPassage: React.FC = () => {
   const frame = useCurrentFrame();
-  // Fade in after the initial Kobalt punch (@ frame 30 of the 1197f Sequence)
-  const opacity = interpolate(frame, [150, 220], [0, 0.32], {
+  // Fade in after the initial Kobalt punch
+  const opacity = interpolate(frame, [120, 180], [0, 0.32], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  // Slow parallax drift across the duration
-  const kbScale = interpolate(frame, [0, 1197], [1.0, 1.08]);
-  const kbDriftY = interpolate(frame, [0, 1197], [0, -18]);
+  // Slow parallax drift across the shortened duration (662f)
+  const kbScale = interpolate(frame, [0, 662], [1.0, 1.08]);
+  const kbDriftY = interpolate(frame, [0, 662], [0, -18]);
 
   return (
     <AbsoluteFill style={{ opacity, pointerEvents: "none" }}>
@@ -338,12 +338,12 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
           LAYER 4 — 39 Overlays (ordered by frame_start)
           ═══════════════════════════════════════════════════════════════════ */}
 
-      {/* ovl-001 — DanielLowerThirdStatCard 5 STUNDEN (hook anchor, col_001) */}
+      {/* ovl-001 — DanielLowerThirdStatCard 5 STUNDEN (Iter2.13: Nachtschicht raus, Daniel sagt "an einem einzigen Thema") */}
       <Sequence from={O["ovl-001"].start} durationInFrames={O["ovl-001"].end - O["ovl-001"].start}>
         <DanielLowerThirdStatCard
           heroLabel="5"
           heroUnit="STUNDEN"
-          sub="NACHTSCHICHT AN EINEM THEMA"
+          sub="AN EINEM EINZIGEN THEMA"
         />
       </Sequence>
 
@@ -404,14 +404,13 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
 
       {/* ovl-012 — KineticMoment BRUCH NICHT UPDATE handled by km-03 */}
 
-      {/* ovl-013 — Kinetic Counter 1/4 VIER DINGE (F.2 was ListicleCounterStatCard) */}
+      {/* ovl-013 — Kinetic VIER DINGE (Iter2.13: 1/4 counter gelöscht per user) */}
       <Sequence from={O["ovl-013"].start} durationInFrames={O["ovl-013"].end - O["ovl-013"].start}>
         <BmfKineticStack
           position="lower-third"
-          counter={{ text: "1 / 4", startFrame: 0, color: "#f5d37a", size: 72 }}
           words={[
-            { text: "VIER DINGE", startFrame: 10, size: 108, color: "#fff5e0", variant: "underline", accentColor: "#f5d37a", reveal: "scale" },
-            { text: "DIE NIEMAND SEHEN SOLL", startFrame: 32, size: 44, color: "rgba(255,245,224,0.78)", reveal: "track" },
+            { text: "VIER DINGE", startFrame: 0, size: 120, color: "#fff5e0", variant: "underline", accentColor: "#f5d37a", reveal: "scale" },
+            { text: "DIE NIEMAND SEHEN SOLL", startFrame: 22, size: 46, color: "rgba(255,245,224,0.82)", reveal: "track" },
           ]}
         />
       </Sequence>

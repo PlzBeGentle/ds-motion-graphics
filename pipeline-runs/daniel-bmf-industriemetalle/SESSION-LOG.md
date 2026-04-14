@@ -1305,7 +1305,7 @@ Map-Loop auch geaendert: key nutzt `slot.slot` statt array index, label zeigt ca
 3. Veo Provider — Google AI Studio direkt, fal.ai (via ae-premium-editing MCP), oder Replicate? Google AI Pro ist am billigsten fuer Iterations-Session, fal.ai hat existing tooling
 
 **Commits (Phase B in progress):**
-- (pending — kommt nach diesem log-append)
+- `22c2923` feat(bmf): Phase B start - BROLL_SLOTS fix + slot-11 icons collage
 
 ---
 

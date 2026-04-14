@@ -11,7 +11,7 @@
 // - All paths via staticFile, files live in public/sfx/epidemic/
 
 import React from "react";
-import { Audio, Sequence, staticFile } from "remotion";
+import { Audio, Sequence, getRemotionEnvironment, staticFile } from "remotion";
 
 import { ES_MUSIC, ES_SFX } from "../../components/EpidemicSoundLibrary";
 
@@ -232,36 +232,47 @@ const MUSIC_BEDS = [
   },
 ];
 
-export const BmfSoundDesign: React.FC = () => (
-  <>
-    {MUSIC_BEDS.map((bed, i) => (
-      <Sequence
-        key={`music-${i}`}
-        from={bed.from}
-        durationInFrames={bed.durationInFrames}
-        name={`music-bed-${i}`}
-      >
-        <Audio src={staticFile(`sfx/${bed.src}`)} volume={bed.volume} />
-      </Sequence>
-    ))}
+export const BmfSoundDesign: React.FC = () => {
+  // Iter2.23: Skip ALL audio in Studio preview — Studio's draw-peaks.js
+  // waveform renderer crashes on this composition (IndexSizeError on
+  // createImageData). Audio stays fully active in headless render pipeline
+  // (ffmpeg / Lambda), so the final video has all music beds + SFX cues.
+  const env = getRemotionEnvironment();
+  if (env.isStudio) {
+    return null;
+  }
 
-    {CUES.map((cue, i) => {
-      const seqDuration = Math.max(
-        cue.durationInFrames ?? DEFAULT_DURATION,
-        MIN_SEQUENCE_DURATION,
-      );
-      return (
+  return (
+    <>
+      {MUSIC_BEDS.map((bed, i) => (
         <Sequence
-          key={`sfx-${i}`}
-          from={cue.frame}
-          durationInFrames={seqDuration}
-          name={`sfx-${i}-${cue.note ?? ""}`}
+          key={`music-${i}`}
+          from={bed.from}
+          durationInFrames={bed.durationInFrames}
+          name={`music-bed-${i}`}
         >
-          <Audio src={staticFile(`sfx/${cue.src}`)} volume={cue.volume} />
+          <Audio src={staticFile(`sfx/${bed.src}`)} volume={bed.volume} />
         </Sequence>
-      );
-    })}
-  </>
-);
+      ))}
+
+      {CUES.map((cue, i) => {
+        const seqDuration = Math.max(
+          cue.durationInFrames ?? DEFAULT_DURATION,
+          MIN_SEQUENCE_DURATION,
+        );
+        return (
+          <Sequence
+            key={`sfx-${i}`}
+            from={cue.frame}
+            durationInFrames={seqDuration}
+            name={`sfx-${i}-${cue.note ?? ""}`}
+          >
+            <Audio src={staticFile(`sfx/${cue.src}`)} volume={cue.volume} />
+          </Sequence>
+        );
+      })}
+    </>
+  );
+};
 
 export default BmfSoundDesign;

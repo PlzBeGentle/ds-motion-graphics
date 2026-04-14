@@ -9,7 +9,7 @@ type ChapterTransition3DProps = {
   accentColor?: string;
 };
 
-const ChapterTransition3D: React.FC<ChapterTransition3DProps> = ({
+export const ChapterTransition3D: React.FC<ChapterTransition3DProps> = ({
   chapterNumber,
   chapterTitle,
   chapterSubtitle,

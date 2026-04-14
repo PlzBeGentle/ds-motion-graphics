@@ -32,7 +32,8 @@ import PriceExplosionBars from "./PriceExplosionBars";
 import DanielZoomLayer from "./DanielZoomLayer";
 
 // Utility / layer components
-import ChapterCard from "./ChapterCard";
+// ChapterCard replaced by ChapterTransition3D in F.8
+import { ChapterTransition3D } from "../../components/library/remotion-coder/ChapterTransition3D";
 // KineticMoment removed in F.2 — replaced by BmfKineticStack for all 11 moments
 import BmfKineticStack from "./BmfKineticStack";
 import BmfBRoll11IconsCollage from "./BmfBRoll11IconsCollage";
@@ -121,15 +122,17 @@ const O = {
   "ovl-new-001": { start: 19350, end: 19980 }, // HandelsblattFAZNewsCard
 } as const;
 
-// Chapter title cards
+// Chapter title cards (F.8 re-enabled with ChapterTransition3D + collision-adjusted ranges)
+// KAP02/03/04/07 shifted by ±30 frames to avoid collision with F.2 kinetic moments
+// and F.5 NullEuroBilanz. Ranges verified clean per PHASE-F-REDESIGN-PLAN.md section 5.
 const CHAPTERS = [
   { start: 0, end: 78, num: "KAPITEL 01", title: "FÜNF STUNDEN NACHTSCHICHT", sub: "WAS MIR GESTERN KLAR GEWORDEN IST" },
-  { start: 4650, end: 4830, num: "KAPITEL 02", title: "DAS WORT DAS ALLES VERRÄT", sub: "#1 · KOBALT · DIE SMOKING GUN" },
-  { start: 7287, end: 7467, num: "KAPITEL 03", title: "DIE VERBOTENE RÜCKWIRKUNG", sub: "#2 · 22 JAHRE · EIN FEDERSTRICH" },
-  { start: 8670, end: 8850, num: "KAPITEL 04", title: "DAS NULL-CENT-PARADOX", sub: "#3 · DEUTSCHLAND BEKOMMT GAR NICHTS" },
+  { start: 4620, end: 4800, num: "KAPITEL 02", title: "DAS WORT DAS ALLES VERRÄT", sub: "#1 · KOBALT · DIE SMOKING GUN" },
+  { start: 7257, end: 7437, num: "KAPITEL 03", title: "DIE VERBOTENE RÜCKWIRKUNG", sub: "#2 · 22 JAHRE · GESTOPPT" },
+  { start: 8640, end: 8820, num: "KAPITEL 04", title: "DAS NULL-CENT-PARADOX", sub: "#3 · DEUTSCHLAND BEKOMMT GAR NICHTS" },
   { start: 11100, end: 11280, num: "KAPITEL 05", title: "DAS MUSTER", sub: "#4 · KEIN ZUFALL · EINE KETTE" },
   { start: 16380, end: 16560, num: "KAPITEL 06", title: "DIE LÖSUNG", sub: "SCHWEIZ · GOLD-GRADE · WARMER PAYOFF" },
-  { start: 22587, end: 22797, num: "KAPITEL 07", title: "DANKE, DEUTSCHLAND.", sub: "FINAL · COLD ACCENT · SLOW FADE" },
+  { start: 22437, end: 22617, num: "KAPITEL 07", title: "DANKE, DEUTSCHLAND.", sub: "FINAL · COLD ACCENT · SLOW FADE" },
 ];
 
 // B-Roll slots — canonical frame ranges from phase-4/edit/b-roll-slots.md
@@ -675,26 +678,30 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
       </Sequence>
 
       {/* ═══════════════════════════════════════════════════════════════════
-          LAYER 6 — 7 Chapter Title Cards — DISABLED 2026-04-14
-          Grund: Chapters sind Fullscreen-Dim-Overlays die mit anderen
-          Content-Layern kollidieren:
-          - Chapter 03 (7287-7467) + km-05 RUECKWIRKUNG (7287-7575)
-          - Chapter 04 (8670-8850) + km-07 "22 JAHRE GELOESCHT" (8670-8895)
-          - Chapter 05 (11100-11280) + NullEuroBilanzFullscreen (10872-11205)
-            + TwoDateTimelineSplit (11259-11535)
-          - Chapter 07 (22587-22797) + km-10 DANKE DEUTSCHLAND (22587-22797)
-          Wieder aktivieren nach Chapter-Timing-Rework.
+          LAYER 6 — 7 Chapter Title Cards (F.8 re-enabled with ChapterTransition3D)
+          Collision-adjusted ranges:
+            KAP02 4620-4800 (was 4650-4830, shifted -30 to clear km-04 counter)
+            KAP03 7257-7437 (was 7287-7467, shifted -30 to clear km-05 counter)
+            KAP04 8640-8820 (was 8670-8850, shifted -30 to clear km-07 counter)
+            KAP07 22437-22617 (was 22587-22797, shifted -150 to clear AuroraTextEffect)
+          KAP05 near ovl-024 NullEuroBilanz (3f gap); KAP01 + KAP06 clean.
           ═══════════════════════════════════════════════════════════════════ */}
-      {/* {CHAPTERS.map((ch, i) => (
+      {CHAPTERS.map((ch, i) => (
         <Sequence
           key={`chapter-${i}`}
           from={ch.start}
           durationInFrames={ch.end - ch.start}
           name={ch.num}
         >
-          <ChapterCard chapterNumber={ch.num} title={ch.title} subtitle={ch.sub} />
+          <ChapterTransition3D
+            chapterNumber={ch.num}
+            chapterTitle={ch.title}
+            chapterSubtitle={ch.sub}
+            accentColor="#d4a017"
+            paperTextureSrc={staticFile("assets/mbf-schreiben-titelseite.png")}
+          />
         </Sequence>
-      ))} */}
+      ))}
 
       {/* ═══════════════════════════════════════════════════════════════════
           LAYER 7 — 2 Letterboxes (pattern interrupts)

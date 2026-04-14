@@ -664,9 +664,101 @@ Die initial angenommene These "Daniel editorialisiert Kobalt auf ein generic Bei
 
 ---
 
+---
+
+## 13. Asset-Discovery Part 2 — public/assets/ bereits vorhanden (Session 2026-04-15 Teil 3)
+
+Dario hat bereits **5 kritische Assets** in `public/assets/` liegen (wurde in der ersten Bestandsaufnahme übersehen). Diese eliminieren mehrere der "fliegt raus" + "nice to have" Items aus der reduzierten Asset-Liste und sind direkt production-ready.
+
+### Verfügbare Assets in `public/assets/`
+
+| Asset | Filename | Größe | Use für Overlay |
+|---|---|---|---|
+| BMF-Schreiben PDF (4 Seiten laut file-check, 7 Seiten beim Render) | `bmf-schreiben.pdf` | 260 KB | — (master document reference) |
+| BMF Titelseite Screenshot | `mbf-schreiben-titelseite.png` (typo "mbf" statt "bmf") | 434 KB | **ovl-002 BMFDocumentCard** |
+| BMF Kobalt-Passage mit HIGHLIGHTER (Dario-selbst markiert) | `bmf-schreiben-passsage.png` (typo "passsage") | 218 KB | **ovl-015 KobaltFullscreen** (backdrop) + **ovl-018 HighlighterDocumentExcerpt** (main) |
+| Gallium Preis-Chart 2012-2024 USD+EUR | `gallium preis.png` | 36 KB | **ovl-027 PriceExplosionBars** (1/3) |
+| Germanium Preis-Chart 2012-2024 USD+EUR | `germanium preis.png` | 36 KB | **ovl-027 PriceExplosionBars** (2/3) |
+| Antimon Preis-Chart 2021-2025 USD+EUR | `antimon preis.png` | 38 KB | **ovl-027 PriceExplosionBars** (3/3) |
+| Bundesadler SVG | `logos/bundesadler.svg` | — | Watermark in allen BMF Document-Cards |
+| Deutschland Karte SVG | `logos/deutschland-karte.svg` | — | Potential für "Deutschland bekommt 0 Cent" moment |
+| Deutschland Flagge | `logos/deutschland-flagge.png` | — | Potential für authority moments |
+| Rotes X (schon genutzt) | `logos/rotes-x.png` | — | bereits in HandelsblattFAZNewsCard |
+
+### MD5-Verifikation
+`public/assets/bmf-schreiben.pdf` MD5 `6962f0a6771b5413cba1d0517a0b8e86` = identisch mit dem von Claude automatisch runtergeladenen `public/bmf/assets/documents/bmf-schreiben-2026-04-09.pdf` (gleicher MD5). Same file. Claude's download bleibt drin weil die 7 extrahierten PDF-Seiten als zusätzliche cascade-reveals für ovl-018 nützlich sind (Dario hat nur Titelseite + Passage, nicht alle 7).
+
+### Content-Check `bmf-schreiben-passsage.png`
+Dario hat das image bereits selbst mit gelbem Highlighter annotiert. Sichtbar markiert:
+1. "A liefert im Zolllager eingelagertes Kobalt an P." (voll highlighted)
+2. "Nach praxisorientierter Betrachtungsweise hinsichtlich der Art des Metalls" (highlighted)
+3. "ausschließlich die weitere Lagerung im Zolllager möglich" (highlighted)
+4. **"ist daher nicht nach § 4 Nr. 4b UStG steuerfrei"** ← **die Punchline des ganzen BMF-Schreibens**, vollständig highlighted
+
+**Bedeutung für Phase F execution:** Die HighlighterDocumentExcerpt Component braucht KEINE eigene Highlighter-Rendering-Logik mehr. Das image wird direkt als static background geladen, die Animation ist nur "image fade-in + zoom + optional arrow/pointer reveal auf den Kern-Satz". Massiv reduzierter Aufwand vs. Re-Implementation mit GesetzesBlatt3D.
+
+### Price-Charts Content
+Alle 3 Charts haben:
+- USD + EUR dual-line rendering
+- Hellblau (USD) + dunkelblau (EUR) clean styling
+- Grid-Hintergrund
+- Deutsche Datums-Achse
+- Y-Axis in EUR
+
+Spezifische Werte (sichtbar):
+- **Gallium** (2012-2024): 4.7.12 bei ~0 → 13.10.22 bei ~50 → 12.8.19 bei ~-60 (low) → 11.2024 bei ~200 EUR (peak)
+- **Germanium** (2012-2024): 4.7.12 bei ~5 → 2024 peak bei ~350 EUR
+- **Antimon** (2021-2025): 18.3.22 bei ~5 → 25.6.25 peak bei ~360 → 5.11.25 drop auf ~180
+
+Daniel's Behauptung "Europa plus 365% / Germanium +400% / Antimon +437%" kann mit den echten Charts **visuell bestätigt** werden (die Peaks in den Charts entsprechen genau den genannten Multiplikatoren).
+
+---
+
+## 14. Overlay-Mapping Update für verfügbare Assets
+
+| Overlay | Vorherige Target-Strategie | NEU mit verfügbaren Assets |
+|---|---|---|
+| **ovl-002 BMFDocumentCard** | `GesetzesBlatt3D` mit paragraphs array aus PDF | `GesetzesBlatt3D` mit `mbf-schreiben-titelseite.png` als hero image + extracted text |
+| **ovl-015 KobaltFullscreen** | KobaltFullscreen existing, keep timing | **KobaltFullscreen bekommt `bmf-schreiben-passsage.png` als ghosted backdrop** (30-40% opacity) hinter dem Kinetic "KOBALT" text — das highlightet den direkten Bezug zum Dokument |
+| **ovl-018 HighlighterDocumentExcerpt** | `GesetzesBlatt3D` mit highlighted paragraph | **Direkter Image-Layer** mit `bmf-schreiben-passsage.png` + zoom-in animation auf die highlighted Kobalt-Zeile + progressive reveal durch die 4 highlighted Zeilen top-to-bottom (stagger mit word-timing Daniels vorlesender Stimme) |
+| **ovl-027 PriceExplosionBars** | `BloombergChart3D` mit eingegebenen Daten | **3-Chart-Stack** (horizontal oder vertikal arrangement) mit den 3 Real-Charts, Stagger-Reveal Gallium → Germanium → Antimon matching Daniels word-order, mit Overlay-Numbers "+365%" / "+400%" / "+437%" als KineticMoment labels |
+| **Alle Document-Cards** | GesetzesBlatt3D paper-texture | `logos/bundesadler.svg` als watermark in top-margin |
+| **ovl-024 NullEuroBilanzFullscreen** | CountUp mit fake fullscreen | Possible: `logos/deutschland-karte.svg` als subtle background shape |
+
+---
+
+## 15. Final Asset-Status
+
+**✅ Verfügbar** (production-ready):
+- BMF-Schreiben PDF komplett (Dario + Claude backup)
+- BMF Titelseite (Dario)
+- BMF Kobalt-Passage mit Highlighter (Dario, ready to use)
+- Gallium + Germanium + Antimon Preis-Charts (Dario, real data)
+- Logos (Bundesadler, Deutschland-Karte, Flagge, Rotes X)
+- 7 Pages des BMF-PDFs als zusätzliche Cascade-Options (Claude)
+- 7 nano-banana B-Roll stills (Phase B)
+- 3 Veo 3.1 B-Roll videos (Phase B)
+
+**⏳ Dario sucht noch** (oder skippen als editorial cards):
+- `bmf-schreiben-2004-cover.png` — für ovl-009 BMF2004DocumentCard (historischer contrast)
+- `bmf-schreiben-2004-zollfreilager-passage.png` — für ovl-009 detail
+- 5 China Export-Kontrollen Docs (gallium/germanium/graphit/antimon/rare-earths/aktuell) — für ovl-026 + ovl-028 chronology
+
+**❌ Gestrichen** (zu aufwändig, Editorial-Card Fallback):
+- ~~bmf-schreiben-2026-kobalt-passage.png~~ (= passage.png, redundant)
+- ~~eu-krisendialog-oktober-2025.png~~
+- ~~donnerstag-leak-source.png~~
+- ~~eu-critical-raw-materials-list-2023.png~~
+- ~~bundeshaushalt-industriemetalle-0-eur.png~~
+- ~~Alle 6 metal ingot photos~~
+- ~~Mainstream news screenshots (Handelsblatt/FAZ/Spiegel)~~
+
+---
+
 **Commits:**
 - `22c2923` feat(bmf): Phase B start - BROLL_SLOTS fix + slot-11 icons collage
 - `1cf6e25` feat(bmf): Phase B complete - B-roll assets + refactor + loop bugfix
 - `48f936c` fix(bmf): pad SFX sequences to min 30 frames for Studio draw-peaks
 - `d3bbf43` docs(bmf): Phase F redesign plan (supersedes component-review approach)
-- (pending) feat(bmf-assets): BMF-Schreiben 9.4.2026 PDF + 7 page PNGs + plan update mit D1-D5 decisions
+- `926da4f` feat(bmf-assets): BMF-Schreiben 9.4.2026 PDF + 7 page PNGs + plan update mit D1-D5 decisions
+- (pending) docs(bmf): plan update part 3 - integrate public/assets discoveries

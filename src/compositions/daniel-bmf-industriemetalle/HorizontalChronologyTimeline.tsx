@@ -24,23 +24,26 @@ export const HorizontalChronologyTimeline: React.FC = () => {
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
 
-  // Container entry
-  const opacity = interpolate(frame, [0, 24, durationInFrames - 24, durationInFrames], [0, 1, 1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  // Container entry + early exit fade (Iter2.6: don't linger on last frame,
+  // start fading 150f before end so Dario doesn't feel the dead pause)
+  const fadeOutStart = Math.max(60, durationInFrames - 150);
+  const opacity = interpolate(
+    frame,
+    [0, 24, fadeOutStart, durationInFrames],
+    [0, 1, 1, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  );
   const slideY = interpolate(frame, [0, 24], [40, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: Easing.out(Easing.cubic),
   });
 
-  // Gold line grows to FULL width across the entire duration
-  // durationInFrames ~= 1213 (12230-13443), we want the line to reach 100%
-  // by frame ~900 (well before exit) so user sees it completed
+  // Gold line grows to FULL width; finish well before the exit fade
+  // (duration ~1160 @ new ovl-028 range, line full by ~frame 960)
   const lineProgress = interpolate(
     frame,
-    [30, Math.max(60, durationInFrames - 120)],
+    [30, Math.max(60, durationInFrames - 200)],
     [0, 1],
     {
       extrapolateLeft: "clamp",

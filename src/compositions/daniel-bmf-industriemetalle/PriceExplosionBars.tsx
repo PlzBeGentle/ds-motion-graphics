@@ -18,6 +18,7 @@ import {
   Easing,
   staticFile,
 } from "remotion";
+import { MovingGridBG } from "./MovingGridBG";
 
 type ChartBlockProps = {
   src: string;
@@ -168,12 +169,15 @@ export const PriceExplosionBars: React.FC = () => {
   const chartY = 220;
 
   return (
-    <AbsoluteFill
-      style={{
-        background:
-          "radial-gradient(ellipse 90% 70% at 50% 45%, rgba(20, 16, 10, 0.92) 0%, rgba(2, 3, 8, 0.96) 60%, #020308 100%)",
-      }}
-    >
+    <AbsoluteFill>
+      {/* Moving grid BG (Iter2.6) */}
+      <AbsoluteFill style={{ opacity: headerOpacity }}>
+        <MovingGridBG
+          gridColor="rgba(245, 211, 122, 0.10)"
+          accentColor="rgba(227, 6, 19, 0.22)"
+        />
+      </AbsoluteFill>
+      <AbsoluteFill>
       <div
         style={{
           position: "absolute",
@@ -250,6 +254,7 @@ export const PriceExplosionBars: React.FC = () => {
         width={CHART_WIDTH}
         height={CHART_HEIGHT}
       />
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

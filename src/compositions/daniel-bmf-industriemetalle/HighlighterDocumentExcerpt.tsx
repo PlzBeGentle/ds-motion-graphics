@@ -11,6 +11,7 @@ import {
   Easing,
   staticFile,
 } from "remotion";
+import { MovingGridBG } from "./MovingGridBG";
 
 export const HighlighterDocumentExcerpt: React.FC = () => {
   const frame = useCurrentFrame();
@@ -38,33 +39,32 @@ export const HighlighterDocumentExcerpt: React.FC = () => {
   });
 
   return (
-    <AbsoluteFill
-      style={{
-        background:
-          "radial-gradient(ellipse 80% 60% at 50% 45%, #0d1022 0%, #05060e 60%, #020308 100%)",
-        perspective: "2000px",
-        perspectiveOrigin: "50% 50%",
-      }}
-    >
+    <AbsoluteFill>
+      {/* Moving grid BG (Iter2.6) */}
+      <AbsoluteFill style={{ opacity: panelOpacity }}>
+        <MovingGridBG
+          gridColor="rgba(245, 211, 122, 0.10)"
+          accentColor="rgba(245, 211, 122, 0.16)"
+        />
+      </AbsoluteFill>
+
+      {/* Centered straight-on passage image, no tilt */}
       <div
         style={{
           position: "absolute",
           left: "50%",
           top: "50%",
-          width: 1360,
-          height: 860,
-          marginLeft: -680,
-          marginTop: -430,
+          width: 1420,
+          height: 880,
+          marginLeft: -710,
+          marginTop: -440,
           opacity: panelOpacity,
-          transform: `translateZ(0) scale(${panelScale}) rotateX(3deg) rotateY(-10deg)`,
-          transformStyle: "preserve-3d",
+          transform: `scale(${panelScale})`,
           background: "#fbf6e8",
-          border: "1px solid rgba(212, 160, 23, 0.34)",
-          borderRadius: 8,
+          border: "2px solid rgba(245, 211, 122, 0.55)",
+          borderRadius: 12,
           boxShadow:
-            "0 40px 120px rgba(0, 0, 0, 0.78), " +
-            "0 15px 50px rgba(0,0,0,0.5), " +
-            "inset 0 1px 0 rgba(255,255,255,0.8)",
+            "0 60px 160px rgba(0, 0, 0, 0.88), 0 0 100px rgba(245, 211, 122, 0.22), inset 0 1px 0 rgba(255,255,255,0.8)",
           overflow: "hidden",
         }}
       >

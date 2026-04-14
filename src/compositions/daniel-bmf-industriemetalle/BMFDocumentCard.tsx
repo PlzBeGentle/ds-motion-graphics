@@ -12,9 +12,9 @@ import {
   spring,
   interpolate,
   useVideoConfig,
-  Easing,
   staticFile,
 } from "remotion";
+import { MovingGridBG } from "./MovingGridBG";
 
 export const BMFDocumentCard: React.FC = () => {
   const frame = useCurrentFrame();
@@ -34,44 +34,50 @@ export const BMFDocumentCard: React.FC = () => {
   const kbDriftY = interpolate(frame, [0, 203], [0, -14]);
 
   return (
-    <AbsoluteFill
-      style={{
-        pointerEvents: "none",
-        perspective: "2200px",
-        perspectiveOrigin: "50% 50%",
-      }}
-    >
-      <div
+    <AbsoluteFill>
+      {/* Moving grid BG (Iter2.6 fullscreen centered treatment) */}
+      <AbsoluteFill style={{ opacity }}>
+        <MovingGridBG
+          gridColor="rgba(245, 211, 122, 0.10)"
+          accentColor="rgba(245, 211, 122, 0.16)"
+        />
+      </AbsoluteFill>
+
+      {/* Centered screenshot (no tilt — straight-on, bigger) */}
+      <AbsoluteFill
         style={{
-          position: "absolute",
-          left: "50%",
-          top: "50%",
-          width: 940,
-          height: 680,
-          marginLeft: -470,
-          marginTop: -340,
-          opacity,
-          transform: `translateY(${translateY}px) scale(${scale}) rotateX(4deg) rotateY(-8deg)`,
-          transformStyle: "preserve-3d",
-          borderRadius: 10,
-          overflow: "hidden",
-          border: "1.5px solid rgba(245, 211, 122, 0.42)",
-          boxShadow:
-            "0 50px 140px rgba(0,0,0,0.82), 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.12)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          pointerEvents: "none",
         }}
       >
-        <Img
-          src={staticFile("assets/mbf-schreiben-titelseite.png")}
+        <div
           style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            transform: `scale(${kbScale}) translateY(${kbDriftY}px)`,
-            transformOrigin: "center 30%",
-            filter: "brightness(1.02) contrast(1.06)",
+            width: 1100,
+            height: 820,
+            opacity,
+            transform: `translateY(${translateY}px) scale(${scale})`,
+            borderRadius: 12,
+            overflow: "hidden",
+            border: "2px solid rgba(245, 211, 122, 0.55)",
+            boxShadow:
+              "0 60px 160px rgba(0,0,0,0.88), 0 0 100px rgba(245, 211, 122, 0.28), inset 0 1px 0 rgba(255,255,255,0.14)",
           }}
-        />
-      </div>
+        >
+          <Img
+            src={staticFile("assets/mbf-schreiben-titelseite.png")}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transform: `scale(${kbScale}) translateY(${kbDriftY}px)`,
+              transformOrigin: "center 30%",
+              filter: "brightness(1.02) contrast(1.06)",
+            }}
+          />
+        </div>
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

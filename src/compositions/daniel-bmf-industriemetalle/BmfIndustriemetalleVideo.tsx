@@ -108,7 +108,7 @@ const O = {
   "ovl-025": { start: 11260, end: 11535 },    // TwoDateTimelineSplit → HistoricalTimeline3D (F.3)
   "ovl-026": { start: 11535, end: 12000 },    // ChinaBekanntmachungDocumentCard (F.1 editorial trim)
   "ovl-027": { start: 12334, end: 12930 },    // PriceExplosionBars real charts (F.3 word-sync Gallium→437)
-  "ovl-028": { start: 12230, end: 13443 },    // HorizontalChronologyTimeline → HistoricalTimeline3D (F.3 extended)
+  "ovl-028": { start: 12230, end: 13390 },    // HorizontalChronologyTimeline bottom bar (Iter2.6 shorter end + gap before ovl-029)
   "ovl-029": { start: 13434, end: 13767 },    // EUKrisendialogNewsCard
   "ovl-030": { start: 14035, end: 14200 },    // Kinetic GENAU JETZT (F.2 word-sync)
   "ovl-031": { start: 14795, end: 15083 },    // SplitNarrative Reserven → FlatEuropeMap3D (F.7)

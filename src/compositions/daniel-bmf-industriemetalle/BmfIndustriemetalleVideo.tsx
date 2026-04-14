@@ -35,6 +35,7 @@ import DanielZoomLayer from "./DanielZoomLayer";
 import ChapterCard from "./ChapterCard";
 import KineticMoment from "./KineticMoment";
 import BRollPlaceholder from "./BRollPlaceholder";
+import BmfBRoll11IconsCollage from "./BmfBRoll11IconsCollage";
 import LocosColorGrade from "./LocosColorGrade";
 import BmfSoundDesign from "./BmfSoundDesign";
 // import BmfCaptions from "./BmfCaptions"; // DISABLED 2026-04-14 per user request
@@ -130,19 +131,22 @@ const CHAPTERS = [
   { start: 22587, end: 22797, num: "KAPITEL 07", title: "DANKE, DEUTSCHLAND.", sub: "FINAL · COLD ACCENT · SLOW FADE" },
 ];
 
-// B-Roll slots (from pattern-interrupts.json — 11 slots for footage)
+// B-Roll slots — canonical frame ranges from phase-4/edit/b-roll-slots.md
+// (source: phase-1/1D-pacing-plan.json b_roll_targets[], 11 targets, ~74s total)
+// Fixed 2026-04-15 — Phase 6 build agent had mismatched frame ranges that
+// didn't align with Daniel's caption timing at the slot beats.
 const BROLL_SLOTS = [
-  { start: 1860, duration: 210, topic: "Zollfreilager Frankfurt" },
-  { start: 3150, duration: 90, topic: "BMF-PDF · Red 2004 Stamp (freeze)" },
-  { start: 6600, duration: 240, topic: "Batterie · E-Auto · EU Critical Raw" },
-  { start: 8100, duration: 200, topic: "Verkehrsschild Metapher" },
-  { start: 10200, duration: 200, topic: "0,00 EUR Bilanz B-Roll" },
-  { start: 11900, duration: 200, topic: "China Export-Stopp Karte" },
-  { start: 13765, duration: 210, topic: "Chipfabrik TSMC / Intel" },
-  { start: 14500, duration: 200, topic: "Strategische Reserven Tresor" },
-  { start: 17850, duration: 210, topic: "Schweiz Alpen · Tresor" },
-  { start: 20700, duration: 240, topic: "Halbleiter · Maschinenbau · PV · Medizintechnik" },
-  { start: 22100, duration: 190, topic: "Closer · Bittersweet" },
+  { slot: 1, start: 1170, duration: 210, topic: "BMF Berlin · 0-Cent-Ironie" },          // 39-46s
+  { slot: 2, start: 1800, duration: 210, topic: "PDF BMF-Schreiben Close-Up" },          // 60-67s
+  { slot: 3, start: 2280, duration: 180, topic: "Zollfreilager · Industriemetall-Barren" }, // 76-82s
+  { slot: 4, start: 3750, duration: 210, topic: "Telefon · Donnerstagabend 20 Uhr" },    // 125-132s
+  { slot: 5, start: 6750, duration: 210, topic: "Kobalt · EU-Liste kritische Rohstoffe" }, // 225-232s
+  { slot: 6, start: 7860, duration: 180, topic: "Verkehrsschild · Strafzettel-Metapher" }, // 262-268s
+  { slot: 7, start: 12210, duration: 210, topic: "China Shanghai Hafen · Exportkontrollen" }, // 407-414s
+  { slot: 8, start: 13650, duration: 210, topic: "Chipfabrik Reinraum · Wafer-Robotik" }, // 455-462s
+  { slot: 9, start: 14790, duration: 210, topic: "Strategische Reserven · Bunker" },     // 493-500s
+  { slot: 10, start: 17850, duration: 210, topic: "Schweiz Alpen · Warm Payoff" },       // 595-602s
+  { slot: 11, start: 20640, duration: 180, topic: "Branchen-Icons · Halbleiter/Maschinen/PV/Medizin" }, // 688-694s
 ];
 
 // Letterboxes — pattern-interrupts idx 8 + 18
@@ -269,11 +273,21 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
           LAYER 2 — B-Roll Placeholder Slots (11)
           Dario: replace these with real footage later.
           ═══════════════════════════════════════════════════════════════════ */}
-      {BROLL_SLOTS.map((slot, i) => (
-        <Sequence key={`broll-${i}`} from={slot.start} durationInFrames={slot.duration}>
-          <BRollPlaceholder topic={slot.topic} label={`B-ROLL ${String(i + 1).padStart(2, "0")}`} />
-        </Sequence>
-      ))}
+      {BROLL_SLOTS.map((slot) => {
+        // Slot 11 is a pure motion-graphics component (no external asset)
+        if (slot.slot === 11) {
+          return (
+            <Sequence key={`broll-${slot.slot}`} from={slot.start} durationInFrames={slot.duration}>
+              <BmfBRoll11IconsCollage />
+            </Sequence>
+          );
+        }
+        return (
+          <Sequence key={`broll-${slot.slot}`} from={slot.start} durationInFrames={slot.duration}>
+            <BRollPlaceholder topic={slot.topic} label={`B-ROLL ${String(slot.slot).padStart(2, "0")}`} />
+          </Sequence>
+        );
+      })}
 
       {/* ═══════════════════════════════════════════════════════════════════
           LAYER 3 — LOCOS Color Grade (11 segments, cross-faded)

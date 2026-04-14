@@ -1235,11 +1235,77 @@ Post-Phase-4-Session-Log + ds-motion-graphics commits kommen noch (diese Session
 **Commits:**
 - `5e46a2a` feat(bmf): Phase A sound-design layer (70 SFX + 6 music beds)
 
-### 24z) Session 2 End-State
+### 24z) Phase A End-State
 
 **Fertig:** Phase A — BmfSoundDesign.tsx (354 Zeilen) + Layer-0 Wiring + TS clean + Studio HTTP 200
-**Offen:** Phase B (B-Roll Orchestration, 3-4h + $11-16), Phase C (Schweiz-Alpen Asset, piggyback in B), Phase D (ovl-003 Face-Safe-Zone, 5 min), Phase E (4C Brand-Warnings, 10 min), Phase F (22 Components Frame-by-Frame Review, 3-5h mit Dario), Phase G (Chapter-Cards Rework optional), Phase H (Final Render)
-**Next:** Studio-Scrub-Test durch Dario auf kritische Frames (5868, 22649, 14609) um Music-Ducking + SFX-Timing zu validieren. Dann Entscheidung ob Phase B oder Phase F zuerst
+**Next:** Phase B (B-Roll Orchestration, 3-4h + $10)
+
+---
+
+## 25. Phase B — B-Roll Orchestration (in progress, 2026-04-15)
+
+### 25a) Veo 3.1 Deep Research + Skript-Kontext-Audit
+
+**Research Agent spawned** für Veo 3.1 best practices. Kern-Findings:
+
+- **Durations:** Nur 4s / 6s / 8s verfuegbar. Kein 7s. → Generate 8s, cut 1s in edit, nutze middle 4-5 seconds (Frame 0 und Last-Frame driften am meisten)
+- **Prompt-Anatomie:** `[Camera/Shot] + [Subject] + [Action] + [Setting] + [Lighting] + [Style/Mood] + [Audio] + [Specs]` — Camera move zuerst (Veo weights earlier tokens), Kelvin-Werte statt "warm", 100-175 Wörter optimal, negative prompts als Liste
+- **Pricing (2026):** Standard 1080p ~$0.40/s (=$3.20/8s-clip), Fast ~$0.15/s ($1.20/8s-clip), SynthID invisible, YouTube commercial use OK
+- **First-Frame-Conditioning:** Nur in Standard, empfohlen fuer Konsistenz
+- **Failure zones (AVOID):** Text/Logos in scene, real-people-faces, brand names (ASML), fingers-close-up, multi-figure-interaction
+- **Veo audio:** natively generiert aber match nicht zum sound design → muten in NLE
+- Research-Output enthaelt komplette rewritten Veo-Prompts fuer Slot 4/5/8 mit Camera-Moves + Lighting-Specs + Negative-Listen
+
+**Skript-Kontext-Audit** per grep auf captions.ts fuer jede slot-frame-range:
+
+10 von 11 Slots matchen b-roll-slots.md Topic perfekt (Slot 4 "Donnerstagabend gegen 20 Uhr" exakt @ 125-132s, Slot 5 "Kobalt ausgesucht... EU-Liste kritische Rohstoffe" exakt @ 225-232s, Slot 8 "Chipfabrik versorgen soll... April 26" exakt @ 455-462s, etc.). Einziger Ausreisser: Slot 1 @ 39-46s wo Daniel "Deutschland bekommt exakt keinen Cent" sagt — Topic "BMF Berlin Exterior" passt trotzdem weil der ironische Kontrast (Behoerde + 0 Cent) funktioniert.
+
+### 25b) Kritischer Finding: BROLL_SLOTS Master-Misalignment
+
+Der Phase-6 Full-Build-Agent hatte in `BmfIndustriemetalleVideo.tsx` Zeilen 133-145 eigene Frame-Ranges geschrieben die NICHT mit b-roll-slots.md (canonical, aus 1D-pacing-plan.json) matchen. Beispiel: build-agent hatte Slot 0 "Zollfreilager Frankfurt" bei Frame 1860 — aber canonical ist Slot 3 "Zollfreilager" bei Frame 2280. Build-agent hatte auch 2 Topics die gar nicht in der Slot-Liste sind ("0,00 EUR Bilanz", "Closer Bittersweet"). Disaster wenn wir Assets fuer canonical frames generieren und sie an falschen Positionen landen.
+
+**Fix:** `BROLL_SLOTS` array umgeschrieben auf die 11 canonical Slot-Definitionen aus `b-roll-slots.md`:
+```
+Slot 1  BMF Berlin 0-Cent-Ironie          frame 1170  dur 210
+Slot 2  PDF BMF-Schreiben                 frame 1800  dur 210
+Slot 3  Zollfreilager                     frame 2280  dur 180
+Slot 4  Telefon Donnerstagabend           frame 3750  dur 210
+Slot 5  Kobalt EU-Liste                   frame 6750  dur 210
+Slot 6  Verkehrsschild Strafzettel        frame 7860  dur 180
+Slot 7  Shanghai Hafen Exportkontrollen   frame 12210 dur 210
+Slot 8  Chipfabrik Wafer-Robotik          frame 13650 dur 210
+Slot 9  Strategic Reserves Bunker         frame 14790 dur 210
+Slot 10 Schweiz Alpen Warm Payoff         frame 17850 dur 210
+Slot 11 Branchen-Icons Collage            frame 20640 dur 180
+```
+
+Map-Loop auch geaendert: key nutzt `slot.slot` statt array index, label zeigt canonical slot number.
+
+### 25c) Slot 11 Motion-Graphics gebaut
+
+- **File:** `src/compositions/daniel-bmf-industriemetalle/BmfBRoll11IconsCollage.tsx` (243 Zeilen)
+- **Slot:** 11 @ frame 20640-20820 (6s, 180f)
+- **Skript-Kontext:** "Link zu dem kostenfreien Erstgespraech... wenn du einen Teil deiner Ersparnisse in krisenssichere Sachwerte investieren moechtest"
+- **Design:** Glass panel 1280px breit, Title "DIE NACHFRAGE BLEIBT" (Montserrat 900 / 56px warm-white) + Subtitle "4 BRANCHEN · BRAUCHEN DIE METALLE · JEDEN TAG" (gold-highlight 22px letter-spacing 0.22em), 2x2 grid mit 4 inline SVG outline icons:
+  - Halbleiter (chip mit pins)
+  - Maschinenbau (gear mit 8 teeth)
+  - Photovoltaik (solar panel + sun)
+  - Medizintechnik (cross in circle + pulse line)
+- **Animation:** Panel slide-up 14f + fade-in, Title @ frame 6-22, Icons Stagger 8f intervals (18f/26f/34f/42f), jeder Icon spring-pop (damping 14 stiffness 140) + Scale 0.88→1.0, persistent gold-glow pulse `filter: drop-shadow(...)` per Icon mit sine-wave amplitude
+- **Exit:** Panel opacity fade-out letzte 14f, icons opacity fade letzte 12f
+- **Brand:** strict LOCOS — goldAccent (#d4a017) icon stroke, warm-white labels, gold-highlight accent, NIE cyan/neon
+- **Wire:** BROLL_SLOTS.map() jetzt mit conditional — slot 11 rendert `BmfBRoll11IconsCollage`, alle anderen slots bleiben auf `BRollPlaceholder` bis Phase-B-Build die assets liefert
+- **TypeScript:** 0 Errors in daniel-bmf-industriemetalle/
+- **Studio:** HTTP 200, Watch-Mode rebundelt automatisch
+
+### 25d) Offene User-Entscheidungen (block weitere Progression)
+
+1. Slot 5 Kobalt — DRC-Mine Option A (gritty photojournalist, ethisch heikel) oder EV-Batterie-Produktion Option B (clean, geopolitisch)?
+2. Slot 2 PDF + Slot 6 Verkehrsschild — self-shot (du produzierst, $0) oder FLUX Still ($0.05 je)?
+3. Veo Provider — Google AI Studio direkt, fal.ai (via ae-premium-editing MCP), oder Replicate? Google AI Pro ist am billigsten fuer Iterations-Session, fal.ai hat existing tooling
+
+**Commits (Phase B in progress):**
+- (pending — kommt nach diesem log-append)
 
 ---
 

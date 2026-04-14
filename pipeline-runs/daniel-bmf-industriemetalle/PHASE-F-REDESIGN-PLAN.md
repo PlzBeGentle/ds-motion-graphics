@@ -553,12 +553,114 @@ Jeder overlay wird frame-gerendert, visuell geprüft, finales tuning
 ## 10. Status & Next Steps
 
 - ✅ Plan gelesen + verstanden (Dario)
-- ⏳ Assets raussuchen und in `public/bmf/assets/` ablegen (Dario) — **blockiert Phase F.2 + F.3**
-- ⏳ User Decisions D1-D5 beantworten (Dario) — **blockiert Phase F.4**
-- ⏳ Voll-Audit captions.ts × overlays (Claude) — kann parallel starten während Dario sammelt
-- ⏳ remotion-coder-test components ins motion-graphics workspace importieren (Claude) — kann parallel starten
+- ✅ **User Decisions D1-D5 beantwortet (Session 2026-04-15 Teil 2):**
+  - **D1 Counter-Style:** "keine ahnung welche du meinst" — Claude entscheidet autonom. **Gewählt: Option D (Mix) ersetzt durch Option B konsistent** — alle 5 Counter-Moments (1/4 + #1/#2/#3/#4) auf Kinetic-Center Style mit `HighlightedWord` aus remotion-coder-test. Panel-Card-Style wird bei ovl-013 entfernt. Konsistente visual language.
+  - **D2 Word-Sync Mode:** "muss halt on point sein mit gesprochenen wörtern" = **Strict (Option A)** — jedes Text-Element synct zu seinem word-start aus captions.ts.
+  - **D3 Chapter-Transitions:** "a kannst du gerne enablen aber sonst nichts" = **Option A** — `ChapterTransition3D` für alle 7 Chapter-Cards re-enablen. Keine andere Chapter-Änderung.
+  - **D4 KineticMoment Wording:** "angleichen. und dabei auch auf überschneidungen generell achten" = **Option A** — alle KineticMoments auf Daniels echte Worte angleichen, plus globale Überschneidungs-Prüfung als Phase F.1.5 task.
+  - **D5 Overlay-Duration:** "eher 0.25" = **Hard rule: overlay max 0.25s über last relevant Daniel-word hinaus.** Strikter als ursprünglich vorgeschlagen (0.5s → 0.25s).
 
-**Sobald Assets + D1-D5 da sind → Phase F.1 execution start.**
+- ⏳ Assets (reduzierter scope per Dario 2026-04-15):
+  - **Fliegen raus** (Dario: "dauert alles ewig rauszusuchen"):
+    - ~~bmf-schreiben-2026-kobalt-passage.png~~ — NICHT NÖTIG, weil es die gleiche Passage ist wie "vorgelesene passage" (siehe unten)
+    - ~~eu-krisendialog-oktober-2025.png~~
+    - ~~donnerstag-leak-source.png~~
+    - ~~eu-critical-raw-materials-list-2023.png~~
+    - ~~bundeshaushalt-industriemetalle-0-eur.png~~
+    - ~~Alle 6 metal ingot photos~~
+    - ~~Alle price charts (gallium/germanium/antimon)~~
+  - **Bleiben auf Dario's Suchliste:**
+    - `bmf-schreiben-2026-vorgelesene-passage.png` — ✅ **KEIN SUCHEN NÖTIG** → Claude hat automatisiert rausgefunden = Seite 5 des BMF-Schreibens 9.4.2026, Beispiel 3 "A liefert im Zolllager eingelagertes Kobalt an P." → bereits in `public/bmf/assets/documents/bmf-2026-04-09-page-5-kobalt-beispiel.png`
+    - `bmf-schreiben-2004-cover.png` — Dario sucht
+    - `bmf-schreiben-2004-zollfreilager-passage.png` — Dario sucht
+    - `china-export-kontrolle-gallium-germanium-aug-2023.png` — Dario sucht
+    - `china-export-kontrolle-graphit-dez-2023.png` — Dario sucht
+    - `china-export-kontrolle-antimon-sep-2024.png` — Dario sucht
+    - `china-export-kontrolle-rare-earths-apr-2025.png` — Dario sucht
+    - `china-bekanntmachung-aktuell.png` — Dario sucht
+  - **Claude soll suchen** (Dario: "such ma danach ob du was findest"):
+    - Handelsblatt / FAZ / NZZ / Spiegel Artikel zum BMF-Schreiben — **Recherche-Ergebnis:** Mainstream-News (Handelsblatt/FAZ/Spiegel) covern das Thema NICHT. Es ist ein Steuer-Fach-Thema. Alternative Authority-Quellen gefunden (wäre der Ersatz für "news screenshots"):
+      - **PwC Blog** (13.04.2026): "BMF: Steuerbefreiung für die einer Einfuhr vorangehenden Lieferungen von Gegenständen" — blogs.pwc.de/de/steuern-und-recht/article/254103
+      - **ad-hoc-news / boerse-global.de** (13.04.2026 20:41): "Finanzministerium konkretisiert Umsatzsteuer für Importe und Konzerne"
+      - **RP Steuerberatung** (10.04.2026) — erste Fach-Coverage, 1 Tag nach BMF
+      - **DATEV Magazin** — "Steuerbefreiung für die einer Einfuhr vorangehenden Lieferungen von Gegenständen"
+      - **Haufe Steuern** — entsprechende Guidance-Page
+      - **IWW.de / IFW GmbH / Eggert-Kienzle / Steuerkanzlei Pfuff** — weitere Fachpresse
+    - **Entscheidung Claude:** Wir nutzen PwC + DATEV + Haufe als "Authority Steuer-Fachpresse" statt "mainstream news screenshots" für ovl-new-001 HandelsblattFAZNewsCard. Das ist sogar EHRLICHER als fake Handelsblatt — echte Steuer-Fachwelt die das Thema covert. Ich werde die Seiten als screenshots archivieren (screenshots via playwright oder HTML-render).
+
+- ✅ **ChapterTransition3D re-enable** (D3) — Scope expanded: alle 7 Chapter-Cards mit remotion-coder-test `ChapterTransition3D` component
+- ⏳ Voll-Audit captions.ts × overlays (Claude) — Phase F.1 task
+- ⏳ remotion-coder-test components ins motion-graphics workspace importieren (Claude) — Phase F.1 task
+
+**Constraints aus Dario's Feedback:**
+- **KG GoldVault3D nicht nutzen** — Slot 10 Schweiz-Tresor bleibt beim FLUX still aus Phase B. GoldVault3D steht NICHT mehr in der Target-Component-Liste für ovl-034.
+- **"paar assets sind drin nimm nur die"** — Claude interpretiert: nutze was in `public/bmf/b-roll/` (Phase B) + was in `public/bmf/assets/documents/` (BMF PDF + 7 page PNGs) steht + was Dario später in `public/bmf/assets/` ablegt. Keine neuen Asset-Requests an Dario.
+
+---
+
+## 11. Automatisierte Asset-Discovery (Session 2026-04-15 Teil 2)
+
+**Discovery:** Ich habe das BMF-Schreiben vom 9. April 2026 automatisiert gefunden und komplett runtergeladen.
+
+### Verified Metadata
+- **Aktenzeichen:** III C 3 - S 7157-a/00005/001/052
+- **DOK:** COO.7005.100.4.14450860
+- **Datum:** 9. April 2026
+- **Betreff:** "Umsatzsteuer; Steuerbefreiung für die einer Einfuhr vorangehenden Lieferungen von Gegenständen (§ 4 Nr. 4b UStG)"
+- **Ersetzt:** BMF-Schreiben vom 28. Januar 2004 – IV D 1 — S 7157 — 01/04 — / — IV D 1 — S 7157a — 01/04 — (BStBl I S. 242)
+- **Daniels "22 Jahre":** 2004-01-28 → 2026-04-09 = **22 Jahre, 2 Monate, 12 Tage** — mathematisch bestätigt
+- **PDF-Quelle:** `https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Steuerarten/Umsatzsteuer/Umsatzsteuer-Anwendungserlass/2026-04-09-steuerbefreiung-einfuhr-gegenstaende.pdf?__blob=publicationFile&v=5`
+- **Seiten:** 7
+- **Fileformat:** PDF 1.7, 260 KB
+- **Absender:** Bundesministerium der Finanzen, Wilhelmstraße 97, 10117 Berlin
+
+### Downloaded Assets
+In `public/bmf/assets/documents/`:
+- `bmf-schreiben-2026-04-09.pdf` (260 KB, 7 Seiten)
+- `bmf-2026-04-09-page-1-cover.png` — Header mit Wilhelmstraße, Aktenzeichen, Inhaltsverzeichnis, Beginn "Allgemeines"
+- `bmf-2026-04-09-page-2-allgemeines.png` — Fortsetzung Allgemeines, Definition Einfuhr-Prozess
+- `bmf-2026-04-09-page-3-ustae-grundsaetze.png` — UStAE Abschnitt 4.4b.1 Änderungen, "Grundsätze"
+- `bmf-2026-04-09-page-4-tabak-beispiel.png` — Brasilianischer Tabakexporteur A, Bremen-Zolllager, Reihengeschäft
+- **`bmf-2026-04-09-page-5-kobalt-beispiel.png` ← 🔴 DIE KRITISCHE SEITE** — enthält **Beispiel 3: "A liefert im Zolllager eingelagertes Kobalt an P. Nach praxisorientierter Betrachtungsweise hinsichtlich der Art des Metalls ist ausschließlich die weitere Lagerung im Zolllager möglich und die Beendigung des Zolllagerverfahrens nicht mehr möglich..."** — **Daniels wörtliche Quote ist hier**, das Wort "Kobalt" steht literal im BMF-Dokument
+- `bmf-2026-04-09-page-6-ski-glas-beispiel.png` — Vorübergehende Verwendung (Ski Schweiz→München), Aktive Veredelung (Glasscheibe)
+- `bmf-2026-04-09-page-7-schlussbestimmung.png` — Anwendungsregelung + Aufhebung 2004-Schreiben
+
+### Kritischer Befund: Daniels Narrativ ist verifizierbar
+Die initial angenommene These "Daniel editorialisiert Kobalt auf ein generic Beispiel" ist **falsch**. Das BMF-Schreiben nennt **Kobalt explizit** auf Seite 5, Beispiel 3, mit dem Zusatz "praxisorientierter Betrachtungsweise hinsichtlich der Art des Metalls". Das bedeutet:
+
+1. **ovl-018 HighlighterDocumentExcerpt** bekommt page-5 als background + Highlighter-Rect über "Beispiel 3" paragraph (Koordinaten noch zu bestimmen via image-pixel-mapping)
+2. **ovl-015 KobaltFullscreen** kann page-5 als ghosted background nutzen plus editorial "KOBALT" overlay — oder direkter reveal der highlighted zeile aus dem Dokument
+3. **Der Satz "Nach praxisorientierter Betrachtungsweise hinsichtlich der Art des Metalls"** ist eine potentielle zusätzliche KineticMoment Quote — das ist eine smoking-gun phrase im Dokument selbst
+4. Die 3 Beispiele auf Seiten 4-6 (Tabak → 2 zu Kobalt → Ski/Glas) bilden einen **natürlichen Document-Reveal Flow** für cascade-timing durch das Dokument
+
+### Reduzierte Asset-Liste (nur noch was Dario sucht)
+
+| Asset | Status | Overlay |
+|---|---|---|
+| `bmf-schreiben-2026-04-09.pdf` + 7 Page-PNGs | ✅ **Claude automated download** | ovl-002, ovl-015, ovl-018 |
+| `bmf-schreiben-2004-cover.png` | ⏳ Dario | ovl-009 |
+| `bmf-schreiben-2004-zollfreilager-passage.png` | ⏳ Dario | ovl-009 |
+| `china-export-kontrolle-gallium-germanium-aug-2023.png` | ⏳ Dario | ovl-028 chronology node 1 |
+| `china-export-kontrolle-graphit-dez-2023.png` | ⏳ Dario | ovl-028 chronology node 2 |
+| `china-export-kontrolle-antimon-sep-2024.png` | ⏳ Dario | ovl-028 chronology node 3 |
+| `china-export-kontrolle-rare-earths-apr-2025.png` | ⏳ Dario | ovl-028 chronology node 4 |
+| `china-bekanntmachung-aktuell.png` | ⏳ Dario | ovl-026 |
+| Steuer-Fachpresse Screenshots (PwC, DATEV, RP, Haufe) | ⏳ Claude next session | ovl-new-001 |
+
+---
+
+## 12. Overlays die wegen reduzierter Asset-Liste angepasst werden
+
+| Overlay | Ursprünglich | Neu nach Asset-Reduktion |
+|---|---|---|
+| ovl-011 DonnerstagNewsCard | Real Twitter/leak screenshot | **Editorial Card** mit fake "DONNERSTAG 20:07 UHR" text + generic phone-silhouette. Keine Asset-Änderung — die existing skeleton component bleibt, bekommt nur word-sync timing fix. |
+| ovl-016 EUCriticalIconRow (re-enable) | Real EU Critical Raw Materials List screenshot | **Re-enable canceled.** Slot bleibt disabled. |
+| ovl-024 NullEuroBilanzFullscreen | Real Bundeshaushalt screenshot | Keep current handmade fullscreen, nur word-sync + `CountUp` library swap. Kein real-asset overlay. |
+| ovl-027 PriceExplosionBars | Real price charts | `BloombergChart3D` wird benutzt aber mit eingegebenen data-points (365% / 400% / 437%) statt real-chart screenshots. |
+| ovl-029 EUKrisendialogNewsCard | Real press release screenshot | **Editorial news-card** mit "EU KRISENDIALOG · OKTOBER 2025" title + summary bullets. Keine real-asset overlay. |
+| ovl-034 SchweizLocationCard | GoldVault3D Alternative | **Verboten per Dario** — keep FLUX still `slot-10-schweiz-alpen.png` als KenBurns backdrop. |
+| ovl-037 AuthorityTimeline | Daniel's 20 Jahre | Keep existing handmade oder swap auf HistoricalTimeline3D. Kein Asset nötig. |
+| Slot 5/6/7 Element visuals in chronology | Real ingot photos | `HistoricalTimeline3D` nodes zeigen text "GALLIUM", "GERMANIUM" etc. ohne element photos — minimalistic. |
 
 ---
 
@@ -566,4 +668,5 @@ Jeder overlay wird frame-gerendert, visuell geprüft, finales tuning
 - `22c2923` feat(bmf): Phase B start - BROLL_SLOTS fix + slot-11 icons collage
 - `1cf6e25` feat(bmf): Phase B complete - B-roll assets + refactor + loop bugfix
 - `48f936c` fix(bmf): pad SFX sequences to min 30 frames for Studio draw-peaks
-- (pending) docs(bmf): Phase F redesign plan
+- `d3bbf43` docs(bmf): Phase F redesign plan (supersedes component-review approach)
+- (pending) feat(bmf-assets): BMF-Schreiben 9.4.2026 PDF + 7 page PNGs + plan update mit D1-D5 decisions

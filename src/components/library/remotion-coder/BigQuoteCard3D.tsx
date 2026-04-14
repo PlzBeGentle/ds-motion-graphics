@@ -100,7 +100,8 @@ export const BigQuoteCard3D: React.FC<BigQuoteCard3DProps> = ({
 
   return (
     <AbsoluteFill style={{
-      background: "radial-gradient(ellipse 80% 60% at 50% 45%, #0d1022 0%, #05060e 60%, #020308 100%)",
+      // Iter2.9: removed radial-gradient BG so parent MovingGridBG can show through
+      background: "transparent",
       perspective: "1800px",
       perspectiveOrigin: "50% 50%",
     }}>

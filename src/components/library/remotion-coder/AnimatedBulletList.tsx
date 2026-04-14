@@ -124,7 +124,9 @@ export const AnimatedBulletList: React.FC<AnimatedBulletListProps> = ({
 
   return (
     <AbsoluteFill style={{
-      background: "radial-gradient(ellipse 80% 60% at 50% 45%, #0d1022 0%, #05060e 60%, #020308 100%)",
+      // Iter2.9: removed radial-gradient BG so parent MovingGridBG shows through
+      background: "transparent",
+      // was: "radial-gradient(ellipse 80% 60% at 50% 45%, #0d1022 0%, #05060e 60%, #020308 100%)"; kept disabled below
       perspective: "1800px",
       perspectiveOrigin: "50% 50%",
     }}>

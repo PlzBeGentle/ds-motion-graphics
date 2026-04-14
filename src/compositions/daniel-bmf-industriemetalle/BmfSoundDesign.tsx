@@ -20,10 +20,15 @@ type SfxCue = {
   src: string;
   volume: number;
   durationInFrames?: number;
+  // Iter2.20: Audio endAt (frames) — trims the audio file internally while
+  // the Sequence stays ≥30f to keep Remotion Studio's draw-peaks happy.
+  // Use this for hard-cut risers and tight stagger pops.
+  audioEndAt?: number;
   note?: string;
 };
 
 const DEFAULT_DURATION = 120; // ~4s, long enough for most hits to bloom
+const MIN_SEQUENCE_DURATION = 30; // Studio draw-peaks safety floor
 
 const CUES: SfxCue[] = [
   // =========================================================================
@@ -45,12 +50,12 @@ const CUES: SfxCue[] = [
   // ovl-004 OhneTriptychon (Iter2.18: per-bullet pops restored with new clean
   // single-shot POP_SINGLE file)
   { frame: 1040, src: ES_SFX.WHOOSH_DEEP, volume: 0.3, note: "ovl-004 entry" },
-  { frame: 1055, src: ES_SFX.POP_SINGLE, volume: 0.42, durationInFrames: 30, note: "bullet 1 OHNE PARLAMENT" },
-  { frame: 1085, src: ES_SFX.POP_SINGLE, volume: 0.42, durationInFrames: 30, note: "bullet 2 OHNE VORWARNUNG" },
-  { frame: 1117, src: ES_SFX.POP_SINGLE, volume: 0.42, durationInFrames: 30, note: "bullet 3 OHNE ÜBERGANGSFRIST" },
+  { frame: 1055, src: ES_SFX.POP_SINGLE, volume: 0.42, audioEndAt: 20, note: "bullet 1 OHNE PARLAMENT" },
+  { frame: 1085, src: ES_SFX.POP_SINGLE, volume: 0.42, audioEndAt: 20, note: "bullet 2 OHNE VORWARNUNG" },
+  { frame: 1117, src: ES_SFX.POP_SINGLE, volume: 0.42, audioEndAt: 20, note: "bullet 3 OHNE ÜBERGANGSFRIST" },
 
   // ovl-005 FullscreenTakeover 0 CENT
-  { frame: 1185, src: ES_SFX.RISER_GRITTY, volume: 0.36, durationInFrames: 30, note: "0 CENT build — hard cut at impact" },
+  { frame: 1185, src: ES_SFX.RISER_GRITTY, volume: 0.36, audioEndAt: 13, note: "0 CENT build — hard cut at impact" },
   { frame: 1193, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.5, note: "ovl-005 0 CENT hit" },
 
   // ovl-006 CTA soft
@@ -59,10 +64,10 @@ const CUES: SfxCue[] = [
   // ovl-007 Element chips (Iter2.18: per-chip CAMERA_CLICK_SINGLE — word-sync
   // to Daniel's "Industriemetalle wie Indium oder Renium" @69.28-72.06s)
   { frame: 2078, src: ES_SFX.WHOOSH_DEEP, volume: 0.3, note: "ovl-007 container" },
-  { frame: 2082, src: ES_SFX.CAMERA_CLICK_SINGLE, volume: 0.38, durationInFrames: 30, note: "GALLIUM chip" },
-  { frame: 2095, src: ES_SFX.CAMERA_CLICK_SINGLE, volume: 0.38, durationInFrames: 30, note: "GERMANIUM chip" },
-  { frame: 2134, src: ES_SFX.CAMERA_CLICK_SINGLE, volume: 0.38, durationInFrames: 30, note: "INDIUM chip" },
-  { frame: 2151, src: ES_SFX.CAMERA_CLICK_SINGLE, volume: 0.38, durationInFrames: 30, note: "RHENIUM chip" },
+  { frame: 2082, src: ES_SFX.CAMERA_CLICK_SINGLE, volume: 0.38, audioEndAt: 10, note: "GALLIUM chip" },
+  { frame: 2095, src: ES_SFX.CAMERA_CLICK_SINGLE, volume: 0.38, audioEndAt: 10, note: "GERMANIUM chip" },
+  { frame: 2134, src: ES_SFX.CAMERA_CLICK_SINGLE, volume: 0.38, audioEndAt: 12, note: "INDIUM chip" },
+  { frame: 2151, src: ES_SFX.CAMERA_CLICK_SINGLE, volume: 0.38, audioEndAt: 12, note: "RHENIUM chip" },
 
   // ovl-008 Zollfreilager flow
   { frame: 2338, src: ES_SFX.WHOOSH_DEEP, volume: 0.3, note: "ovl-008 flow entry" },
@@ -89,7 +94,7 @@ const CUES: SfxCue[] = [
   { frame: 4805, src: ES_SFX.BOOM_LOW, volume: 0.4, note: "BRUCH layered" },
 
   // KAP02 DAS WORT DAS ALLES VERRÄT
-  { frame: 4610, src: ES_SFX.RISER_LONG_TRAILER, volume: 0.32, durationInFrames: 30, note: "KAP02 build — hard cut at impact" },
+  { frame: 4610, src: ES_SFX.RISER_LONG_TRAILER, volume: 0.32, audioEndAt: 15, note: "KAP02 build — hard cut at impact" },
   { frame: 4620, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.44, note: "KAP02 open" },
   { frame: 4790, src: ES_SFX.WHOOSH_DEEP, volume: 0.3, note: "KAP02 close" },
 
@@ -103,7 +108,7 @@ const CUES: SfxCue[] = [
   { frame: 5340, src: ES_SFX.POP, volume: 0.3, note: "Das Wort reveal" },
 
   // ovl-015 KOBALT FULLSCREEN — the centerpiece
-  { frame: 5820, src: ES_SFX.RISER_LONG_TRAILER, volume: 0.42, durationInFrames: 30, note: "KOBALT hero build — hard cut at impact 5838" },
+  { frame: 5820, src: ES_SFX.RISER_LONG_TRAILER, volume: 0.42, audioEndAt: 24, note: "KOBALT hero build — hard cut at impact 5838" },
   { frame: 5838, src: ES_SFX.BOOM_ULTRA_LOW, volume: 0.62, note: "KOBALT hero punch" },
   { frame: 5868, src: ES_SFX.IMPACT_DEEP_HIT, volume: 0.48, note: "KOBALT kinetic reveal" },
 
@@ -137,7 +142,7 @@ const CUES: SfxCue[] = [
   { frame: 10383, src: ES_SFX.GLASS_CLINK, volume: 0.36, note: "19% reveal" },
 
   // ovl-024 0,00 EUR hero
-  { frame: 11020, src: ES_SFX.RISER_GRITTY, volume: 0.4, durationInFrames: 30, note: "pre 0,00 EUR — hard cut at impact 11031" },
+  { frame: 11020, src: ES_SFX.RISER_GRITTY, volume: 0.4, audioEndAt: 13, note: "pre 0,00 EUR — hard cut at impact 11031" },
   { frame: 11031, src: ES_SFX.BOOM_ULTRA_LOW, volume: 0.6, note: "ovl-024 0,00 EUR punch" },
   { frame: 11031, src: ES_SFX.IMPACT_DEEP_HIT, volume: 0.44, note: "0,00 EUR layered" },
 
@@ -153,17 +158,17 @@ const CUES: SfxCue[] = [
   // ovl-028 China chronology timeline (Iter2.18: POP_SINGLE for each node reveal,
   // word-synced to Daniel's date mentions)
   { frame: 12230, src: ES_SFX.WHOOSH_DEEP, volume: 0.32, note: "ovl-028 timeline entry" },
-  { frame: 12230, src: ES_SFX.POP_SINGLE, volume: 0.34, durationInFrames: 30, note: "AUG 23 node" },
-  { frame: 12681, src: ES_SFX.POP_SINGLE, volume: 0.34, durationInFrames: 30, note: "DEZ 23 node" },
-  { frame: 12779, src: ES_SFX.POP_SINGLE, volume: 0.34, durationInFrames: 30, note: "SEP 24 node" },
-  { frame: 13083, src: ES_SFX.POP_SINGLE, volume: 0.34, durationInFrames: 30, note: "APR 25 node" },
-  { frame: 13280, src: ES_SFX.POP_SINGLE, volume: 0.34, durationInFrames: 30, note: "OKT 25 node" },
+  { frame: 12230, src: ES_SFX.POP_SINGLE, volume: 0.34, audioEndAt: 25, note: "AUG 23 node" },
+  { frame: 12681, src: ES_SFX.POP_SINGLE, volume: 0.34, audioEndAt: 25, note: "DEZ 23 node" },
+  { frame: 12779, src: ES_SFX.POP_SINGLE, volume: 0.34, audioEndAt: 25, note: "SEP 24 node" },
+  { frame: 13083, src: ES_SFX.POP_SINGLE, volume: 0.34, audioEndAt: 25, note: "APR 25 node" },
+  { frame: 13280, src: ES_SFX.POP_SINGLE, volume: 0.34, audioEndAt: 25, note: "OKT 25 node" },
 
   // ovl-027 Price Explosion (Iter2.18: POP_SINGLE per chart reveal + entry clink)
   { frame: 12334, src: ES_SFX.GLASS_CLINK, volume: 0.35, note: "charts triptychon entry" },
-  { frame: 12334, src: ES_SFX.POP_SINGLE, volume: 0.36, durationInFrames: 30, note: "GALLIUM chart reveal" },
-  { frame: 12356, src: ES_SFX.POP_SINGLE, volume: 0.36, durationInFrames: 30, note: "GERMANIUM chart reveal" },
-  { frame: 12378, src: ES_SFX.POP_SINGLE, volume: 0.36, durationInFrames: 30, note: "ANTIMON chart reveal" },
+  { frame: 12334, src: ES_SFX.POP_SINGLE, volume: 0.36, audioEndAt: 18, note: "GALLIUM chart reveal" },
+  { frame: 12356, src: ES_SFX.POP_SINGLE, volume: 0.36, audioEndAt: 18, note: "GERMANIUM chart reveal" },
+  { frame: 12378, src: ES_SFX.POP_SINGLE, volume: 0.36, audioEndAt: 18, note: "ANTIMON chart reveal" },
 
   // ovl-029 EU Krisendialog (Iter2.13: keyboard volume matched lower)
   { frame: 13434, src: ES_SFX.WHOOSH_SPACEY, volume: 0.32, note: "ovl-029 news entry" },
@@ -186,11 +191,11 @@ const CUES: SfxCue[] = [
   { frame: 15700, src: ES_SFX.GLASS_CLINK, volume: 0.3, note: "VERTRAUENSSCHUTZ reveal" },
 
   // KAP06 DIE LÖSUNG
-  { frame: 16370, src: ES_SFX.RISER_LONG_TRAILER, volume: 0.36, durationInFrames: 30, note: "KAP06 warm build — hard cut at impact" },
+  { frame: 16370, src: ES_SFX.RISER_LONG_TRAILER, volume: 0.36, audioEndAt: 15, note: "KAP06 warm build — hard cut at impact" },
   { frame: 16380, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.4, note: "KAP06 open" },
 
   // ovl-034 SCHWEIZ warm payoff
-  { frame: 17268, src: ES_SFX.RISER_GRITTY, volume: 0.34, durationInFrames: 30, note: "SCHWEIZ pre-build — hard cut at impact" },
+  { frame: 17268, src: ES_SFX.RISER_GRITTY, volume: 0.34, audioEndAt: 13, note: "SCHWEIZ pre-build — hard cut at impact" },
   { frame: 17278, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.48, note: "ovl-034 SCHWEIZ payoff" },
   { frame: 17278, src: ES_SFX.BOOM_LOW, volume: 0.38, note: "SCHWEIZ warm sub" },
 
@@ -200,14 +205,14 @@ const CUES: SfxCue[] = [
 
   // ovl-new-001 Steuer-Fachpresse (Iter2.18: per-card POP_SINGLE reveals + stamps)
   { frame: 19444, src: ES_SFX.WHOOSH_DEEP, volume: 0.3, note: "ovl-new-001 press entry" },
-  { frame: 19456, src: ES_SFX.POP_SINGLE, volume: 0.34, durationInFrames: 30, note: "PwC card" },
-  { frame: 19470, src: ES_SFX.POP_SINGLE, volume: 0.34, durationInFrames: 30, note: "DATEV card" },
-  { frame: 19484, src: ES_SFX.POP_SINGLE, volume: 0.34, durationInFrames: 30, note: "Haufe card" },
-  { frame: 19498, src: ES_SFX.POP_SINGLE, volume: 0.34, durationInFrames: 30, note: "RP card" },
+  { frame: 19456, src: ES_SFX.POP_SINGLE, volume: 0.34, audioEndAt: 12, note: "PwC card" },
+  { frame: 19470, src: ES_SFX.POP_SINGLE, volume: 0.34, audioEndAt: 12, note: "DATEV card" },
+  { frame: 19484, src: ES_SFX.POP_SINGLE, volume: 0.34, audioEndAt: 12, note: "Haufe card" },
+  { frame: 19498, src: ES_SFX.POP_SINGLE, volume: 0.34, audioEndAt: 12, note: "RP card" },
   { frame: 19510, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.44, note: "rotes X stamp group" },
 
   // ovl-036 HardCTA (Iter2.14: word-sync "Und wer darüber hinaus..." @679.52s=20385, single phase)
-  { frame: 20375, src: ES_SFX.RISER_GRITTY, volume: 0.38, durationInFrames: 30, note: "HardCTA build — hard cut at impact" },
+  { frame: 20375, src: ES_SFX.RISER_GRITTY, volume: 0.38, audioEndAt: 13, note: "HardCTA build — hard cut at impact" },
   { frame: 20385, src: ES_SFX.IMPACT_DEEP_HIT, volume: 0.48, note: "ovl-036 HardCTA hit" },
   { frame: 20385, src: ES_SFX.BOOM_LOW, volume: 0.4, note: "HardCTA sub" },
 
@@ -244,16 +249,27 @@ export const BmfSoundDesign: React.FC = () => (
       </Sequence>
     ))}
 
-    {CUES.map((cue, i) => (
-      <Sequence
-        key={`sfx-${i}`}
-        from={cue.frame}
-        durationInFrames={cue.durationInFrames ?? DEFAULT_DURATION}
-        name={`sfx-${i}-${cue.note ?? ""}`}
-      >
-        <Audio src={staticFile(`sfx/${cue.src}`)} volume={cue.volume} />
-      </Sequence>
-    ))}
+    {CUES.map((cue, i) => {
+      // Sequence must be ≥30f so Studio's draw-peaks doesn't crash
+      const seqDuration = Math.max(
+        cue.durationInFrames ?? DEFAULT_DURATION,
+        MIN_SEQUENCE_DURATION,
+      );
+      return (
+        <Sequence
+          key={`sfx-${i}`}
+          from={cue.frame}
+          durationInFrames={seqDuration}
+          name={`sfx-${i}-${cue.note ?? ""}`}
+        >
+          <Audio
+            src={staticFile(`sfx/${cue.src}`)}
+            volume={cue.volume}
+            endAt={cue.audioEndAt}
+          />
+        </Sequence>
+      );
+    })}
   </>
 );
 

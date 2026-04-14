@@ -161,12 +161,12 @@ export const PriceExplosionBars: React.FC = () => {
     extrapolateRight: "clamp",
   });
 
-  const CHART_WIDTH = 560;
-  const CHART_HEIGHT = 700;
-  const GAP = 48;
+  const CHART_WIDTH = 520;
+  const CHART_HEIGHT = 560;
+  const GAP = 40;
   const totalWidth = CHART_WIDTH * 3 + GAP * 2;
   const startX = (1920 - totalWidth) / 2;
-  const chartY = 220;
+  const chartY = 180;
 
   return (
     <AbsoluteFill>
@@ -234,21 +234,23 @@ export const PriceExplosionBars: React.FC = () => {
         label="GERMANIUM"
         percent={400}
         color="#f5d37a"
-        startFrame={28}
-        countStartFrame={76}
+        startFrame={22}
+        countStartFrame={70}
         x={startX + CHART_WIDTH + GAP}
         y={chartY}
         width={CHART_WIDTH}
         height={CHART_HEIGHT}
       />
 
+      {/* Iter2.7 — Antimon reveal moved earlier (was 589) so all 3 charts
+          are visible from the start of the triptychon hero-moment */}
       <ChartBlock
         src="assets/antimon preis.png"
         label="ANTIMON"
         percent={437}
         color="#E30613"
-        startFrame={589}
-        countStartFrame={610}
+        startFrame={44}
+        countStartFrame={92}
         x={startX + (CHART_WIDTH + GAP) * 2}
         y={chartY}
         width={CHART_WIDTH}

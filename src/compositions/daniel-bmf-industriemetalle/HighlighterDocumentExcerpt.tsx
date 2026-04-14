@@ -48,16 +48,16 @@ export const HighlighterDocumentExcerpt: React.FC = () => {
         />
       </AbsoluteFill>
 
-      {/* Centered straight-on passage image, no tilt */}
+      {/* Wide landscape box matching passage.png aspect ratio (1854x418 ≈ 4.4:1) */}
       <div
         style={{
           position: "absolute",
           left: "50%",
           top: "50%",
-          width: 1420,
-          height: 880,
-          marginLeft: -710,
-          marginTop: -440,
+          width: 1680,
+          height: 380,
+          marginLeft: -840,
+          marginTop: -190,
           opacity: panelOpacity,
           transform: `scale(${panelScale})`,
           background: "#fbf6e8",
@@ -73,10 +73,9 @@ export const HighlighterDocumentExcerpt: React.FC = () => {
           style={{
             width: "100%",
             height: "100%",
-            objectFit: "contain",
-            background: "#fbf6e8",
+            objectFit: "cover",
             transform: `scale(${imageZoom}) translateY(${imageDriftY}px)`,
-            transformOrigin: "center 40%",
+            transformOrigin: "center 50%",
           }}
         />
       </div>

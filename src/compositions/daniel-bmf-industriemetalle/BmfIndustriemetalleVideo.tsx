@@ -40,7 +40,7 @@ import BmfBRoll11IconsCollage from "./BmfBRoll11IconsCollage";
 import LocosColorGrade from "./LocosColorGrade";
 import BmfSoundDesign from "./BmfSoundDesign";
 import { KenBurns } from "../../components/KenBurns";
-import { AuroraTextEffect } from "../../components/library/text/AuroraTextEffect";
+// AuroraTextEffect removed in Iter2.7 — ovl-038 DANKE DEUTSCHLAND disabled
 // import BmfCaptions from "./BmfCaptions"; // DISABLED 2026-04-14 per user request
 
 // Shared library components
@@ -122,17 +122,14 @@ const O = {
   "ovl-new-001": { start: 19350, end: 19980 }, // HandelsblattFAZNewsCard
 } as const;
 
-// Chapter title cards (F.8 re-enabled with ChapterTransition3D + collision-adjusted ranges)
-// KAP02/03/04/07 shifted by ±30 frames to avoid collision with F.2 kinetic moments
-// and F.5 NullEuroBilanz. Ranges verified clean per PHASE-F-REDESIGN-PLAN.md section 5.
+// Chapter title cards (Iter2.7: KAP01 removed — broke the hook immediately)
+// KAP02/03/04/07 shifted by ±30 frames to avoid collision with kinetic moments.
 const CHAPTERS = [
-  { start: 0, end: 78, num: "KAPITEL 01", title: "FÜNF STUNDEN NACHTSCHICHT", sub: "WAS MIR GESTERN KLAR GEWORDEN IST" },
   { start: 4620, end: 4800, num: "KAPITEL 02", title: "DAS WORT DAS ALLES VERRÄT", sub: "#1 · KOBALT · DIE SMOKING GUN" },
   { start: 7257, end: 7437, num: "KAPITEL 03", title: "DIE VERBOTENE RÜCKWIRKUNG", sub: "#2 · 22 JAHRE · GESTOPPT" },
   { start: 8640, end: 8820, num: "KAPITEL 04", title: "DAS NULL-CENT-PARADOX", sub: "#3 · DEUTSCHLAND BEKOMMT GAR NICHTS" },
   { start: 11100, end: 11280, num: "KAPITEL 05", title: "DAS MUSTER", sub: "#4 · KEIN ZUFALL · EINE KETTE" },
-  { start: 16380, end: 16560, num: "KAPITEL 06", title: "DIE LÖSUNG", sub: "SCHWEIZ · GOLD-GRADE · WARMER PAYOFF" },
-  { start: 22437, end: 22617, num: "KAPITEL 07", title: "DANKE, DEUTSCHLAND.", sub: "FINAL · COLD ACCENT · SLOW FADE" },
+  { start: 16380, end: 16560, num: "KAPITEL 06", title: "DIE LÖSUNG", sub: "SCHWEIZ · ZOLLLAGER · WARMER PAYOFF" },
 ];
 
 // B-Roll slots — canonical frame ranges from phase-4/edit/b-roll-slots.md
@@ -518,17 +515,10 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
         <TrustCheckmarkStatCard />
       </Sequence>
 
-      {/* ovl-033 — BigQuoteCard3D Nicht-Beanstandungsklausel (Iter2.2 shorter quote) */}
-      <Sequence from={O["ovl-033"].start} durationInFrames={O["ovl-033"].end - O["ovl-033"].start}>
-        <BigQuoteCard3D
-          quote="Altbestände bleiben umsatzsteuerfrei."
-          author="BMF § 4 Nr. 4b"
-          authorRole="Übergangsregelung"
-          authorDate="9. April 2026"
-          variant="overlay"
-          clusterOffsetX={220}
-        />
-      </Sequence>
+      {/* ovl-033 — DISABLED (Iter2.7 Bild 24: same content as ovl-032 TrustCheckmark 5s earlier, redundant) */}
+      {/* <Sequence from={O["ovl-033"].start} durationInFrames={O["ovl-033"].end - O["ovl-033"].start}>
+        <BigQuoteCard3D ... />
+      </Sequence> */}
 
       {/* ovl-034 — SchweizLocationCard (warm payoff) */}
       <Sequence from={O["ovl-034"].start} durationInFrames={O["ovl-034"].end - O["ovl-034"].start}>
@@ -654,19 +644,10 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
         />
       </Sequence>
 
-      {/* ovl-038 — "DANKE, DEUTSCHLAND." AuroraTextEffect slow fade (ehem. km-10) */}
-      <Sequence from={O["ovl-038"].start} durationInFrames={O["ovl-038"].end - O["ovl-038"].start} name="km-10">
-        <AbsoluteFill style={{ backgroundColor: "rgba(0,0,0,0.58)" }}>
-          <AuroraTextEffect
-            text="DANKE, DEUTSCHLAND."
-            fontSize="140px"
-            firstColor="#d4a017"
-            secondColor="#f5d37a"
-            thirdColor="#E30613"
-            fourthColor="#fff5e0"
-          />
-        </AbsoluteFill>
-      </Sequence>
+      {/* ovl-038 — DISABLED (Iter2.7 Bild 26: "danke deutschland" schon vorher, redundant) */}
+      {/* <Sequence from={O["ovl-038"].start} durationInFrames={O["ovl-038"].end - O["ovl-038"].start} name="km-10">
+        <AuroraTextEffect ... />
+      </Sequence> */}
 
       {/* ═══════════════════════════════════════════════════════════════════
           LAYER 6 — 7 Chapter Title Cards (F.8 re-enabled with ChapterTransition3D)

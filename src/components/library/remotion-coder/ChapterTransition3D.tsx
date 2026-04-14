@@ -142,7 +142,7 @@ export const ChapterTransition3D: React.FC<ChapterTransition3DProps> = ({
         </div>
 
         <div style={{
-          fontSize: chapterTitle.length > 22 ? 96 : chapterTitle.length > 16 ? 116 : 140,
+          fontSize: chapterTitle.length > 22 ? 72 : chapterTitle.length > 16 ? 96 : 128,
           fontFamily: '"Georgia", "Times New Roman", serif',
           fontWeight: 900,
           letterSpacing: "-0.02em",
@@ -151,9 +151,10 @@ export const ChapterTransition3D: React.FC<ChapterTransition3DProps> = ({
           textAlign: "center",
           textShadow: "0 8px 32px rgba(0, 0, 0, 0.9), 0 0 60px rgba(255, 200, 80, 0.15)",
           display: "flex",
-          flexWrap: "wrap",
+          flexWrap: "nowrap",
           justifyContent: "center",
-          maxWidth: 1640,
+          whiteSpace: "nowrap",
+          maxWidth: 1760,
         }}>
           {titleChars.map((ch, i) => (
             <span 

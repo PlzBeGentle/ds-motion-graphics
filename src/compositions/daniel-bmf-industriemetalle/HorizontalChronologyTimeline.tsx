@@ -65,13 +65,15 @@ export const HorizontalChronologyTimeline: React.FC = () => {
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       {/* Bottom-placed overlay, transparent BG, no fullscreen dim */}
+      {/* Iter2.7: bottom moved lower (60 → 20) so it doesn't clash with
+          ovl-027 PriceExplosionBars chart cards above */}
       <div
         style={{
           position: "absolute",
           left: 0,
           right: 0,
-          bottom: 60,
-          height: 220,
+          bottom: 20,
+          height: 180,
           opacity,
           transform: `translateY(${slideY}px)`,
           padding: "0 100px",

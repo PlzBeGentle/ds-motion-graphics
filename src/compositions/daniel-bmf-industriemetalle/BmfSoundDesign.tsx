@@ -42,11 +42,12 @@ const CUES: SfxCue[] = [
   { frame: 887, src: ES_SFX.IMPACT_DEEP_HIT, volume: 0.48, note: "22 JAHRE" },
   { frame: 1010, src: ES_SFX.BOOM_ULTRA_LOW, volume: 0.55, note: "GESTOPPT" },
 
-  // ovl-004 OhneTriptychon (Iter2.16: removed 3 per-bullet clicks — pop-various +
-  // camera-click WAVs contain multiple transients that clashed on rapid-fire
-  // staggers. Only entry whoosh kept — bullets reveal visually with their spring
-  // animation, no audio needed.)
+  // ovl-004 OhneTriptychon (Iter2.18: per-bullet pops restored with new clean
+  // single-shot POP_SINGLE file)
   { frame: 1040, src: ES_SFX.WHOOSH_DEEP, volume: 0.3, note: "ovl-004 entry" },
+  { frame: 1055, src: ES_SFX.POP_SINGLE, volume: 0.42, durationInFrames: 25, note: "bullet 1 OHNE PARLAMENT" },
+  { frame: 1085, src: ES_SFX.POP_SINGLE, volume: 0.42, durationInFrames: 25, note: "bullet 2 OHNE VORWARNUNG" },
+  { frame: 1117, src: ES_SFX.POP_SINGLE, volume: 0.42, durationInFrames: 25, note: "bullet 3 OHNE ÜBERGANGSFRIST" },
 
   // ovl-005 FullscreenTakeover 0 CENT
   { frame: 1185, src: ES_SFX.RISER_GRITTY, volume: 0.36, durationInFrames: 13, note: "0 CENT build — hard cut at impact" },
@@ -55,10 +56,13 @@ const CUES: SfxCue[] = [
   // ovl-006 CTA soft
   { frame: 1606, src: ES_SFX.POP, volume: 0.3, note: "ovl-006 link CTA" },
 
-  // ovl-007 Element chips (Iter2.16: removed 4 per-chip glass clinks — clashed
-  // as multiple hits. Only container whoosh + one glass clink for the entry.)
+  // ovl-007 Element chips (Iter2.18: per-chip CAMERA_CLICK_SINGLE — word-sync
+  // to Daniel's "Industriemetalle wie Indium oder Renium" @69.28-72.06s)
   { frame: 2078, src: ES_SFX.WHOOSH_DEEP, volume: 0.3, note: "ovl-007 container" },
-  { frame: 2082, src: ES_SFX.GLASS_CLINK, volume: 0.3, note: "chip container entry" },
+  { frame: 2082, src: ES_SFX.CAMERA_CLICK_SINGLE, volume: 0.38, durationInFrames: 20, note: "GALLIUM chip" },
+  { frame: 2095, src: ES_SFX.CAMERA_CLICK_SINGLE, volume: 0.38, durationInFrames: 20, note: "GERMANIUM chip" },
+  { frame: 2134, src: ES_SFX.CAMERA_CLICK_SINGLE, volume: 0.38, durationInFrames: 20, note: "INDIUM chip" },
+  { frame: 2151, src: ES_SFX.CAMERA_CLICK_SINGLE, volume: 0.38, durationInFrames: 20, note: "RHENIUM chip" },
 
   // ovl-008 Zollfreilager flow
   { frame: 2338, src: ES_SFX.WHOOSH_DEEP, volume: 0.3, note: "ovl-008 flow entry" },
@@ -146,12 +150,20 @@ const CUES: SfxCue[] = [
   { frame: 11535, src: ES_SFX.PAPER_RUSTLE, volume: 0.4, durationInFrames: 150, note: "ovl-026 china doc" },
   { frame: 11555, src: ES_SFX.KEYBOARD_CLICK, volume: 0.11, durationInFrames: 240, note: "china metal chips" },
 
-  // ovl-028 China chronology timeline (Iter2.16: removed 5 per-node pops —
-  // Daniel's voice provides the node-by-node narration, no extra clicks needed)
+  // ovl-028 China chronology timeline (Iter2.18: POP_SINGLE for each node reveal,
+  // word-synced to Daniel's date mentions)
   { frame: 12230, src: ES_SFX.WHOOSH_DEEP, volume: 0.32, note: "ovl-028 timeline entry" },
+  { frame: 12230, src: ES_SFX.POP_SINGLE, volume: 0.34, durationInFrames: 22, note: "AUG 23 node" },
+  { frame: 12681, src: ES_SFX.POP_SINGLE, volume: 0.34, durationInFrames: 22, note: "DEZ 23 node" },
+  { frame: 12779, src: ES_SFX.POP_SINGLE, volume: 0.34, durationInFrames: 22, note: "SEP 24 node" },
+  { frame: 13083, src: ES_SFX.POP_SINGLE, volume: 0.34, durationInFrames: 22, note: "APR 25 node" },
+  { frame: 13280, src: ES_SFX.POP_SINGLE, volume: 0.34, durationInFrames: 22, note: "OKT 25 node" },
 
-  // ovl-027 Price Explosion (Iter2.16: single entry clink for the triptychon)
+  // ovl-027 Price Explosion (Iter2.18: POP_SINGLE per chart reveal + entry clink)
   { frame: 12334, src: ES_SFX.GLASS_CLINK, volume: 0.35, note: "charts triptychon entry" },
+  { frame: 12334, src: ES_SFX.POP_SINGLE, volume: 0.36, durationInFrames: 22, note: "GALLIUM chart reveal" },
+  { frame: 12356, src: ES_SFX.POP_SINGLE, volume: 0.36, durationInFrames: 22, note: "GERMANIUM chart reveal" },
+  { frame: 12378, src: ES_SFX.POP_SINGLE, volume: 0.36, durationInFrames: 22, note: "ANTIMON chart reveal" },
 
   // ovl-029 EU Krisendialog (Iter2.13: keyboard volume matched lower)
   { frame: 13434, src: ES_SFX.WHOOSH_SPACEY, volume: 0.32, note: "ovl-029 news entry" },
@@ -186,9 +198,12 @@ const CUES: SfxCue[] = [
   { frame: 18586, src: ES_SFX.GLASS_CLINK, volume: 0.32, note: "ovl-035 ANTIZYKLISCH" },
   { frame: 18586, src: ES_SFX.POP, volume: 0.28, note: "core message reveal" },
 
-  // ovl-new-001 Steuer-Fachpresse (Iter2.16: removed 4 per-card pops + 4 rapid-fire
-  // stamp impacts — they all clashed. Single entry whoosh + 1 bigger stamp hit.)
+  // ovl-new-001 Steuer-Fachpresse (Iter2.18: per-card POP_SINGLE reveals + stamps)
   { frame: 19444, src: ES_SFX.WHOOSH_DEEP, volume: 0.3, note: "ovl-new-001 press entry" },
+  { frame: 19456, src: ES_SFX.POP_SINGLE, volume: 0.34, durationInFrames: 22, note: "PwC card" },
+  { frame: 19470, src: ES_SFX.POP_SINGLE, volume: 0.34, durationInFrames: 22, note: "DATEV card" },
+  { frame: 19484, src: ES_SFX.POP_SINGLE, volume: 0.34, durationInFrames: 22, note: "Haufe card" },
+  { frame: 19498, src: ES_SFX.POP_SINGLE, volume: 0.34, durationInFrames: 22, note: "RP card" },
   { frame: 19510, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.44, note: "rotes X stamp group" },
 
   // ovl-036 HardCTA (Iter2.14: word-sync "Und wer darüber hinaus..." @679.52s=20385, single phase)

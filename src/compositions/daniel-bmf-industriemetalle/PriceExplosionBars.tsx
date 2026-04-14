@@ -161,12 +161,14 @@ export const PriceExplosionBars: React.FC = () => {
     extrapolateRight: "clamp",
   });
 
-  const CHART_WIDTH = 520;
-  const CHART_HEIGHT = 560;
+  const CHART_WIDTH = 500;
+  const CHART_HEIGHT = 500;
   const GAP = 40;
   const totalWidth = CHART_WIDTH * 3 + GAP * 2;
   const startX = (1920 - totalWidth) / 2;
-  const chartY = 180;
+  // Iter2.8: Charts positioned BETWEEN header (y=90-180) and ovl-028 timeline
+  // (which sits at bottom y=880-1060). Safe zone y=260-780.
+  const chartY = 260;
 
   return (
     <AbsoluteFill>

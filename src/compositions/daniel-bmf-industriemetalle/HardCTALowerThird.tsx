@@ -126,30 +126,30 @@ export const HardCTALowerThird: React.FC = () => {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              gap: 10,
+              gap: 8,
             }}
           >
             <div
               style={{
                 fontFamily: '"Montserrat", sans-serif',
                 fontWeight: 900,
-                fontSize: 72,
+                fontSize: 64,
                 color: "#f5d37a",
                 letterSpacing: "-0.01em",
                 lineHeight: 1,
                 textShadow: "0 0 32px rgba(245, 211, 122, 0.42)",
               }}
             >
-              ERSTGESPRÄCH SICHERN
+              ERSTGESPRÄCH
             </div>
             <div
               style={{
-                fontFamily: '"Inter", sans-serif',
-                fontWeight: 700,
-                fontSize: 26,
+                fontFamily: '"Montserrat", sans-serif',
+                fontWeight: 900,
+                fontSize: 48,
                 color: "#fff5e0",
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
+                letterSpacing: "-0.01em",
+                lineHeight: 1,
               }}
             >
               LINK IN DER VIDEOBESCHREIBUNG
@@ -165,32 +165,32 @@ export const HardCTALowerThird: React.FC = () => {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              gap: 10,
+              gap: 8,
             }}
           >
             <div
               style={{
                 fontFamily: '"Montserrat", sans-serif',
                 fontWeight: 900,
-                fontSize: 72,
+                fontSize: 64,
                 color: "#f5d37a",
                 letterSpacing: "-0.01em",
                 lineHeight: 1,
               }}
             >
-              KOSTENFREI · UNVERBINDLICH
+              KOSTENFREI
             </div>
             <div
               style={{
-                fontFamily: '"Inter", sans-serif',
-                fontWeight: 700,
-                fontSize: 26,
+                fontFamily: '"Montserrat", sans-serif',
+                fontWeight: 900,
+                fontSize: 48,
                 color: "#fff5e0",
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
+                letterSpacing: "-0.01em",
+                lineHeight: 1,
               }}
             >
-              DIREKT VON DANIEL SAUER
+              UNVERBINDLICH · TERMINE BEGRENZT
             </div>
           </div>
 
@@ -203,32 +203,32 @@ export const HardCTALowerThird: React.FC = () => {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              gap: 10,
+              gap: 8,
             }}
           >
             <div
               style={{
                 fontFamily: '"Montserrat", sans-serif',
                 fontWeight: 900,
-                fontSize: 72,
+                fontSize: 64,
                 color: "#f5d37a",
                 letterSpacing: "-0.01em",
                 lineHeight: 1,
               }}
             >
-              JETZT HANDELN · BEVOR ES VORBEI IST
+              JETZT HANDELN
             </div>
             <div
               style={{
-                fontFamily: '"Inter", sans-serif',
-                fontWeight: 700,
-                fontSize: 26,
+                fontFamily: '"Montserrat", sans-serif',
+                fontWeight: 900,
+                fontSize: 48,
                 color: "#fff5e0",
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
+                letterSpacing: "-0.01em",
+                lineHeight: 1,
               }}
             >
-              Termine begrenzt · Direkt von Daniel
+              BEVOR ES VORBEI IST
             </div>
           </div>
         </div>

@@ -47,6 +47,7 @@ import { KenBurns } from "../../components/KenBurns";
 import { FullscreenTakeover } from "../../components/FullscreenTakeover";
 import { Letterbox } from "../../components/Letterbox";
 import { BigQuoteCard3D } from "../../components/library/remotion-coder/BigQuoteCard3D";
+import { MovingGridBG } from "./MovingGridBG";
 // FlatEuropeMap3D removed in Iter2.4 — ovl-031 disabled per user feedback
 
 /**
@@ -116,7 +117,7 @@ const O = {
   "ovl-033": { start: 15950, end: 16400 },    // BigQuoteCard3D Nicht-Beanstandung (F.6)
   "ovl-034": { start: 17278, end: 17550 },    // SchweizLocationCard (F.7 word-sync "Schweiz")
   "ovl-035": { start: 18200, end: 18540 },    // CoreMessageStatCard → GlareCard3D (F.5)
-  "ovl-036": { start: 19980, end: 20690 },    // HardCTALowerThird 3-phase + BorderBeam (F.9)
+  "ovl-036": { start: 19980, end: 20640 },    // HardCTALowerThird (Iter2.8: end 20690→20640 to avoid overlap with slot-11 @ 20640)
   "ovl-037": { start: 21262, end: 21790 },    // AuthorityTimeline → GlareCard3D (F.3 word-sync "20")
   "ovl-038": { start: 22620, end: 22800 },    // Kinetic DANKE DEUTSCHLAND via AuroraTextEffect (F.2)
   "ovl-new-001": { start: 19350, end: 19980 }, // HandelsblattFAZNewsCard
@@ -451,16 +452,22 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
 
       {/* ovl-020 — KineticMoment #3 22 JAHRE GELOESCHT (km-07) */}
 
-      {/* ovl-021 — BigQuoteCard3D BMF-Schreiben aufgehoben (F.6) */}
+      {/* ovl-021 — BigQuoteCard3D BMF-Schreiben aufgehoben (Iter2.8: + MovingGridBG) */}
       <Sequence from={O["ovl-021"].start} durationInFrames={O["ovl-021"].end - O["ovl-021"].start}>
-        <BigQuoteCard3D
-          quote="Das BMF-Schreiben vom 28. Januar 2004 wird damit aufgehoben."
-          author="BMF-Schreiben"
-          authorRole="Seite 7 · letzter Satz"
-          authorDate="9. April 2026"
-          variant="overlay"
-          clusterOffsetX={220}
-        />
+        <AbsoluteFill>
+          <MovingGridBG
+            gridColor="rgba(245, 211, 122, 0.10)"
+            accentColor="rgba(245, 211, 122, 0.18)"
+          />
+          <BigQuoteCard3D
+            quote="Das BMF-Schreiben vom 28. Januar 2004 wird damit aufgehoben."
+            author="BMF-Schreiben"
+            authorRole="Seite 7 · letzter Satz"
+            authorDate="9. April 2026"
+            variant="overlay"
+            clusterOffsetX={0}
+          />
+        </AbsoluteFill>
       </Sequence>
 
       {/* ovl-022 — KineticMoment #4 0 CENT NEUE STEUERN (km-08) */}
@@ -586,17 +593,10 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
         />
       </Sequence>
 
-      {/* ovl-017 — Counter #2 DIE VERBOTENE RÜCKWIRKUNG (ehem. km-05) */}
-      <Sequence from={O["ovl-017"].start} durationInFrames={O["ovl-017"].end - O["ovl-017"].start} name="km-05">
-        <BmfKineticStack
-          position="lower-third"
-          counter={{ text: "# 2", startFrame: 0, color: "#f5d37a", size: 64 }}
-          words={[
-            { text: "DIE VERBOTENE", startFrame: 12, size: 72, color: "#fff5e0", reveal: "scale" },
-            { text: "RÜCKWIRKUNG", startFrame: 32, size: 120, color: "#E30613", variant: "circle", accentColor: "#E30613", reveal: "scale" },
-          ]}
-        />
-      </Sequence>
+      {/* ovl-017 — DISABLED (Iter2.8 Bild 31: doppelt sich mit KAP03 "DIE VERBOTENE RÜCKWIRKUNG" 2s vorher) */}
+      {/* <Sequence from={O["ovl-017"].start} durationInFrames={O["ovl-017"].end - O["ovl-017"].start} name="km-05">
+        <BmfKineticStack ... />
+      </Sequence> */}
 
       {/* ovl-019 — "STRAFZETTEL" (ehem. km-06) */}
       <Sequence from={O["ovl-019"].start} durationInFrames={O["ovl-019"].end - O["ovl-019"].start} name="km-06">

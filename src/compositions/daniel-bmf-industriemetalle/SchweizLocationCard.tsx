@@ -13,6 +13,7 @@ import {
   spring,
 } from "remotion";
 import { Sparkles } from "../../components/library/effects/Sparkles";
+import { MovingGridBG } from "./MovingGridBG";
 
 export const SchweizLocationCard: React.FC = () => {
   const frame = useCurrentFrame();
@@ -29,7 +30,15 @@ export const SchweizLocationCard: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
-      {/* Sparkles gold particles (no BG — Daniel + LocosColorGrade shines through) */}
+      {/* Iter2.8: MovingGridBG gold-warm, fullscreen had no BG before */}
+      <AbsoluteFill style={{ opacity: panelOpacity }}>
+        <MovingGridBG
+          gridColor="rgba(245, 211, 122, 0.12)"
+          accentColor="rgba(245, 211, 122, 0.22)"
+        />
+      </AbsoluteFill>
+
+      {/* Sparkles gold particles layered over the grid */}
       <Sparkles count={60} color="#f5d37a" minSize={1} maxSize={3} speed={0.32} />
 
       {/* Centered glass card */}

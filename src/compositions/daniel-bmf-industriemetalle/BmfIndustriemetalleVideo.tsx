@@ -125,11 +125,13 @@ const O = {
 
 // Chapter title cards (Iter2.7: KAP01 removed — broke the hook immediately)
 // KAP02/03/04/07 shifted by ±30 frames to avoid collision with kinetic moments.
+// Iter2.11: KAP05 moved 11100-11280 → 14400-14580 (was overlapping ovl-024
+// NullEuroBilanz 11031-11210 AND was not word-synced to "Zufall" @ 486.3s=14589)
 const CHAPTERS = [
   { start: 4620, end: 4800, num: "KAPITEL 02", title: "DAS WORT DAS ALLES VERRÄT", sub: "#1 · KOBALT · DIE SMOKING GUN" },
   { start: 7257, end: 7437, num: "KAPITEL 03", title: "DIE VERBOTENE RÜCKWIRKUNG", sub: "#2 · 22 JAHRE · GESTOPPT" },
   { start: 8640, end: 8820, num: "KAPITEL 04", title: "DAS NULL-CENT-PARADOX", sub: "#3 · DEUTSCHLAND BEKOMMT GAR NICHTS" },
-  { start: 11100, end: 11280, num: "KAPITEL 05", title: "DAS MUSTER", sub: "#4 · KEIN ZUFALL · EINE KETTE" },
+  { start: 14400, end: 14580, num: "KAPITEL 05", title: "KEIN ZUFALL", sub: "#4 · EINE KETTE · DAS MUSTER" },
   { start: 16380, end: 16560, num: "KAPITEL 06", title: "DIE LÖSUNG", sub: "SCHWEIZ · ZOLLLAGER · WARMER PAYOFF" },
 ];
 
@@ -609,17 +611,10 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
         />
       </Sequence>
 
-      {/* ovl-020 — Counter #3 22 JAHRE GELÖSCHT (ehem. km-07) */}
-      <Sequence from={O["ovl-020"].start} durationInFrames={O["ovl-020"].end - O["ovl-020"].start} name="km-07">
-        <BmfKineticStack
-          position="lower-third"
-          counter={{ text: "# 3", startFrame: 0, color: "#f5d37a", size: 64 }}
-          words={[
-            { text: "22 JAHRE", startFrame: 12, size: 108, color: "#f5d37a", reveal: "scale" },
-            { text: "GELÖSCHT", startFrame: 32, size: 132, color: "#E30613", variant: "circle", accentColor: "#E30613", reveal: "scale" },
-          ]}
-        />
-      </Sequence>
+      {/* ovl-020 — DISABLED (Iter2.11 Audit: overlap with KAP04 "DAS NULL-CENT-PARADOX #3" 60f earlier, same counter) */}
+      {/* <Sequence from={O["ovl-020"].start} durationInFrames={O["ovl-020"].end - O["ovl-020"].start} name="km-07">
+        <BmfKineticStack ... />
+      </Sequence> */}
 
       {/* ovl-022 — Counter #4 0 CENT NEUE STEUERN (ehem. km-08) */}
       <Sequence from={O["ovl-022"].start} durationInFrames={O["ovl-022"].end - O["ovl-022"].start} name="km-08">

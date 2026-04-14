@@ -105,10 +105,10 @@ const O = {
   "ovl-022": { start: 10116, end: 10305 },    // Kinetic Counter #4 0 CENT NEUE STEUERN (F.2 word-sync)
   "ovl-023": { start: 10464, end: 10704 },    // PercentDownStatCard 19%
   "ovl-024": { start: 10872, end: 11205 },    // NullEuroBilanzFullscreen
-  "ovl-025": { start: 11259, end: 11535 },    // TwoDateTimelineSplit
+  "ovl-025": { start: 11260, end: 11535 },    // TwoDateTimelineSplit → HistoricalTimeline3D (F.3)
   "ovl-026": { start: 11535, end: 12000 },    // ChinaBekanntmachungDocumentCard (F.1 editorial trim)
-  "ovl-027": { start: 12213, end: 12570 },    // ChartBuild PREIS-EXPLOSION
-  "ovl-028": { start: 12669, end: 13317 },    // HorizontalChronologyTimeline
+  "ovl-027": { start: 12334, end: 12930 },    // PriceExplosionBars real charts (F.3 word-sync Gallium→437)
+  "ovl-028": { start: 12230, end: 13443 },    // HorizontalChronologyTimeline → HistoricalTimeline3D (F.3 extended)
   "ovl-029": { start: 13434, end: 13767 },    // EUKrisendialogNewsCard
   "ovl-030": { start: 14035, end: 14200 },    // Kinetic GENAU JETZT (F.2 word-sync)
   "ovl-031": { start: 14649, end: 15075 },    // SplitNarrative Reserven
@@ -117,7 +117,7 @@ const O = {
   "ovl-034": { start: 17079, end: 17643 },    // SchweizLocationCard
   "ovl-035": { start: 18078, end: 18543 },    // CoreMessageStatCard
   "ovl-036": { start: 19980, end: 20697 },    // HardCTALowerThird
-  "ovl-037": { start: 21243, end: 21786 },    // AuthorityTimeline
+  "ovl-037": { start: 21262, end: 21790 },    // AuthorityTimeline → GlareCard3D (F.3 word-sync "20")
   "ovl-038": { start: 22620, end: 22800 },    // Kinetic DANKE DEUTSCHLAND via AuroraTextEffect (F.2)
   "ovl-new-001": { start: 19350, end: 19980 }, // HandelsblattFAZNewsCard
 } as const;

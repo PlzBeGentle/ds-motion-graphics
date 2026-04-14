@@ -1,235 +1,256 @@
+// Phase F.3 — PriceExplosionBars rewritten with real chart PNGs
+// ovl-027: 3 real price charts (Gallium / Germanium / Antimon) triptychon
+// with CountUp overlays for +365% / +400% / +437%.
+// Frame range 12213-12570 → 12334-12930 (word-sync to "Gallium" / "437").
+// Per-chart reveal staggered to Daniel's word-starts:
+//   Gallium   @ local 0   (abs 12334)
+//   Germanium @ local 28  (abs 12362 — word "Germanium" 412.08s)
+//   Antimon   @ local 589 (abs 12923 — word "437" 430.76s)
+
 import React from "react";
-import { useCurrentFrame, useVideoConfig, interpolate, spring, Easing } from "remotion";
-import { BMF_COLORS, BMF_FONTS, seqLifecycle } from "./bmf-theme";
+import {
+  AbsoluteFill,
+  Img,
+  useCurrentFrame,
+  interpolate,
+  spring,
+  useVideoConfig,
+  Easing,
+  staticFile,
+} from "remotion";
 
-/**
- * PriceExplosionBars — 3-Bar horizontal chart for ovl-027.
- *
- * Shows GALLIUM +365%, GERMANIUM +400%, ANTIMON +437% as animated
- * horizontal bars with LOCOS gold/red accent. Right-split position,
- * respects face-safe-zone (x=1180-1880, y=180-880).
- *
- * Replacement for library ChartBuild which is a line chart (wrong type
- * for 2-3 categorical percentage values).
- */
+type ChartBlockProps = {
+  src: string;
+  label: string;
+  percent: number;
+  color: string;
+  startFrame: number;
+  countStartFrame: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
 
-const BARS = [
-  { label: "GALLIUM", value: 365, icon: "Ga" },
-  { label: "GERMANIUM", value: 400, icon: "Ge" },
-  { label: "ANTIMON", value: 437, icon: "Sb" },
-];
-
-const MAX_VALUE = 500; // scale so 437% doesn't hit edge
-
-export const PriceExplosionBars: React.FC = () => {
+const ChartBlock: React.FC<ChartBlockProps> = ({
+  src,
+  label,
+  percent,
+  color,
+  startFrame,
+  countStartFrame,
+  x,
+  y,
+  width,
+  height,
+}) => {
   const frame = useCurrentFrame();
-  const { durationInFrames, fps } = useVideoConfig();
+  const { fps } = useVideoConfig();
+  const localFrame = frame - startFrame;
+  if (localFrame < -4) return null;
 
-  const opacity = seqLifecycle(frame, durationInFrames, 18, 18);
-
-  // Panel entrance
-  const panelSpring = spring({
-    frame,
+  const entrySpring = spring({
+    frame: localFrame,
     fps,
-    config: { damping: 16, stiffness: 110, mass: 0.85 },
+    config: { damping: 14, stiffness: 140, mass: 0.8 },
   });
-  const panelScale = interpolate(panelSpring, [0, 1], [0.92, 1]);
-  const panelY = interpolate(panelSpring, [0, 1], [30, 0]);
 
-  // Title reveal
-  const titleOpacity = interpolate(frame, [6, 18], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  const opacity = interpolate(entrySpring, [0, 1], [0, 1]);
+  const scale = interpolate(entrySpring, [0, 1], [0.84, 1]);
+  const translateY = interpolate(entrySpring, [0, 1], [40, 0]);
+
+  const countProgress = interpolate(
+    frame - countStartFrame,
+    [0, 50],
+    [0, percent],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+      easing: Easing.out(Easing.cubic),
+    },
+  );
+  const displayPercent = Math.round(countProgress);
 
   return (
     <div
       style={{
         position: "absolute",
-        left: 1180,
-        top: 180,
-        width: 680,
-        height: 720,
+        left: x,
+        top: y,
+        width,
+        height,
         opacity,
-        transform: `scale(${panelScale}) translateY(${panelY}px)`,
-        transformOrigin: "center top",
-        background: "rgba(22,21,20,0.88)",
-        backdropFilter: "blur(14px)",
-        border: `1.5px solid rgba(212,160,23,0.38)`,
-        borderRadius: 8,
-        padding: "32px 32px 36px 32px",
-        boxShadow:
-          "0 28px 72px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.06)",
-        display: "flex",
-        flexDirection: "column",
-        gap: 20,
-        pointerEvents: "none",
+        transform: `translateY(${translateY}px) scale(${scale})`,
+        transformOrigin: "center center",
       }}
     >
-      {/* Label row */}
       <div
         style={{
-          opacity: titleOpacity,
-          fontFamily: BMF_FONTS.sans,
-          fontWeight: 600,
-          fontSize: 18,
-          color: BMF_COLORS.goldAccent,
-          letterSpacing: "0.24em",
-          textTransform: "uppercase",
+          position: "absolute",
+          inset: 0,
+          background: "rgba(14, 12, 8, 0.86)",
+          backdropFilter: "blur(22px) saturate(1.2)",
+          WebkitBackdropFilter: "blur(22px) saturate(1.2)",
+          border: "1px solid rgba(245, 211, 122, 0.22)",
+          borderRadius: 18,
+          boxShadow:
+            "0 30px 80px rgba(0, 0, 0, 0.72), inset 0 1px 0 rgba(255,255,255,0.12)",
+          padding: 20,
+          display: "flex",
+          flexDirection: "column",
+          gap: 12,
         }}
       >
-        KRITISCHE METALLE · EU
-      </div>
+        <div
+          style={{
+            fontFamily: '"Montserrat", "Inter", sans-serif',
+            fontWeight: 900,
+            fontSize: 30,
+            color: "#fff5e0",
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+          }}
+        >
+          {label}
+        </div>
 
-      {/* Title */}
-      <div
-        style={{
-          opacity: titleOpacity,
-          fontFamily: BMF_FONTS.sans,
-          fontWeight: 900,
-          fontSize: 44,
-          color: BMF_COLORS.goldHighlight,
-          lineHeight: 1.05,
-          letterSpacing: "0.02em",
-          marginBottom: 12,
-          textShadow: "0 2px 20px rgba(0,0,0,0.7)",
-        }}
-      >
-        PREIS-EXPLOSION
-      </div>
+        <div
+          style={{
+            flex: 1,
+            position: "relative",
+            borderRadius: 10,
+            overflow: "hidden",
+            background: "rgba(0,0,0,0.35)",
+          }}
+        >
+          <Img
+            src={staticFile(src)}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+              filter: "brightness(1.05) contrast(1.08)",
+            }}
+          />
+        </div>
 
-      {/* Bars */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
-        {BARS.map((bar, i) => {
-          const barStart = 24 + i * 12;
-          const barSpring = spring({
-            frame: frame - barStart,
-            fps,
-            config: { damping: 18, stiffness: 90, mass: 1 },
-          });
-          const barProgress = interpolate(barSpring, [0, 1], [0, 1], {
-            extrapolateLeft: "clamp",
-            extrapolateRight: "clamp",
-          });
-          const barWidth = `${(bar.value / MAX_VALUE) * 100 * barProgress}%`;
-
-          // Number count-up
-          const counterStart = barStart + 8;
-          const counterProgress = interpolate(
-            frame,
-            [counterStart, counterStart + 22],
-            [0, 1],
-            {
-              extrapolateLeft: "clamp",
-              extrapolateRight: "clamp",
-              easing: Easing.out(Easing.cubic),
-            }
-          );
-          const displayValue = Math.round(bar.value * counterProgress);
-
-          const labelOpacity = interpolate(frame, [barStart, barStart + 8], [0, 1], {
-            extrapolateLeft: "clamp",
-            extrapolateRight: "clamp",
-          });
-
-          return (
-            <div key={bar.label} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {/* Label + Value row */}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "baseline",
-                  opacity: labelOpacity,
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "baseline",
-                    gap: 14,
-                  }}
-                >
-                  <span
-                    style={{
-                      fontFamily: BMF_FONTS.sans,
-                      fontWeight: 800,
-                      fontSize: 22,
-                      color: BMF_COLORS.warmWhite,
-                      letterSpacing: "0.08em",
-                    }}
-                  >
-                    {bar.label}
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: BMF_FONTS.sans,
-                      fontWeight: 600,
-                      fontSize: 14,
-                      color: "rgba(255,245,224,0.58)",
-                      letterSpacing: "0.18em",
-                    }}
-                  >
-                    {bar.icon}
-                  </span>
-                </div>
-                <span
-                  style={{
-                    fontFamily: "Orbitron, sans-serif",
-                    fontWeight: 900,
-                    fontSize: 36,
-                    color: BMF_COLORS.redAccent,
-                    letterSpacing: "-0.02em",
-                    textShadow: "0 2px 16px rgba(227,6,19,0.35)",
-                  }}
-                >
-                  +{displayValue}%
-                </span>
-              </div>
-
-              {/* Bar track + fill */}
-              <div
-                style={{
-                  height: 18,
-                  background: "rgba(255,245,224,0.08)",
-                  borderRadius: 2,
-                  overflow: "hidden",
-                  border: "1px solid rgba(212,160,23,0.18)",
-                }}
-              >
-                <div
-                  style={{
-                    width: barWidth,
-                    height: "100%",
-                    background: `linear-gradient(90deg, ${BMF_COLORS.goldHighlight} 0%, ${BMF_COLORS.redAccent} 100%)`,
-                    boxShadow: "0 0 16px rgba(227,6,19,0.35)",
-                    transition: "none",
-                  }}
-                />
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Footer annotation */}
-      <div
-        style={{
-          marginTop: "auto",
-          paddingTop: 16,
-          borderTop: "1px solid rgba(212,160,23,0.22)",
-          fontFamily: BMF_FONTS.sans,
-          fontWeight: 500,
-          fontSize: 14,
-          color: "rgba(255,245,224,0.58)",
-          letterSpacing: "0.08em",
-          textTransform: "uppercase",
-          opacity: titleOpacity,
-        }}
-      >
-        SEIT CHINA-EXPORTKONTROLLEN · 2024-2026
+        <div
+          style={{
+            fontFamily: '"Montserrat", sans-serif',
+            fontWeight: 900,
+            fontSize: 56,
+            color,
+            letterSpacing: "-0.02em",
+            textAlign: "right",
+            textShadow: `0 0 24px ${color}aa`,
+          }}
+        >
+          +{displayPercent}%
+        </div>
       </div>
     </div>
+  );
+};
+
+export const PriceExplosionBars: React.FC = () => {
+  const frame = useCurrentFrame();
+
+  const headerOpacity = interpolate(frame, [0, 24], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  const CHART_WIDTH = 560;
+  const CHART_HEIGHT = 700;
+  const GAP = 48;
+  const totalWidth = CHART_WIDTH * 3 + GAP * 2;
+  const startX = (1920 - totalWidth) / 2;
+  const chartY = 220;
+
+  return (
+    <AbsoluteFill
+      style={{
+        background:
+          "radial-gradient(ellipse 90% 70% at 50% 45%, rgba(20, 16, 10, 0.92) 0%, rgba(2, 3, 8, 0.96) 60%, #020308 100%)",
+      }}
+    >
+      <div
+        style={{
+          position: "absolute",
+          top: 90,
+          left: 0,
+          right: 0,
+          textAlign: "center",
+          opacity: headerOpacity,
+        }}
+      >
+        <div
+          style={{
+            fontFamily: '"Montserrat", sans-serif',
+            fontWeight: 900,
+            fontSize: 56,
+            color: "#fff5e0",
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            textShadow: "0 4px 20px rgba(0,0,0,0.72)",
+          }}
+        >
+          PREIS-EXPLOSION
+        </div>
+        <div
+          style={{
+            fontFamily: '"Inter", sans-serif',
+            fontWeight: 700,
+            fontSize: 22,
+            color: "rgba(245, 211, 122, 0.82)",
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            marginTop: 8,
+          }}
+        >
+          Industriemetalle · 2023 → 2025
+        </div>
+      </div>
+
+      <ChartBlock
+        src="assets/gallium preis.png"
+        label="GALLIUM"
+        percent={365}
+        color="#f5d37a"
+        startFrame={0}
+        countStartFrame={48}
+        x={startX}
+        y={chartY}
+        width={CHART_WIDTH}
+        height={CHART_HEIGHT}
+      />
+
+      <ChartBlock
+        src="assets/germanium preis.png"
+        label="GERMANIUM"
+        percent={400}
+        color="#f5d37a"
+        startFrame={28}
+        countStartFrame={76}
+        x={startX + CHART_WIDTH + GAP}
+        y={chartY}
+        width={CHART_WIDTH}
+        height={CHART_HEIGHT}
+      />
+
+      <ChartBlock
+        src="assets/antimon preis.png"
+        label="ANTIMON"
+        percent={437}
+        color="#E30613"
+        startFrame={589}
+        countStartFrame={610}
+        x={startX + (CHART_WIDTH + GAP) * 2}
+        y={chartY}
+        width={CHART_WIDTH}
+        height={CHART_HEIGHT}
+      />
+    </AbsoluteFill>
   );
 };
 

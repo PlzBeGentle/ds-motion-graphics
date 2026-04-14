@@ -27,7 +27,7 @@ type HistoricalTimeline3DProps = {
   highlightIndices?: number[];
 };
 
-const HistoricalTimeline3D: React.FC<HistoricalTimeline3DProps> = ({
+export const HistoricalTimeline3D: React.FC<HistoricalTimeline3DProps> = ({
   title,
   subtitle,
   events,

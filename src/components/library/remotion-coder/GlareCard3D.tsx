@@ -14,7 +14,7 @@ type GlareCard3DProps = {
 
 const formatNumber = (n: number): string => Math.round(n).toLocaleString("de-DE");
 
-const GlareCard3D: React.FC<GlareCard3DProps> = ({
+export const GlareCard3D: React.FC<GlareCard3DProps> = ({
   title,
   subtitle,
   fromValue,

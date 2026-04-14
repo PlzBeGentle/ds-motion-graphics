@@ -1,20 +1,16 @@
-import React from "react";
-import { HorizontalChronologyTimeline } from "./HorizontalChronologyTimeline";
+// Phase F.3 — AuthorityTimeline rewritten as GlareCard3D wrapper
+// ovl-037: "20 JAHRE FINANZBRANCHE" — Daniel's credibility anchor.
 
-/**
- * AuthorityTimeline (ovl-037) — 3-dot biography timeline.
- * Variant of HorizontalChronologyTimeline.
- */
+import React from "react";
+import { GlareCard3D } from "../../components/library/remotion-coder/GlareCard3D";
+
 export const AuthorityTimeline: React.FC = () => (
-  <HorizontalChronologyTimeline
-    dots={[
-      { date: "2005", label: "START FINANZBRANCHE" },
-      { date: "2008", label: "LEHMAN · FINANZKRISE" },
-      { date: "2011", label: "EURO-KRISE" },
-    ]}
-    x={80}
-    y={720}
-    w={1760}
+  <GlareCard3D
+    title="20 JAHRE"
+    subtitle="FINANZBRANCHE"
+    fromValue={2006}
+    toValue={2026}
+    badgeText="DANIEL SAUER · SEIT 2006"
   />
 );
 

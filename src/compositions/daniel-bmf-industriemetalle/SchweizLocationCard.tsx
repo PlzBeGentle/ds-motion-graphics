@@ -1,70 +1,36 @@
-// Phase F.7 — SchweizLocationCard rewritten with slot-10 KenBurns + Sparkles
-// ovl-034: Warm Schweiz payoff. Uses slot-10-schweiz-alpen.png as full BG
-// with KenBurns drift + Sparkles particle overlay (NO GoldVault3D per Dario).
-// Frame range 17079-17643 → 17278-17550 (word-sync "Schweiz"@575.94s)
+// Iter2.4 — SchweizLocationCard: removed slot-10 BG (redundant with B-roll slot 10)
+// Feedback Bild 13: schweiz-alpen.png used twice back-to-back (SchweizLocationCard
+// @ 17278-17550 + B-roll slot 10 @ 17850-18060) felt redundant.
+// Now: just the glass card over Daniel + gold sparkles, no own BG.
+// "Freihafen" + "Gold-Grade" removed (not in script).
 
 import React from "react";
 import {
   AbsoluteFill,
-  Img,
   useCurrentFrame,
   useVideoConfig,
   interpolate,
   spring,
-  Easing,
-  staticFile,
 } from "remotion";
 import { Sparkles } from "../../components/library/effects/Sparkles";
 
 export const SchweizLocationCard: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps, durationInFrames } = useVideoConfig();
+  const { fps } = useVideoConfig();
 
-  // BG entry
-  const bgOpacity = interpolate(frame, [0, 18], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const kbScale = interpolate(frame, [0, durationInFrames], [1.02, 1.1]);
-  const kbDriftY = interpolate(frame, [0, durationInFrames], [0, -18]);
-
-  // Panel entry
   const panelSpring = spring({
-    frame: frame - 12,
+    frame: frame - 6,
     fps,
-    config: { damping: 14, stiffness: 100, mass: 1 },
+    config: { damping: 14, stiffness: 120, mass: 0.9 },
   });
   const panelOpacity = interpolate(panelSpring, [0, 1], [0, 1]);
-  const panelScale = interpolate(panelSpring, [0, 1], [0.9, 1]);
-  const panelY = interpolate(panelSpring, [0, 1], [40, 0]);
+  const panelScale = interpolate(panelSpring, [0, 1], [0.88, 1]);
+  const panelY = interpolate(panelSpring, [0, 1], [30, 0]);
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
-      {/* BG — Schweiz Alpen KenBurns */}
-      <AbsoluteFill style={{ opacity: bgOpacity }}>
-        <Img
-          src={staticFile("bmf/b-roll/slot-10-schweiz-alpen.png")}
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            transform: `scale(${kbScale}) translateY(${kbDriftY}px)`,
-            transformOrigin: "center 60%",
-            filter: "brightness(0.82) saturate(1.15) contrast(1.08)",
-          }}
-        />
-      </AbsoluteFill>
-
-      {/* Warm vignette overlay */}
-      <AbsoluteFill
-        style={{
-          background:
-            "radial-gradient(ellipse 90% 70% at 50% 50%, transparent 0%, rgba(14, 8, 2, 0.55) 100%)",
-        }}
-      />
-
-      {/* Sparkles gold particles */}
-      <Sparkles count={70} color="#f5d37a" minSize={1} maxSize={4} speed={0.35} />
+      {/* Sparkles gold particles (no BG — Daniel + LocosColorGrade shines through) */}
+      <Sparkles count={60} color="#f5d37a" minSize={1} maxSize={3} speed={0.32} />
 
       {/* Centered glass card */}
       <div
@@ -74,26 +40,26 @@ export const SchweizLocationCard: React.FC = () => {
           left: "50%",
           transform: `translate(-50%, -50%) translateY(${panelY}px) scale(${panelScale})`,
           opacity: panelOpacity,
-          padding: "48px 64px",
-          background: "rgba(14, 10, 4, 0.8)",
-          backdropFilter: "blur(18px) saturate(1.3)",
-          WebkitBackdropFilter: "blur(18px) saturate(1.3)",
-          border: "1.5px solid rgba(245, 211, 122, 0.48)",
+          padding: "42px 60px",
+          background: "rgba(14, 10, 4, 0.86)",
+          backdropFilter: "blur(22px) saturate(1.3)",
+          WebkitBackdropFilter: "blur(22px) saturate(1.3)",
+          border: "1.5px solid rgba(245, 211, 122, 0.52)",
           borderRadius: 20,
           boxShadow:
-            "0 40px 120px rgba(0,0,0,0.82), inset 0 1px 0 rgba(255,255,255,0.12), 0 0 80px rgba(245, 211, 122, 0.22)",
+            "0 40px 120px rgba(0,0,0,0.82), inset 0 1px 0 rgba(255,255,255,0.12), 0 0 80px rgba(245, 211, 122, 0.28)",
           textAlign: "center",
           display: "flex",
           flexDirection: "column",
           gap: 14,
-          minWidth: 620,
+          minWidth: 580,
         }}
       >
         <div
           style={{
             fontFamily: '"Inter", sans-serif',
             fontWeight: 800,
-            fontSize: 28,
+            fontSize: 26,
             color: "rgba(245, 211, 122, 0.82)",
             letterSpacing: "0.3em",
             textTransform: "uppercase",
@@ -105,11 +71,12 @@ export const SchweizLocationCard: React.FC = () => {
           style={{
             fontFamily: '"Montserrat", sans-serif',
             fontWeight: 900,
-            fontSize: 148,
+            fontSize: 140,
             color: "#f5d37a",
             letterSpacing: "-0.02em",
             lineHeight: 1,
-            textShadow: "0 0 48px rgba(245, 211, 122, 0.68), 0 6px 24px rgba(0,0,0,0.72)",
+            textShadow:
+              "0 0 48px rgba(245, 211, 122, 0.68), 0 6px 24px rgba(0,0,0,0.72)",
           }}
         >
           SCHWEIZ
@@ -118,7 +85,7 @@ export const SchweizLocationCard: React.FC = () => {
           style={{
             fontFamily: '"Inter", sans-serif',
             fontWeight: 700,
-            fontSize: 30,
+            fontSize: 26,
             color: "#fff5e0",
             letterSpacing: "0.14em",
             textTransform: "uppercase",

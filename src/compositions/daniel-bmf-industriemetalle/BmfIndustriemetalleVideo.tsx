@@ -47,7 +47,7 @@ import { AuroraTextEffect } from "../../components/library/text/AuroraTextEffect
 import { FullscreenTakeover } from "../../components/FullscreenTakeover";
 import { Letterbox } from "../../components/Letterbox";
 import { BigQuoteCard3D } from "../../components/library/remotion-coder/BigQuoteCard3D";
-import { FlatEuropeMap3D } from "../../components/library/remotion-coder/FlatEuropeMap3D";
+// FlatEuropeMap3D removed in Iter2.4 — ovl-031 disabled per user feedback
 
 /**
  * BMF-Industriemetalle Video — Daniel Sauer Longform (Phase-6 Full Build)
@@ -508,19 +508,10 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
 
       {/* ovl-030 — KineticMoment GENAU JETZT (glitch, km-09) */}
 
-      {/* ovl-031 — SplitNarrative → FlatEuropeMap3D Reserven (F.7) */}
-      <Sequence from={O["ovl-031"].start} durationInFrames={O["ovl-031"].end - O["ovl-031"].start}>
-        <FlatEuropeMap3D
-          title="STRATEGISCHE RESERVEN"
-          subtitle="CHINA BAUT AUF · EUROPA BAUT AB"
-          highlightMarker={{
-            city: "BERLIN",
-            label: "0 CENT RESERVE",
-            countryCode: "DE",
-          }}
-          variant="fullscreen"
-        />
-      </Sequence>
+      {/* ovl-031 — DISABLED (Iter2.4 Bild 10: FlatEuropeMap3D macht keinen Sinn, komplett raus) */}
+      {/* <Sequence from={O["ovl-031"].start} durationInFrames={O["ovl-031"].end - O["ovl-031"].start}>
+        <FlatEuropeMap3D ... />
+      </Sequence> */}
 
       {/* ovl-032 — TrustCheckmarkStatCard */}
       <Sequence from={O["ovl-032"].start} durationInFrames={O["ovl-032"].end - O["ovl-032"].start}>

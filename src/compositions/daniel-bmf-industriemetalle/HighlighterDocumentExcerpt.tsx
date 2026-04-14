@@ -73,7 +73,8 @@ export const HighlighterDocumentExcerpt: React.FC = () => {
           style={{
             width: "100%",
             height: "100%",
-            objectFit: "cover",
+            objectFit: "contain",
+            background: "#fbf6e8",
             transform: `scale(${imageZoom}) translateY(${imageDriftY}px)`,
             transformOrigin: "center 40%",
           }}

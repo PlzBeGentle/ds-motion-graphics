@@ -1,25 +1,132 @@
-// Phase F.4 — DonnerstagNewsCard rewritten as NewspaperMockup3D editorial
-// ovl-011: Donnerstagabend-Leak Einzelheiten. Editorial (no real source asset).
+// Iter2.3 — DonnerstagNewsCard simple 2D card (was NewspaperMockup3D)
+// Feedback Bild 3: too much text + phantom photo placeholder for missing asset
+// ovl-011: Donnerstagabend 20 Uhr — BMF interne Weisung leak
 
 import React from "react";
-import { NewspaperMockup3D } from "../../components/library/remotion-coder/NewspaperMockup3D";
+import {
+  AbsoluteFill,
+  useCurrentFrame,
+  spring,
+  interpolate,
+  useVideoConfig,
+  Easing,
+} from "remotion";
 
-export const DonnerstagNewsCard: React.FC = () => (
-  <NewspaperMockup3D
-    newspaperName="BMF · INTERNE WEISUNG"
-    dateStamp="DONNERSTAG · 9. APRIL 2026 · 20:00 UHR"
-    issueNumber="GZ: III C 3 - S 7157-a/00005/001/052"
-    headline="7 SEITEN — IN DER NACHT RAUSGESCHICKT"
-    subheadline="Bundesfinanzministerium publiziert neue § 4 Nr. 4b UStG Anweisung"
-    bodyParagraphs={[
-      "Das Schreiben erreicht Steuerberater, Zolllager-Betreiber und Edelmetall-Händler ohne Vorlauf. Eine Übergangsfrist fehlt. Die Wirkung tritt sofort ein.",
-      "Ein versteckter Satz auf Seite 7 hebt das 22 Jahre gültige BMF-Schreiben vom 28. Januar 2004 auf — die gesamte bisherige Rechtspraxis fällt in sich zusammen.",
-    ]}
-    pullQuote="7 Seiten. Donnerstagabend. Ohne Parlament. Ohne Übergang."
-    pullQuoteAttribution="Daniel Sauer"
-    variant="overlay"
-    clusterOffsetX={-280}
-  />
-);
+export const DonnerstagNewsCard: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  const entry = spring({
+    frame: frame - 4,
+    fps,
+    config: { damping: 14, stiffness: 120, mass: 0.9 },
+  });
+  const opacity = interpolate(entry, [0, 1], [0, 1]);
+  const slideY = interpolate(entry, [0, 1], [30, 0]);
+  const scale = interpolate(entry, [0, 1], [0.94, 1]);
+
+  const dividerProgress = interpolate(frame, [14, 32], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.out(Easing.cubic),
+  });
+
+  return (
+    <AbsoluteFill style={{ pointerEvents: "none" }}>
+      <div
+        style={{
+          position: "absolute",
+          left: 1100,
+          top: 160,
+          width: 780,
+          opacity,
+          transform: `translateY(${slideY}px) scale(${scale}) rotateY(-4deg)`,
+          transformOrigin: "left center",
+          padding: "44px 48px",
+          background: "rgba(14, 12, 8, 0.95)",
+          backdropFilter: "blur(22px) saturate(1.2)",
+          WebkitBackdropFilter: "blur(22px) saturate(1.2)",
+          border: "1.5px solid rgba(245, 211, 122, 0.42)",
+          borderRadius: 14,
+          boxShadow:
+            "0 30px 80px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.1)",
+          display: "flex",
+          flexDirection: "column",
+          gap: 20,
+        }}
+      >
+        {/* Source + Date */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            fontFamily: '"Inter", sans-serif',
+            fontWeight: 800,
+            fontSize: 18,
+            color: "rgba(245, 211, 122, 0.82)",
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+          }}
+        >
+          <span>BMF · INTERNE WEISUNG</span>
+          <span style={{ color: "#E30613" }}>DO · 20:00 UHR</span>
+        </div>
+
+        {/* Gold divider */}
+        <div
+          style={{
+            height: 2,
+            width: `${dividerProgress * 100}%`,
+            background: "linear-gradient(90deg, #d4a017, transparent)",
+            boxShadow: "0 0 12px rgba(212, 160, 23, 0.5)",
+          }}
+        />
+
+        {/* Headline */}
+        <div
+          style={{
+            fontFamily: '"Montserrat", sans-serif',
+            fontWeight: 900,
+            fontSize: 64,
+            color: "#fff5e0",
+            letterSpacing: "-0.01em",
+            lineHeight: 1,
+            textShadow: "0 4px 20px rgba(0,0,0,0.72)",
+          }}
+        >
+          7 SEITEN
+        </div>
+        <div
+          style={{
+            fontFamily: '"Montserrat", sans-serif',
+            fontWeight: 900,
+            fontSize: 44,
+            color: "#E30613",
+            letterSpacing: "-0.01em",
+            lineHeight: 1,
+          }}
+        >
+          Rausgeschickt in der Nacht.
+        </div>
+
+        {/* Meta footer */}
+        <div
+          style={{
+            fontFamily: '"Inter", sans-serif',
+            fontWeight: 700,
+            fontSize: 20,
+            color: "rgba(255, 245, 224, 0.72)",
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            marginTop: 8,
+          }}
+        >
+          9. April 2026 · Donnerstagabend
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
 
 export default DonnerstagNewsCard;

@@ -1,100 +1,144 @@
+// Phase F.6 — ElementChipRow rewritten with glass-element chips + stagger reveal
+// ovl-007: "Indium / Gallium / Germanium / Rhenium / Antimon" — periodic element row
+// Frame range 2001-2193 → 2078-2199 (word-sync "Industriemetalle"@69.28s)
+
 import React from "react";
-import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
-import { BMF_COLORS, BMF_FONTS, BMF_SPRINGS, seqLifecycle } from "./bmf-theme";
+import {
+  AbsoluteFill,
+  useCurrentFrame,
+  spring,
+  interpolate,
+  useVideoConfig,
+} from "remotion";
 
 const CHIPS = [
-  { symbol: "In", name: "INDIUM", atomic_no: 49 },
-  { symbol: "Ga", name: "GALLIUM", atomic_no: 31 },
-  { symbol: "Ge", name: "GERMANIUM", atomic_no: 32 },
+  { symbol: "In", name: "INDIUM", atomicNo: 49, wordStart: 2134 },
+  { symbol: "Ga", name: "GALLIUM", atomicNo: 31, wordStart: 2078 },
+  { symbol: "Ge", name: "GERMANIUM", atomicNo: 32, wordStart: 2090 },
+  { symbol: "Re", name: "RHENIUM", atomicNo: 75, wordStart: 2151 },
 ];
 
-/**
- * ElementChipRow (ovl-007) — periodic-element 3-chip grid.
- * Symbol + name + atomic number, stagger scale-pop entry.
- */
 export const ElementChipRow: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps, durationInFrames } = useVideoConfig();
-  const opacity = seqLifecycle(frame, durationInFrames, 14, 12);
+  const { fps } = useVideoConfig();
+
+  // Sequence starts at frame 2078 (absolute). Local frame 0 = abs frame 2078.
+  // Compute stagger offsets from word-starts relative to Sequence start.
+  const SEQ_START = 2078;
 
   return (
-    <AbsoluteFill style={{ pointerEvents: "none" }}>
+    <AbsoluteFill
+      style={{
+        background:
+          "radial-gradient(ellipse 90% 70% at 50% 50%, rgba(14, 12, 8, 0.88) 0%, rgba(2, 3, 8, 0.95) 70%)",
+      }}
+    >
       <div
         style={{
           position: "absolute",
-          left: 1220,
-          top: 200,
-          width: 620,
-          opacity,
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
           display: "flex",
           flexDirection: "column",
-          gap: 20,
+          alignItems: "center",
+          gap: 36,
         }}
       >
-        {CHIPS.map((c, i) => {
-          const pop = spring({
-            frame: frame - i * 4 - 4,
-            fps,
-            config: BMF_SPRINGS.snappy,
-          });
-          const scale = interpolate(pop, [0, 1], [0.7, 1]);
-          const chipOpacity = interpolate(pop, [0, 1], [0, 1]);
-          return (
-            <div
-              key={c.symbol}
-              style={{
-                opacity: chipOpacity,
-                transform: `scale(${scale})`,
-                transformOrigin: "left center",
-                background: BMF_COLORS.panelBg,
-                border: `1.5px solid ${BMF_COLORS.goldBorder}`,
-                borderRadius: 8,
-                backdropFilter: "blur(18px)",
-                padding: "24px 32px",
-                display: "flex",
-                alignItems: "center",
-                gap: 28,
-              }}
-            >
+        <div
+          style={{
+            fontFamily: '"Inter", sans-serif',
+            fontWeight: 800,
+            fontSize: 28,
+            color: "rgba(245, 211, 122, 0.82)",
+            letterSpacing: "0.28em",
+            textTransform: "uppercase",
+            opacity: interpolate(frame, [0, 20], [0, 1], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            }),
+          }}
+        >
+          Industriemetalle · Steuerfrei
+        </div>
+
+        <div style={{ display: "flex", gap: 32 }}>
+          {CHIPS.map((chip, i) => {
+            const localStart = chip.wordStart - SEQ_START;
+            const localFrame = frame - localStart;
+            if (localFrame < -2) return null;
+            const entry = spring({
+              frame: localFrame,
+              fps,
+              config: { damping: 14, stiffness: 140, mass: 0.7 },
+            });
+            const opacity = interpolate(entry, [0, 1], [0, 1]);
+            const scale = interpolate(entry, [0, 1], [0.72, 1]);
+            const translateY = interpolate(entry, [0, 1], [48, 0]);
+
+            return (
               <div
+                key={chip.symbol}
                 style={{
-                  fontFamily: BMF_FONTS.sans,
-                  fontWeight: 900,
-                  fontSize: 96,
-                  color: BMF_COLORS.goldAccent,
-                  lineHeight: 1,
-                  minWidth: 140,
+                  width: 240,
+                  height: 280,
+                  background: "rgba(14, 12, 8, 0.92)",
+                  backdropFilter: "blur(22px) saturate(1.2)",
+                  WebkitBackdropFilter: "blur(22px) saturate(1.2)",
+                  border: "1.5px solid rgba(245, 211, 122, 0.42)",
+                  borderRadius: 18,
+                  boxShadow:
+                    "0 24px 60px rgba(0,0,0,0.72), inset 0 1px 0 rgba(255,255,255,0.08), 0 0 32px rgba(245, 211, 122, 0.15)",
+                  padding: "28px 22px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  opacity,
+                  transform: `translateY(${translateY}px) scale(${scale})`,
+                  transformOrigin: "center center",
                 }}
               >
-                {c.symbol}
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
                 <div
                   style={{
-                    fontFamily: BMF_FONTS.sans,
+                    fontFamily: '"Inter", sans-serif',
                     fontWeight: 700,
+                    fontSize: 20,
+                    color: "rgba(245, 211, 122, 0.72)",
+                    alignSelf: "flex-end",
+                  }}
+                >
+                  {chip.atomicNo}
+                </div>
+                <div
+                  style={{
+                    fontFamily: '"Montserrat", sans-serif',
+                    fontWeight: 900,
+                    fontSize: 104,
+                    color: "#f5d37a",
+                    letterSpacing: "-0.04em",
+                    lineHeight: 1,
+                    textShadow: "0 0 28px rgba(245, 211, 122, 0.5)",
+                  }}
+                >
+                  {chip.symbol}
+                </div>
+                <div
+                  style={{
+                    fontFamily: '"Inter", sans-serif',
+                    fontWeight: 800,
                     fontSize: 22,
-                    color: BMF_COLORS.warmWhiteSoft,
+                    color: "#fff5e0",
                     letterSpacing: "0.14em",
+                    textTransform: "uppercase",
                   }}
                 >
-                  {c.name}
-                </div>
-                <div
-                  style={{
-                    fontFamily: BMF_FONTS.mono,
-                    fontWeight: 700,
-                    fontSize: 16,
-                    color: "rgba(212,160,23,0.7)",
-                    letterSpacing: "0.1em",
-                  }}
-                >
-                  N° {c.atomic_no}
+                  {chip.name}
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </AbsoluteFill>
   );

@@ -17,7 +17,7 @@ type AnimatedBulletListProps = {
   clusterOffsetX?: number;
 };
 
-const AnimatedBulletList: React.FC<AnimatedBulletListProps> = ({
+export const AnimatedBulletList: React.FC<AnimatedBulletListProps> = ({
   title,
   subtitle,
   items,

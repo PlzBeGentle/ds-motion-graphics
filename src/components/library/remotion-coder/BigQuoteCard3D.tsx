@@ -12,7 +12,7 @@ type BigQuoteCard3DProps = {
   clusterOffsetX?: number;
 };
 
-const BigQuoteCard3D: React.FC<BigQuoteCard3DProps> = ({
+export const BigQuoteCard3D: React.FC<BigQuoteCard3DProps> = ({
   quote,
   author,
   authorRole,

@@ -46,8 +46,7 @@ import { AuroraTextEffect } from "../../components/library/text/AuroraTextEffect
 import { FullscreenTakeover } from "../../components/FullscreenTakeover";
 import { Letterbox } from "../../components/Letterbox";
 import { SplitNarrative } from "../../components/SplitNarrative";
-import { QuoteCard } from "../../components/QuoteCard";
-import { ChartBuild } from "../../components/ChartBuild";
+import { BigQuoteCard3D } from "../../components/library/remotion-coder/BigQuoteCard3D";
 
 /**
  * BMF-Industriemetalle Video — Daniel Sauer Longform (Phase-6 Full Build)
@@ -84,10 +83,10 @@ const O = {
   "ovl-001": { start: 162, end: 249 },        // DanielLowerThirdStatCard (F.5 word-sync "5"@5.42s)
   "ovl-002": { start: 653, end: 856 },        // BMFDocumentCard (F.1 word-sync: "9."→"rausgeschickt")
   "ovl-003": { start: 887, end: 1041 },       // Kinetic 22 JAHRE GESTOPPT (F.2 D4 wording, word-sync)
-  "ovl-004": { start: 1041, end: 1158 },      // OhneTriptychon
+  "ovl-004": { start: 1040, end: 1166 },      // OhneTriptychon → AnimatedBulletList (F.6)
   "ovl-005": { start: 1173, end: 1395 },      // FullscreenTakeover 0 CENT
   "ovl-006": { start: 1410, end: 1695 },      // CTALowerThird
-  "ovl-007": { start: 2001, end: 2193 },      // ElementChipRow
+  "ovl-007": { start: 2078, end: 2199 },      // ElementChipRow (F.6 word-sync "Industriemetalle")
   "ovl-008": { start: 2280, end: 2544 },      // ZollfreilagerFlowSplit
   "ovl-009": { start: 3079, end: 3184 },      // BMF2004DocumentCard (F.1 word-sync: "2004" mention)
   "ovl-010": { start: 3385, end: 3450 },      // Kinetic AUFGEHOBEN (F.2 word-sync + D5 cap)
@@ -101,7 +100,7 @@ const O = {
   "ovl-018": { start: 7495, end: 7980 },      // HighlighterDocumentExcerpt (F.1 word-sync: "wörtlich")
   "ovl-019": { start: 8041, end: 8156 },      // Kinetic STRAFZETTEL (F.2 word-sync)
   "ovl-020": { start: 8700, end: 8780 },      // Kinetic Counter #3 22 JAHRE GELÖSCHT (F.2 word-sync)
-  "ovl-021": { start: 9501, end: 9954 },      // QuoteCard — aufgehoben
+  "ovl-021": { start: 9596, end: 9870 },      // BigQuoteCard3D — aufgehoben (F.6 word-sync "2004")
   "ovl-022": { start: 10116, end: 10305 },    // Kinetic Counter #4 0 CENT NEUE STEUERN (F.2 word-sync)
   "ovl-023": { start: 10373, end: 10700 },    // PercentDownStatCard 19% (F.5 word-sync "19"@345.76)
   "ovl-024": { start: 11031, end: 11210 },    // NullEuroBilanzFullscreen (F.5 word-sync "0"@367.70)
@@ -113,7 +112,7 @@ const O = {
   "ovl-030": { start: 14035, end: 14200 },    // Kinetic GENAU JETZT (F.2 word-sync)
   "ovl-031": { start: 14649, end: 15075 },    // SplitNarrative Reserven
   "ovl-032": { start: 15660, end: 15800 },    // TrustCheckmarkStatCard → Safe3D (F.5 word-sync "Vertrauensschutz")
-  "ovl-033": { start: 15888, end: 16467 },    // QuoteCard Nicht-Beanstandung
+  "ovl-033": { start: 15950, end: 16400 },    // BigQuoteCard3D Nicht-Beanstandung (F.6)
   "ovl-034": { start: 17079, end: 17643 },    // SchweizLocationCard
   "ovl-035": { start: 18200, end: 18540 },    // CoreMessageStatCard → GlareCard3D (F.5)
   "ovl-036": { start: 19980, end: 20697 },    // HardCTALowerThird
@@ -423,24 +422,16 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
 
       {/* ovl-020 — KineticMoment #3 22 JAHRE GELOESCHT (km-07) */}
 
-      {/* ovl-021 — QuoteCard BMF-Schreiben aufgehoben */}
+      {/* ovl-021 — BigQuoteCard3D BMF-Schreiben aufgehoben (F.6) */}
       <Sequence from={O["ovl-021"].start} durationInFrames={O["ovl-021"].end - O["ovl-021"].start}>
-        <div
-          style={{
-            position: "absolute",
-            left: 1200,
-            top: 260,
-            width: 660,
-            height: 520,
-          }}
-        >
-          <QuoteCard
-            quote="Das BMF-Schreiben vom 28. Januar 2004 wird damit aufgehoben."
-            author="BMF-SCHREIBEN · 9. APRIL 2026 · SEITE 7"
-            fontFamily="Playfair Display, serif"
-            fontWeight={700}
-          />
-        </div>
+        <BigQuoteCard3D
+          quote="Das BMF-Schreiben vom 28. Januar 2004 wird damit aufgehoben."
+          author="BMF-Schreiben"
+          authorRole="Seite 7 · letzter Satz"
+          authorDate="9. April 2026"
+          variant="overlay"
+          clusterOffsetX={220}
+        />
       </Sequence>
 
       {/* ovl-022 — KineticMoment #4 0 CENT NEUE STEUERN (km-08) */}
@@ -510,24 +501,16 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
         <TrustCheckmarkStatCard />
       </Sequence>
 
-      {/* ovl-033 — QuoteCard Nicht-Beanstandungsklausel */}
+      {/* ovl-033 — BigQuoteCard3D Nicht-Beanstandungsklausel (F.6) */}
       <Sequence from={O["ovl-033"].start} durationInFrames={O["ovl-033"].end - O["ovl-033"].start}>
-        <div
-          style={{
-            position: "absolute",
-            left: 1200,
-            top: 260,
-            width: 680,
-            height: 520,
-          }}
-        >
-          <QuoteCard
-            quote="Nicht-Beanstandungsklausel — Alle Altkäufe bleiben umsatzsteuerfrei."
-            author="BMF § 4 NR. 4B"
-            fontFamily="Playfair Display, serif"
-            fontWeight={700}
-          />
-        </div>
+        <BigQuoteCard3D
+          quote="Die Nicht-Beanstandungsklausel schützt alle Altbestände. Ihre Reserven bleiben umsatzsteuerfrei."
+          author="BMF § 4 Nr. 4b UStG"
+          authorRole="Übergangsregelung"
+          authorDate="9. April 2026"
+          variant="overlay"
+          clusterOffsetX={220}
+        />
       </Sequence>
 
       {/* ovl-034 — SchweizLocationCard (warm payoff) */}

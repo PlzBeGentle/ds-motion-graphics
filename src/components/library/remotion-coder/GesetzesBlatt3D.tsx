@@ -23,7 +23,7 @@ type GesetzesBlatt3DProps = {
 	clusterOffsetX?: number;
 };
 
-const GesetzesBlatt3D: React.FC<GesetzesBlatt3DProps> = ({
+export const GesetzesBlatt3D: React.FC<GesetzesBlatt3DProps> = ({
 	sourceName,
 	sourceMeta,
 	lawTitle,

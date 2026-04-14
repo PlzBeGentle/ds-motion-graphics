@@ -80,14 +80,14 @@ import { ChartBuild } from "../../components/ChartBuild";
 // Overlay frame ranges — keep in sync with mograph-overlay-specs.json
 const O = {
   "ovl-001": { start: 72, end: 258 },        // DanielLowerThirdStatCard (5 Stunden)
-  "ovl-002": { start: 648, end: 870 },        // BMFDocumentCard
+  "ovl-002": { start: 653, end: 856 },        // BMFDocumentCard (F.1 word-sync: "9."→"rausgeschickt")
   "ovl-003": { start: 870, end: 1038 },       // KineticText 22 JAHRE · EIN FEDERSTRICH
   "ovl-004": { start: 1041, end: 1158 },      // OhneTriptychon
   "ovl-005": { start: 1173, end: 1395 },      // FullscreenTakeover 0 CENT
   "ovl-006": { start: 1410, end: 1695 },      // CTALowerThird
   "ovl-007": { start: 2001, end: 2193 },      // ElementChipRow
   "ovl-008": { start: 2280, end: 2544 },      // ZollfreilagerFlowSplit
-  "ovl-009": { start: 2670, end: 3165 },      // BMF2004DocumentCard
+  "ovl-009": { start: 3079, end: 3184 },      // BMF2004DocumentCard (F.1 word-sync: "2004" mention)
   "ovl-010": { start: 3270, end: 3552 },      // KineticText AUFGEHOBEN (stamp-slam)
   "ovl-011": { start: 3750, end: 4104 },      // DonnerstagNewsCard
   "ovl-012": { start: 4452, end: 4827 },      // KineticText BRUCH NICHT UPDATE
@@ -96,7 +96,7 @@ const O = {
   "ovl-015": { start: 5838, end: 7278 },      // KobaltFullscreen (already built)
   "ovl-016": { start: 6909, end: 7278 },      // EUCriticalIconRow
   "ovl-017": { start: 7287, end: 7575 },      // KineticText #2 RUECKWIRKUNG
-  "ovl-018": { start: 7584, end: 7974 },      // HighlighterDocumentExcerpt
+  "ovl-018": { start: 7495, end: 7980 },      // HighlighterDocumentExcerpt (F.1 word-sync: "wörtlich")
   "ovl-019": { start: 7998, end: 8295 },      // KineticText STRAFZETTEL
   "ovl-020": { start: 8670, end: 8895 },      // KineticText #3 22 JAHRE GELOESCHT
   "ovl-021": { start: 9501, end: 9954 },      // QuoteCard — aufgehoben
@@ -104,7 +104,7 @@ const O = {
   "ovl-023": { start: 10464, end: 10704 },    // PercentDownStatCard 19%
   "ovl-024": { start: 10872, end: 11205 },    // NullEuroBilanzFullscreen
   "ovl-025": { start: 11259, end: 11535 },    // TwoDateTimelineSplit
-  "ovl-026": { start: 11535, end: 12012 },    // ChinaBekanntmachungDocumentCard
+  "ovl-026": { start: 11535, end: 12000 },    // ChinaBekanntmachungDocumentCard (F.1 editorial trim)
   "ovl-027": { start: 12213, end: 12570 },    // ChartBuild PREIS-EXPLOSION
   "ovl-028": { start: 12669, end: 13317 },    // HorizontalChronologyTimeline
   "ovl-029": { start: 13434, end: 13767 },    // EUKrisendialogNewsCard

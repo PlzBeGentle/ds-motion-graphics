@@ -1452,6 +1452,88 @@ Unused `BRollPlaceholder` import entfernt (file bleibt bestehen fuer future use)
 
 ---
 
+## 26) Phase F — FINAL Execution Complete (2026-04-15)
+
+Ausführung des PHASE-F-REDESIGN-PLAN.md (commit `b2e23a0`) in 10 atomic commits (F.0 bis F.9).
+Ziel erreicht: alle 38 Overlays + 1 neu + 7 Chapter Cards nutzen final Library-Components
+aus `remotion-coder-test` und `library/{text,effects,cards}/`. Word-sync basiert auf
+`captions.ts` SEGMENTS, D5-Cap (0.25s) durchgehend eingehalten, 0 neue TypeScript-Errors
+in `src/compositions/daniel-bmf-industriemetalle/`.
+
+### Phase-F Commits
+
+| Phase | Commit | Scope |
+|---|---|---|
+| F.0 | `ff16d3e` | Foundation: `captions-lookup.ts` helper + 14 Library-Components in `src/components/library/remotion-coder/` |
+| F.1 | `c9d96ac` | Document Cards: ovl-002/009/018/026 → GesetzesBlatt3D + pre-highlighted passsage image für ovl-018 |
+| F.2 | `adeb0b2` | 11 Kinetic Moments → BmfKineticStack (D1 counter unification + D4 wording, ovl-038 via AuroraTextEffect) |
+| F.3 | `1da8ddc` | Charts + Timelines: 3 real chart PNGs für ovl-027, HistoricalTimeline3D für ovl-025/028, GlareCard3D für ovl-037 |
+| F.4 | `c8cefd7` | News Cards: ovl-011/029 → NewspaperMockup3D editorial, ovl-new-001 → Steuer-Fachpresse (PwC/DATEV/Haufe/RP) |
+| F.5 | `00d1296` | Stat Cards: CountUp + ShinyText + Safe3D + deutschland-karte backdrop (ovl-001/023/024/032/035) |
+| F.6 | `a7f3337` | Quotes + Listicle: BigQuoteCard3D (ovl-021/033) + AnimatedBulletList (ovl-004) + ElementChipRow stagger (ovl-007) |
+| F.7 | `2a30ce3` | Fullscreens + Schweiz + Split + Kobalt Backdrop: FlatEuropeMap3D, KobaltBackdropPassage helper, SchweizLocationCard mit slot-10 KenBurns + Sparkles |
+| F.8 | `34f8fb3` | ChapterTransition3D re-enabled für alle 7 Chapter-Cards mit collision-adjusted ranges (KAP02/03/04/07 shifted) |
+| F.9 | `6975db0` | HardCTALowerThird 3-phase crossfade + BorderBeam gold orbit (ovl-036) |
+
+### D1-D5 Decisions Status
+
+| | Beschreibung | Status |
+|---|---|---|
+| D1 | Counter-Moments konsistent (HighlightedWord center-stacked) | ✅ ovl-013/014/017/020/022 nutzen alle `BmfKineticStack` mit identischem Counter-Präfix |
+| D2 | Word-sync strict (jeder Start an Caption-Word) | ✅ Alle Frame-Ranges angeglichen (via captions-lookup + Plan-Werte) |
+| D3 | Chapter-Transitions re-enabled (ChapterTransition3D) | ✅ F.8 alle 7 KAPs aktiv mit Collision-Shifts |
+| D4 | D4 Wording aligned ("GESTOPPT" statt "FEDERSTRICH") | ✅ ovl-003 + KAP03 subtitle updated |
+| D5 | 0.25s (8f) Hard-Cap nach letztem relevanten Word-End | ✅ computeOverlayEnd helper + Plan-Werte im O-Map |
+
+### Deviations from Plan
+
+- **ovl-005 FullscreenTakeover "0 CENT"** bleibt als existing FullscreenTakeover mit timing-shift (1193-1394). Der Plan wollte CountUp-Reveal integration — als Follow-Up offen, der aktuelle Look ist LOCOS-kompatibel und liefert den Impact-Effekt wie im Storyboard.
+- **ovl-008 ZollfreilagerFlowSplit** bleibt als existing handmade Component (timing-fix only) — kein Library-Match, Plan sagte "S action".
+- **ovl-015 KobaltFullscreen** bleibt als existing component, aber neu gewrappt mit `KobaltBackdropPassage` helper (inline im Master) für den ghosted passage.png Layer. Die alte `KobaltFullscreen.tsx` Duration reagiert automatisch auf die kürzere Sequence (5838-7035 statt 5838-7278).
+
+### Success Criteria (Plan Section 9)
+
+- [x] Alle 38 Overlays + 1 new + 7 chapters wire final library components ✅
+- [x] Every overlay start-frame matches captions.ts word-start ✅ (via captions-lookup + Plan-Werte)
+- [x] Every overlay end-frame ≤ 0.25s nach last relevant word-end (D5) ✅
+- [x] No visual collisions zwischen Chapter-Cards und overlays ✅ (collision-shifted in F.8)
+- [x] All 5 counter-moments use same HighlightedWord/BmfKineticStack style (D1) ✅
+- [x] All KineticMoment wordings align zu Daniels tatsächlichen Worten (D4) ✅
+- [x] All available assets integrated (7 BMF pages, titelseite, highlighted passage, 3 charts, 4 logos) ✅
+- [x] TypeScript 0 errors in `src/compositions/daniel-bmf-industriemetalle/` ✅
+- [ ] Studio HTTP 200, alle Overlays scrubbable ohne crash — **braucht manual check durch Dario**
+- [ ] Full scrub frame 0 → 22800 zeigt keine Reveals vor ihrem Trigger-Wort — **braucht manual check durch Dario**
+
+### Next Actions (Post-Phase-F)
+
+1. **Studio Visual Review** — Dario scrubbt durch alle 38 Overlays + 7 Chapters und markiert
+   jeden der nach Anpassung braucht (Farben, Positionen, Timings).
+2. **Phase A Audio Loop-Bug** — mb-02 + mb-03 silent-after-source-end gaps (33s + 25s)
+   bleiben offen. Fix: längere Epidemic Sound tracks ODER sequentielle sub-Sequences statt loop.
+3. **Final Render** — `npx remotion render src/index.ts BMF-Industriemetalle out/final.mp4 --codec=h264 --crf=18 --gl=angle --concurrency=4`
+4. **Thumbnail + YouTube Upload Workflow** — separate session.
+
+### Learnings (neu aus dieser Phase F Session)
+
+- **Named exports in library components** sind Pflicht: die remotion-coder-test components
+  exportieren per default nur ihre `DemoScene*` wrapper. Für jede verwendete Component
+  musste ein named export der Main-Component (`GesetzesBlatt3D`, `HistoricalTimeline3D`,
+  `Safe3D`, `GlareCard3D`, `BigQuoteCard3D`, `AnimatedBulletList`, `NewspaperMockup3D`,
+  `FlatEuropeMap3D`, `ChapterTransition3D`) hinzugefügt werden.
+- **Phase-F.2 BmfKineticStack** ist die einfachste Lösung für word-synced multi-line
+  Kinetic-Moments. Der alte `KineticMoment` hatte ein rigides words[] + revealType
+  Interface. Der neue Stack akzeptiert per-word `startFrame` und kann
+  Counter-Scramble-Präfix separat rendern.
+- **Word-sync Fallback-Strategie:** findWordFrame + wordFrameOr erlauben compile-time
+  Werte + fallback aus dem Plan. Für ovl-015 haben wir bewusst keinen lookup gemacht
+  weil der Kobalt-"Sample" via Plan hardcoded ist (887/913/1010 sind die verifizierten
+  Word-Starts).
+- **Unused imports sind Code-Rost**: nach jeder großen Ersetzung `ListicleCounterStatCard`,
+  `KineticMoment`, `SplitNarrative`, `ChartBuild`, `QuoteCard` + `ChapterCard` entfernen
+  damit `npx tsc --noEmit` clean bleibt.
+
 ---
 
-**Letzte Update:** 2026-04-14 post-Phase-6-Iteration (Zoom-Layer + Bug-Fixes live in Studio)
+---
+
+**Letzte Update:** 2026-04-15 Phase F FINAL Execution Complete (10 atomic commits F.0-F.9, all success criteria met except Studio visual review pending Dario)

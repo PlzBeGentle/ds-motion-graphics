@@ -13,6 +13,7 @@ import {
   useVideoConfig,
   Easing,
 } from "remotion";
+import { MovingGridBG } from "./MovingGridBG";
 
 export const TrustCheckmarkStatCard: React.FC = () => {
   const frame = useCurrentFrame();
@@ -37,14 +38,23 @@ export const TrustCheckmarkStatCard: React.FC = () => {
   const glowPulse = 0.7 + 0.3 * Math.sin((frame / 22) * Math.PI * 2);
 
   return (
-    <AbsoluteFill
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        pointerEvents: "none",
-      }}
-    >
+    <AbsoluteFill>
+      {/* Moving grid BG — green-tinted for trust (Iter2.5) */}
+      <AbsoluteFill style={{ opacity }}>
+        <MovingGridBG
+          gridColor="rgba(93, 235, 147, 0.10)"
+          accentColor="rgba(93, 235, 147, 0.18)"
+        />
+      </AbsoluteFill>
+
+      <AbsoluteFill
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          pointerEvents: "none",
+        }}
+      >
       <div
         style={{
           padding: "54px 72px",
@@ -134,6 +144,7 @@ export const TrustCheckmarkStatCard: React.FC = () => {
           </div>
         </div>
       </div>
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

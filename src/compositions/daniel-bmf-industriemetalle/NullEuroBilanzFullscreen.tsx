@@ -11,6 +11,7 @@ import {
   interpolate,
   useVideoConfig,
 } from "remotion";
+import { MovingGridBG } from "./MovingGridBG";
 
 const MINUS_ROWS = [
   { label: "ANLEGER", state: "VERLOREN" },
@@ -51,8 +52,13 @@ export const NullEuroBilanzFullscreen: React.FC = () => {
 
   return (
     <AbsoluteFill>
-      {/* Dim background (deutschland-karte removed per Iter2.1 feedback) */}
-      <AbsoluteFill style={{ background: "#0a0808", opacity: bgOpacity }} />
+      {/* Moving grid BG (Iter2.5) */}
+      <AbsoluteFill style={{ opacity: bgOpacity }}>
+        <MovingGridBG
+          gridColor="rgba(227, 6, 19, 0.12)"
+          accentColor="rgba(227, 6, 19, 0.22)"
+        />
+      </AbsoluteFill>
 
       {/* Split grid: PLUS (0 EUR) vs MINUS (3 VERLOREN rows) */}
       <div

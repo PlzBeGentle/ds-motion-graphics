@@ -49,7 +49,7 @@ const CUES: SfxCue[] = [
   { frame: 1040, src: ES_SFX.WHOOSH_DEEP, volume: 0.3, note: "ovl-004 entry" },
 
   // ovl-005 FullscreenTakeover 0 CENT
-  { frame: 1185, src: ES_SFX.RISER_GRITTY, volume: 0.36, note: "0 CENT build" },
+  { frame: 1185, src: ES_SFX.RISER_GRITTY, volume: 0.36, durationInFrames: 13, note: "0 CENT build — hard cut at impact" },
   { frame: 1193, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.5, note: "ovl-005 0 CENT hit" },
 
   // ovl-006 CTA soft
@@ -85,7 +85,7 @@ const CUES: SfxCue[] = [
   { frame: 4805, src: ES_SFX.BOOM_LOW, volume: 0.4, note: "BRUCH layered" },
 
   // KAP02 DAS WORT DAS ALLES VERRÄT
-  { frame: 4610, src: ES_SFX.RISER_LONG_TRAILER, volume: 0.32, durationInFrames: 270, note: "KAP02 build" },
+  { frame: 4610, src: ES_SFX.RISER_LONG_TRAILER, volume: 0.32, durationInFrames: 15, note: "KAP02 build — hard cut at impact" },
   { frame: 4620, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.44, note: "KAP02 open" },
   { frame: 4790, src: ES_SFX.WHOOSH_DEEP, volume: 0.3, note: "KAP02 close" },
 
@@ -99,7 +99,7 @@ const CUES: SfxCue[] = [
   { frame: 5340, src: ES_SFX.POP, volume: 0.3, note: "Das Wort reveal" },
 
   // ovl-015 KOBALT FULLSCREEN — the centerpiece
-  { frame: 5820, src: ES_SFX.RISER_LONG_TRAILER, volume: 0.42, durationInFrames: 300, note: "KOBALT hero build" },
+  { frame: 5820, src: ES_SFX.RISER_LONG_TRAILER, volume: 0.42, durationInFrames: 24, note: "KOBALT hero build — hard cut at impact 5838" },
   { frame: 5838, src: ES_SFX.BOOM_ULTRA_LOW, volume: 0.62, note: "KOBALT hero punch" },
   { frame: 5868, src: ES_SFX.IMPACT_DEEP_HIT, volume: 0.48, note: "KOBALT kinetic reveal" },
 
@@ -133,7 +133,7 @@ const CUES: SfxCue[] = [
   { frame: 10383, src: ES_SFX.GLASS_CLINK, volume: 0.36, note: "19% reveal" },
 
   // ovl-024 0,00 EUR hero
-  { frame: 11020, src: ES_SFX.RISER_GRITTY, volume: 0.4, durationInFrames: 60, note: "pre 0,00 EUR" },
+  { frame: 11020, src: ES_SFX.RISER_GRITTY, volume: 0.4, durationInFrames: 13, note: "pre 0,00 EUR — hard cut at impact 11031" },
   { frame: 11031, src: ES_SFX.BOOM_ULTRA_LOW, volume: 0.6, note: "ovl-024 0,00 EUR punch" },
   { frame: 11031, src: ES_SFX.IMPACT_DEEP_HIT, volume: 0.44, note: "0,00 EUR layered" },
 
@@ -158,7 +158,7 @@ const CUES: SfxCue[] = [
   { frame: 13448, src: ES_SFX.KEYBOARD_CLICK, volume: 0.13, durationInFrames: 180, note: "EU news typing" },
 
   // ovl-030 WEGREGULIERT (Iter2.15: retexted, hit synced to "wegzuregulieren" @ 469.50s = frame 14085)
-  { frame: 14035, src: ES_SFX.GLITCH_TRANSITION, volume: 0.42, durationInFrames: 150, note: "ovl-030 glitch bed" },
+  { frame: 14035, src: ES_SFX.GLITCH_TRANSITION, volume: 0.42, durationInFrames: 55, note: "ovl-030 glitch bed — hard cut at impact 14085" },
   { frame: 14085, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.44, note: "WEGREGULIERT impact" },
 
   // KAP05 KEIN ZUFALL (moved to 14400-14580 in Iter2.11)
@@ -174,11 +174,11 @@ const CUES: SfxCue[] = [
   { frame: 15700, src: ES_SFX.GLASS_CLINK, volume: 0.3, note: "VERTRAUENSSCHUTZ reveal" },
 
   // KAP06 DIE LÖSUNG
-  { frame: 16370, src: ES_SFX.RISER_LONG_TRAILER, volume: 0.36, durationInFrames: 240, note: "KAP06 warm build" },
+  { frame: 16370, src: ES_SFX.RISER_LONG_TRAILER, volume: 0.36, durationInFrames: 15, note: "KAP06 warm build — hard cut at impact" },
   { frame: 16380, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.4, note: "KAP06 open" },
 
   // ovl-034 SCHWEIZ warm payoff
-  { frame: 17268, src: ES_SFX.RISER_GRITTY, volume: 0.34, note: "SCHWEIZ pre-build" },
+  { frame: 17268, src: ES_SFX.RISER_GRITTY, volume: 0.34, durationInFrames: 13, note: "SCHWEIZ pre-build — hard cut at impact" },
   { frame: 17278, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.48, note: "ovl-034 SCHWEIZ payoff" },
   { frame: 17278, src: ES_SFX.BOOM_LOW, volume: 0.38, note: "SCHWEIZ warm sub" },
 
@@ -192,7 +192,7 @@ const CUES: SfxCue[] = [
   { frame: 19510, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.44, note: "rotes X stamp group" },
 
   // ovl-036 HardCTA (Iter2.14: word-sync "Und wer darüber hinaus..." @679.52s=20385, single phase)
-  { frame: 20375, src: ES_SFX.RISER_GRITTY, volume: 0.38, note: "HardCTA build" },
+  { frame: 20375, src: ES_SFX.RISER_GRITTY, volume: 0.38, durationInFrames: 13, note: "HardCTA build — hard cut at impact" },
   { frame: 20385, src: ES_SFX.IMPACT_DEEP_HIT, volume: 0.48, note: "ovl-036 HardCTA hit" },
   { frame: 20385, src: ES_SFX.BOOM_LOW, volume: 0.4, note: "HardCTA sub" },
 

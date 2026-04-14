@@ -19,7 +19,7 @@ import EUCriticalIconRow from "./EUCriticalIconRow";
 import PercentDownStatCard from "./PercentDownStatCard";
 import TrustCheckmarkStatCard from "./TrustCheckmarkStatCard";
 import CoreMessageStatCard from "./CoreMessageStatCard";
-import ListicleCounterStatCard from "./ListicleCounterStatCard";
+// ListicleCounterStatCard removed in F.2 — ovl-013 now uses BmfKineticStack
 import NullEuroBilanzFullscreen from "./NullEuroBilanzFullscreen";
 import ZollfreilagerFlowSplit from "./ZollfreilagerFlowSplit";
 import TwoDateTimelineSplit from "./TwoDateTimelineSplit";
@@ -33,11 +33,13 @@ import DanielZoomLayer from "./DanielZoomLayer";
 
 // Utility / layer components
 import ChapterCard from "./ChapterCard";
-import KineticMoment from "./KineticMoment";
+// KineticMoment removed in F.2 — replaced by BmfKineticStack for all 11 moments
+import BmfKineticStack from "./BmfKineticStack";
 import BmfBRoll11IconsCollage from "./BmfBRoll11IconsCollage";
 import LocosColorGrade from "./LocosColorGrade";
 import BmfSoundDesign from "./BmfSoundDesign";
 import { KenBurns } from "../../components/KenBurns";
+import { AuroraTextEffect } from "../../components/library/text/AuroraTextEffect";
 // import BmfCaptions from "./BmfCaptions"; // DISABLED 2026-04-14 per user request
 
 // Shared library components
@@ -81,26 +83,26 @@ import { ChartBuild } from "../../components/ChartBuild";
 const O = {
   "ovl-001": { start: 72, end: 258 },        // DanielLowerThirdStatCard (5 Stunden)
   "ovl-002": { start: 653, end: 856 },        // BMFDocumentCard (F.1 word-sync: "9."→"rausgeschickt")
-  "ovl-003": { start: 870, end: 1038 },       // KineticText 22 JAHRE · EIN FEDERSTRICH
+  "ovl-003": { start: 887, end: 1041 },       // Kinetic 22 JAHRE GESTOPPT (F.2 D4 wording, word-sync)
   "ovl-004": { start: 1041, end: 1158 },      // OhneTriptychon
   "ovl-005": { start: 1173, end: 1395 },      // FullscreenTakeover 0 CENT
   "ovl-006": { start: 1410, end: 1695 },      // CTALowerThird
   "ovl-007": { start: 2001, end: 2193 },      // ElementChipRow
   "ovl-008": { start: 2280, end: 2544 },      // ZollfreilagerFlowSplit
   "ovl-009": { start: 3079, end: 3184 },      // BMF2004DocumentCard (F.1 word-sync: "2004" mention)
-  "ovl-010": { start: 3270, end: 3552 },      // KineticText AUFGEHOBEN (stamp-slam)
+  "ovl-010": { start: 3385, end: 3450 },      // Kinetic AUFGEHOBEN (F.2 word-sync + D5 cap)
   "ovl-011": { start: 3750, end: 4104 },      // DonnerstagNewsCard
-  "ovl-012": { start: 4452, end: 4827 },      // KineticText BRUCH NICHT UPDATE
-  "ovl-013": { start: 4890, end: 5205 },      // ListicleCounterStatCard 1/4
-  "ovl-014": { start: 5322, end: 5472 },      // KineticText #1
+  "ovl-012": { start: 4690, end: 4900 },      // Kinetic BRUCH NICHT UPDATE (F.2 word-sync)
+  "ovl-013": { start: 4910, end: 5200 },      // Kinetic Counter 1/4 VIER DINGE (F.2 was ListicleCounterStatCard)
+  "ovl-014": { start: 5385, end: 5475 },      // Kinetic Counter #1 DAS WORT (F.2 word-sync)
   "ovl-015": { start: 5838, end: 7278 },      // KobaltFullscreen (already built)
   "ovl-016": { start: 6909, end: 7278 },      // EUCriticalIconRow
-  "ovl-017": { start: 7287, end: 7575 },      // KineticText #2 RUECKWIRKUNG
+  "ovl-017": { start: 7300, end: 7570 },      // Kinetic Counter #2 RÜCKWIRKUNG (F.2 word-sync)
   "ovl-018": { start: 7495, end: 7980 },      // HighlighterDocumentExcerpt (F.1 word-sync: "wörtlich")
-  "ovl-019": { start: 7998, end: 8295 },      // KineticText STRAFZETTEL
-  "ovl-020": { start: 8670, end: 8895 },      // KineticText #3 22 JAHRE GELOESCHT
+  "ovl-019": { start: 8041, end: 8156 },      // Kinetic STRAFZETTEL (F.2 word-sync)
+  "ovl-020": { start: 8700, end: 8780 },      // Kinetic Counter #3 22 JAHRE GELÖSCHT (F.2 word-sync)
   "ovl-021": { start: 9501, end: 9954 },      // QuoteCard — aufgehoben
-  "ovl-022": { start: 9981, end: 10299 },     // KineticText #4 0 CENT
+  "ovl-022": { start: 10116, end: 10305 },    // Kinetic Counter #4 0 CENT NEUE STEUERN (F.2 word-sync)
   "ovl-023": { start: 10464, end: 10704 },    // PercentDownStatCard 19%
   "ovl-024": { start: 10872, end: 11205 },    // NullEuroBilanzFullscreen
   "ovl-025": { start: 11259, end: 11535 },    // TwoDateTimelineSplit
@@ -108,7 +110,7 @@ const O = {
   "ovl-027": { start: 12213, end: 12570 },    // ChartBuild PREIS-EXPLOSION
   "ovl-028": { start: 12669, end: 13317 },    // HorizontalChronologyTimeline
   "ovl-029": { start: 13434, end: 13767 },    // EUKrisendialogNewsCard
-  "ovl-030": { start: 13773, end: 14178 },    // KineticText GENAU JETZT (glitch)
+  "ovl-030": { start: 14035, end: 14200 },    // Kinetic GENAU JETZT (F.2 word-sync)
   "ovl-031": { start: 14649, end: 15075 },    // SplitNarrative Reserven
   "ovl-032": { start: 15315, end: 15888 },    // TrustCheckmarkStatCard
   "ovl-033": { start: 15888, end: 16467 },    // QuoteCard Nicht-Beanstandung
@@ -116,7 +118,7 @@ const O = {
   "ovl-035": { start: 18078, end: 18543 },    // CoreMessageStatCard
   "ovl-036": { start: 19980, end: 20697 },    // HardCTALowerThird
   "ovl-037": { start: 21243, end: 21786 },    // AuthorityTimeline
-  "ovl-038": { start: 22587, end: 22797 },    // KineticText DANKE DEUTSCHLAND
+  "ovl-038": { start: 22620, end: 22800 },    // Kinetic DANKE DEUTSCHLAND via AuroraTextEffect (F.2)
   "ovl-new-001": { start: 19350, end: 19980 }, // HandelsblattFAZNewsCard
 } as const;
 
@@ -220,96 +222,12 @@ const LETTERBOXES = [
   { start: 22290, duration: 90, barHeight: 108 },  // final closer
 ];
 
-// 10 KineticMoments from kinetic-moments.json
-const KINETIC_MOMENTS = [
-  {
-    id: "km-01",
-    start: 870, end: 1038, position: "bottom" as const, reveal: "tracking" as const,
-    words: [
-      { text: "22", color: "#f5d37a", size: 108 },
-      { text: "JAHRE", color: "#fff5e0", size: 72 },
-      { text: "· EIN FEDERSTRICH", color: "#fff5e0", size: 54 },
-    ],
-  },
-  {
-    id: "km-02",
-    start: 3270, end: 3552, position: "center" as const, reveal: "blur-reveal" as const,
-    words: [
-      { text: "AUFGEHOBEN", color: "#E30613", size: 84 },
-      { text: "EIN SATZ", color: "#fff5e0", size: 54 },
-      { text: "SEITE 7", color: "#f5d37a", size: 54 },
-    ],
-  },
-  {
-    id: "km-03",
-    start: 4452, end: 4827, position: "bottom" as const, reveal: "tracking" as const,
-    words: [
-      { text: "BRUCH", color: "#E30613", size: 108 },
-      { text: "NICHT UPDATE", color: "#fff5e0", size: 48 },
-    ],
-  },
-  {
-    id: "km-04",
-    start: 5322, end: 5472, position: "bottom" as const, reveal: "tracking" as const,
-    words: [
-      { text: "#1", color: "#f5d37a", size: 64 },
-      { text: "DAS WORT DAS", color: "#fff5e0", size: 54 },
-      { text: "ALLES VERRÄT", color: "#f5d37a", size: 72 },
-    ],
-  },
-  {
-    id: "km-05",
-    start: 7287, end: 7575, position: "bottom" as const, reveal: "mask-wipe" as const,
-    words: [
-      { text: "#2", color: "#f5d37a", size: 64 },
-      { text: "DIE VERBOTENE", color: "#fff5e0", size: 54 },
-      { text: "RÜCKWIRKUNG", color: "#f5d37a", size: 78 },
-    ],
-  },
-  {
-    id: "km-06",
-    start: 7998, end: 8295, position: "bottom" as const, reveal: "mask-wipe" as const,
-    words: [
-      { text: "STRAFZETTEL", color: "#E30613", size: 84 },
-      { text: "FÜR EIN SCHILD · NÄCHSTE WOCHE", color: "#fff5e0", size: 42 },
-    ],
-  },
-  {
-    id: "km-07",
-    start: 8670, end: 8895, position: "bottom" as const, reveal: "stamp-slam" as const,
-    words: [
-      { text: "#3", color: "#f5d37a", size: 64 },
-      { text: "22 JAHRE", color: "#f5d37a", size: 96 },
-      { text: "GELÖSCHT", color: "#E30613", size: 78 },
-    ],
-  },
-  {
-    id: "km-08",
-    start: 9981, end: 10299, position: "bottom" as const, reveal: "tracking" as const,
-    words: [
-      { text: "#4", color: "#f5d37a", size: 64 },
-      { text: "0 CENT", color: "#E30613", size: 132 },
-      { text: "NEUE STEUERN", color: "#fff5e0", size: 48 },
-    ],
-  },
-  {
-    id: "km-09",
-    start: 13773, end: 14178, position: "bottom" as const, reveal: "mask-wipe" as const,
-    words: [
-      { text: "GENAU JETZT", color: "#E30613", size: 84 },
-      { text: "LETZTE INFRASTRUKTUR WEG", color: "#fff5e0", size: 48 },
-    ],
-    glitch: true,
-  },
-  {
-    id: "km-10",
-    start: 22587, end: 22797, position: "bottom" as const, reveal: "slow-fade" as const,
-    words: [
-      { text: "DANKE,", color: "#fff5e0", size: 84 },
-      { text: "DEUTSCHLAND.", color: "rgba(255,245,224,0.62)", size: 84 },
-    ],
-  },
-];
+// Phase F.2 — 11 Kinetic Moments rewritten with BmfKineticStack + HighlightedWord
+// style. Word-sync via captions.ts word-starts (see PHASE-F-REDESIGN-PLAN.md).
+// D4 wording applied (FEDERSTRICH → GESTOPPT, etc.). All 5 counter moments
+// (#1-#4 + 1/4) use the same BmfKineticStack counter treatment per D1.
+// Frame ranges live in the O map above; per-word startFrames are relative
+// to each Sequence.
 
 // ============================================================================
 // MASTER COMPOSITION
@@ -456,12 +374,29 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
 
       {/* ovl-012 — KineticMoment BRUCH NICHT UPDATE handled by km-03 */}
 
-      {/* ovl-013 — ListicleCounterStatCard 1/4 VIER DINGE */}
+      {/* ovl-013 — Kinetic Counter 1/4 VIER DINGE (F.2 was ListicleCounterStatCard) */}
       <Sequence from={O["ovl-013"].start} durationInFrames={O["ovl-013"].end - O["ovl-013"].start}>
-        <ListicleCounterStatCard />
+        <BmfKineticStack
+          position="center"
+          counter={{ text: "1 / 4", startFrame: 0, color: "#f5d37a", size: 72 }}
+          words={[
+            { text: "VIER DINGE", startFrame: 10, size: 108, color: "#fff5e0", variant: "underline", accentColor: "#f5d37a", reveal: "scale" },
+            { text: "DIE NIEMAND SEHEN SOLL", startFrame: 32, size: 44, color: "rgba(255,245,224,0.78)", reveal: "track" },
+          ]}
+        />
       </Sequence>
 
-      {/* ovl-014 — KineticMoment #1 (km-04) */}
+      {/* ovl-014 — Kinetic Counter #1 DAS WORT DAS ALLES VERRÄT */}
+      <Sequence from={O["ovl-014"].start} durationInFrames={O["ovl-014"].end - O["ovl-014"].start}>
+        <BmfKineticStack
+          position="center"
+          counter={{ text: "# 1", startFrame: 0, color: "#f5d37a", size: 64 }}
+          words={[
+            { text: "DAS WORT", startFrame: 12, size: 96, color: "#fff5e0", reveal: "scale" },
+            { text: "DAS ALLES VERRÄT", startFrame: 30, size: 72, color: "#f5d37a", variant: "underline", accentColor: "#f5d37a", reveal: "track" },
+          ]}
+        />
+      </Sequence>
 
       {/* ovl-015 — KobaltFullscreen (already built, CENTERPIECE) */}
       <Sequence from={O["ovl-015"].start} durationInFrames={O["ovl-015"].end - O["ovl-015"].start}>
@@ -623,24 +558,115 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
       {/* ovl-038 — KineticMoment DANKE DEUTSCHLAND (km-10, slow-fade) */}
 
       {/* ═══════════════════════════════════════════════════════════════════
-          LAYER 5 — 10 KineticMoments (km-01 .. km-10)
+          LAYER 5 — 11 Kinetic Moments (F.2 rewrite with BmfKineticStack)
+          Counter-moments (ovl-013/014/017/020/022) use identical counter
+          treatment per D1. Word-sync to captions.ts word-starts.
+          D4 wording: "EIN FEDERSTRICH" → "GESTOPPT".
           ═══════════════════════════════════════════════════════════════════ */}
-      {KINETIC_MOMENTS.map((km) => (
-        <Sequence
-          key={km.id}
-          from={km.start}
-          durationInFrames={km.end - km.start}
-          name={km.id}
-        >
-          <KineticMoment
-            words={km.words}
-            revealType={km.reveal}
-            position={km.position}
-            staggerFrames={4}
-            enableGlitch={km.glitch}
+
+      {/* ovl-003 — "22 JAHRE GESTOPPT" (ehem. km-01) */}
+      <Sequence from={O["ovl-003"].start} durationInFrames={O["ovl-003"].end - O["ovl-003"].start} name="km-01">
+        <BmfKineticStack
+          position="center"
+          words={[
+            { text: "22 JAHRE", startFrame: 0, size: 108, color: "#f5d37a", variant: "underline", accentColor: "#f5d37a", reveal: "scale" },
+            { text: "GESTOPPT", startFrame: 123, size: 144, color: "#fff5e0", variant: "circle", accentColor: "#E30613", reveal: "scale" },
+          ]}
+        />
+      </Sequence>
+
+      {/* ovl-010 — "AUFGEHOBEN" stamp-slam (ehem. km-02) */}
+      <Sequence from={O["ovl-010"].start} durationInFrames={O["ovl-010"].end - O["ovl-010"].start} name="km-02">
+        <BmfKineticStack
+          position="center"
+          words={[
+            { text: "AUFGEHOBEN", startFrame: 5, size: 132, color: "#E30613", variant: "both", accentColor: "#E30613", reveal: "scale" },
+          ]}
+        />
+      </Sequence>
+
+      {/* ovl-012 — "BRUCH NICHT UPDATE" (ehem. km-03) */}
+      <Sequence from={O["ovl-012"].start} durationInFrames={O["ovl-012"].end - O["ovl-012"].start} name="km-03">
+        <BmfKineticStack
+          position="center"
+          words={[
+            { text: "BRUCH", startFrame: 0, size: 160, color: "#E30613", variant: "circle", accentColor: "#E30613", reveal: "scale" },
+            { text: "KEIN UPDATE", startFrame: 60, size: 56, color: "#fff5e0", reveal: "track" },
+          ]}
+        />
+      </Sequence>
+
+      {/* ovl-017 — Counter #2 DIE VERBOTENE RÜCKWIRKUNG (ehem. km-05) */}
+      <Sequence from={O["ovl-017"].start} durationInFrames={O["ovl-017"].end - O["ovl-017"].start} name="km-05">
+        <BmfKineticStack
+          position="center"
+          counter={{ text: "# 2", startFrame: 0, color: "#f5d37a", size: 64 }}
+          words={[
+            { text: "DIE VERBOTENE", startFrame: 12, size: 72, color: "#fff5e0", reveal: "scale" },
+            { text: "RÜCKWIRKUNG", startFrame: 32, size: 120, color: "#E30613", variant: "circle", accentColor: "#E30613", reveal: "scale" },
+          ]}
+        />
+      </Sequence>
+
+      {/* ovl-019 — "STRAFZETTEL" (ehem. km-06) */}
+      <Sequence from={O["ovl-019"].start} durationInFrames={O["ovl-019"].end - O["ovl-019"].start} name="km-06">
+        <BmfKineticStack
+          position="center"
+          words={[
+            { text: "STRAFZETTEL", startFrame: 0, size: 128, color: "#E30613", variant: "circle", accentColor: "#E30613", reveal: "scale" },
+            { text: "FÜR EIN SCHILD NÄCHSTE WOCHE", startFrame: 40, size: 38, color: "rgba(255,245,224,0.82)", reveal: "track" },
+          ]}
+        />
+      </Sequence>
+
+      {/* ovl-020 — Counter #3 22 JAHRE GELÖSCHT (ehem. km-07) */}
+      <Sequence from={O["ovl-020"].start} durationInFrames={O["ovl-020"].end - O["ovl-020"].start} name="km-07">
+        <BmfKineticStack
+          position="center"
+          counter={{ text: "# 3", startFrame: 0, color: "#f5d37a", size: 64 }}
+          words={[
+            { text: "22 JAHRE", startFrame: 12, size: 108, color: "#f5d37a", reveal: "scale" },
+            { text: "GELÖSCHT", startFrame: 32, size: 132, color: "#E30613", variant: "circle", accentColor: "#E30613", reveal: "scale" },
+          ]}
+        />
+      </Sequence>
+
+      {/* ovl-022 — Counter #4 0 CENT NEUE STEUERN (ehem. km-08) */}
+      <Sequence from={O["ovl-022"].start} durationInFrames={O["ovl-022"].end - O["ovl-022"].start} name="km-08">
+        <BmfKineticStack
+          position="center"
+          counter={{ text: "# 4", startFrame: 0, color: "#f5d37a", size: 64 }}
+          words={[
+            { text: "0 CENT", startFrame: 10, size: 180, color: "#E30613", variant: "circle", accentColor: "#E30613", reveal: "scale" },
+            { text: "NEUE STEUERN", startFrame: 42, size: 56, color: "#fff5e0", reveal: "track" },
+          ]}
+        />
+      </Sequence>
+
+      {/* ovl-030 — "GENAU JETZT" glitch (ehem. km-09) */}
+      <Sequence from={O["ovl-030"].start} durationInFrames={O["ovl-030"].end - O["ovl-030"].start} name="km-09">
+        <BmfKineticStack
+          position="center"
+          words={[
+            { text: "GENAU JETZT", startFrame: 0, size: 132, color: "#E30613", variant: "circle", accentColor: "#E30613", reveal: "scale" },
+            { text: "LETZTE INFRASTRUKTUR WEG", startFrame: 30, size: 40, color: "rgba(255,245,224,0.82)", reveal: "track" },
+          ]}
+        />
+      </Sequence>
+
+      {/* ovl-038 — "DANKE, DEUTSCHLAND." AuroraTextEffect slow fade (ehem. km-10) */}
+      <Sequence from={O["ovl-038"].start} durationInFrames={O["ovl-038"].end - O["ovl-038"].start} name="km-10">
+        <AbsoluteFill style={{ backgroundColor: "rgba(0,0,0,0.58)" }}>
+          <AuroraTextEffect
+            text="DANKE, DEUTSCHLAND."
+            fontSize="140px"
+            firstColor="#d4a017"
+            secondColor="#f5d37a"
+            thirdColor="#E30613"
+            fourthColor="#fff5e0"
           />
-        </Sequence>
-      ))}
+        </AbsoluteFill>
+      </Sequence>
 
       {/* ═══════════════════════════════════════════════════════════════════
           LAYER 6 — 7 Chapter Title Cards — DISABLED 2026-04-14

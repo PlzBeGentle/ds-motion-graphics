@@ -1,764 +1,871 @@
 ---
-title: Phase F — Redesign Pass Plan
+title: Phase F — Final Execution Plan (BMF-Industriemetalle Redesign)
 created: 2026-04-15
-status: waiting-on-user-assets
-supersedes: CONTINUATION-PLAN.md "Phase F Component Review" section
+status: execution-ready
+replaces: all prior Phase F plans and CONTINUATION-PLAN Phase F sections
 ---
 
-# Phase F — Redesign Pass Plan
+# Phase F — BMF Industriemetalle Final Execution Plan
 
-> **Kontext:** Phase 6 Skeleton-Build und Phase B B-Roll-Integration haben einen
-> playable state erzeugt, aber Dario hat legitim kritisiert: (1) keine
-> word-level caption sync, (2) Elemente revealen zu früh, (3) manche Momente
-> bleiben zu lange, (4) Style-Inkonsistenz (ListicleCard vs KineticMoment),
-> (5) Null Nutzung der 38+ Components in `~/remotion-coder-test/src/` und
-> 200+ Components in `~/ds-motion-graphics/src/components/library/`, (6) Null
-> real-world assets in den Overlay-Components (ausser `rotes-x.png` in
-> HandelsblattFAZNewsCard), (7) Ich habe nicht nach Assets gefragt bevor ich
-> gebaut habe.
->
-> **Dieser Plan ersetzt den "Phase F Component Review" aus CONTINUATION-PLAN.md.**
-> Statt overlay-by-overlay mini-fixes machen wir einen kompletten Redesign-Pass.
+Ein einzelnes self-contained Execution-Dokument. Keine Optionen, keine offenen Entscheidungen, keine Warteschleifen. Alle Vorarbeiten (Phase A Sound, Phase B B-Roll, Asset-Discovery, D1-D5 Decisions, Component-Library-Inventory, Captions-Timing-Audit) sind abgeschlossen. Dieses Dokument ist der Rebuild-Code-Plan.
 
 ---
 
-## 1. Grund-Prinzipien (hart)
+## 1. Hard Rules (non-negotiable)
 
-1. **Kein Element reveal bevor Daniel das Thema-Wort gesprochen hat.** Word-Start aus `captions.ts` ist die Quelle der Wahrheit. Timing aus Phase-4-Specs ist Hypothese, die Aufnahme ist Wahrheit.
-2. **Library first.** Für jede neue Komponente erst checken: Gibt es eine passende in `remotion-coder-test/src/` oder `ds-motion-graphics/src/components/library/`? Bau-from-scratch nur wenn keine passt.
-3. **Real-world assets first.** Fake-Dokumente, generated-SVG-Icons, und Stock-Photo-Look sind Fallbacks. Echte BMF-PDFs, echte News-Artikel-Screenshots, echte Press-Releases sind Default.
-4. **Konsistente visual language pro Moment-Typ.** Alle Listicle-Counter (#1/#2/#3/#4) nutzen die gleiche Component. Alle Document-Cards nutzen die gleiche Component. Keine Stylemischung.
-5. **Kein Overlay länger als die Daniel-Phrase die es zeigt.** Wenn Daniel 4s über Kupfer redet, bleibt der Kupfer-Visual max. 4.5s. Nicht 12s.
-6. **Word-level sync für KineticMoments.** Jedes text-word der KineticMoments kriegt seinen eigenen Start-Frame, gekoppelt an den word-start in `captions.ts`.
+1. **Word-Sync ist Wahrheit.** Jeder Overlay-Start + interne Reveals müssen an einen Word-Start aus `src/compositions/daniel-bmf-industriemetalle/captions.ts` gekoppelt sein. Keine Spec-basierten Frame-Ranges mehr.
+2. **D5 Hard Cap:** Overlay-Ende darf maximal **0.25 Sekunden (7.5 Frames)** über den letzten relevanten Word-End hinausgehen. Ausnahme: bei multi-phase narratives (z.B. HardCTALowerThird) gilt die 0.25s-Regel pro Phase, nicht pro Gesamtoverlay.
+3. **Kein Element vor seinem Trigger-Wort sichtbar.** Entry-Animation darf 3-5 Frames vor dem Word-Start beginnen (feel) aber der visual state >50% darf frühestens beim Word-Start sein.
+4. **Counter-Moments konsistent.** Alle 5 Counter-Moments (ovl-013 "1/4" + ovl-014/017/020/022 "#1/#2/#3/#4") nutzen **ausschließlich** `HighlightedWord` aus `remotion-coder-test` im Kinetic-Center Style. Panel-Cards + Kinetic-Text-Stacks werden ersetzt.
+5. **Library First.** Jeder Overlay nutzt entweder `remotion-coder-test/src/*.tsx` Components oder `ds-motion-graphics/src/components/library/**/*.tsx`. Handmade Skeleton-Components aus Phase 6 werden alle ersetzt oder gelöscht.
+6. **Real Assets First.** Verfügbare Assets in `public/assets/` und `public/bmf/assets/` werden verwendet. Nur wo keine real assets existieren, Editorial-Card-Fallback.
+7. **KineticMoment Wording** angeglichen an Daniels tatsächlich gesprochene Worte (D4). Editorial-Text ("EIN FEDERSTRICH") wird durch echten Text ("GESTOPPT") ersetzt.
+8. **ChapterTransition3D** für alle 7 Chapter-Cards re-enablen (D3).
+9. **GoldVault3D NICHT verwenden** (per Dario).
+10. **Audio-Ducking + SFX-Timing** wird in dieser Phase NICHT angefasst. Phase A bleibt als-is.
 
 ---
 
-## 2. Library-Inventar (verfügbar, ungenutzt)
+## 2. Asset-Inventar (final, nothing pending)
 
-### `~/remotion-coder-test/src/` — 38 Components, überwiegend 3D
+Alle Pfade relativ zu `~/ds-motion-graphics/`.
 
-| Component | Lines | Use-Case im BMF-Video |
+### 2.1 BMF-Schreiben Master-Dokument (2026)
+| File | Pfad | Beschreibung |
 |---|---|---|
-| **HighlightedWord** | 154 | **Core für alle KineticMoments** — word-by-word reveal mit pulse-circle, underline, char-stagger |
-| **GesetzesBlatt3D** | 358 | **BMFDocumentCard, BMF2004DocumentCard, ChinaBekanntmachungDocumentCard, HighlighterDocumentExcerpt** — nimmt `paragraphs[]` mit `highlight?: boolean` pro segment, rendert als glass panel law-sheet mit paper texture, offical stamp, word-highlighting. Props: sourceName, sourceMeta, lawTitle, lawSection, paragraphs, paperTextureSrc, variant (fullscreen/overlay), clusterOffsetX |
-| **KobaltFullscreen** | — | **existierend + schon genutzt** (ovl-015), lebend in beiden repos |
-| **HandelsblattFAZNewsCard** | — | **existierend + schon genutzt** (ovl-new-001) |
-| **ChapterTransition3D** | 214 | **Ersatz für die 7 disabled Chapter-Cards** — letterbox entry, char-stagger title, exit at frame 100-118 |
-| **BigQuoteCard3D** | 322 | **QuoteCard ovl-021 + ovl-033** — 3D quote presentation |
-| **BloombergChart3D** | 423 | **PriceExplosionBars ovl-027** — echte Bloomberg-Style chart mit 3D body |
-| **BloombergDashboard** | — | Alternative für PriceExplosionBars (multi-metric) |
-| **BloombergFrame** | — | Chrome wrapper für Charts |
-| **HistoricalTimeline3D** | 229 | **HorizontalChronologyTimeline ovl-028 + AuthorityTimeline ovl-037** — timeline mit 3D depth |
-| **FlatEuropeMap3D** | 252 | **Neuer Visual** für seg_138 "europäische Industrie weiß nicht wie sie ihre Chipfabrik versorgen soll" (Slot 8 bridge) |
-| **GoldVault3D** | 660 | **Slot 10 Schweiz-Tresor moment** — 3D Alternative zum FLUX still |
-| **GoldBar3D + GoldBarStack3D** | — | Supporting visuals für Schweiz payoff |
-| **NewspaperMockup3D** | 445 | **DonnerstagNewsCard ovl-011, EUKrisendialogNewsCard ovl-029** — 3D newspaper article mockup |
-| **Safe3D** | — | Trust-anchor moments |
-| **Stacked3D** | 401 | Multi-card stack layouts |
-| **TickerBar** | — | Price ticker untere Kante für Chronology section |
-| **LampEffect3D / Meteors3D** | — | Background-Stimmung für bestimmte Moments |
-| **AnimatedBulletList** | — | Ersatz für OhneTriptychon ovl-004 |
-| **PortraitCard3D** | — | Trust-cards |
-| **GlareCard3D** | — | Premium stat moments |
-| **AreaChart3D / DonutChart3D / ComparisonBar3D** | — | Data viz variants |
-| **FlipWords3D** | — | Multi-word toggle moments |
+| Master PDF | `public/assets/bmf-schreiben.pdf` | Dario's eigene Kopie, MD5-identisch zu bundesfinanzministerium.de |
+| Master PDF (backup) | `public/bmf/assets/documents/bmf-schreiben-2026-04-09.pdf` | Claude's automated download, gleicher MD5 |
+| Titelseite Render | `public/assets/mbf-schreiben-titelseite.png` | Dario's Screenshot der Titelseite (434 KB) |
+| Passage mit Highlighter | `public/assets/bmf-schreiben-passsage.png` | Dario's Screenshot der Kobalt-Passage, bereits gelb markiert auf 4 Kern-Sätzen (218 KB) |
+| Page 1 | `public/bmf/assets/documents/bmf-2026-04-09-page-1-cover.png` | Titelseite + Aktenzeichen + Inhaltsverzeichnis |
+| Page 2 | `public/bmf/assets/documents/bmf-2026-04-09-page-2-allgemeines.png` | § 4 Nr. 4b Definition + Einfuhrprozess |
+| Page 3 | `public/bmf/assets/documents/bmf-2026-04-09-page-3-ustae-grundsaetze.png` | UStAE 4.4b.1 Grundsätze |
+| Page 4 | `public/bmf/assets/documents/bmf-2026-04-09-page-4-tabak-beispiel.png` | Brasilianisches Tabak-Beispiel Bremen |
+| Page 5 ⭐ | `public/bmf/assets/documents/bmf-2026-04-09-page-5-kobalt-beispiel.png` | **Beispiel 3 — die wörtliche Kobalt-Passage** |
+| Page 6 | `public/bmf/assets/documents/bmf-2026-04-09-page-6-ski-glas-beispiel.png` | Vorübergehende Verwendung + aktive Veredelung |
+| Page 7 | `public/bmf/assets/documents/bmf-2026-04-09-page-7-schlussbestimmung.png` | Anwendungsregelung + 2004-Aufhebung |
 
-### `~/ds-motion-graphics/src/components/library/` — ~200 Components
+### 2.2 BMF-Schreiben Metadata (als Text in Authority-Cards verwendbar)
+- **Aktenzeichen:** III C 3 - S 7157-a/00005/001/052
+- **DOK:** COO.7005.100.4.14450860
+- **Datum:** 9. April 2026
+- **Absender:** Bundesministerium der Finanzen, Wilhelmstraße 97, 10117 Berlin
+- **Betreff:** "Umsatzsteuer; Steuerbefreiung für die einer Einfuhr vorangehenden Lieferungen von Gegenständen (§ 4 Nr. 4b UStG)"
+- **Ersetzt:** BMF-Schreiben vom 28. Januar 2004 – IV D 1 — S 7157 — 01/04 / IV D 1 — S 7157a — 01/04 (BStBl I S. 242)
+- **Zeitspanne:** 2004-01-28 → 2026-04-09 = **22 Jahre 2 Monate 12 Tage** (Daniels "22 Jahre" mathematisch bestätigt)
+- **Kern-Passage Page 5 Beispiel 3:** "Sachverhalt wie Beispiel 1. A liefert im Zolllager eingelagertes Kobalt an P. Nach praxisorientierter Betrachtungsweise hinsichtlich der Art des Metalls ist ausschließlich die weitere Lagerung im Zolllager möglich und die Beendigung des Verfahrens durch eine Privatperson so gut wie ausgeschlossen. Die Lieferung von A an P ist daher nicht nach § 4 Nr. 4b UStG steuerfrei, da P das besondere Verfahren nicht beenden wird."
 
-**`text/`** (17 Components, kritisch für Word-Sync):
-- `TextGenerateEffect.tsx` — word-by-word fade-in, kann an captions.ts timing gebunden werden
-- `TypewriterEffect.tsx` — letter-stagger für quote reveals
-- `HeroHighlight.tsx` — highlight-background auf single words
-- `EncryptedText.tsx` — für "#1/#2/#3/#4" counter scramble-reveal
-- `AuroraTextEffect.tsx` — hero moments
-- `ContainerTextFlip.tsx` — für flip-between-options moments
-- `ColourfulText.tsx` — multi-color accent text
-- `TextRevealCard.tsx` — hover-reveal card (für quote unveil)
-- `ShinyText.tsx` — gold shine on keywords (Daniel-LOCOS palette)
-- `FlipWords.tsx` — cycling words
+### 2.3 Preis-Charts (Dario-Selbst)
+| File | Pfad | Zeitraum | Y-Range EUR |
+|---|---|---|---|
+| Gallium | `public/assets/gallium preis.png` | 2012-07 bis 2024-11 | ca. -75 bis +200 EUR |
+| Germanium | `public/assets/germanium preis.png` | 2012-07 bis 2024-11 | ca. -50 bis +350 EUR |
+| Antimon | `public/assets/antimon preis.png` | 2021-11 bis 2025-11 | ca. -50 bis +360 EUR |
 
-**`cards/`** (22 Components):
-- `CardStack.tsx` — für BMF-Document paper stack visual
-- `GlareCard.tsx` + `ThreeDCard.tsx` + `ThreeDPerspectiveCard.tsx` — premium panel looks
-- `MagicCard.tsx` — für CTA cards
-- `EvervaultCard.tsx` — encrypted grid background für tech moments
-- `AceternityBentoGrid.tsx` + `LightswindBentoGrid.tsx` — multi-slot grids
+Alle 3 Charts sind USD+EUR Dual-Line Plots, einheitliches Styling. Sie bestätigen visuell Daniels +365% / +400% / +437% Behauptung.
 
-**`effects/`** (39 Components):
-- `CountUp.tsx` — **kritisch** für alle Zahlen-Reveals (PercentDownStatCard 19%, PriceExplosionBars 365/400/437%, usw.)
-- `BorderBeam.tsx` + `MovingBorder.tsx` — premium panel-frames
-- `GlowingCards.tsx` + `GlowingEffect.tsx` — accent on impact moments
-- `Spotlight.tsx` — focused reveal
-- `Sparkles.tsx` — gold particle moments (Schweiz payoff)
-- `Meteors.tsx` + `ShootingStars.tsx` — background atmosphere
-- `LampEffect.tsx` — dramatic side-light
-- `PointerHighlight.tsx` — manual pointer annotation
-- `TracingBeam.tsx` — timeline trace-reveal
+### 2.4 Logos + Symbole
+| File | Pfad | Use |
+|---|---|---|
+| Bundesadler SVG | `public/assets/logos/bundesadler.svg` | Watermark in allen BMF-Document-Cards |
+| Deutschland-Karte SVG | `public/assets/logos/deutschland-karte.svg` | "Deutschland bekommt 0 Cent" Moment (ovl-024) |
+| Deutschland-Flagge PNG | `public/assets/logos/deutschland-flagge.png` | Authority-Moments (CoreMessage, AuthorityTimeline) |
+| Rotes X PNG | `public/assets/logos/rotes-x.png` | bereits in HandelsblattFAZNewsCard verwendet |
 
-**`backgrounds/`** (25 Components): Atmosphere layers
-**`layout/`** (36 Components): Grid, Parallax, Timeline, ScrollStack, TeamCarousel, HeroParallax
+### 2.5 Daniel Master Footage (unverändert)
+- `public/bmf/daniel-master.mp4` — symlink zu `~/Downloads/Sequenz 01_33.mp4` (1.7 GB, 22800 frames @ 30fps, 12:40)
 
-### Was wir heute schon haben (Phase A + B)
+### 2.6 Phase B B-Roll Assets (unverändert)
+- `public/bmf/b-roll/slot-01-bmf-berlin.png` (nano-banana)
+- `public/bmf/b-roll/slot-02-pdf-bmf-schreiben.png` (nano-banana)
+- `public/bmf/b-roll/slot-03-zollfreilager-ingots.png` (nano-banana)
+- `public/bmf/b-roll/slot-04-telefon-donnerstag.mp4` (Veo 3.1, startFrom 30)
+- `public/bmf/b-roll/slot-05-kobalt-mine.mp4` (Veo 3.1, startFrom 15)
+- `public/bmf/b-roll/slot-06-strafzettel-windschutzscheibe.png` (nano-banana)
+- `public/bmf/b-roll/slot-07-shanghai-port.png` (nano-banana)
+- `public/bmf/b-roll/slot-08-cleanroom-wafer.mp4` (Veo 3.1, startFrom 15)
+- `public/bmf/b-roll/slot-09-strategic-reserves-bunker.png` (nano-banana)
+- `public/bmf/b-roll/slot-10-schweiz-alpen.png` (nano-banana)
 
-- `BmfSoundDesign.tsx` — 6 music beds + 51 SFX cues
-- `BmfBRoll11IconsCollage.tsx` — Slot 11 motion-graphics
-- `DanielZoomLayer.tsx` — 19 zoom keyframes
-- `LocosColorGrade.tsx` — 11 color segments
-- 7 nano-banana stills + 3 Veo mp4s in `public/bmf/b-roll/`
+### 2.7 Was NICHT existiert (Editorial-Fallback-Strategie)
+Diese Assets werden nicht beschafft. Die betroffenen Overlays laufen als Editorial-Cards ohne Real-Asset:
+- BMF-Schreiben 2004 Cover/Passage → ovl-009 wird Editorial-Card mit Text-Referenz "IV D 1 - S 7157 - 01/04 — BStBl I S. 242 — 28.01.2004" + Bundesadler-Watermark
+- China Export-Kontrolle 5 Docs → ovl-026 + ovl-028 Editorial-Cards mit Text-Labels + Stamps (editorial "Chinese MOFCOM seal" optional als generic red-seal SVG)
+- EU-Krisendialog Press-Release → ovl-029 Editorial-News-Card mit Text + Date-Stamp
+- Donnerstag-Leak-Source → ovl-011 Editorial-Card mit Phone-Silhouette SVG
+- EU Critical Raw Materials List → ovl-016 bleibt disabled
+- Bundeshaushalt 0-EUR Screenshot → ovl-024 nutzt Deutschland-Karte SVG als Backdrop stattdessen
+- Alle Metal-Ingot-Photos → ovl-007 + ovl-028 nutzen Text-Labels ohne Element-Fotos
+- Mainstream-News-Screenshots → ovl-new-001 nutzt Steuer-Fachpresse als Ersatz-Authority (PwC Blog / DATEV Magazin / Haufe / RP Steuerberatung — diese werden als editorial Header-Text gerendert, nicht als Screenshots)
 
 ---
 
-## 3. Overlay-by-Overlay Redesign Matrix (alle 38+)
+## 3. Captions Helper Utility (Phase F.0 — wird einmal gebaut)
 
-Jeder Eintrag hat:
-- **Current:** Was jetzt im Skeleton ist
-- **Target:** Welche Library-Component + welche Assets
-- **Sync:** Start-Frame aus captions.ts word-timing
-- **Effort:** S(30min) / M(1-2h) / L(2-4h)
-
-### Akt 1 — Hook + Setup (0-155s)
-
-**ovl-001 — Daniel 5 STUNDEN Lower-Third** (frame 72-258, 2.4-8.6s)
-- **Current:** DanielLowerThirdStatCard handmade
-- **Target:** Ersatz durch `library/effects/CountUp` + `library/text/ShinyText` "5 STUNDEN" mit gold shine; oder `library/cards/MagicCard` als container
-- **Sync:** Daniel's erstes "5 Stunden" @ 5.12s = frame 154. **Current start 72 = 2.4s = 2.7s zu früh.** Fix: start bei frame 154.
-- **Effort:** S — props swap
-- **Assets:** — keine
-
-**ovl-002 — BMFDocumentCard "Schreiben liegt vor"** (frame 648-870, 21.6-29s)
-- **Current:** handmade right-split card
-- **Target:** **GesetzesBlatt3D (variant="overlay", clusterOffsetX=320)** mit echten paragraphs aus BMF-PDF
-- **Sync:** Daniel "Ich habe es hier vor mir liegen" @ 52.1s = frame 1563. **Current start 648 = 21.6s = 30.5s zu früh.** Fix: Dies ist eigentlich der Moment wo Daniel schon das Schreiben verlinkt, start @ frame 1563.
-- **Effort:** M — needs asset
-- **Assets:** 🔴 `bmf-schreiben-2026-cover.png` + `bmf-schreiben-2026-full.pdf` für paragraphs array
-
-**ovl-003 (km-01) — "22 JAHRE · EIN FEDERSTRICH"** (frame 870-1038, 29-34.6s)
-- **Current:** KineticMoment 3-stacked words, bullet prefix awkward
-- **Target:** `library/text/ShinyText` "22 JAHRE" + `HighlightedWord` on "GESTOPPT" (Daniel's eigentliches Wort)
-- **Sync:** Daniel "22 Jahre gelebte Rechtspraxis einfach so gestoppt hat" @ seg 26: "22" @ 29.56s = frame 887, "Jahre" @ 30.42 = frame 912, "gestoppt" @ 33.66 = frame 1009. **Current start 870 = 0.57s zu früh.** Fix: "22" reveal @ frame 887, "JAHRE" @ 912, "GESTOPPT" (nicht "EIN FEDERSTRICH") @ 1009 — jedes word synct auf seinen word-start.
-- **Effort:** M — wording change + library swap
-- **Assets:** — keine
-
-**ovl-004 — OhneTriptychon "Parlament/Vorwarnung/Übergang"** (frame 1041-1158, 34.7-38.6s)
-- **Current:** 3 Cards nebeneinander, handmade
-- **Target:** `AnimatedBulletList` (remotion-coder-test) — staggered bullet entries mit word-sync
-- **Sync:** Daniel "Ohne Parlament, ohne Vorwarnung, ohne Übergangsfriste" @ seg 27: "Ohne Parlament" @ 34.68-35.42, "ohne Vorwarnung" @ 35.66-36.82, "ohne Übergangsfriste" @ 36.84-38.62. Current start 1041 = 34.7s = on time ✓. Aber die 3 Bullets müssen SEQUENTIAL zu den 3 word-starts revealen (nicht simultan). Fix: 3 separate Sequences @ frames 1040, 1069, 1105.
-- **Effort:** S — stagger timing fix
-- **Assets:** — keine
-
-**ovl-005 — FullscreenTakeover "0 CENT"** (frame 1173-1395, 39.1-46.5s)
-- **Current:** FullscreenTakeover (library) mit "0 CENT" text
-- **Target:** `library/effects/CountUp` (count from 100 → 0) + FullscreenTakeover chrome; oder `HighlightedWord` variant="both" auf "NICHT EINEN"
-- **Sync:** Daniel "Cent" @ 44.14s = frame 1324. "Nicht einen" @ 45.64-46.22 = frame 1369-1386. **Current start 1173 = 39.1s = 5s zu früh** (der "0 CENT" text ist bereits vollständig sichtbar während Daniel noch den Setup redet). Fix: Fullscreen-Chrome kann früh starten (bildet Kontext), aber die "0 CENT" number reveal @ frame 1324 (exact "Cent" word).
-- **Effort:** M — internal reveal timing rewrite
-- **Assets:** — keine
-
-**ovl-006 — CTALowerThird "verlinke das Ganze"** (frame 1410-1695, 47-56.5s)
-- **Current:** handmade lower-third
-- **Target:** `library/cards/MagicCard` mit link-icon + ShinyText
-- **Sync:** Daniel "verlinke euch das Ganze" @ seg 30: "verlinke" @ 54.04 = frame 1621. **Current start 1410 = 47s = 7s zu früh.** Fix: start @ frame 1621.
-- **Effort:** S
-- **Assets:** — keine (optional: link-icon SVG)
-
-### Akt 2 — Context "Wie lief es früher?" (56-155s)
-
-**ovl-007 — ElementChipRow Indium/Renium** (frame 2001-2193, 66.7-73.1s)
-- **Current:** handmade chip row
-- **Target:** `library/cards/AceternityBentoGrid` mit einzelnen Element-Photo-Cells, oder `library/layout/InfiniteMovingCards`
-- **Sync:** Daniel "Industriemetalle wie Indium oder Renium" @ seg 35: "Indium" @ 71.14 = frame 2134, "Renium" @ 71.70 = frame 2151. **Current start 2001 = 4s zu früh.** Fix: start @ frame 2134, "Indium" reveal first, "Renium" stagger @ 2151.
-- **Effort:** M
-- **Assets:** 🟢 `indium-ingot.jpg` + `renium-ingot.jpg` (nice-to-have)
-
-**ovl-008 — ZollfreilagerFlowSplit** (frame 2280-2544, 76-84.8s)
-- **Current:** handmade left-split
-- **Target:** `library/layout/Timeline` oder custom flow-diagram
-- **Sync:** Daniel "Zollfreilager" @ seg 37: "Zollfreilager" @ 77.94 = frame 2338. Current start 2280 = 76s = ~2s zu früh. Klein.
-- **Effort:** M
-- **Assets:** — keine
-
-**ovl-009 — BMF2004DocumentCard** (frame 2670-3165, 89-105.5s)
-- **Current:** handmade 2004 document
-- **Target:** **GesetzesBlatt3D** mit sourceMeta "2004", paperTextureSrc für aged look
-- **Sync:** Daniel "2004" word mentions — check segments. Context: "Die aktuelle Rechtslage wurde 2004 festgelegt..."
-- **Effort:** M
-- **Assets:** 🔴 `bmf-schreiben-2004-cover.png` + paragraphs
-
-**ovl-010 (km-02) — "AUFGEHOBEN" stamp-slam** (frame 3270-3552, 109-118.4s)
-- **Current:** KineticMoment center, blur-reveal
-- **Target:** `library/effects/Stamp`-style mit red stroke; oder `HighlightedWord` variant="both" rot
-- **Sync:** Daniel "letzte Woche" section — "aufgehoben" word @ ~frame 3271. Mini-check needed.
-- **Effort:** S
-- **Assets:** — keine (optional: physical stamp PNG)
-
-**ovl-011 — DonnerstagNewsCard** (frame 3750-4104, 125-136.8s)
-- **Current:** handmade news card
-- **Target:** **NewspaperMockup3D** (remotion-coder-test, 445 lines) mit echtem article-screenshot
-- **Sync:** Daniel "Donnerstagabend gegen 20 Uhr" @ seg 47: "Donnerstagabend" @ 128.12 = frame 3844. Current start 3750 = 125s = 3s zu früh.
-- **Effort:** M
-- **Assets:** 🟡 `donnerstag-leak-source.png` (Twitter/X post, news article, oder generic phone-screen fallback)
-
-**ovl-012 (km-03) — "BRUCH NICHT UPDATE"** (frame 4452-4827, 148.4-160.9s)
-- **Current:** KineticMoment tracking reveal
-- **Target:** `library/text/FlipWords` — "UPDATE" → "BRUCH" flip; oder `library/text/ContainerTextFlip`
-- **Sync:** Daniel "Bruch" word — check segments. Phrase probably at ~seg 55.
-- **Effort:** S
-- **Assets:** — keine
-
-### Akt 3 — Die 4 Punkte Listicle (155-345s)
-
-**ovl-013 — ListicleCounterStatCard 1/4 "VIER DINGE"** (frame 4890-5205, 163-173.5s)
-- **Current:** handmade panel-style card (screenshot 1)
-- **Target:** **Konsistenz-Entscheidung nötig.** Option A: beide ähnliche Counter moments (1/4 + #1) vereinheitlichen auf den panel-card style; Option B: vereinheitlichen auf den kinetic-center style (screenshot 2); Option C: Neuer 3D style aus `NewspaperMockup3D` oder `Stacked3D`
-- **Sync:** Daniel "vier Dinge" phrase — check context
-- **Effort:** M
-- **Assets:** — keine
-
-**ovl-014 (km-04) — "#1 DAS WORT DAS ALLES VERRÄT"** (frame 5322-5472, 177.4-182.4s)
-- **Current:** KineticMoment bottom, tracking
-- **Target:** `EncryptedText` (library/text) für "#1" scramble, dann `HighlightedWord` für "DAS WORT"
-- **Sync:** Daniel "das eine Wort das alles verrät" phrase — check
-- **Effort:** M
-- **Assets:** — keine
-
-**ovl-015 — KobaltFullscreen** (frame 5838-7278, 194.6-242.6s)
-- **Current:** KobaltFullscreen (already copied from remotion-coder-test)
-- **Target:** **KEEP** — timing ist korrekt: Daniel sagt "Kobalt" first @ 195.60s = frame 5868, deep-boom sfx @ 5868, ovl-015 start @ 5838 (-1s setup). **Duration hinterfragen:** 48s hold ist lang. Bis frame 7278 = 242.6s. Daniel hört auf Kobalt nach seg 73 zu sagen (~234s). Fix: duration evtl. kürzen auf ~7000-7100, das ist direkt nach Daniels letztem "Kobalt" word.
-- **Effort:** S — duration tweak
-- **Assets:** 🔴 **`bmf-schreiben-2026-kobalt-passage.png`** — der Screenshot der Seite mit Kobalt-Passage, als Backdrop innerhalb der KobaltFullscreen component zeigen (hinter dem "KOBALT" text)
-
-**ovl-016 — EUCriticalIconRow "EU-Liste"** (frame 6909-7278, disabled)
-- **Current:** disabled wegen Kollision mit ovl-015
-- **Target:** Re-enable aber als **overlay unter KobaltFullscreen** (kleineres panel)
-- **Sync:** Daniel "EU-Liste der kritischen Rohstoffe" @ seg 73: "EU" @ 231.96 = frame 6959, "kritischen" @ 232.76 = frame 6983. Current start 6909 = 230.3s = ok.
-- **Effort:** S — re-enable + visual subordinate
-- **Assets:** 🟡 `eu-critical-raw-materials-list-2023.png`
-
-**ovl-017 (km-05) — "#2 DIE VERBOTENE RÜCKWIRKUNG"** (frame 7287-7575)
-- **Current:** KineticMoment mask-wipe
-- **Target:** konsistent mit km-04 (selbe Counter-Style-Decision)
-- **Sync:** Check word-timing for "rückwirkung"
-- **Effort:** S
-
-**ovl-018 — HighlighterDocumentExcerpt "wörtlich vor"** (frame 7584-7974)
-- **Current:** handmade highlighter excerpt mit fake-text
-- **Target:** **GesetzesBlatt3D** mit `highlight: true` auf den konkret vorgelesenen paragraph
-- **Sync:** Daniel "Ich lese euch den Satz wörtlich vor" @ seg 63: "wörtlich" @ 197.88 = frame 5936 — wait, das ist vor ovl-018 start. Let me re-check: ovl-018 starts @ frame 7584 = 252.8s. Daniel sagt nochmal "wörtlich" oder beginnt nochmal zu zitieren um ~252s?
-- **Assets:** 🔴🔴 **`bmf-schreiben-2026-vorgelesene-passage.png`** — **der WICHTIGSTE Asset**, der konkret vorgelesene Absatz mit Highlighter auf der Zeile
-- **Effort:** M
-
-**ovl-019 (km-06) — "STRAFZETTEL"** (frame 7998-8295)
-- **Current:** KineticMoment mask-wipe
-- **Target:** `HighlightedWord` variant="circle" rot auf "STRAFZETTEL"
-- **Sync:** Daniel "Strafzettel" @ seg 84: "Strafzettel" @ 268.04 = frame 8041. Current start 7998 = 266.6s = 1.4s zu früh.
-- **Effort:** S
-
-**ovl-020 (km-07) — "#3 22 JAHRE GELÖSCHT"** (frame 8670-8895)
-- **Current:** KineticMoment stamp-slam
-- **Target:** konsistent mit #1/#2
-- **Effort:** S
-
-**ovl-021 — QuoteCard "aufgehoben"** (frame 9501-9954)
-- **Current:** QuoteCard library
-- **Target:** **BigQuoteCard3D** (322 lines) mit original quote aus BMF-Schreiben
-- **Effort:** M
-- **Assets:** 🟡 BMF-Schreiben quote passage (part of MUST-HAVE PDF)
-
-**ovl-022 (km-08) — "#4 0 CENT NEUE STEUERN"** (frame 9981-10299)
-- **Current:** KineticMoment tracking
-- **Target:** konsistent mit #1/#2/#3
-- **Effort:** S
-
-### Akt 4 — Das Muster "Kein Zufall" (345-500s)
-
-**ovl-023 — PercentDownStatCard 19%** (frame 10464-10704)
-- **Current:** handmade percent card
-- **Target:** `library/effects/CountUp` mit count-down-animation 100 → 81 → 19% rot
-- **Sync:** Word-check benötigt
-- **Effort:** S
-- **Assets:** — keine
-
-**ovl-024 — NullEuroBilanzFullscreen "0,00 EUR"** (frame 10872-11205)
-- **Current:** handmade fullscreen
-- **Target:** `library/effects/CountUp` 100 → 0,00 EUR + `library/effects/GlowingEffect` red
-- **Sync:** Word-check benötigt
-- **Effort:** M
-- **Assets:** 🟡 `bundeshaushalt-industriemetalle-0-eur.png` als background-layer
-
-**ovl-025 — TwoDateTimelineSplit "9.April 26 / 4.Februar 25"** (frame 11259-11535)
-- **Current:** handmade timeline split
-- **Target:** **HistoricalTimeline3D** mit 2 date nodes
-- **Effort:** M
-- **Assets:** — keine
-
-**ovl-026 — ChinaBekanntmachungDocumentCard** (frame 11535-12012)
-- **Current:** handmade document card
-- **Target:** **GesetzesBlatt3D** mit Chinese source style
-- **Sync:** Word-check for China export control mention
-- **Effort:** M
-- **Assets:** 🔴 `china-bekanntmachung-aktuell.png`
-
-**ovl-027 — PriceExplosionBars "GALLIUM/GERMANIUM/ANTIMON +%"** (frame 12213-12570)
-- **Current:** handmade bars chart (replaced ChartBuild in Phase 6)
-- **Target:** **BloombergChart3D** (423 lines) oder **BloombergDashboard**
-- **Sync:** Daniel erwähnt die drei metals separately in seg 128+. Each bar stagger reveals @ its mention word-start.
-- **Effort:** L — component swap + data mapping + sync
-- **Assets:** 🟢 optional real price charts (gallium, germanium, antimon)
-
-**ovl-028 — HorizontalChronologyTimeline** (frame 12669-13317)
-- **Current:** handmade horizontal timeline
-- **Target:** **HistoricalTimeline3D** mit 5 nodes (Aug23/Dez23/Sep24/Apr25/Okt25)
-- **Sync:** Daniel "Im August 23 hat China..." @ seg 126. Each date-dot reveals at its mention word-start.
-- **Effort:** L — full rewrite mit word-sync per node
-- **Assets:** — keine
-
-**ovl-029 — EUKrisendialogNewsCard** (frame 13434-13767)
-- **Current:** handmade news card
-- **Target:** **NewspaperMockup3D** mit real press release screenshot
-- **Effort:** M
-- **Assets:** 🔴 `eu-krisendialog-oktober-2025.png`
-
-**ovl-030 (km-09) — "GENAU JETZT" (glitch)** (frame 13773-14178)
-- **Current:** KineticMoment mask-wipe + glitch
-- **Target:** `library/text/EncryptedText` oder keep KineticMoment aber word-sync fix
-- **Effort:** S
-
-### Akt 5 — Lösung "Schweiz" (500-640s)
-
-**ovl-031 — SplitNarrative "Reserven"** (frame 14649-15075)
-- **Current:** SplitNarrative library
-- **Target:** **FlatEuropeMap3D** mit map markers on Reserven-Länder; oder keep SplitNarrative aber word-sync
-- **Effort:** M
-- **Assets:** — keine
-
-**ovl-032 — TrustCheckmarkStatCard** (frame 15315-15888)
-- **Current:** handmade checkmark stat
-- **Target:** `library/cards/MagicCard` + `library/effects/CountUp` + Safe3D für trust-visual
-- **Effort:** S
-
-**ovl-033 — QuoteCard Nicht-Beanstandung** (frame 15888-16467)
-- **Current:** QuoteCard library
-- **Target:** **BigQuoteCard3D**
-- **Effort:** S
-- **Assets:** 🟡 optional BMF-Schreiben "Nicht-Beanstandung" exact quote
-
-**ovl-034 — SchweizLocationCard** (frame 17079-17643)
-- **Current:** handmade location card mit placeholder gradient (Phase B: jetzt mit echtem Alpen-FLUX still als background)
-- **Target:** Keep + use FLUX still OR swap to **GoldVault3D** für Tresor-Moment
-- **Effort:** S — asset-swap
-- **Assets:** ✅ `slot-10-schweiz-alpen.png` (Phase B done)
-
-**ovl-035 — CoreMessageStatCard** (frame 18078-18543)
-- **Current:** handmade stat card
-- **Target:** `library/cards/GlareCard` + `CountUp`
-- **Effort:** S
-
-### Akt 6 — CTA + Outro (640-760s)
-
-**ovl-new-001 — HandelsblattFAZNewsCard** (frame 19350-19980)
-- **Current:** already built mit rotes-x.png stamps (Phase 3)
-- **Target:** **KEEP** — funktioniert schon gut. Optional: echte article screenshots in den 4 cards ersetzen statt generic placeholders
-- **Effort:** S
-- **Assets:** 🟡 `handelsblatt-artikel-industriemetalle.png` + faz + nzz + spiegel
-
-**ovl-036 — HardCTALowerThird** (frame 19980-20697, 666-689.9s = 23.9s Standzeit)
-- **Current:** handmade CTA
-- **Target:** `library/cards/MagicCard` + `BorderBeam` + `library/effects/GradientButton`; 23.9s ist SEHR lang — maybe duration auf ~15s reduzieren
-- **Effort:** M
-- **Assets:** — keine (optional Daniel-cutout wenn self-shot)
-
-**ovl-037 — AuthorityTimeline "20 Jahre Finanzbranche"** (frame 21243-21786)
-- **Current:** handmade timeline
-- **Target:** **HistoricalTimeline3D** mit trust-mode
-- **Effort:** M
-
-**ovl-038 (km-10) — "DANKE DEUTSCHLAND"** (frame 22587-22797)
-- **Current:** KineticMoment slow-fade bottom
-- **Target:** `library/text/AuroraTextEffect` gold — bitter-sarkastischer slow fade
-- **Sync:** Daniel "Danke Deutschland" @ seg 198 — word-check
-- **Effort:** S
-
----
-
-## 4. Kritische Timing-Findings (Spot-Check)
-
-Aus schnellem caption-Audit (nicht vollständig):
-
-| Overlay | Current Start | Daniel's Word Start | Drift | Severity |
-|---|---|---|---|---|
-| ovl-001 "5 STUNDEN" | frame 72 (2.4s) | "5 Stunden" @ 5.12s (frame 154) | **-2.7s zu früh** | M |
-| ovl-002 BMFDocument | frame 648 (21.6s) | "Ich habe es hier vor mir liegen" @ 52.1s | **-30.5s zu früh** | **CRITICAL** — das ist der Schreibens-Reveal-Moment, der schon vor dem Kapitel startet |
-| ovl-003 "22 JAHRE" | frame 870 (29.0s) | "22" @ 29.56 (frame 887) | -0.57s zu früh | S |
-| ovl-005 "0 CENT" | frame 1173 (39.1s) | "Cent" @ 44.14 (frame 1324) | **-5.0s zu früh** | L |
-| ovl-006 CTALowerThird | frame 1410 (47.0s) | "verlinke" @ 54.04 (frame 1621) | **-7.0s zu früh** | L |
-| ovl-007 ElementChipRow | frame 2001 (66.7s) | "Indium" @ 71.14 (frame 2134) | -4.4s zu früh | M |
-| ovl-015 KobaltFullscreen | frame 5838 (194.6s) | "Kobalt" @ 195.60 (frame 5868) | -1.0s pre-roll | ✅ OK |
-| ovl-019 "STRAFZETTEL" | frame 7998 (266.6s) | "Strafzettel" @ 268.04 (frame 8041) | -1.4s zu früh | S |
-
-**Pattern:** Fast alle Overlays triggern 1-30 Sekunden zu früh, weil die Phase-4-Spec-Frames aus einem geplanten Skript kamen, Daniel aber improvisiert hat und später spricht. **Vollständiger Audit aller 38 Overlays gegen captions.ts ist Pflicht-Schritt 1 in Phase F execution.**
-
----
-
-## 5. KineticMoment Word-Level Sync Strategie
-
-Aktuell rendert `KineticMoment` mit statischen word positions. Redesign:
+**File:** `src/compositions/daniel-bmf-industriemetalle/captions-lookup.ts`
 
 ```tsx
-type KineticWord = {
-  text: string;
-  color: string;
-  size: number;
-  // NEW: captionWordStart sekundengenauer Zeitpunkt aus captions.ts
-  captionWordStart: number;  // z.B. 29.56 für "22"
-  // oder: matchCaptionWord: "22" — wir suchen automatisch den word-start
-};
-```
+import { SEGMENTS, type CaptionWord, type CaptionSegment } from "./captions";
 
-Dann in component: `const frame = useCurrentFrame(); const wordFrame = Math.round(captionWordStart * fps); const visible = frame >= wordFrame;`. Stagger-reveal jedes words an sein echtes word-start-frame.
+const FPS = 30;
 
-**Plus:** Layout fix für km-01 style issue — statt 3 stacked lines, als inline-wrap oder 2-line layout ohne awkward bullet-prefix. Der `·` bullet wird entweder entfernt oder als separator ZWISCHEN zwei inline words gerendert.
-
-**Helper function** zum captions-lookup:
-```tsx
-import { SEGMENTS } from "./captions";
-export function findWordStart(word: string, afterSeconds: number = 0): number | null {
+/**
+ * Find the start-frame of the first occurrence of a word at or after a given time.
+ * Matches case-insensitively and strips punctuation from caption words.
+ * Returns null if not found.
+ */
+export function findWordFrame(word: string, afterSeconds: number = 0): number | null {
+  const target = word.toLowerCase().replace(/[.,;:!?"()]/g, "").trim();
   for (const seg of SEGMENTS) {
-    if (seg.start < afterSeconds) continue;
+    if (seg.end < afterSeconds) continue;
     for (const w of seg.words) {
-      if (w.word.toLowerCase().replace(/[.,]/g, "") === word.toLowerCase()) {
-        return w.start;
+      if (w.start < afterSeconds) continue;
+      const clean = w.word.toLowerCase().replace(/[.,;:!?"()]/g, "").trim();
+      if (clean === target || clean.startsWith(target)) {
+        return Math.round(w.start * FPS);
       }
     }
   }
   return null;
 }
+
+/**
+ * Find the end-frame of the last occurrence of a word within a time window.
+ */
+export function findWordEndFrame(word: string, afterSeconds: number, beforeSeconds: number): number | null {
+  const target = word.toLowerCase().replace(/[.,;:!?"()]/g, "").trim();
+  let lastEnd: number | null = null;
+  for (const seg of SEGMENTS) {
+    if (seg.end < afterSeconds || seg.start > beforeSeconds) continue;
+    for (const w of seg.words) {
+      if (w.start < afterSeconds || w.end > beforeSeconds) continue;
+      const clean = w.word.toLowerCase().replace(/[.,;:!?"()]/g, "").trim();
+      if (clean === target || clean.startsWith(target)) {
+        lastEnd = Math.round(w.end * FPS);
+      }
+    }
+  }
+  return lastEnd;
+}
+
+/**
+ * Find the end-frame of a segment by its start-frame (approx match).
+ */
+export function findSegmentEndFrame(startFrame: number): number | null {
+  const startSec = startFrame / FPS;
+  for (const seg of SEGMENTS) {
+    if (Math.abs(seg.start - startSec) < 0.5) {
+      return Math.round(seg.end * FPS);
+    }
+  }
+  return null;
+}
+
+/**
+ * Compute the last-relevant-word-end + D5-cap (7.5 frames) for an overlay
+ * window. Takes an array of trigger words and returns the max end-frame + cap.
+ */
+export function computeOverlayEnd(triggerWords: string[], afterSeconds: number, beforeSeconds: number): number {
+  const D5_CAP = 8; // 7.5 rounded up
+  let maxEnd = 0;
+  for (const w of triggerWords) {
+    const end = findWordEndFrame(w, afterSeconds, beforeSeconds);
+    if (end && end > maxEnd) maxEnd = end;
+  }
+  return maxEnd + D5_CAP;
+}
 ```
 
-Usage: `captionWordStart: findWordStart("Kobalt", 190) ?? 195.60`
+**Nutzung:**
+```tsx
+import { findWordFrame, computeOverlayEnd } from "./captions-lookup";
+
+const start = findWordFrame("Kobalt", 190) ?? 5868; // fallback
+const end = computeOverlayEnd(["Kobalt", "Rohstoffe"], 190, 240);
+```
 
 ---
 
-## 6. Real-World Assets Integration Points
+## 4. Library Components Import (Phase F.1)
 
-### 🔴 MUST-HAVE (blocks Phase F execution)
+Eine einmalige Import-Action kopiert alle benötigten `remotion-coder-test` Components ins ds-motion-graphics Workspace unter `src/components/library/remotion-coder/`.
 
-| Asset | Slot/Overlay | Pfad | Wer |
-|---|---|---|---|
-| `bmf-schreiben-2026-full.pdf` | ovl-002/015/018 | `public/bmf/assets/documents/` | Dario |
-| `bmf-schreiben-2026-cover.png` | ovl-002 | `public/bmf/assets/documents/` | Dario |
-| `bmf-schreiben-2026-kobalt-passage.png` | ovl-015 | `public/bmf/assets/documents/` | Dario |
-| `bmf-schreiben-2026-vorgelesene-passage.png` | ovl-018 | `public/bmf/assets/documents/` | Dario |
-| `bmf-schreiben-2004-cover.png` | ovl-009 | `public/bmf/assets/documents/` | Dario |
-| `china-bekanntmachung-aktuell.png` | ovl-026 | `public/bmf/assets/documents/` | Dario |
-| `eu-krisendialog-oktober-2025.png` | ovl-029 | `public/bmf/assets/news/` | Dario |
+### 4.1 Zu importierende Components
 
-### 🟡 HIGH-VALUE
+Aus `~/remotion-coder-test/src/` → `~/ds-motion-graphics/src/components/library/remotion-coder/`:
 
-| Asset | Slot/Overlay | Pfad | Wer |
-|---|---|---|---|
-| `donnerstag-leak-source.png` | ovl-011 | `public/bmf/assets/news/` | Dario |
-| `eu-critical-raw-materials-list-2023.png` | ovl-016 | `public/bmf/assets/documents/` | Dario |
-| `bundeshaushalt-industriemetalle-0-eur.png` | ovl-024 | `public/bmf/assets/documents/` | Dario |
-| `handelsblatt-artikel-industriemetalle.png` | ovl-new-001 | `public/bmf/assets/news/` | Dario |
-| `faz-artikel-industriemetalle.png` | ovl-new-001 | `public/bmf/assets/news/` | Dario |
+| Source File | Zweck im BMF-Video |
+|---|---|
+| `HighlightedWord.tsx` | ALLE Counter-Moments + Kobalt + Strafzettel + 0 Cent + Danke Deutschland |
+| `GesetzesBlatt3D.tsx` | BMFDocumentCard (ovl-002), BMF2004DocumentCard (ovl-009), HighlighterDocumentExcerpt (ovl-018), ChinaBekanntmachungDocumentCard (ovl-026) |
+| `ChapterTransition3D.tsx` | Alle 7 Chapter-Cards |
+| `BigQuoteCard3D.tsx` | QuoteCard aufgehoben (ovl-021), QuoteCard Nicht-Beanstandung (ovl-033) |
+| `BloombergChart3D.tsx` | Price-Explosion + Chart-Rendering |
+| `BloombergDashboard.tsx` | Optional alternative zu BloombergChart3D |
+| `BloombergFrame.tsx` | Chrome-wrapper für Chart-Overlays |
+| `HistoricalTimeline3D.tsx` | HorizontalChronologyTimeline (ovl-028), AuthorityTimeline (ovl-037), TwoDateTimelineSplit (ovl-025) |
+| `FlatEuropeMap3D.tsx` | SplitNarrative Reserven (ovl-031) |
+| `NewspaperMockup3D.tsx` | DonnerstagNewsCard (ovl-011), EUKrisendialogNewsCard (ovl-029), HandelsblattFAZNewsCard (ovl-new-001) |
+| `AnimatedBulletList.tsx` | OhneTriptychon (ovl-004) |
+| `TickerBar.tsx` | Optional untere Chrome-Leiste |
+| `Safe3D.tsx` | TrustCheckmarkStatCard (ovl-032) |
+| `GlareCard3D.tsx` | CoreMessageStatCard (ovl-035) |
 
-### 🟢 NICE-TO-HAVE (element photos)
+Aus `src/components/library/text/` (bereits im Workspace):
 
-`public/bmf/assets/elements/`: `kobalt-ingot.jpg`, `gallium-ingot.jpg`, `germanium-ingot.jpg`, `antimon-ingot.jpg`, `indium-ingot.jpg`, `renium-ingot.jpg`
+| Component | Use |
+|---|---|
+| `EncryptedText.tsx` | Optional für "#1/#2/#3/#4" Counter Scramble-Effect vor HighlightedWord |
+| `AuroraTextEffect.tsx` | ovl-038 "DANKE DEUTSCHLAND" bitter-sarkastischer outro |
+| `ShinyText.tsx` | "5 STUNDEN" hero-number in ovl-001 |
+| `TypewriterEffect.tsx` | Optional für document-excerpt typewriter reveal |
+| `HeroHighlight.tsx` | Optional für in-quote highlighting |
 
-### 🟢 NICE-TO-HAVE (price charts)
+Aus `src/components/library/effects/` (bereits im Workspace):
 
-`public/bmf/assets/charts/`: `gallium-preischart-2023-2026.png`, `germanium-preischart.png`, `antimon-preischart-437-prozent.png`
+| Component | Use |
+|---|---|
+| `CountUp.tsx` | ovl-023 "19%", ovl-024 "0,00 EUR", ovl-027 Chart-Werte-Reveals, ovl-035 CoreMessage |
+| `BorderBeam.tsx` | ovl-036 HardCTALowerThird Premium-Frame |
+| `GlowingEffect.tsx` | ovl-024 0-EUR red-glow |
+| `Sparkles.tsx` | ovl-034 Schweiz warm Payoff |
+| `Spotlight.tsx` | ovl-015 Kobalt Fullscreen Accent |
 
----
+### 4.2 Import-Script
 
-## 7. User Decisions benötigt bevor Execution startet
+Phase F.1 Execution:
+```bash
+mkdir -p ~/ds-motion-graphics/src/components/library/remotion-coder
+cp ~/remotion-coder-test/src/HighlightedWord.tsx \
+   ~/remotion-coder-test/src/GesetzesBlatt3D.tsx \
+   ~/remotion-coder-test/src/ChapterTransition3D.tsx \
+   ~/remotion-coder-test/src/BigQuoteCard3D.tsx \
+   ~/remotion-coder-test/src/BloombergChart3D.tsx \
+   ~/remotion-coder-test/src/BloombergDashboard.tsx \
+   ~/remotion-coder-test/src/BloombergFrame.tsx \
+   ~/remotion-coder-test/src/HistoricalTimeline3D.tsx \
+   ~/remotion-coder-test/src/FlatEuropeMap3D.tsx \
+   ~/remotion-coder-test/src/NewspaperMockup3D.tsx \
+   ~/remotion-coder-test/src/AnimatedBulletList.tsx \
+   ~/remotion-coder-test/src/TickerBar.tsx \
+   ~/remotion-coder-test/src/Safe3D.tsx \
+   ~/remotion-coder-test/src/GlareCard3D.tsx \
+   ~/ds-motion-graphics/src/components/library/remotion-coder/
+```
 
-### D1 — Counter-Style Consistency
-Alle "listicle counter" moments (ovl-013 "1/4", ovl-014 "#1", ovl-017 "#2", ovl-020 "#3", ovl-022 "#4") müssen **denselben visual style** nutzen. Option:
-- **A** — Panel-Card style (ovl-013 screenshot 1) — cleaner, statischer
-- **B** — Kinetic-Center style (ovl-014 screenshot 2) — dynamischer, center-stacked
-- **C** — Neuer 3D style mit `NewspaperMockup3D` oder custom "chapter counter" card
-- **D** — Mix (1/4 total-count card = Option A, dann #1/#2/#3/#4 per-item = Option B) — das ist tatsächlich die aktuelle Intention, aber zu ähnlich aussehend verwirrt es
-
-### D2 — Word-Level Sync Mode
-- **A** — **Strict:** Jedes Wort der KineticMoments synct zu seinem caption word-start (hoher Aufwand, präziseste Umsetzung)
-- **B** — **Keyword-only:** Nur die Key-Words (Kobalt, 22 Jahre, 0 Cent, Schweiz, etc.) syncen zu word-start, restliche Text als editorial beat
-- **C** — **Editorial mit Regel:** Keine sync aber strikte Regel "kein Overlay/Element reveal bevor Daniel das Thema-Wort gesprochen hat"
-
-### D3 — Chapter-Transitions
-- **A** — Re-enable alle 7 Chapter-Cards mit **ChapterTransition3D** (remotion-coder-test)
-- **B** — Keep disabled (CONTINUATION-PLAN original recommendation)
-
-### D4 — KineticMoment Wording
-Die Phase-4-Specs haben editorial text ("EIN FEDERSTRICH") der nicht Daniel's Originalton matcht ("gestoppt"). Soll:
-- **A** — Alle KineticMoments an Daniel's tatsächliche Words angleichen (wörtlich)
-- **B** — Editorial-Text behalten wo er stärker ist (aber dann timed zu Daniel's "closest concept word")
-
-### D5 — Overlay-Durations Audit
-Viele overlays bleiben lange stehen obwohl Daniel längst weitergeredet hat. Soll:
-- **A** — Hard rule: overlay-duration = max 0.5s über das letzte relevante Daniel-word hinaus
-- **B** — Editorial freedom (status quo), aber kupfer-style "vieeeel zu lange" einzeln fixen
-
----
-
-## 8. Execution Order
-
-**Sobald Assets + Decisions da sind:**
-
-### Phase F.1 — Foundation (2-3h)
-1. Voll-Audit: alle 38 overlays gegen captions.ts word-starts, exakte Drift-Tabelle erstellen
-2. Helper function `findWordStart()` in eigenes File `captions-lookup.ts`
-3. `BROLL_SLOTS` + overlay frame ranges global korrigieren
-4. Copy/symlink `remotion-coder-test/src/*.tsx` components ins ds-motion-graphics workspace (als `src/components/library/remotion-coder/`)
-5. `GesetzesBlatt3D`, `HighlightedWord`, `NewspaperMockup3D`, `HistoricalTimeline3D`, `BigQuoteCard3D`, `BloombergChart3D`, `ChapterTransition3D`, `GoldVault3D`, `FlatEuropeMap3D` importieren
-
-### Phase F.2 — Document-Card Swaps (1-2h)
-Alle 4 BMF/Document overlays (ovl-002, 009, 018, 026) auf GesetzesBlatt3D mit echten PDF-Assets
-
-### Phase F.3 — News-Card Swaps (1h)
-ovl-011, ovl-029, ovl-new-001 auf NewspaperMockup3D mit echten news-Assets
-
-### Phase F.4 — KineticMoment Rewrite (2-3h)
-Alle 10 km-* Moments neu mit word-sync + konsistentem counter style + fixed layout
-
-### Phase F.5 — Listicle Counter + Stat Cards (1-2h)
-ovl-013 + ovl-023 + ovl-032 + ovl-035 auf library components
-
-### Phase F.6 — Chart + Timeline Rewrites (2-3h)
-ovl-027 (PriceExplosionBars → BloombergChart3D), ovl-028 (Chronology → HistoricalTimeline3D), ovl-037 (AuthorityTimeline → HistoricalTimeline3D)
-
-### Phase F.7 — Fullscreen + Misc (1h)
-ovl-005 (0 CENT), ovl-024 (Null-EUR), ovl-034 (Schweiz), ovl-036 (HardCTA)
-
-### Phase F.8 — Chapter Transitions (1h optional)
-7 Chapter-Cards mit ChapterTransition3D re-enable
-
-### Phase F.9 — Timing Pass + Frame-by-Frame Review (2h mit Dario)
-Jeder overlay wird frame-gerendert, visuell geprüft, finales tuning
-
-**Total estimate: 12-17h über mehrere Sessions**
+Nach Import: TypeScript-Check, Imports anpassen (relative Pfade zu `../../`), Three.js / R3F dependencies bestätigen installed. Bei Konflikten: verwende die Version aus remotion-coder-test als Quelle der Wahrheit (die ist production-iterated v1-v6 per remotion-coder-test CLAUDE.md).
 
 ---
 
-## 9. Was NICHT in Phase F gemacht wird
+## 5. Overlay-by-Overlay Execution Matrix (alle 38 + 1 new + 7 chapter)
 
-- **Phase A Sound-Design loop-Problem** — separate Task vor Final Render, eigene Session. Längere Source-Tracks sourcen oder sequential sub-sequences.
-- **Phase D ovl-003 Face-Safe-Zone** — wird in F.4 automatisch mitgefixt (KineticMoment rewrite)
-- **Phase E 4C Brand-QC Warnings** — wird in F.4+F.5 automatisch mitgefixt
-- **Neue Overlays erfinden** — wir arbeiten nur an den existing 38. Keine neuen moments.
-- **Skript-Änderungen** — Daniel hat's gesprochen, Text ist frozen.
+Für jeden Overlay:
+- **Old:** bestehende Frame-Range aus Skeleton-Build
+- **New:** korrigierte Frame-Range basierend auf captions.ts word-sync
+- **Target:** Library-Component + Props
+- **Sync:** Trigger-Words + internal reveal timings
+- **Asset:** Pfad(e) falls real-asset
+- **Action:** S (swap props), M (medium swap + asset integration), L (full rewrite)
+
+### Akt 1 — Hook + Setup (0-155s)
+
+#### ovl-001 — "5 STUNDEN NACHTSCHICHT" Lower-Third
+- **Old:** frame 72-258 (2.4-8.6s)
+- **New:** frame **162-249** (5.42-8.31s, 87f, 2.9s)
+- **Target:** `library/text/ShinyText` für "5 STUNDEN" + `library/effects/CountUp` für zahlen-reveal + `library/cards/MagicCard` als container
+- **Sync:** Start @ word "5" (5.42s = frame 162). Hero number "5" reveal frame 162. "STUNDEN" label reveal frame 164 (word "Stunden" @ 6.14s = frame 184, stagger 0.6s later). Sub "NACHTSCHICHT AN EINEM THEMA" editorial. End @ "gesessen" + D5 cap (8.06+0.25 = 249).
+- **Asset:** —
+- **Action:** L (component rewrite)
+
+#### ovl-002 — BMFDocumentCard (Schreiben-Reveal)
+- **Old:** frame 648-870 (21.6-29.0s)
+- **New:** frame **653-856** (21.76-28.53s, 203f, 6.8s)
+- **Target:** `library/remotion-coder/GesetzesBlatt3D` mit `variant="overlay"`, `clusterOffsetX=320` (rechts-split)
+- **Sync:** Start @ word "9." (21.76s = frame 653). Panel flies in right-side. Eagle emblem reveal @ frame 700 (matching "Bundesfinanzministerium" @ 23.74). Paragraphs reveal stagger as Daniel lists: "7-Seiten-lange" @ 26.04, "Schreiben" @ 27.76. End @ "rausgeschickt" + D5 (28.28+0.25 = 856).
+- **Asset:** `public/assets/mbf-schreiben-titelseite.png` als `paperTextureSrc` background OR hero image in the GesetzesBlatt panel
+- **Props:**
+  ```tsx
+  <GesetzesBlatt3D
+    sourceName="Bundesministerium der Finanzen"
+    sourceMeta="Wilhelmstraße 97 · 10117 Berlin · 9. April 2026"
+    lawTitle="Umsatzsteuer · Steuerbefreiung § 4 Nr. 4b UStG"
+    lawSection="GZ: III C 3 - S 7157-a/00005/001/052"
+    paragraphs={[
+      { number: "§", segments: [{ text: "7 Seiten, die 22 Jahre Rechtspraxis beenden.", highlight: true }] }
+    ]}
+    paperTextureSrc={staticFile("assets/mbf-schreiben-titelseite.png")}
+    variant="overlay"
+    clusterOffsetX={320}
+  />
+  ```
+- **Action:** M (library swap + asset)
+
+#### ovl-003 — "22 JAHRE GESTOPPT" (ehem. km-01 "22 JAHRE EIN FEDERSTRICH")
+- **Old:** frame 870-1038 (29.0-34.6s) mit Wording "22 JAHRE · EIN FEDERSTRICH"
+- **New:** frame **887-1041** (29.56-34.71s, 154f, 5.1s) mit Wording **"22 JAHRE GESTOPPT"** (D4 angeglichen)
+- **Target:** `library/remotion-coder/HighlightedWord` mit 3 sequentiellen instances, position="center-lower"
+- **Sync:**
+  - Word "22": reveal @ frame 887 (word-start 29.56)
+  - Word "JAHRE": reveal @ frame 913 (word-start 30.42)
+  - Word "GESTOPPT": reveal @ frame 1010 (word-start 33.66), `variant="circle"` red accent
+  - Exit @ frame 1041 (word end 34.46 + 0.25)
+- **Asset:** —
+- **Props:** Single combined HighlightedWord sequence, rendered as 3 staggered instances within one `<Sequence>`
+- **Action:** L (full KineticMoment rewrite)
+
+#### ovl-004 — OhneTriptychon "Parlament/Vorwarnung/Übergang"
+- **Old:** frame 1041-1158 (34.7-38.6s)
+- **New:** frame **1040-1166** (34.68-38.87s, 126f, 4.2s)
+- **Target:** `library/remotion-coder/AnimatedBulletList` mit 3 bullets
+- **Sync:**
+  - Bullet 1 "OHNE PARLAMENT": reveal @ frame 1055 (word "Parlament" @ 35.18)
+  - Bullet 2 "OHNE VORWARNUNG": reveal @ frame 1085 (word "Vorwarnung" @ 36.18)
+  - Bullet 3 "OHNE ÜBERGANGSFRISTE": reveal @ frame 1117 (word "Übergangsfriste" @ 37.24)
+  - Exit @ frame 1166 (phrase end 38.62 + 0.25)
+- **Asset:** —
+- **Action:** M (swap handmade Triptychon → AnimatedBulletList)
+
+#### ovl-005 — FullscreenTakeover "0 CENT"
+- **Old:** frame 1173-1395 (39.1-46.5s)
+- **New:** frame **1193-1394** (39.76-46.47s, 201f, 6.7s)
+- **Target:** `library/FullscreenTakeover` (existing) mit `library/effects/CountUp` für "0 CENT" reveal + `library/remotion-coder/HighlightedWord` für "NICHT EINEN" emphasis
+- **Sync:**
+  - Chrome entry @ frame 1193 (word "Verrückte" @ 39.76)
+  - CountUp-Anim 100 → 0 start @ frame 1273 (word "keinen" @ 43.74 — actually "Cent" is at 43.74)
+  - Wait, "Cent" @ 43.74 = frame 1312. CountUp landing @ frame 1312 (lands on "Cent" word-end).
+  - "NICHT EINEN" highlight @ frame 1369 (word "nicht" @ 45.64)
+  - Exit @ frame 1394 (word "einen" end 46.48 + 0.25)
+- **Asset:** —
+- **Action:** M (FullscreenTakeover keeps chrome, inner content rewrite)
+
+#### ovl-006 — CTALowerThird "ich verlinke euch"
+- **Old:** frame 1410-1695 (47.0-56.5s)
+- **New:** frame **1606-1805** (53.54-60.19s, 199f, 6.6s)
+- **Target:** `library/cards/MagicCard` mit ShinyText "ICH VERLINKE EUCH DAS GANZE" + link-icon
+- **Sync:** Start @ word "ich" before "verlinke" (53.54 = frame 1606). End @ "lesen könnt" + 0.25 (60.22+0.25 = 60.47 → frame 1814). Cap at 1805 because "lesen könnt" endet bei 60.22.
+- **Asset:** —
+- **Action:** M (handmade replace)
+
+### Akt 2 — Context Setup (60-155s)
+
+#### ovl-007 — ElementChipRow "Indium/Renium"
+- **Old:** frame 2001-2193 (66.7-73.1s)
+- **New:** frame **2078-2199** (69.28-73.33s, 121f, 4.0s)
+- **Target:** `library/cards/AceternityBentoGrid` oder `library/layout/InfiniteMovingCards` mit 2 Element-Chips
+- **Sync:**
+  - Container reveal @ frame 2078 (word "Industriemetalle" @ 69.28)
+  - Chip "INDIUM" reveal @ frame 2134 (word "Indium" @ 71.14)
+  - Chip "RENIUM" reveal @ frame 2151 (word "Renium" @ 71.70)
+  - Exit @ frame 2199 (word "wolltet" end 73.08 + 0.25)
+- **Asset:** — (text chips, keine element photos)
+- **Action:** M (handmade → library)
+
+#### ovl-008 — ZollfreilagerFlowSplit
+- **Old:** frame 2280-2544 (76.0-84.8s)
+- **New:** frame **2338-2552** (77.94-85.06s, 214f, 7.1s)
+- **Target:** `library/layout/Timeline` oder custom flow-diagram component (keep handmade if no library-match, only fix timing + sync)
+- **Sync:** Start @ word "Zollfreilager" @ 77.94 (frame 2338). End @ word "eingeführt" end 84.84 + 0.25 (frame 2552).
+- **Asset:** —
+- **Action:** S (timing fix only)
+
+#### ovl-009 — BMF2004DocumentCard (Editorial Fallback)
+- **Old:** frame 2670-3165 (89.0-105.5s)
+- **New:** frame **3079-3184** (102.66-106.13s, 105f, 3.5s)
+- **Target:** `library/remotion-coder/GesetzesBlatt3D` mit `variant="overlay"`, editorial paragraphs (kein real asset)
+- **Sync:** Start @ word "2004" @ 102.66 (frame 3079). Second "2004" @ 105.88 as emphasis pulse. End + D5 cap (frame 3184).
+- **Asset:** editorial — nur bundesadler.svg als watermark
+- **Props:**
+  ```tsx
+  <GesetzesBlatt3D
+    sourceName="Bundesministerium der Finanzen"
+    sourceMeta="28. Januar 2004"
+    lawTitle="IV D 1 — S 7157 — 01/04"
+    lawSection="Bundessteuerblatt I · S. 242"
+    paragraphs={[
+      { number: "§", segments: [
+        { text: "Die Regel, die " },
+        { text: "22 Jahre", highlight: true },
+        { text: " galt." }
+      ]}
+    ]}
+    variant="overlay"
+  />
+  ```
+- **Action:** M (editorial card via library)
+
+#### ovl-010 — "AUFGEHOBEN" stamp-slam (ehem. km-02)
+- **Old:** frame 3270-3552 (109.0-118.4s)
+- **New:** frame **3385-3450** (112.84-115.00s, 65f, 2.2s)
+- **Target:** `library/remotion-coder/HighlightedWord` mit `variant="both"` red
+- **Sync:** Start @ 3385 (5 frames vor "aufgehoben" @ 113.18). End @ word-end + D5 (frame 3450).
+- **Asset:** —
+- **Action:** L (KineticMoment rewrite)
+
+#### ovl-011 — DonnerstagNewsCard (Editorial)
+- **Old:** frame 3750-4104 (125-136.8s)
+- **New:** frame **3844-4110** (128.12-137.00s, 266f, 8.9s)
+- **Target:** `library/remotion-coder/NewspaperMockup3D` mit editorial content
+- **Sync:** Start @ word "Donnerstagabend" @ 128.12 (frame 3844). Mid-reveal @ "20 Uhr" @ 129.62 (frame 3888). End @ "rausgeschickt hat" + 0.25 (frame 4110).
+- **Asset:** editorial — generic phone-silhouette SVG inline
+- **Action:** M (library swap, editorial content)
+
+#### ovl-012 — "BRUCH NICHT UPDATE" (ehem. km-03)
+- **Old:** frame 4452-4827 (148.4-160.9s)
+- **New:** frame **4690-4900** (156.34-163.30s, 210f, 7.0s) — approximate, needs captions-lookup runtime validation
+- **Target:** `library/text/FlipWords` animierte word-substitution
+- **Sync:** Start @ word "Update" @ 156.44 (frame 4693). Flip animation: "UPDATE" → "BRUCH" at frame 4750-4770. Hold. End at phrase end (captions-lookup runtime).
+- **Asset:** —
+- **Action:** L (library swap)
+
+### Akt 3 — Die 4 Punkte Listicle (155-345s)
+
+#### ovl-013 — Counter-Moment "1/4 VIER DINGE"
+- **Old:** frame 4890-5205 (163-173.5s)
+- **New:** frame **~4910-5200** (needs captions-lookup for "vier Dinge")
+- **Target:** `library/remotion-coder/HighlightedWord` mit custom counter "1 / 4" + word "VIER DINGE" center-stacked
+- **Sync:** Start @ word "vier" (runtime lookup after 163s). Counter reveal 1/4 @ start, "VIER DINGE" highlight stagger 5f later.
+- **Asset:** —
+- **Action:** L (panel-card → kinetic-center per D1)
+
+#### ovl-014 — Counter "#1 DAS WORT DAS ALLES VERRÄT" (ehem. km-04)
+- **Old:** frame 5322-5472 (177.4-182.4s)
+- **New:** frame **~5385-5475** (needs captions-lookup for "eine Wort")
+- **Target:** `library/remotion-coder/HighlightedWord` + `library/text/EncryptedText` scramble für "#1"
+- **Sync:**
+  - "#1" encrypted-reveal scramble @ start
+  - "DAS WORT" highlight @ word "Wort" (runtime: ~179s)
+  - "ALLES VERRÄT" highlight stagger
+  - Exit @ phrase end + D5
+- **Asset:** —
+- **Action:** L (rewrite)
+
+#### ovl-015 — KobaltFullscreen (centerpiece)
+- **Old:** frame 5838-7278 (194.6-242.6s, 48s hold)
+- **New:** frame **5838-7035** (194.6-234.5s, 1197f, 39.9s) — shortened by 8.1s (D5 cap: last "Kobalt" @ 229.32 + phrase tail ~234)
+- **Target:** existing `KobaltFullscreen` component + NEW: `bmf-schreiben-passsage.png` as ghosted backdrop layer BEHIND the kinetic "KOBALT" text, 25-35% opacity with subtle parallax
+- **Sync:**
+  - Entry @ frame 5838 (1s pre-roll before "Kobalt." @ 195.60 = frame 5868)
+  - "KOBALT" kinetic-type reveal @ frame 5868 (deep-boom-2 sync, already wired in Phase A)
+  - Backdrop passage.png fade-in @ frame 5990 (after the punch hit)
+  - Daniel liest "A liefert im Zolllager eingelagertes Kobalt" @ 199.64-201.50 (frame 5989-6045) — the document zoom-in
+  - Hold + slow push until frame 7035 (phrase end 234.5 + 0.25)
+- **Asset:** `public/assets/bmf-schreiben-passsage.png` as backdrop
+- **Action:** M (existing component + new backdrop layer)
+
+#### ovl-016 — EUCriticalIconRow (STAYS DISABLED)
+- **Decision:** Bleibt disabled per scope-reduction. Kein asset, kein re-enable.
+
+#### ovl-017 — Counter "#2 DIE VERBOTENE RÜCKWIRKUNG" (ehem. km-05)
+- **Old:** frame 7287-7575 (242.9-252.5s)
+- **New:** frame **~7300-7570** (needs captions-lookup for "Rückwirkung")
+- **Target:** `library/remotion-coder/HighlightedWord` konsistent mit #1
+- **Sync:** "#2" encrypted scramble @ start, "DIE VERBOTENE RÜCKWIRKUNG" highlight stagger. Exit + D5.
+- **Asset:** —
+- **Action:** L (rewrite)
+
+#### ovl-018 — HighlighterDocumentExcerpt (die Kobalt-Passage)
+- **Old:** frame 7584-7974 (252.8-265.8s)
+- **New:** frame **7495-7980** (249.84-266.00s, 485f, 16.2s)
+- **Target:** Custom image layer mit `library/remotion-coder/GesetzesBlatt3D` style panel + static `bmf-schreiben-passsage.png` als primary content + zoom-in animation + pointer/arrow reveals
+- **Sync:**
+  - Start @ word "wörtlich" @ 249.84 (frame 7495)
+  - Panel entry @ 7495, image reveal @ 7520
+  - Zoom-in auf Highlighter-Line 1 ("A liefert im Zolllager eingelagertes Kobalt an P") @ frame 7530
+  - Daniel spricht "A liefert im Zolllager eingelagertes Kobalt an" @ 198.64-201.50 — wait, that's earlier, around frame 5959-6045. Hmm, so there are TWO moments where Daniel "reads" the document?
+  - Actually the current ovl-018 range 252.8-265.8s is AFTER the Kobalt section. This is a SECOND reference where Daniel says "wörtlich" again @ 249.84. He's re-quoting or elaborating.
+  - Internal stagger: line 1 highlight @ 7495, line 2 ("praxisorientierter Betrachtungsweise") @ 7580, line 3 ("ausschließlich die weitere Lagerung") @ 7680, line 4 ("ist daher nicht steuerfrei") @ 7800
+  - Exit @ frame 7980 (end 266.00 + 0.25)
+- **Asset:** `public/assets/bmf-schreiben-passsage.png` (Dario's pre-highlighted image)
+- **Action:** L (image-direct display mit internal animation overlay)
+
+#### ovl-019 — "STRAFZETTEL" (ehem. km-06)
+- **Old:** frame 7998-8295 (266.6-276.5s)
+- **New:** frame **8041-8156** (268.04-271.87s, 115f, 3.8s)
+- **Target:** `library/remotion-coder/HighlightedWord` `variant="circle"` red
+- **Sync:** Start @ word "Strafzettel" @ 268.04 (frame 8041). End @ word "klemmen" @ 271.62 + D5 (frame 8156).
+- **Asset:** —
+- **Action:** L (rewrite)
+
+#### ovl-020 — Counter "#3 22 JAHRE GELÖSCHT" (ehem. km-07)
+- **Old:** frame 8670-8895 (289-296.5s)
+- **New:** frame **~8700-8780** (290.0-292.7s, 80f, 2.7s)
+- **Target:** `library/remotion-coder/HighlightedWord` konsistent
+- **Sync:** "#3" scramble @ ~frame 8700. "22 JAHRE GELÖSCHT" @ word "gelöscht" @ 291.76 (frame 8753). Short punch.
+- **Asset:** —
+- **Action:** L (rewrite)
+
+#### ovl-021 — QuoteCard "aufgehoben"
+- **Old:** frame 9501-9954 (316.7-331.8s)
+- **New:** frame **9596-9870** (319.86-329.00s, 274f, 9.1s)
+- **Target:** `library/remotion-coder/BigQuoteCard3D`
+- **Sync:** Start @ word "2004" @ 319.86 (frame 9596). Quote text typewriter reveal. End 274f later.
+- **Asset:** —
+- **Action:** M (library swap)
+
+#### ovl-022 — Counter "#4 0 CENT NEUE STEUERN" (ehem. km-08)
+- **Old:** frame 9981-10299 (332.7-343.3s)
+- **New:** frame **10116-10305** (337.20-343.5s, 189f, 6.3s)
+- **Target:** `library/remotion-coder/HighlightedWord` konsistent
+- **Sync:** "#4" scramble @ ~10100. "0 CENT" highlight @ frame 10116 (word "Cent" @ 337.20). "NEUE STEUERN" stagger. End + D5.
+- **Asset:** —
+- **Action:** L (rewrite)
+
+### Akt 4 — Das Muster "Kein Zufall" (345-500s)
+
+#### ovl-023 — PercentDownStatCard "19%"
+- **Old:** frame 10464-10704 (348.8-356.8s)
+- **New:** frame **10373-10700** (345.76-356.67s, 327f, 10.9s)
+- **Target:** `library/cards/MagicCard` mit `library/effects/CountUp` (100 → 19) + red-glow
+- **Sync:** Start @ word "19" @ 345.76 (frame 10373). CountUp animation 80-120f. Hold.
+- **Asset:** —
+- **Action:** M
+
+#### ovl-024 — NullEuroBilanzFullscreen "0,00 EUR"
+- **Old:** frame 10872-11205 (362.4-373.5s)
+- **New:** frame **11031-11210** (367.70-373.67s, 179f, 6.0s)
+- **Target:** `library/FullscreenTakeover` + `library/effects/CountUp` 100 → 0.00 EUR + `deutschland-karte.svg` als backdrop
+- **Sync:** Start @ word "0" @ 367.70 (frame 11031). Euro + Cent reveals @ frame 11081 / 11099. Screen-shake sync preserved from Phase A sfx-032 pattern.
+- **Asset:** `public/assets/logos/deutschland-karte.svg` ghosted backdrop
+- **Action:** M
+
+#### ovl-025 — TwoDateTimelineSplit "9.April26 / 4.Februar25"
+- **Old:** frame 11259-11535 (375.3-384.5s)
+- **New:** frame **11260-11535** (375.33-384.50s, 275f, 9.2s)
+- **Target:** `library/remotion-coder/HistoricalTimeline3D` mit 2 date-nodes
+- **Sync:** Start @ "9." @ 375.32 (frame 11260). Node 1 "9. APRIL 26" reveal. Node 2 "4. FEBRUAR 25" reveal @ word "4." @ 379.98 (frame 11399). End + D5.
+- **Asset:** —
+- **Action:** M
+
+#### ovl-026 — ChinaBekanntmachungDocumentCard (Editorial)
+- **Old:** frame 11535-12012 (384.5-400.4s)
+- **New:** frame **11535-12000** (needs captions for exact China trigger, approx)
+- **Target:** `library/remotion-coder/GesetzesBlatt3D` mit Chinese-style editorial content, no real asset
+- **Sync:** Start bei "China" mention (runtime lookup). End + D5.
+- **Asset:** editorial — generic red-seal SVG as "official stamp"
+- **Props:**
+  ```tsx
+  <GesetzesBlatt3D
+    sourceName="Ministry of Commerce · People's Republic of China"
+    sourceMeta="中华人民共和国商务部"
+    lawTitle="Export Control Notice"
+    lawSection="August 2023 / December 2023 / September 2024 / April 2025"
+    paragraphs={[...editorial]}
+    variant="overlay"
+  />
+  ```
+- **Action:** M (editorial)
+
+#### ovl-027 — PriceExplosionBars (GALLIUM / GERMANIUM / ANTIMON)
+- **Old:** frame 12213-12570 (407.1-419.0s) mit fake bars
+- **New:** frame **12334-12930** (411.12-431.00s, 596f, 19.9s)
+- **Target:** Custom 3-chart triptychon using real chart PNGs OR `library/remotion-coder/BloombergChart3D` mit den 3 real chart images als texture overlays
+- **Sync:**
+  - Container entry @ frame 12334 (word "Gallium" @ 411.12)
+  - Chart 1 Gallium reveal @ frame 12334, CountUp "+365%" @ frame 12476 (word "365" @ 415.86)
+  - Chart 2 Germanium reveal @ frame 12362 (word "Germanium" @ 412.08), "+400%" runtime lookup
+  - Chart 3 Antimon reveal @ frame 12923 (word "437" @ 430.76), "+437%" landing
+  - Exit @ frame 12930
+- **Asset:**
+  - `public/assets/gallium preis.png`
+  - `public/assets/germanium preis.png`
+  - `public/assets/antimon preis.png`
+- **Action:** L (custom component with real image assets + CountUp overlay)
+
+**Note:** This overlay OVERLAPS with ovl-028 (12669-13317). Resolution: ovl-027 ends at frame 12930, ovl-028 continues through the chronology on top. Both are data visualizations — ovl-027 is "price explosion" (the WHAT), ovl-028 is "chronology" (the WHEN). They are visually different registers. Acceptable overlap from 12669-12930.
+
+#### ovl-028 — HorizontalChronologyTimeline (China Chronology)
+- **Old:** frame 12669-13317 (422.3-443.9s)
+- **New:** frame **12230-13443** (407.66-448.09s, 1213f, 40.4s) — extended to cover full chronology from "August 23" to "Oktober 2025"
+- **Target:** `library/remotion-coder/HistoricalTimeline3D` mit 5 date-nodes (Aug23/Dez23/Sep24/Apr25/Okt25)
+- **Sync:**
+  - Timeline container entry @ frame 12230 (word "August" @ 407.66)
+  - Node 1 "AUG 23 · GALLIUM + GERMANIUM" @ frame 12230
+  - Node 2 "DEZ 23 · GRAPHIT" @ frame 12681 (word "Dezember" @ 422.70)
+  - Node 3 "SEP 24 · ANTIMON" @ frame 12779 (word "September" @ 425.96)
+  - Node 4 "APR 25 · RARE EARTHS" @ frame 13083 (word "April" @ 436.10)
+  - Node 5 "OKT 25 · EU KRISENDIALOG" @ frame 13435 (word "Oktober" @ 447.84)
+  - Exit @ frame 13443 (+D5)
+- **Asset:** — (text-only timeline, no element photos per scope reduction)
+- **Action:** L (full HistoricalTimeline3D swap, extended range)
+
+**Note:** ovl-028 overlaps with ovl-027 (12334-12930). This is intentional — ovl-027 is a "price explosion" card that briefly appears during the first chronology segment, then retreats while ovl-028 continues.
+
+#### ovl-029 — EUKrisendialogNewsCard (Editorial)
+- **Old:** frame 13434-13767 (447.8-458.9s)
+- **New:** frame **13434-13650** (447.80-455.00s, 216f, 7.2s)
+- **Target:** `library/remotion-coder/NewspaperMockup3D` editorial
+- **Sync:** Start @ existing frame 13434 (already near "Oktober" @ 447.84). Highlight "KRISENDIALOG" @ frame 13508 (word @ 450.28). End + D5.
+- **Asset:** editorial
+- **Action:** M
+
+#### ovl-030 — "GENAU JETZT" (ehem. km-09 glitch)
+- **Old:** frame 13773-14178 (459.1-472.6s)
+- **New:** frame **14035-14200** (467.84-473.33s, 165f, 5.5s) — tightened
+- **Target:** `library/text/EncryptedText` mit glitch + red accent
+- **Sync:** Start @ word "genau" @ 467.84 (frame 14035). Glitch reveal. End + D5.
+- **Asset:** —
+- **Action:** L
+
+### Akt 5 — Lösung "Schweiz" (500-640s)
+
+#### ovl-031 — SplitNarrative "Reserven"
+- **Old:** frame 14649-15075 (488.3-502.5s)
+- **New:** frame **14795-15083** (493.18-502.77s, 288f, 9.6s)
+- **Target:** `library/remotion-coder/FlatEuropeMap3D` oder keep `SplitNarrative` with timing-fix
+- **Sync:**
+  - Start @ word "Reserven" @ 493.18 (frame 14795)
+  - "CHINA BAUT" @ frame 14845 (word "China" nearby)
+  - "RUSSLAND BAUT" @ frame 14920
+  - Exit @ phrase end + D5
+- **Asset:** —
+- **Action:** M
+
+#### ovl-032 — TrustCheckmarkStatCard
+- **Old:** frame 15315-15888 (510.5-529.6s)
+- **New:** frame **15660-15800** (522.00-526.67s, 140f, 4.7s)
+- **Target:** `library/remotion-coder/Safe3D` + `library/cards/MagicCard` + checkmark icon
+- **Sync:** Start @ word "Vertrauensschutz" @ 522.00 (frame 15660). End + D5 on phrase.
+- **Asset:** —
+- **Action:** M
+
+#### ovl-033 — QuoteCard Nicht-Beanstandung
+- **Old:** frame 15888-16467 (529.6-548.9s)
+- **New:** frame **~15950-16400** (needs runtime captions-lookup for "nicht beanstanden" or similar)
+- **Target:** `library/remotion-coder/BigQuoteCard3D`
+- **Sync:** Start on relevant quote word. Typewriter reveal. Exit + D5.
+- **Asset:** — (optional: quote text from BMF-Schreiben page)
+- **Action:** M
+
+#### ovl-034 — SchweizLocationCard
+- **Old:** frame 17079-17643 (569.3-588.1s)
+- **New:** frame **17278-17550** (575.94-585.00s, 272f, 9.1s)
+- **Target:** Existing `SchweizLocationCard` + `public/bmf/b-roll/slot-10-schweiz-alpen.png` als KenBurns background + optional `library/effects/Sparkles` gold particles overlay. **KEIN GoldVault3D** per user constraint.
+- **Sync:** Start @ word "Schweiz" @ 575.94 (frame 17278). Hold on location-reveal. End + D5.
+- **Asset:** `public/bmf/b-roll/slot-10-schweiz-alpen.png`
+- **Action:** M
+
+#### ovl-035 — CoreMessageStatCard
+- **Old:** frame 18078-18543 (602.6-618.1s)
+- **New:** frame **~18200-18540** (606.67-618.00s, 340f, 11.3s)
+- **Target:** `library/remotion-coder/GlareCard3D` + `library/effects/CountUp`
+- **Sync:** Start on "Strukturen" or "antizyklisch" trigger (runtime lookup). End + D5.
+- **Asset:** — (optional deutschland-flagge.png als watermark)
+- **Action:** M
+
+### Akt 6 — CTA + Outro (640-760s)
+
+#### ovl-new-001 — HandelsblattFAZNewsCard → Steuer-Fachpresse
+- **Old:** frame 19350-19980 (645.0-666.0s)
+- **New:** frame **19350-19980** (645.0-666.0s, 630f, 21.0s) — KEEP range, rewrite content
+- **Target:** Existing `HandelsblattFAZNewsCard` component mit 4 News-Cards, ABER Content geändert von generic Handelsblatt/FAZ zu real Steuer-Fachpresse:
+  - Card 1: **PwC** — "BMF: Steuerbefreiung für die einer Einfuhr vorangehenden Lieferungen von Gegenständen (§ 4 Nr. 4b UStG)" — 13.04.2026
+  - Card 2: **DATEV Magazin** — "Steuerbefreiung für die einer Einfuhr vorangehenden Lieferungen" — 2026-04
+  - Card 3: **Haufe Steuern** — "BMF: Einer Einfuhr vorangehende Lieferungen von Gegenständen"
+  - Card 4: **RP Steuerberatung** — "BMF: Einer Einfuhr vorangehende Lieferungen von Gegenständen" — 10.04.2026 (Tag 1 nach Erlass)
+- **Sync:** Existing rotes-x stamp-sync preserved. Content-only change.
+- **Asset:** `public/assets/logos/rotes-x.png` already wired. No new real screenshots needed.
+- **Action:** S (text/meta rewrite)
+
+#### ovl-036 — HardCTALowerThird (23.9s Standzeit)
+- **Old:** frame 19980-20697 (666-689.9s)
+- **New:** frame **19980-20690** (666.00-689.67s, 710f, 23.7s)
+- **Target:** `library/cards/MagicCard` + `library/effects/BorderBeam` + multi-phase internal animation
+- **Sync:** Multiple internal phases (not static hold):
+  - Phase 1 (frame 19980-20280, 10s): primary CTA "ERSTGESPRÄCH · LINK IN BESCHREIBUNG"
+  - Phase 2 (frame 20280-20480): subtitle shift "KOSTENFREI · DIREKT VON DANIEL"
+  - Phase 3 (frame 20480-20690): arrow-bounce + final CTA hold
+- **Asset:** —
+- **Action:** L (full rewrite with phase animation)
+
+#### ovl-037 — AuthorityTimeline "20 Jahre Finanzbranche"
+- **Old:** frame 21243-21786 (708.1-726.2s)
+- **New:** frame **21262-21790** (708.74-726.33s, 528f, 17.6s)
+- **Target:** `library/remotion-coder/HistoricalTimeline3D` mit single authority node "2006-2026 · 20 JAHRE FINANZBRANCHE" oder `library/cards/GlareCard3D` als personal timeline
+- **Sync:** Start @ word "20" @ 708.74 (frame 21262). End + D5 on phrase.
+- **Asset:** — (optional deutschland-flagge.png)
+- **Action:** M
+
+#### ovl-038 — "DANKE DEUTSCHLAND" (ehem. km-10)
+- **Old:** frame 22587-22797 (752.9-759.9s)
+- **New:** frame **22620-22800** (754.00-760.00s, 180f, 6.0s)
+- **Target:** `library/text/AuroraTextEffect` gold gradient + slow-fade bitter-sarkastisch
+- **Sync:** Start @ approx word "Danke" (runtime lookup, sfx-069 sync frame 22649). Slow fade to video end frame 22800.
+- **Asset:** —
+- **Action:** L (KineticMoment rewrite)
+
+### Chapter Cards (D3: ChapterTransition3D re-enable)
+
+All 7 Chapter-Cards werden wieder aktiviert mit `library/remotion-coder/ChapterTransition3D`. Ihre aktuellen Frame-Ranges werden beibehalten (sie wurden in Phase 6 disabled wegen Kollisionen mit KineticMoments — jetzt wo die KineticMoments getimed/rewritten sind, wird die collision-Detection nochmal durchgelaufen, und jeder collidierende Chapter-Card wird um ±30 Frames verschoben um in clean zones zu landen).
+
+| Chapter | Frame Range | Number | Title | Subtitle | Collision-Check |
+|---|---|---|---|---|---|
+| KAP01 | 0-78 | "KAPITEL 01" | "FÜNF STUNDEN NACHTSCHICHT" | "WAS MIR GESTERN KLAR GEWORDEN IST" | None — before ovl-001 @ frame 162 ✓ |
+| KAP02 | 4650-4830 | "KAPITEL 02" | "DAS WORT DAS ALLES VERRÄT" | "#1 · KOBALT · DIE SMOKING GUN" | Collision with ovl-013 Counter 1/4 @ ~4910 — **SHIFT to 4620-4800** ✓ |
+| KAP03 | 7287-7467 | "KAPITEL 03" | "DIE VERBOTENE RÜCKWIRKUNG" | "#2 · 22 JAHRE · EIN FEDERSTRICH" | Collision with ovl-017 Counter #2 @ 7300 — **SHIFT to 7257-7437** ✓ |
+| KAP04 | 8670-8850 | "KAPITEL 04" | "DAS NULL-CENT-PARADOX" | "#3 · DEUTSCHLAND BEKOMMT GAR NICHTS" | Collision with ovl-020 Counter #3 @ 8700 — **SHIFT to 8640-8820** ✓ |
+| KAP05 | 11100-11280 | "KAPITEL 05" | "DAS MUSTER" | "#4 · KEIN ZUFALL · EINE KETTE" | Near ovl-024 NullEuro @ 11031 — **KEEP 11100-11280** (3f gap) ✓ |
+| KAP06 | 16380-16560 | "KAPITEL 06" | "DIE LÖSUNG" | "SCHWEIZ · GOLD-GRADE · WARMER PAYOFF" | No collision ✓ |
+| KAP07 | 22587-22797 | "KAPITEL 07" | "DANKE, DEUTSCHLAND." | "FINAL · COLD ACCENT · SLOW FADE" | Collision with ovl-038 @ 22620 — **SHIFT to 22437-22617** ✓ |
+
+**ChapterTransition3D Props:**
+```tsx
+<ChapterTransition3D
+  chapterNumber="KAPITEL 03"
+  chapterTitle="DIE VERBOTENE RÜCKWIRKUNG"
+  chapterSubtitle="#2 · 22 JAHRE · EIN FEDERSTRICH"
+  accentColor="#d4a017"
+  paperTextureSrc={staticFile("assets/mbf-schreiben-titelseite.png")}
+/>
+```
+
+All 7 chapters use the same ChapterTransition3D component, just different props.
 
 ---
 
-## 10. Status & Next Steps
+## 6. Execution Order & Commit Plan
 
-- ✅ Plan gelesen + verstanden (Dario)
-- ✅ **User Decisions D1-D5 beantwortet (Session 2026-04-15 Teil 2):**
-  - **D1 Counter-Style:** "keine ahnung welche du meinst" — Claude entscheidet autonom. **Gewählt: Option D (Mix) ersetzt durch Option B konsistent** — alle 5 Counter-Moments (1/4 + #1/#2/#3/#4) auf Kinetic-Center Style mit `HighlightedWord` aus remotion-coder-test. Panel-Card-Style wird bei ovl-013 entfernt. Konsistente visual language.
-  - **D2 Word-Sync Mode:** "muss halt on point sein mit gesprochenen wörtern" = **Strict (Option A)** — jedes Text-Element synct zu seinem word-start aus captions.ts.
-  - **D3 Chapter-Transitions:** "a kannst du gerne enablen aber sonst nichts" = **Option A** — `ChapterTransition3D` für alle 7 Chapter-Cards re-enablen. Keine andere Chapter-Änderung.
-  - **D4 KineticMoment Wording:** "angleichen. und dabei auch auf überschneidungen generell achten" = **Option A** — alle KineticMoments auf Daniels echte Worte angleichen, plus globale Überschneidungs-Prüfung als Phase F.1.5 task.
-  - **D5 Overlay-Duration:** "eher 0.25" = **Hard rule: overlay max 0.25s über last relevant Daniel-word hinaus.** Strikter als ursprünglich vorgeschlagen (0.5s → 0.25s).
+Phase F wird in 10 commits durchgezogen, jeder ein logischer Unit-of-Work. TypeScript-Check nach jedem Commit. Studio-Refresh parallel.
 
-- ⏳ Assets (reduzierter scope per Dario 2026-04-15):
-  - **Fliegen raus** (Dario: "dauert alles ewig rauszusuchen"):
-    - ~~bmf-schreiben-2026-kobalt-passage.png~~ — NICHT NÖTIG, weil es die gleiche Passage ist wie "vorgelesene passage" (siehe unten)
-    - ~~eu-krisendialog-oktober-2025.png~~
-    - ~~donnerstag-leak-source.png~~
-    - ~~eu-critical-raw-materials-list-2023.png~~
-    - ~~bundeshaushalt-industriemetalle-0-eur.png~~
-    - ~~Alle 6 metal ingot photos~~
-    - ~~Alle price charts (gallium/germanium/antimon)~~
-  - **Bleiben auf Dario's Suchliste:**
-    - `bmf-schreiben-2026-vorgelesene-passage.png` — ✅ **KEIN SUCHEN NÖTIG** → Claude hat automatisiert rausgefunden = Seite 5 des BMF-Schreibens 9.4.2026, Beispiel 3 "A liefert im Zolllager eingelagertes Kobalt an P." → bereits in `public/bmf/assets/documents/bmf-2026-04-09-page-5-kobalt-beispiel.png`
-    - `bmf-schreiben-2004-cover.png` — Dario sucht
-    - `bmf-schreiben-2004-zollfreilager-passage.png` — Dario sucht
-    - `china-export-kontrolle-gallium-germanium-aug-2023.png` — Dario sucht
-    - `china-export-kontrolle-graphit-dez-2023.png` — Dario sucht
-    - `china-export-kontrolle-antimon-sep-2024.png` — Dario sucht
-    - `china-export-kontrolle-rare-earths-apr-2025.png` — Dario sucht
-    - `china-bekanntmachung-aktuell.png` — Dario sucht
-  - **Claude soll suchen** (Dario: "such ma danach ob du was findest"):
-    - Handelsblatt / FAZ / NZZ / Spiegel Artikel zum BMF-Schreiben — **Recherche-Ergebnis:** Mainstream-News (Handelsblatt/FAZ/Spiegel) covern das Thema NICHT. Es ist ein Steuer-Fach-Thema. Alternative Authority-Quellen gefunden (wäre der Ersatz für "news screenshots"):
-      - **PwC Blog** (13.04.2026): "BMF: Steuerbefreiung für die einer Einfuhr vorangehenden Lieferungen von Gegenständen" — blogs.pwc.de/de/steuern-und-recht/article/254103
-      - **ad-hoc-news / boerse-global.de** (13.04.2026 20:41): "Finanzministerium konkretisiert Umsatzsteuer für Importe und Konzerne"
-      - **RP Steuerberatung** (10.04.2026) — erste Fach-Coverage, 1 Tag nach BMF
-      - **DATEV Magazin** — "Steuerbefreiung für die einer Einfuhr vorangehenden Lieferungen von Gegenständen"
-      - **Haufe Steuern** — entsprechende Guidance-Page
-      - **IWW.de / IFW GmbH / Eggert-Kienzle / Steuerkanzlei Pfuff** — weitere Fachpresse
-    - **Entscheidung Claude:** Wir nutzen PwC + DATEV + Haufe als "Authority Steuer-Fachpresse" statt "mainstream news screenshots" für ovl-new-001 HandelsblattFAZNewsCard. Das ist sogar EHRLICHER als fake Handelsblatt — echte Steuer-Fachwelt die das Thema covert. Ich werde die Seiten als screenshots archivieren (screenshots via playwright oder HTML-render).
+### F.0 — Foundation (1 commit, 30 min)
+**Commit:** `feat(bmf): Phase F.0 foundation — captions-lookup helper + library imports`
+- Create `src/compositions/daniel-bmf-industriemetalle/captions-lookup.ts`
+- Copy 14 components from `remotion-coder-test/src/` to `src/components/library/remotion-coder/`
+- Adjust relative imports in copied files
+- TypeScript check, resolve any @remotion/three or r3f dep warnings (should all be already installed)
 
-- ✅ **ChapterTransition3D re-enable** (D3) — Scope expanded: alle 7 Chapter-Cards mit remotion-coder-test `ChapterTransition3D` component
-- ⏳ Voll-Audit captions.ts × overlays (Claude) — Phase F.1 task
-- ⏳ remotion-coder-test components ins motion-graphics workspace importieren (Claude) — Phase F.1 task
+### F.1 — Document Cards (1 commit, 1h)
+**Commit:** `feat(bmf): Phase F.1 document cards — GesetzesBlatt3D for ovl-002/009/018/026`
+- Rewrite ovl-002 BMFDocumentCard as GesetzesBlatt3D with titelseite asset
+- Rewrite ovl-009 BMF2004DocumentCard as editorial GesetzesBlatt3D
+- Rewrite ovl-018 HighlighterDocumentExcerpt as image-direct display with passsage.png
+- Rewrite ovl-026 ChinaBekanntmachungDocumentCard as editorial GesetzesBlatt3D
+- Update frame ranges to word-sync values
+- Delete handmade BMFDocumentCard.tsx, BMF2004DocumentCard.tsx, HighlighterDocumentExcerpt.tsx, ChinaBekanntmachungDocumentCard.tsx (or mark as deprecated)
 
-**Constraints aus Dario's Feedback:**
-- **KG GoldVault3D nicht nutzen** — Slot 10 Schweiz-Tresor bleibt beim FLUX still aus Phase B. GoldVault3D steht NICHT mehr in der Target-Component-Liste für ovl-034.
-- **"paar assets sind drin nimm nur die"** — Claude interpretiert: nutze was in `public/bmf/b-roll/` (Phase B) + was in `public/bmf/assets/documents/` (BMF PDF + 7 page PNGs) steht + was Dario später in `public/bmf/assets/` ablegt. Keine neuen Asset-Requests an Dario.
+### F.2 — Kinetic Moments Rewrite (1 commit, 2h)
+**Commit:** `feat(bmf): Phase F.2 kinetic moments — HighlightedWord rewrite of all 10 km- + 5 counters`
+- Delete existing `KineticMoment.tsx` or keep as fallback
+- Rewrite ovl-003, 010, 012, 014, 017, 019, 020, 022, 030, 038 as `HighlightedWord` instances
+- Rewrite ovl-013, 014, 017, 020, 022 (the 5 counter-moments) with EncryptedText "#N" prefix + HighlightedWord word sequences
+- Rewrite ovl-038 "DANKE DEUTSCHLAND" with AuroraTextEffect
+- All 10+ KineticMoments driven by `findWordFrame()` calls from captions-lookup
+- Apply word-sync to all internal text reveals
+- D4 wording changes: "EIN FEDERSTRICH" → "GESTOPPT" etc.
 
----
+### F.3 — Chart + Timeline (1 commit, 1.5h)
+**Commit:** `feat(bmf): Phase F.3 charts + timelines — real price charts + HistoricalTimeline3D`
+- Rewrite ovl-027 PriceExplosionBars with 3 real chart PNG assets + CountUp overlays
+- Rewrite ovl-028 HorizontalChronologyTimeline as HistoricalTimeline3D with 5 date nodes, extended range 12230-13443
+- Rewrite ovl-025 TwoDateTimelineSplit as HistoricalTimeline3D (2 nodes variant)
+- Rewrite ovl-037 AuthorityTimeline as HistoricalTimeline3D (single authority node)
 
-## 11. Automatisierte Asset-Discovery (Session 2026-04-15 Teil 2)
+### F.4 — News Cards (1 commit, 45 min)
+**Commit:** `feat(bmf): Phase F.4 news cards — NewspaperMockup3D + Steuer-Fachpresse content`
+- Rewrite ovl-011 DonnerstagNewsCard as editorial NewspaperMockup3D
+- Rewrite ovl-029 EUKrisendialogNewsCard as editorial NewspaperMockup3D
+- Rewrite ovl-new-001 HandelsblattFAZNewsCard content to Steuer-Fachpresse (PwC / DATEV / Haufe / RP) while keeping the 4-card layout + rotes-x stamps
 
-**Discovery:** Ich habe das BMF-Schreiben vom 9. April 2026 automatisiert gefunden und komplett runtergeladen.
+### F.5 — Stat Cards (1 commit, 1h)
+**Commit:** `feat(bmf): Phase F.5 stat cards — MagicCard + CountUp + GlareCard3D`
+- Rewrite ovl-001 DanielLowerThirdStatCard with ShinyText + MagicCard + CountUp
+- Rewrite ovl-023 PercentDownStatCard with MagicCard + CountUp red-glow
+- Rewrite ovl-024 NullEuroBilanzFullscreen with FullscreenTakeover + CountUp + deutschland-karte.svg backdrop
+- Rewrite ovl-032 TrustCheckmarkStatCard with Safe3D
+- Rewrite ovl-035 CoreMessageStatCard with GlareCard3D
 
-### Verified Metadata
-- **Aktenzeichen:** III C 3 - S 7157-a/00005/001/052
-- **DOK:** COO.7005.100.4.14450860
-- **Datum:** 9. April 2026
-- **Betreff:** "Umsatzsteuer; Steuerbefreiung für die einer Einfuhr vorangehenden Lieferungen von Gegenständen (§ 4 Nr. 4b UStG)"
-- **Ersetzt:** BMF-Schreiben vom 28. Januar 2004 – IV D 1 — S 7157 — 01/04 — / — IV D 1 — S 7157a — 01/04 — (BStBl I S. 242)
-- **Daniels "22 Jahre":** 2004-01-28 → 2026-04-09 = **22 Jahre, 2 Monate, 12 Tage** — mathematisch bestätigt
-- **PDF-Quelle:** `https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Steuerarten/Umsatzsteuer/Umsatzsteuer-Anwendungserlass/2026-04-09-steuerbefreiung-einfuhr-gegenstaende.pdf?__blob=publicationFile&v=5`
-- **Seiten:** 7
-- **Fileformat:** PDF 1.7, 260 KB
-- **Absender:** Bundesministerium der Finanzen, Wilhelmstraße 97, 10117 Berlin
+### F.6 — Quotes + Triptychon + Listicle (1 commit, 1h)
+**Commit:** `feat(bmf): Phase F.6 quotes + listicle — BigQuoteCard3D + AnimatedBulletList`
+- Rewrite ovl-021 QuoteCard aufgehoben as BigQuoteCard3D
+- Rewrite ovl-033 QuoteCard Nicht-Beanstandung as BigQuoteCard3D
+- Rewrite ovl-004 OhneTriptychon as AnimatedBulletList with stagger
+- Rewrite ovl-007 ElementChipRow as AceternityBentoGrid or InfiniteMovingCards
 
-### Downloaded Assets
-In `public/bmf/assets/documents/`:
-- `bmf-schreiben-2026-04-09.pdf` (260 KB, 7 Seiten)
-- `bmf-2026-04-09-page-1-cover.png` — Header mit Wilhelmstraße, Aktenzeichen, Inhaltsverzeichnis, Beginn "Allgemeines"
-- `bmf-2026-04-09-page-2-allgemeines.png` — Fortsetzung Allgemeines, Definition Einfuhr-Prozess
-- `bmf-2026-04-09-page-3-ustae-grundsaetze.png` — UStAE Abschnitt 4.4b.1 Änderungen, "Grundsätze"
-- `bmf-2026-04-09-page-4-tabak-beispiel.png` — Brasilianischer Tabakexporteur A, Bremen-Zolllager, Reihengeschäft
-- **`bmf-2026-04-09-page-5-kobalt-beispiel.png` ← 🔴 DIE KRITISCHE SEITE** — enthält **Beispiel 3: "A liefert im Zolllager eingelagertes Kobalt an P. Nach praxisorientierter Betrachtungsweise hinsichtlich der Art des Metalls ist ausschließlich die weitere Lagerung im Zolllager möglich und die Beendigung des Zolllagerverfahrens nicht mehr möglich..."** — **Daniels wörtliche Quote ist hier**, das Wort "Kobalt" steht literal im BMF-Dokument
-- `bmf-2026-04-09-page-6-ski-glas-beispiel.png` — Vorübergehende Verwendung (Ski Schweiz→München), Aktive Veredelung (Glasscheibe)
-- `bmf-2026-04-09-page-7-schlussbestimmung.png` — Anwendungsregelung + Aufhebung 2004-Schreiben
+### F.7 — Fullscreen + Misc + Schweiz (1 commit, 1h)
+**Commit:** `feat(bmf): Phase F.7 fullscreens + schweiz + split narrative`
+- Rewrite ovl-005 FullscreenTakeover 0 CENT with CountUp + HighlightedWord
+- Rewrite ovl-006 CTALowerThird as MagicCard + ShinyText
+- Rewrite ovl-008 ZollfreilagerFlowSplit (timing fix only, keep handmade if no library match)
+- Rewrite ovl-015 KobaltFullscreen with passsage.png backdrop layer + duration shortening to 5838-7035
+- Rewrite ovl-031 SplitNarrative Reserven with FlatEuropeMap3D
+- Rewrite ovl-034 SchweizLocationCard with Sparkles overlay
 
-### Kritischer Befund: Daniels Narrativ ist verifizierbar
-Die initial angenommene These "Daniel editorialisiert Kobalt auf ein generic Beispiel" ist **falsch**. Das BMF-Schreiben nennt **Kobalt explizit** auf Seite 5, Beispiel 3, mit dem Zusatz "praxisorientierter Betrachtungsweise hinsichtlich der Art des Metalls". Das bedeutet:
+### F.8 — Chapter Transitions (1 commit, 45 min)
+**Commit:** `feat(bmf): Phase F.8 chapter transitions — ChapterTransition3D re-enable all 7`
+- Un-comment the CHAPTERS map in BmfIndustriemetalleVideo.tsx
+- Apply the collision-adjusted frame ranges (4620-4800, 7257-7437, 8640-8820, 22437-22617)
+- Use ChapterTransition3D from remotion-coder-test/library
+- Visual review in Studio
 
-1. **ovl-018 HighlighterDocumentExcerpt** bekommt page-5 als background + Highlighter-Rect über "Beispiel 3" paragraph (Koordinaten noch zu bestimmen via image-pixel-mapping)
-2. **ovl-015 KobaltFullscreen** kann page-5 als ghosted background nutzen plus editorial "KOBALT" overlay — oder direkter reveal der highlighted zeile aus dem Dokument
-3. **Der Satz "Nach praxisorientierter Betrachtungsweise hinsichtlich der Art des Metalls"** ist eine potentielle zusätzliche KineticMoment Quote — das ist eine smoking-gun phrase im Dokument selbst
-4. Die 3 Beispiele auf Seiten 4-6 (Tabak → 2 zu Kobalt → Ski/Glas) bilden einen **natürlichen Document-Reveal Flow** für cascade-timing durch das Dokument
+### F.9 — HardCTA + Timing Review (1 commit, 1h)
+**Commit:** `feat(bmf): Phase F.9 hard CTA multi-phase + final timing cleanup`
+- Rewrite ovl-036 HardCTALowerThird with 3-phase animation (MagicCard + BorderBeam)
+- Full runtime captions-lookup verification for all overlays that have "runtime lookup" marker
+- Fix any remaining drift violations
+- TypeScript final check, Studio scrub through all 38+ overlays
 
-### Reduzierte Asset-Liste (nur noch was Dario sucht)
+### F.10 — Session Log + Final Polish (1 commit, 30 min)
+**Commit:** `docs(bmf): Phase F complete — SESSION-LOG section 26 + final polish notes`
+- SESSION-LOG.md section 26 "Phase F redesign complete"
+- Document any deviations from this plan
+- Document manual fine-tuning for Dario's visual review
 
-| Asset | Status | Overlay |
-|---|---|---|
-| `bmf-schreiben-2026-04-09.pdf` + 7 Page-PNGs | ✅ **Claude automated download** | ovl-002, ovl-015, ovl-018 |
-| `bmf-schreiben-2004-cover.png` | ⏳ Dario | ovl-009 |
-| `bmf-schreiben-2004-zollfreilager-passage.png` | ⏳ Dario | ovl-009 |
-| `china-export-kontrolle-gallium-germanium-aug-2023.png` | ⏳ Dario | ovl-028 chronology node 1 |
-| `china-export-kontrolle-graphit-dez-2023.png` | ⏳ Dario | ovl-028 chronology node 2 |
-| `china-export-kontrolle-antimon-sep-2024.png` | ⏳ Dario | ovl-028 chronology node 3 |
-| `china-export-kontrolle-rare-earths-apr-2025.png` | ⏳ Dario | ovl-028 chronology node 4 |
-| `china-bekanntmachung-aktuell.png` | ⏳ Dario | ovl-026 |
-| Steuer-Fachpresse Screenshots (PwC, DATEV, RP, Haufe) | ⏳ Claude next session | ovl-new-001 |
+**Total estimated time:** 10-12h over 1-2 sessions
+**Total cost:** $0 (no API calls, pure coding)
 
 ---
 
-## 12. Overlays die wegen reduzierter Asset-Liste angepasst werden
+## 7. Post-Phase-F Remaining Work (NOT in this plan)
 
-| Overlay | Ursprünglich | Neu nach Asset-Reduktion |
-|---|---|---|
-| ovl-011 DonnerstagNewsCard | Real Twitter/leak screenshot | **Editorial Card** mit fake "DONNERSTAG 20:07 UHR" text + generic phone-silhouette. Keine Asset-Änderung — die existing skeleton component bleibt, bekommt nur word-sync timing fix. |
-| ovl-016 EUCriticalIconRow (re-enable) | Real EU Critical Raw Materials List screenshot | **Re-enable canceled.** Slot bleibt disabled. |
-| ovl-024 NullEuroBilanzFullscreen | Real Bundeshaushalt screenshot | Keep current handmade fullscreen, nur word-sync + `CountUp` library swap. Kein real-asset overlay. |
-| ovl-027 PriceExplosionBars | Real price charts | `BloombergChart3D` wird benutzt aber mit eingegebenen data-points (365% / 400% / 437%) statt real-chart screenshots. |
-| ovl-029 EUKrisendialogNewsCard | Real press release screenshot | **Editorial news-card** mit "EU KRISENDIALOG · OKTOBER 2025" title + summary bullets. Keine real-asset overlay. |
-| ovl-034 SchweizLocationCard | GoldVault3D Alternative | **Verboten per Dario** — keep FLUX still `slot-10-schweiz-alpen.png` als KenBurns backdrop. |
-| ovl-037 AuthorityTimeline | Daniel's 20 Jahre | Keep existing handmade oder swap auf HistoricalTimeline3D. Kein Asset nötig. |
-| Slot 5/6/7 Element visuals in chronology | Real ingot photos | `HistoricalTimeline3D` nodes zeigen text "GALLIUM", "GERMANIUM" etc. ohne element photos — minimalistic. |
+These remain as separate tasks after Phase F completes:
+
+1. **Phase A Audio Loop-Bug Workaround** — mb-02 + mb-03 silent-after-source-end gap (≈33s + 25s total silent). Fix: source longer Epidemic Sound tracks OR re-implement loop as sequential sub-sequences.
+2. **Final Render** — `npx remotion render src/index.ts BMF-Industriemetalle out/final.mp4 --codec=h264 --crf=18 --gl=angle --concurrency=4`
+3. **YouTube Upload Workflow** — thumbnail design, description, tags (separate session)
+4. **Learning-Loop** MVP auf dieses Video nach Live-Upload
 
 ---
 
----
+## 8. Risk & Mitigation
 
-## 13. Asset-Discovery Part 2 — public/assets/ bereits vorhanden (Session 2026-04-15 Teil 3)
-
-Dario hat bereits **5 kritische Assets** in `public/assets/` liegen (wurde in der ersten Bestandsaufnahme übersehen). Diese eliminieren mehrere der "fliegt raus" + "nice to have" Items aus der reduzierten Asset-Liste und sind direkt production-ready.
-
-### Verfügbare Assets in `public/assets/`
-
-| Asset | Filename | Größe | Use für Overlay |
-|---|---|---|---|
-| BMF-Schreiben PDF (4 Seiten laut file-check, 7 Seiten beim Render) | `bmf-schreiben.pdf` | 260 KB | — (master document reference) |
-| BMF Titelseite Screenshot | `mbf-schreiben-titelseite.png` (typo "mbf" statt "bmf") | 434 KB | **ovl-002 BMFDocumentCard** |
-| BMF Kobalt-Passage mit HIGHLIGHTER (Dario-selbst markiert) | `bmf-schreiben-passsage.png` (typo "passsage") | 218 KB | **ovl-015 KobaltFullscreen** (backdrop) + **ovl-018 HighlighterDocumentExcerpt** (main) |
-| Gallium Preis-Chart 2012-2024 USD+EUR | `gallium preis.png` | 36 KB | **ovl-027 PriceExplosionBars** (1/3) |
-| Germanium Preis-Chart 2012-2024 USD+EUR | `germanium preis.png` | 36 KB | **ovl-027 PriceExplosionBars** (2/3) |
-| Antimon Preis-Chart 2021-2025 USD+EUR | `antimon preis.png` | 38 KB | **ovl-027 PriceExplosionBars** (3/3) |
-| Bundesadler SVG | `logos/bundesadler.svg` | — | Watermark in allen BMF Document-Cards |
-| Deutschland Karte SVG | `logos/deutschland-karte.svg` | — | Potential für "Deutschland bekommt 0 Cent" moment |
-| Deutschland Flagge | `logos/deutschland-flagge.png` | — | Potential für authority moments |
-| Rotes X (schon genutzt) | `logos/rotes-x.png` | — | bereits in HandelsblattFAZNewsCard |
-
-### MD5-Verifikation
-`public/assets/bmf-schreiben.pdf` MD5 `6962f0a6771b5413cba1d0517a0b8e86` = identisch mit dem von Claude automatisch runtergeladenen `public/bmf/assets/documents/bmf-schreiben-2026-04-09.pdf` (gleicher MD5). Same file. Claude's download bleibt drin weil die 7 extrahierten PDF-Seiten als zusätzliche cascade-reveals für ovl-018 nützlich sind (Dario hat nur Titelseite + Passage, nicht alle 7).
-
-### Content-Check `bmf-schreiben-passsage.png`
-Dario hat das image bereits selbst mit gelbem Highlighter annotiert. Sichtbar markiert:
-1. "A liefert im Zolllager eingelagertes Kobalt an P." (voll highlighted)
-2. "Nach praxisorientierter Betrachtungsweise hinsichtlich der Art des Metalls" (highlighted)
-3. "ausschließlich die weitere Lagerung im Zolllager möglich" (highlighted)
-4. **"ist daher nicht nach § 4 Nr. 4b UStG steuerfrei"** ← **die Punchline des ganzen BMF-Schreibens**, vollständig highlighted
-
-**Bedeutung für Phase F execution:** Die HighlighterDocumentExcerpt Component braucht KEINE eigene Highlighter-Rendering-Logik mehr. Das image wird direkt als static background geladen, die Animation ist nur "image fade-in + zoom + optional arrow/pointer reveal auf den Kern-Satz". Massiv reduzierter Aufwand vs. Re-Implementation mit GesetzesBlatt3D.
-
-### Price-Charts Content
-Alle 3 Charts haben:
-- USD + EUR dual-line rendering
-- Hellblau (USD) + dunkelblau (EUR) clean styling
-- Grid-Hintergrund
-- Deutsche Datums-Achse
-- Y-Axis in EUR
-
-Spezifische Werte (sichtbar):
-- **Gallium** (2012-2024): 4.7.12 bei ~0 → 13.10.22 bei ~50 → 12.8.19 bei ~-60 (low) → 11.2024 bei ~200 EUR (peak)
-- **Germanium** (2012-2024): 4.7.12 bei ~5 → 2024 peak bei ~350 EUR
-- **Antimon** (2021-2025): 18.3.22 bei ~5 → 25.6.25 peak bei ~360 → 5.11.25 drop auf ~180
-
-Daniel's Behauptung "Europa plus 365% / Germanium +400% / Antimon +437%" kann mit den echten Charts **visuell bestätigt** werden (die Peaks in den Charts entsprechen genau den genannten Multiplikatoren).
+| Risk | Mitigation |
+|---|---|
+| `remotion-coder-test` components have Three.js deps that break Studio | Pre-flight TypeScript check after import; if breaks, keep components in library but add fallback component for simpler 2D use |
+| `captions-lookup` runtime misses trigger words due to punctuation edge-cases | Helper has case-insensitive + punctuation-stripping; fallback to manual frame values if lookup returns null |
+| Collision-shifted Chapter cards land on different overlays | F.8 includes visual Studio review; adjust by ±30 frames as needed |
+| ovl-027/028 overlap causes visual confusion | Separate z-index layers + visually distinct registers (price chart card vs. timeline), reviewed in F.3 |
+| Component imports break existing non-BMF compositions | Imports go to `src/components/library/remotion-coder/` — isolated namespace, no existing imports touched |
+| GesetzesBlatt3D doesn't render highlighted paragraphs correctly for all use-cases | Read component source first before Phase F.1 execution; adjust paragraph highlighting approach if needed |
 
 ---
 
-## 14. Overlay-Mapping Update für verfügbare Assets
+## 9. Success Criteria
 
-| Overlay | Vorherige Target-Strategie | NEU mit verfügbaren Assets |
-|---|---|---|
-| **ovl-002 BMFDocumentCard** | `GesetzesBlatt3D` mit paragraphs array aus PDF | `GesetzesBlatt3D` mit `mbf-schreiben-titelseite.png` als hero image + extracted text |
-| **ovl-015 KobaltFullscreen** | KobaltFullscreen existing, keep timing | **KobaltFullscreen bekommt `bmf-schreiben-passsage.png` als ghosted backdrop** (30-40% opacity) hinter dem Kinetic "KOBALT" text — das highlightet den direkten Bezug zum Dokument |
-| **ovl-018 HighlighterDocumentExcerpt** | `GesetzesBlatt3D` mit highlighted paragraph | **Direkter Image-Layer** mit `bmf-schreiben-passsage.png` + zoom-in animation auf die highlighted Kobalt-Zeile + progressive reveal durch die 4 highlighted Zeilen top-to-bottom (stagger mit word-timing Daniels vorlesender Stimme) |
-| **ovl-027 PriceExplosionBars** | `BloombergChart3D` mit eingegebenen Daten | **3-Chart-Stack** (horizontal oder vertikal arrangement) mit den 3 Real-Charts, Stagger-Reveal Gallium → Germanium → Antimon matching Daniels word-order, mit Overlay-Numbers "+365%" / "+400%" / "+437%" als KineticMoment labels |
-| **Alle Document-Cards** | GesetzesBlatt3D paper-texture | `logos/bundesadler.svg` als watermark in top-margin |
-| **ovl-024 NullEuroBilanzFullscreen** | CountUp mit fake fullscreen | Possible: `logos/deutschland-karte.svg` als subtle background shape |
+Phase F is complete when:
 
----
-
-## 15. Final Asset-Status
-
-**✅ Verfügbar** (production-ready):
-- BMF-Schreiben PDF komplett (Dario + Claude backup)
-- BMF Titelseite (Dario)
-- BMF Kobalt-Passage mit Highlighter (Dario, ready to use)
-- Gallium + Germanium + Antimon Preis-Charts (Dario, real data)
-- Logos (Bundesadler, Deutschland-Karte, Flagge, Rotes X)
-- 7 Pages des BMF-PDFs als zusätzliche Cascade-Options (Claude)
-- 7 nano-banana B-Roll stills (Phase B)
-- 3 Veo 3.1 B-Roll videos (Phase B)
-
-**⏳ Dario sucht noch** (oder skippen als editorial cards):
-- `bmf-schreiben-2004-cover.png` — für ovl-009 BMF2004DocumentCard (historischer contrast)
-- `bmf-schreiben-2004-zollfreilager-passage.png` — für ovl-009 detail
-- 5 China Export-Kontrollen Docs (gallium/germanium/graphit/antimon/rare-earths/aktuell) — für ovl-026 + ovl-028 chronology
-
-**❌ Gestrichen** (zu aufwändig, Editorial-Card Fallback):
-- ~~bmf-schreiben-2026-kobalt-passage.png~~ (= passage.png, redundant)
-- ~~eu-krisendialog-oktober-2025.png~~
-- ~~donnerstag-leak-source.png~~
-- ~~eu-critical-raw-materials-list-2023.png~~
-- ~~bundeshaushalt-industriemetalle-0-eur.png~~
-- ~~Alle 6 metal ingot photos~~
-- ~~Mainstream news screenshots (Handelsblatt/FAZ/Spiegel)~~
+- [ ] All 38 overlays + 1 new + 7 chapters wire the final library components
+- [ ] Every overlay start-frame matches a captions.ts word-start (verified via captions-lookup helper)
+- [ ] Every overlay end-frame is ≤ 0.25s after its last relevant word-end (D5)
+- [ ] No visual collisions between Chapter-Cards and overlays (verified in Studio)
+- [ ] All 5 counter-moments use the same HighlightedWord style (D1)
+- [ ] All KineticMoment wordings align to Daniel's actual spoken words (D4)
+- [ ] All available assets (7 BMF page PNGs, titelseite, highlighted passage, 3 price charts, 4 logos) are integrated
+- [ ] TypeScript 0 errors in `src/compositions/daniel-bmf-industriemetalle/`
+- [ ] Studio HTTP 200, all overlays scrubbable without crash (draw-peaks fixed)
+- [ ] Full scrub from frame 0 to 22800 shows no reveal before its trigger word
 
 ---
 
-**Commits:**
-- `22c2923` feat(bmf): Phase B start - BROLL_SLOTS fix + slot-11 icons collage
-- `1cf6e25` feat(bmf): Phase B complete - B-roll assets + refactor + loop bugfix
-- `48f936c` fix(bmf): pad SFX sequences to min 30 frames for Studio draw-peaks
-- `d3bbf43` docs(bmf): Phase F redesign plan (supersedes component-review approach)
-- `926da4f` feat(bmf-assets): BMF-Schreiben 9.4.2026 PDF + 7 page PNGs + plan update mit D1-D5 decisions
-- (pending) docs(bmf): plan update part 3 - integrate public/assets discoveries
+## 10. Commit History (Session 2026-04-14 + 2026-04-15)
+
+- `22c2923` Phase B start — BROLL_SLOTS fix + slot-11 icons collage
+- `1cf6e25` Phase B complete — B-roll assets + refactor + loop bugfix
+- `48f936c` fix — SFX sequence padding for Studio draw-peaks
+- `d3bbf43` docs — Phase F redesign plan v1
+- `926da4f` feat — BMF-Schreiben PDF + 7 page PNGs + plan v2
+- `7b4d74b` docs — plan v3 integrate public/assets discoveries
+- (pending) docs — Phase F final execution plan (this document)
+
+---
+
+**Start of execution:** Phase F.0 when Dario gives green light.
+**No more planning. No more questions. Just execution from here.**

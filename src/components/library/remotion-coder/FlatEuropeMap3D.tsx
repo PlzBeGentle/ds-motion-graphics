@@ -20,7 +20,7 @@ type FlatEuropeMap3DProps = {
   countries?: EuroCountry[];
 };
 
-const FlatEuropeMap3D: React.FC<FlatEuropeMap3DProps> = ({
+export const FlatEuropeMap3D: React.FC<FlatEuropeMap3DProps> = ({
   title,
   subtitle,
   highlightMarker,

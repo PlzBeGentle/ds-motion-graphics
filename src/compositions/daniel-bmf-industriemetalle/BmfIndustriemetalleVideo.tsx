@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, OffthreadVideo, Sequence, staticFile } from "remotion";
+import { AbsoluteFill, Img, OffthreadVideo, Sequence, staticFile, interpolate, useCurrentFrame } from "remotion";
 
 // Already-built centerpieces
 import DemoSceneKobaltFullscreen from "./KobaltFullscreen";
@@ -45,8 +45,8 @@ import { AuroraTextEffect } from "../../components/library/text/AuroraTextEffect
 // Shared library components
 import { FullscreenTakeover } from "../../components/FullscreenTakeover";
 import { Letterbox } from "../../components/Letterbox";
-import { SplitNarrative } from "../../components/SplitNarrative";
 import { BigQuoteCard3D } from "../../components/library/remotion-coder/BigQuoteCard3D";
+import { FlatEuropeMap3D } from "../../components/library/remotion-coder/FlatEuropeMap3D";
 
 /**
  * BMF-Industriemetalle Video — Daniel Sauer Longform (Phase-6 Full Build)
@@ -84,17 +84,17 @@ const O = {
   "ovl-002": { start: 653, end: 856 },        // BMFDocumentCard (F.1 word-sync: "9."→"rausgeschickt")
   "ovl-003": { start: 887, end: 1041 },       // Kinetic 22 JAHRE GESTOPPT (F.2 D4 wording, word-sync)
   "ovl-004": { start: 1040, end: 1166 },      // OhneTriptychon → AnimatedBulletList (F.6)
-  "ovl-005": { start: 1173, end: 1395 },      // FullscreenTakeover 0 CENT
-  "ovl-006": { start: 1410, end: 1695 },      // CTALowerThird
+  "ovl-005": { start: 1193, end: 1394 },      // FullscreenTakeover 0 CENT (F.7 word-sync "Verrückte")
+  "ovl-006": { start: 1606, end: 1805 },      // CTALowerThird (F.7 word-sync "ich"@53.54s)
   "ovl-007": { start: 2078, end: 2199 },      // ElementChipRow (F.6 word-sync "Industriemetalle")
-  "ovl-008": { start: 2280, end: 2544 },      // ZollfreilagerFlowSplit
+  "ovl-008": { start: 2338, end: 2552 },      // ZollfreilagerFlowSplit (F.7 word-sync)
   "ovl-009": { start: 3079, end: 3184 },      // BMF2004DocumentCard (F.1 word-sync: "2004" mention)
   "ovl-010": { start: 3385, end: 3450 },      // Kinetic AUFGEHOBEN (F.2 word-sync + D5 cap)
   "ovl-011": { start: 3750, end: 4104 },      // DonnerstagNewsCard
   "ovl-012": { start: 4690, end: 4900 },      // Kinetic BRUCH NICHT UPDATE (F.2 word-sync)
   "ovl-013": { start: 4910, end: 5200 },      // Kinetic Counter 1/4 VIER DINGE (F.2 was ListicleCounterStatCard)
   "ovl-014": { start: 5385, end: 5475 },      // Kinetic Counter #1 DAS WORT (F.2 word-sync)
-  "ovl-015": { start: 5838, end: 7278 },      // KobaltFullscreen (already built)
+  "ovl-015": { start: 5838, end: 7035 },      // KobaltFullscreen + passsage backdrop (F.7 D5 cap, shortened)
   "ovl-016": { start: 6909, end: 7278 },      // EUCriticalIconRow
   "ovl-017": { start: 7300, end: 7570 },      // Kinetic Counter #2 RÜCKWIRKUNG (F.2 word-sync)
   "ovl-018": { start: 7495, end: 7980 },      // HighlighterDocumentExcerpt (F.1 word-sync: "wörtlich")
@@ -110,10 +110,10 @@ const O = {
   "ovl-028": { start: 12230, end: 13443 },    // HorizontalChronologyTimeline → HistoricalTimeline3D (F.3 extended)
   "ovl-029": { start: 13434, end: 13767 },    // EUKrisendialogNewsCard
   "ovl-030": { start: 14035, end: 14200 },    // Kinetic GENAU JETZT (F.2 word-sync)
-  "ovl-031": { start: 14649, end: 15075 },    // SplitNarrative Reserven
+  "ovl-031": { start: 14795, end: 15083 },    // SplitNarrative Reserven → FlatEuropeMap3D (F.7)
   "ovl-032": { start: 15660, end: 15800 },    // TrustCheckmarkStatCard → Safe3D (F.5 word-sync "Vertrauensschutz")
   "ovl-033": { start: 15950, end: 16400 },    // BigQuoteCard3D Nicht-Beanstandung (F.6)
-  "ovl-034": { start: 17079, end: 17643 },    // SchweizLocationCard
+  "ovl-034": { start: 17278, end: 17550 },    // SchweizLocationCard (F.7 word-sync "Schweiz")
   "ovl-035": { start: 18200, end: 18540 },    // CoreMessageStatCard → GlareCard3D (F.5)
   "ovl-036": { start: 19980, end: 20697 },    // HardCTALowerThird
   "ovl-037": { start: 21262, end: 21790 },    // AuthorityTimeline → GlareCard3D (F.3 word-sync "20")
@@ -227,6 +227,34 @@ const LETTERBOXES = [
 // (#1-#4 + 1/4) use the same BmfKineticStack counter treatment per D1.
 // Frame ranges live in the O map above; per-word startFrames are relative
 // to each Sequence.
+
+// Phase F.7 — KobaltBackdropPassage: ghosted passage.png behind Kobalt centerpiece
+const KobaltBackdropPassage: React.FC = () => {
+  const frame = useCurrentFrame();
+  // Fade in after the initial Kobalt punch (@ frame 30 of the 1197f Sequence)
+  const opacity = interpolate(frame, [150, 220], [0, 0.32], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  // Slow parallax drift across the duration
+  const kbScale = interpolate(frame, [0, 1197], [1.0, 1.08]);
+  const kbDriftY = interpolate(frame, [0, 1197], [0, -18]);
+
+  return (
+    <AbsoluteFill style={{ opacity, pointerEvents: "none" }}>
+      <Img
+        src={staticFile("assets/bmf-schreiben-passsage.png")}
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          transform: `scale(${kbScale}) translateY(${kbDriftY}px)`,
+          filter: "brightness(0.78) contrast(1.15) saturate(0.92)",
+        }}
+      />
+    </AbsoluteFill>
+  );
+};
 
 // ============================================================================
 // MASTER COMPOSITION
@@ -397,8 +425,9 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
         />
       </Sequence>
 
-      {/* ovl-015 — KobaltFullscreen (already built, CENTERPIECE) */}
+      {/* ovl-015 — KobaltFullscreen + passsage backdrop layer (F.7, shortened to 5838-7035) */}
       <Sequence from={O["ovl-015"].start} durationInFrames={O["ovl-015"].end - O["ovl-015"].start}>
+        <KobaltBackdropPassage />
         <DemoSceneKobaltFullscreen />
       </Sequence>
 
@@ -476,23 +505,17 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
 
       {/* ovl-030 — KineticMoment GENAU JETZT (glitch, km-09) */}
 
-      {/* ovl-031 — SplitNarrative Reserven CN/RU up vs DE down */}
+      {/* ovl-031 — SplitNarrative → FlatEuropeMap3D Reserven (F.7) */}
       <Sequence from={O["ovl-031"].start} durationInFrames={O["ovl-031"].end - O["ovl-031"].start}>
-        <SplitNarrative
-          left={{
-            title: "CN · RU",
-            subtitle: "RESERVEN AUFBAU",
-            color: "#d4a017",
-            bgColor: "#161514",
+        <FlatEuropeMap3D
+          title="STRATEGISCHE RESERVEN"
+          subtitle="CHINA BAUT AUF · EUROPA BAUT AB"
+          highlightMarker={{
+            city: "BERLIN",
+            label: "0 CENT RESERVE",
+            countryCode: "DE",
           }}
-          right={{
-            title: "DE",
-            subtitle: "RESERVEN ABBAU",
-            color: "#E30613",
-            bgColor: "#1a1918",
-          }}
-          dividerColor="#d4a017"
-          animationStyle="simultaneous"
+          variant="fullscreen"
         />
       </Sequence>
 

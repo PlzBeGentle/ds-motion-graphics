@@ -219,7 +219,7 @@ export const PriceExplosionBars: React.FC = () => {
       </div>
 
       <ChartBlock
-        src="assets/gallium preis.png"
+        src="assets/gallium-preis.png"
         label="GALLIUM"
         percent={365}
         color="#f5d37a"
@@ -232,7 +232,7 @@ export const PriceExplosionBars: React.FC = () => {
       />
 
       <ChartBlock
-        src="assets/germanium preis.png"
+        src="assets/germanium-preis.png"
         label="GERMANIUM"
         percent={400}
         color="#f5d37a"
@@ -247,7 +247,7 @@ export const PriceExplosionBars: React.FC = () => {
       {/* Iter2.7 — Antimon reveal moved earlier (was 589) so all 3 charts
           are visible from the start of the triptychon hero-moment */}
       <ChartBlock
-        src="assets/antimon preis.png"
+        src="assets/antimon-preis.png"
         label="ANTIMON"
         percent={437}
         color="#E30613"

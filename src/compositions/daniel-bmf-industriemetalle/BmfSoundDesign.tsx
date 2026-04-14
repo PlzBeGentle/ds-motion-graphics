@@ -42,11 +42,13 @@ const CUES: SfxCue[] = [
   { frame: 887, src: ES_SFX.IMPACT_DEEP_HIT, volume: 0.48, note: "22 JAHRE" },
   { frame: 1010, src: ES_SFX.BOOM_ULTRA_LOW, volume: 0.55, note: "GESTOPPT" },
 
-  // ovl-004 OhneTriptychon bullet stagger
+  // ovl-004 OhneTriptychon bullet stagger (Iter2.15: POP → CAMERA_CLICK single-snap
+  // to avoid "double pops" user heard at 00:34 — pop-various.wav contains trailing
+  // audio that clashes with rapid-fire triggers)
   { frame: 1040, src: ES_SFX.WHOOSH_DEEP, volume: 0.3, note: "ovl-004 entry" },
-  { frame: 1055, src: ES_SFX.POP, volume: 0.28, note: "bullet 1 OHNE PARLAMENT" },
-  { frame: 1085, src: ES_SFX.POP, volume: 0.28, note: "bullet 2 OHNE VORWARNUNG" },
-  { frame: 1117, src: ES_SFX.POP, volume: 0.28, note: "bullet 3 OHNE ÜBERGANGSFRIST" },
+  { frame: 1055, src: ES_SFX.CAMERA_CLICK, volume: 0.42, durationInFrames: 20, note: "bullet 1 OHNE PARLAMENT" },
+  { frame: 1085, src: ES_SFX.CAMERA_CLICK, volume: 0.42, durationInFrames: 20, note: "bullet 2 OHNE VORWARNUNG" },
+  { frame: 1117, src: ES_SFX.CAMERA_CLICK, volume: 0.42, durationInFrames: 20, note: "bullet 3 OHNE ÜBERGANGSFRIST" },
 
   // ovl-005 FullscreenTakeover 0 CENT
   { frame: 1185, src: ES_SFX.RISER_GRITTY, volume: 0.36, note: "0 CENT build" },
@@ -81,19 +83,20 @@ const CUES: SfxCue[] = [
   { frame: 3844, src: ES_SFX.WHOOSH_SPACEY, volume: 0.36, note: "ovl-011 news entry" },
   { frame: 3858, src: ES_SFX.KEYBOARD_CLICK, volume: 0.14, durationInFrames: 180, note: "news typing" },
 
-  // ovl-012 BRUCH kinetic
-  { frame: 4690, src: ES_SFX.GLITCH_HIT, volume: 0.42, note: "ovl-012 BRUCH" },
-  { frame: 4690, src: ES_SFX.BOOM_LOW, volume: 0.4, note: "BRUCH layered" },
+  // ovl-012 KEIN UPDATE → BRUCH kinetic (Iter2.15: BRUCH hit moved to frame 4805 when Daniel says "Bruch")
+  { frame: 4690, src: ES_SFX.POP, volume: 0.3, note: "ovl-012 KEIN UPDATE reveal" },
+  { frame: 4805, src: ES_SFX.GLITCH_HIT, volume: 0.42, note: "BRUCH hit" },
+  { frame: 4805, src: ES_SFX.BOOM_LOW, volume: 0.4, note: "BRUCH layered" },
 
   // KAP02 DAS WORT DAS ALLES VERRÄT
   { frame: 4610, src: ES_SFX.RISER_LONG_TRAILER, volume: 0.32, durationInFrames: 270, note: "KAP02 build" },
   { frame: 4620, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.44, note: "KAP02 open" },
   { frame: 4790, src: ES_SFX.WHOOSH_DEEP, volume: 0.3, note: "KAP02 close" },
 
-  // ovl-013 counter 1/4
-  { frame: 4910, src: ES_SFX.RISER_SHARP, volume: 0.3, note: "pre counter 1/4" },
-  { frame: 4920, src: ES_SFX.POP, volume: 0.3, note: "counter 1/4 scramble" },
-  { frame: 4930, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.4, note: "VIER DINGE" },
+  // ovl-013 VIER DINGE (Iter2.15: word-sync "Vier" @163.02s=4891)
+  { frame: 4881, src: ES_SFX.RISER_SHARP, volume: 0.3, note: "pre VIER DINGE" },
+  { frame: 4891, src: ES_SFX.POP, volume: 0.3, note: "VIER DINGE reveal" },
+  { frame: 4901, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.4, note: "VIER DINGE hit" },
 
   // ovl-014 DAS WORT (Iter2.14: word-sync "Das eine Wort" @177.44s=5323)
   { frame: 5323, src: ES_SFX.GLITCH_HIT, volume: 0.36, note: "ovl-014 Das Wort scramble" },
@@ -138,10 +141,10 @@ const CUES: SfxCue[] = [
   { frame: 11031, src: ES_SFX.BOOM_ULTRA_LOW, volume: 0.6, note: "ovl-024 0,00 EUR punch" },
   { frame: 11031, src: ES_SFX.IMPACT_DEEP_HIT, volume: 0.44, note: "0,00 EUR layered" },
 
-  // ovl-025 Two date timeline
+  // ovl-025 Two date timeline (Iter2.15: node 2 "4. Februar" sync to Daniel's "4." @ frame 11399)
   { frame: 11260, src: ES_SFX.WHOOSH_DEEP, volume: 0.3, note: "ovl-025 timeline entry" },
-  { frame: 11268, src: ES_SFX.POP, volume: 0.28, note: "2025 node" },
-  { frame: 11304, src: ES_SFX.POP, volume: 0.28, note: "2026 node" },
+  { frame: 11268, src: ES_SFX.POP, volume: 0.28, note: "9. April 2026 node" },
+  { frame: 11399, src: ES_SFX.POP, volume: 0.28, note: "4. Februar 2025 node" },
 
   // ovl-026 China Bekanntmachung (Iter2.13: keyboard lower)
   { frame: 11535, src: ES_SFX.PAPER_RUSTLE, volume: 0.4, durationInFrames: 150, note: "ovl-026 china doc" },
@@ -164,9 +167,9 @@ const CUES: SfxCue[] = [
   { frame: 13434, src: ES_SFX.WHOOSH_SPACEY, volume: 0.32, note: "ovl-029 news entry" },
   { frame: 13448, src: ES_SFX.KEYBOARD_CLICK, volume: 0.13, durationInFrames: 180, note: "EU news typing" },
 
-  // ovl-030 GENAU JETZT glitch
-  { frame: 14035, src: ES_SFX.GLITCH_TRANSITION, volume: 0.42, durationInFrames: 150, note: "ovl-030 glitch" },
-  { frame: 14035, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.38, note: "GENAU JETZT impact" },
+  // ovl-030 WEGREGULIERT (Iter2.15: retexted, hit synced to "wegzuregulieren" @ 469.50s = frame 14085)
+  { frame: 14035, src: ES_SFX.GLITCH_TRANSITION, volume: 0.42, durationInFrames: 150, note: "ovl-030 glitch bed" },
+  { frame: 14085, src: ES_SFX.IMPACT_CINEMATIC, volume: 0.44, note: "WEGREGULIERT impact" },
 
   // KAP05 KEIN ZUFALL (moved to 14400-14580 in Iter2.11)
   { frame: 14390, src: ES_SFX.RISER_SHARP, volume: 0.34, note: "KAP05 build" },
@@ -176,9 +179,9 @@ const CUES: SfxCue[] = [
   // AKT 3 — Die Lösung + CTA (500-760s)
   // =========================================================================
 
-  // ovl-032 Trust checkmark
-  { frame: 15660, src: ES_SFX.POP, volume: 0.3, note: "ovl-032 checkmark" },
-  { frame: 15680, src: ES_SFX.GLASS_CLINK, volume: 0.3, note: "VERTRAUENSSCHUTZ reveal" },
+  // ovl-032 Trust checkmark (Iter2.15: word-sync "Vertrauensschutz" @522.76s=15683)
+  { frame: 15683, src: ES_SFX.POP, volume: 0.3, note: "ovl-032 checkmark" },
+  { frame: 15700, src: ES_SFX.GLASS_CLINK, volume: 0.3, note: "VERTRAUENSSCHUTZ reveal" },
 
   // KAP06 DIE LÖSUNG
   { frame: 16370, src: ES_SFX.RISER_LONG_TRAILER, volume: 0.36, durationInFrames: 240, note: "KAP06 warm build" },

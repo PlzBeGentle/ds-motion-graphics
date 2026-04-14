@@ -94,7 +94,7 @@ const O = {
   "ovl-010": { start: 3385, end: 3450 },      // Kinetic AUFGEHOBEN (F.2 word-sync + D5 cap)
   "ovl-011": { start: 3750, end: 4104 },      // DonnerstagNewsCard
   "ovl-012": { start: 4690, end: 4900 },      // Kinetic BRUCH NICHT UPDATE (F.2 word-sync)
-  "ovl-013": { start: 4910, end: 5200 },      // Kinetic Counter 1/4 VIER DINGE (F.2 was ListicleCounterStatCard)
+  "ovl-013": { start: 4891, end: 5200 },      // Kinetic VIER DINGE (Iter2.15: word-sync "Vier" @163.02s=4891)
   "ovl-014": { start: 5323, end: 5475 },      // Kinetic Counter #1 DAS WORT (Iter2.14: word-sync "Das" @177.44s=5323)
   "ovl-015": { start: 5838, end: 6500 },      // KobaltFullscreen (Iter2.13: Dario shorter, ~22s instead of 40s)
   "ovl-016": { start: 6909, end: 7278 },      // EUCriticalIconRow
@@ -113,7 +113,7 @@ const O = {
   "ovl-029": { start: 13434, end: 13767 },    // EUKrisendialogNewsCard
   "ovl-030": { start: 14035, end: 14200 },    // Kinetic GENAU JETZT (F.2 word-sync)
   "ovl-031": { start: 14795, end: 15083 },    // SplitNarrative Reserven → FlatEuropeMap3D (F.7)
-  "ovl-032": { start: 15660, end: 15800 },    // TrustCheckmarkStatCard → Safe3D (F.5 word-sync "Vertrauensschutz")
+  "ovl-032": { start: 15683, end: 15830 },    // TrustCheckmarkStatCard (Iter2.15: word-sync "Vertrauensschutz" @522.76s=15683)
   "ovl-033": { start: 15950, end: 16400 },    // BigQuoteCard3D Nicht-Beanstandung (F.6)
   "ovl-034": { start: 17278, end: 17550 },    // SchweizLocationCard (F.7 word-sync "Schweiz")
   "ovl-035": { start: 18586, end: 18900 },    // CoreMessageStatCard (Iter2.14: word-sync "antizyklisch" @619.54s=18586)
@@ -583,13 +583,13 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
         />
       </Sequence>
 
-      {/* ovl-012 — "BRUCH NICHT UPDATE" (ehem. km-03) */}
+      {/* ovl-012 — Kinetic "KEIN UPDATE → BRUCH" (Iter2.15: reordered so BRUCH lands when Daniel says "Bruch" @ frame 4805) */}
       <Sequence from={O["ovl-012"].start} durationInFrames={O["ovl-012"].end - O["ovl-012"].start} name="km-03">
         <BmfKineticStack
           position="lower-third"
           words={[
-            { text: "BRUCH", startFrame: 0, size: 160, color: "#E30613", variant: "circle", accentColor: "#E30613", reveal: "scale" },
-            { text: "KEIN UPDATE", startFrame: 60, size: 56, color: "#fff5e0", reveal: "track" },
+            { text: "KEIN UPDATE", startFrame: 0, size: 60, color: "#fff5e0", reveal: "track" },
+            { text: "BRUCH", startFrame: 115, size: 160, color: "#E30613", variant: "circle", accentColor: "#E30613", reveal: "scale" },
           ]}
         />
       </Sequence>
@@ -627,13 +627,13 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
         />
       </Sequence>
 
-      {/* ovl-030 — "GENAU JETZT" glitch (ehem. km-09) */}
+      {/* ovl-030 — Kinetic "WEGREGULIERT" (Iter2.15: was "GENAU JETZT" but Daniel actually says "wegzuregulieren" — retext to match) */}
       <Sequence from={O["ovl-030"].start} durationInFrames={O["ovl-030"].end - O["ovl-030"].start} name="km-09">
         <BmfKineticStack
           position="lower-third"
           words={[
-            { text: "GENAU JETZT", startFrame: 0, size: 132, color: "#E30613", variant: "circle", accentColor: "#E30613", reveal: "scale" },
-            { text: "LETZTE INFRASTRUKTUR WEG", startFrame: 30, size: 40, color: "rgba(255,245,224,0.82)", reveal: "track" },
+            { text: "DIE LETZTE INFRASTRUKTUR", startFrame: 0, size: 48, color: "#fff5e0", reveal: "track" },
+            { text: "WEGREGULIERT", startFrame: 50, size: 132, color: "#E30613", variant: "circle", accentColor: "#E30613", reveal: "scale" },
           ]}
         />
       </Sequence>

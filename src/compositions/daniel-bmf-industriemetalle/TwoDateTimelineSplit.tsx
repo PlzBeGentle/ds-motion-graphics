@@ -24,20 +24,21 @@ export const TwoDateTimelineSplit: React.FC = () => {
   const opacity = interpolate(entry, [0, 1], [0, 1]);
   const slideY = interpolate(entry, [0, 1], [30, 0]);
 
-  // Node 1 (2025) reveal
+  // Node 1 (9. April 2026) reveal — Daniel says "9." at sequence start (frame 11260)
   const node1 = interpolate(frame, [8, 22], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: Easing.out(Easing.cubic),
   });
-  // Line draw
-  const lineProgress = interpolate(frame, [20, 50], [0, 1], {
+  // Line draw — starts after node 1, reaches node 2 exactly when Daniel says "4."
+  const lineProgress = interpolate(frame, [20, 138], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: Easing.out(Easing.cubic),
   });
-  // Node 2 (2026) reveal
-  const node2 = interpolate(frame, [44, 62], [0, 1], {
+  // Node 2 (4. Februar 2025) reveal — Iter2.15: shifted from local 44 to 139
+  // (Daniel says "4." @ 379.98s = absolute frame 11399, sequence start 11260 → local 139)
+  const node2 = interpolate(frame, [139, 158], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: Easing.out(Easing.cubic),

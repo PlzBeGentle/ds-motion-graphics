@@ -1,39 +1,39 @@
+// Phase F.5 — DanielLowerThirdStatCard rewritten with CountUp + ShinyText + glass card
+// ovl-001: "5 STUNDEN NACHTSCHICHT" lower-third, word-sync 162-249 (5.42s→8.31s)
+
 import React from "react";
-import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
-import { BMF_COLORS, BMF_FONTS, BMF_SPRINGS, panelStyle, seqLifecycle } from "./bmf-theme";
+import {
+  AbsoluteFill,
+  useCurrentFrame,
+  spring,
+  interpolate,
+  useVideoConfig,
+} from "remotion";
+import { CountUp } from "../../components/library/effects/CountUp";
+import { ShinyText } from "../../components/library/text/ShinyText";
 
 interface Props {
-  heroLabel: string;
+  heroLabel?: string;
   heroUnit?: string;
-  sub: string;
-  accentColor?: string;
-  x?: number;
-  y?: number;
-  w?: number;
-  heroSize?: number;
+  sub?: string;
 }
 
-/**
- * DanielLowerThirdStatCard — Base StatCard (ovl-001 template)
- * Lower-third anchor. Inter 900 hero-number + sub-label.
- * Glass panel with gold border, slide-in-left + fade-out.
- */
 export const DanielLowerThirdStatCard: React.FC<Props> = ({
-  heroLabel,
-  heroUnit,
-  sub,
-  accentColor = BMF_COLORS.goldAccent,
-  x = 80,
-  y = 780,
-  w = 640,
-  heroSize = 120,
+  heroLabel = "5",
+  heroUnit = "STUNDEN",
+  sub = "NACHTSCHICHT AN EINEM THEMA",
 }) => {
   const frame = useCurrentFrame();
-  const { fps, durationInFrames } = useVideoConfig();
+  const { fps } = useVideoConfig();
 
-  const entrance = spring({ frame: frame - 3, fps, config: BMF_SPRINGS.standard });
+  const entrance = spring({
+    frame: frame - 3,
+    fps,
+    config: { damping: 14, stiffness: 140, mass: 0.8 },
+  });
   const slideX = interpolate(entrance, [0, 1], [-80, 0]);
-  const opacity = seqLifecycle(frame, durationInFrames, 16, 12);
+  const opacity = interpolate(entrance, [0, 1], [0, 1]);
+
   const breathe = 1 + 0.003 * Math.sin((frame / 100) * 2 * Math.PI);
 
   return (
@@ -41,56 +41,83 @@ export const DanielLowerThirdStatCard: React.FC<Props> = ({
       <div
         style={{
           position: "absolute",
-          left: x,
-          top: y,
-          width: w,
+          left: 80,
+          top: 740,
+          width: 760,
           opacity,
           transform: `translateX(${slideX}px) scale(${breathe})`,
           transformOrigin: "left center",
-          padding: "22px 28px",
-          ...panelStyle(),
+          padding: "28px 36px",
+          background: "rgba(14, 12, 8, 0.88)",
+          backdropFilter: "blur(22px) saturate(1.2)",
+          WebkitBackdropFilter: "blur(22px) saturate(1.2)",
+          border: "1.5px solid rgba(245, 211, 122, 0.35)",
+          borderRadius: 16,
+          boxShadow:
+            "0 24px 72px rgba(0,0,0,0.72), inset 0 1px 0 rgba(255,255,255,0.1)",
           display: "flex",
           flexDirection: "column",
-          gap: 6,
+          gap: 14,
         }}
       >
+        {/* Hero row: CountUp value + ShinyText label */}
         <div
           style={{
-            fontFamily: BMF_FONTS.sans,
-            fontWeight: 900,
-            fontSize: heroSize,
-            color: accentColor,
-            lineHeight: 0.95,
-            letterSpacing: "-0.02em",
-            textShadow: "0 4px 20px rgba(0,0,0,0.6)",
+            display: "flex",
+            alignItems: "baseline",
+            gap: 18,
           }}
         >
-          {heroLabel}
-          {heroUnit && (
-            <span
-              style={{
-                fontSize: heroSize * 0.32,
-                color: BMF_COLORS.warmWhite,
-                marginLeft: 14,
-                letterSpacing: "0.08em",
-              }}
-            >
-              {heroUnit}
-            </span>
-          )}
+          <CountUp
+            value={Number(heroLabel)}
+            startValue={0}
+            fontSize={168}
+            color="#f5d37a"
+            fontWeight={900}
+            colorScheme="gold"
+            springPreset="snappy"
+            startFrame={6}
+          />
+          <ShinyText
+            fontSize={56}
+            fontWeight={900}
+            fontFamily='"Montserrat", "Inter", sans-serif'
+            baseColor="rgba(255, 245, 224, 0.35)"
+            shineColor="#fff5e0"
+            shineWidth={40}
+            speed={90}
+            startFrame={20}
+          >
+            {heroUnit}
+          </ShinyText>
         </div>
+
+        {/* Sub label */}
         <div
           style={{
-            fontFamily: BMF_FONTS.sans,
+            fontFamily: '"Inter", sans-serif',
             fontWeight: 700,
-            fontSize: 22,
-            color: BMF_COLORS.warmWhiteSoft,
-            letterSpacing: "0.16em",
+            fontSize: 24,
+            color: "rgba(255, 245, 224, 0.82)",
+            letterSpacing: "0.18em",
             textTransform: "uppercase",
           }}
         >
           {sub}
         </div>
+
+        {/* Gold accent line */}
+        <div
+          style={{
+            height: 3,
+            width: interpolate(frame, [12, 32], [0, 260], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            }),
+            background: "linear-gradient(90deg, #d4a017, #f5d37a)",
+            boxShadow: "0 0 16px rgba(245, 211, 122, 0.72)",
+          }}
+        />
       </div>
     </AbsoluteFill>
   );

@@ -1,24 +1,30 @@
-import React from "react";
-import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
-import { BMF_COLORS, BMF_FONTS, BMF_SPRINGS, seqLifecycle } from "./bmf-theme";
+// Phase F.5 — PercentDownStatCard rewritten with CountUp + red-glow glass card
+// ovl-023: "19%" — the hidden VAT uplift nobody wants to pay
 
-/**
- * PercentDownStatCard (ovl-023) — Big percent + down-arrow + count-up.
- * "19% Aufpreis, niemand kauft"
- */
+import React from "react";
+import {
+  AbsoluteFill,
+  useCurrentFrame,
+  spring,
+  interpolate,
+  useVideoConfig,
+} from "remotion";
+import { CountUp } from "../../components/library/effects/CountUp";
+
 export const PercentDownStatCard: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps, durationInFrames } = useVideoConfig();
+  const { fps } = useVideoConfig();
 
-  const entrance = spring({ frame: frame - 4, fps, config: BMF_SPRINGS.standard });
-  const slideX = interpolate(entrance, [0, 1], [-80, 0]);
-  const opacity = seqLifecycle(frame, durationInFrames, 16, 12);
-
-  // Count-up from 0 to 19 over 25 frames starting at frame 10
-  const count = interpolate(frame, [10, 35], [0, 19], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
+  const entrance = spring({
+    frame: frame - 4,
+    fps,
+    config: { damping: 14, stiffness: 140, mass: 0.8 },
   });
+  const slideX = interpolate(entrance, [0, 1], [-80, 0]);
+  const opacity = interpolate(entrance, [0, 1], [0, 1]);
+
+  // Red-glow pulse
+  const glowPulse = 0.7 + 0.3 * Math.sin((frame / 24) * Math.PI * 2);
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
@@ -26,57 +32,86 @@ export const PercentDownStatCard: React.FC = () => {
         style={{
           position: "absolute",
           left: 80,
-          top: 780,
-          width: 760,
+          top: 720,
+          width: 820,
           opacity,
           transform: `translateX(${slideX}px)`,
-          background: BMF_COLORS.panelBg,
-          border: `1.5px solid ${BMF_COLORS.goldBorder}`,
-          borderRadius: 8,
-          backdropFilter: "blur(20px)",
-          padding: "28px 36px",
+          padding: "32px 40px",
+          background: "rgba(18, 8, 8, 0.92)",
+          backdropFilter: "blur(22px) saturate(1.3)",
+          WebkitBackdropFilter: "blur(22px) saturate(1.3)",
+          border: "1.5px solid rgba(227, 6, 19, 0.55)",
+          borderRadius: 18,
+          boxShadow: `0 24px 72px rgba(0,0,0,0.78), 0 0 72px rgba(227, 6, 19, ${
+            0.28 * glowPulse
+          }), inset 0 1px 0 rgba(255,255,255,0.08)`,
           display: "flex",
-          alignItems: "center",
-          gap: 20,
+          flexDirection: "column",
+          gap: 18,
         }}
       >
-        {/* Down arrow */}
+        {/* Hero row: CountUp + down arrow */}
         <div
           style={{
-            width: 0,
-            height: 0,
-            borderLeft: "36px solid transparent",
-            borderRight: "36px solid transparent",
-            borderTop: `54px solid ${BMF_COLORS.redAccent}`,
+            display: "flex",
+            alignItems: "center",
+            gap: 22,
           }}
-        />
-        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-          <div
-            style={{
-              fontFamily: BMF_FONTS.mono,
-              fontWeight: 900,
-              fontSize: 160,
-              color: BMF_COLORS.redAccent,
-              lineHeight: 0.9,
-              letterSpacing: "-0.02em",
-              textShadow: "0 4px 20px rgba(0,0,0,0.6)",
-            }}
-          >
-            {Math.round(count)}
-            <span style={{ fontSize: 100, marginLeft: 6 }}>%</span>
-          </div>
-          <div
-            style={{
-              fontFamily: BMF_FONTS.sans,
-              fontWeight: 700,
-              fontSize: 24,
-              color: BMF_COLORS.warmWhite,
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-            }}
-          >
-            AUFPREIS · NIEMAND KAUFT
-          </div>
+        >
+          <CountUp
+            value={19}
+            startValue={0}
+            suffix="%"
+            fontSize={192}
+            color="#E30613"
+            fontWeight={900}
+            springPreset="snappy"
+            startFrame={10}
+          />
+          {/* Down arrow */}
+          <svg width={96} height={120} viewBox="0 0 96 120" style={{ marginBottom: 12 }}>
+            <path
+              d="M 48 12 L 48 92 M 20 72 L 48 100 L 76 72"
+              stroke="#E30613"
+              strokeWidth={10}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+              style={{
+                filter: "drop-shadow(0 0 16px rgba(227, 6, 19, 0.78))",
+                opacity: interpolate(frame, [20, 40], [0, 1], {
+                  extrapolateLeft: "clamp",
+                  extrapolateRight: "clamp",
+                }),
+              }}
+            />
+          </svg>
+        </div>
+
+        <div
+          style={{
+            fontFamily: '"Montserrat", "Inter", sans-serif',
+            fontWeight: 900,
+            fontSize: 40,
+            color: "#fff5e0",
+            letterSpacing: "-0.01em",
+            lineHeight: 1.1,
+          }}
+        >
+          AUFPREIS · NIEMAND KAUFT
+        </div>
+
+        <div
+          style={{
+            fontFamily: '"Inter", sans-serif',
+            fontWeight: 700,
+            fontSize: 22,
+            color: "rgba(255, 245, 224, 0.68)",
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+          }}
+        >
+          USt · SOFORT FÄLLIG · KEIN MARKT
         </div>
       </div>
     </AbsoluteFill>

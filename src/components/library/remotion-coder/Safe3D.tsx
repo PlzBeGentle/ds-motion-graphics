@@ -14,7 +14,7 @@ const DOOR_INSET = 30;
 const DOOR_WIDTH = SAFE_WIDTH - DOOR_INSET * 2;
 const DOOR_HEIGHT = SAFE_HEIGHT - DOOR_INSET * 2;
 
-const Safe3D: React.FC<Safe3DProps> = ({
+export const Safe3D: React.FC<Safe3DProps> = ({
   revealText,
   revealColor = "#ff4540",
   title = "Dein Geld ist nicht sicher",

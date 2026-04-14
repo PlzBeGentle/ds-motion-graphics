@@ -81,7 +81,7 @@ import { ChartBuild } from "../../components/ChartBuild";
 
 // Overlay frame ranges — keep in sync with mograph-overlay-specs.json
 const O = {
-  "ovl-001": { start: 72, end: 258 },        // DanielLowerThirdStatCard (5 Stunden)
+  "ovl-001": { start: 162, end: 249 },        // DanielLowerThirdStatCard (F.5 word-sync "5"@5.42s)
   "ovl-002": { start: 653, end: 856 },        // BMFDocumentCard (F.1 word-sync: "9."→"rausgeschickt")
   "ovl-003": { start: 887, end: 1041 },       // Kinetic 22 JAHRE GESTOPPT (F.2 D4 wording, word-sync)
   "ovl-004": { start: 1041, end: 1158 },      // OhneTriptychon
@@ -103,8 +103,8 @@ const O = {
   "ovl-020": { start: 8700, end: 8780 },      // Kinetic Counter #3 22 JAHRE GELÖSCHT (F.2 word-sync)
   "ovl-021": { start: 9501, end: 9954 },      // QuoteCard — aufgehoben
   "ovl-022": { start: 10116, end: 10305 },    // Kinetic Counter #4 0 CENT NEUE STEUERN (F.2 word-sync)
-  "ovl-023": { start: 10464, end: 10704 },    // PercentDownStatCard 19%
-  "ovl-024": { start: 10872, end: 11205 },    // NullEuroBilanzFullscreen
+  "ovl-023": { start: 10373, end: 10700 },    // PercentDownStatCard 19% (F.5 word-sync "19"@345.76)
+  "ovl-024": { start: 11031, end: 11210 },    // NullEuroBilanzFullscreen (F.5 word-sync "0"@367.70)
   "ovl-025": { start: 11260, end: 11535 },    // TwoDateTimelineSplit → HistoricalTimeline3D (F.3)
   "ovl-026": { start: 11535, end: 12000 },    // ChinaBekanntmachungDocumentCard (F.1 editorial trim)
   "ovl-027": { start: 12334, end: 12930 },    // PriceExplosionBars real charts (F.3 word-sync Gallium→437)
@@ -112,10 +112,10 @@ const O = {
   "ovl-029": { start: 13434, end: 13767 },    // EUKrisendialogNewsCard
   "ovl-030": { start: 14035, end: 14200 },    // Kinetic GENAU JETZT (F.2 word-sync)
   "ovl-031": { start: 14649, end: 15075 },    // SplitNarrative Reserven
-  "ovl-032": { start: 15315, end: 15888 },    // TrustCheckmarkStatCard
+  "ovl-032": { start: 15660, end: 15800 },    // TrustCheckmarkStatCard → Safe3D (F.5 word-sync "Vertrauensschutz")
   "ovl-033": { start: 15888, end: 16467 },    // QuoteCard Nicht-Beanstandung
   "ovl-034": { start: 17079, end: 17643 },    // SchweizLocationCard
-  "ovl-035": { start: 18078, end: 18543 },    // CoreMessageStatCard
+  "ovl-035": { start: 18200, end: 18540 },    // CoreMessageStatCard → GlareCard3D (F.5)
   "ovl-036": { start: 19980, end: 20697 },    // HardCTALowerThird
   "ovl-037": { start: 21262, end: 21790 },    // AuthorityTimeline → GlareCard3D (F.3 word-sync "20")
   "ovl-038": { start: 22620, end: 22800 },    // Kinetic DANKE DEUTSCHLAND via AuroraTextEffect (F.2)

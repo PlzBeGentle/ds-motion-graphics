@@ -1233,7 +1233,7 @@ Post-Phase-4-Session-Log + ds-motion-graphics commits kommen noch (diese Session
 - **Nicht getestet (Studio-Scrub):** Audio-Playback + Music-Ducking bei den kritischen Frames (5868 Kobalt, 22649 Danke Deutschland, 14609 drei-mal). Dario muss via Studio-Scrub validieren
 
 **Commits:**
-- (pending — kommt direkt nach dieser Log-Section)
+- `5e46a2a` feat(bmf): Phase A sound-design layer (70 SFX + 6 music beds)
 
 ### 24z) Session 2 End-State
 

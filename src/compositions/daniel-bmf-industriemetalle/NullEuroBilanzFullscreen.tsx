@@ -1,18 +1,16 @@
-// Phase F.5 — NullEuroBilanzFullscreen rewritten with deutschland-karte backdrop + CountUp
+// Phase F.5 / Iter2.1 — NullEuroBilanzFullscreen (deutschland-karte removed)
 // ovl-024: "0,00 EUR mehr Einnahmen" + 3 VERLOREN columns
+// Custom de-DE format CountUp (CountUp library uses "." as decimal separator).
 // Frame range 10872-11205 → 11031-11210 (word-sync "0" @ 367.70s = frame 11031)
 
 import React from "react";
 import {
   AbsoluteFill,
-  Img,
   useCurrentFrame,
   spring,
   interpolate,
   useVideoConfig,
-  staticFile,
 } from "remotion";
-import { CountUp } from "../../components/library/effects/CountUp";
 
 const MINUS_ROWS = [
   { label: "ANLEGER", state: "VERLOREN" },
@@ -30,6 +28,18 @@ export const NullEuroBilanzFullscreen: React.FC = () => {
     extrapolateRight: "clamp",
   });
 
+  // Custom de-DE format CountUp: 100,00 → 0,00 EUR
+  const countSpring = spring({
+    frame: frame - 8,
+    fps,
+    config: { damping: 16, stiffness: 100, mass: 1 },
+  });
+  const currentVal = interpolate(countSpring, [0, 1], [100, 0]);
+  const deEurStr = currentVal.toLocaleString("de-DE", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
   // Hero split entry
   const heroSpring = spring({
     frame: frame - 4,
@@ -41,32 +51,8 @@ export const NullEuroBilanzFullscreen: React.FC = () => {
 
   return (
     <AbsoluteFill>
-      {/* Dim background */}
+      {/* Dim background (deutschland-karte removed per Iter2.1 feedback) */}
       <AbsoluteFill style={{ background: "#0a0808", opacity: bgOpacity }} />
-
-      {/* Germany map backdrop — ghosted behind the hero number */}
-      <AbsoluteFill
-        style={{
-          opacity: interpolate(frame, [8, 36], [0, 0.22], {
-            extrapolateLeft: "clamp",
-            extrapolateRight: "clamp",
-          }),
-          filter: "drop-shadow(0 0 48px rgba(227, 6, 19, 0.62))",
-        }}
-      >
-        <Img
-          src={staticFile("assets/logos/deutschland-karte.svg")}
-          style={{
-            position: "absolute",
-            left: "50%",
-            top: "50%",
-            width: 920,
-            height: "auto",
-            marginLeft: -460,
-            marginTop: -380,
-          }}
-        />
-      </AbsoluteFill>
 
       {/* Split grid: PLUS (0 EUR) vs MINUS (3 VERLOREN rows) */}
       <div
@@ -104,18 +90,23 @@ export const NullEuroBilanzFullscreen: React.FC = () => {
           >
             MEHR EINNAHMEN
           </div>
-          <CountUp
-            value={0}
-            startValue={100}
-            decimals={2}
-            suffix=" EUR"
-            separator="."
-            fontSize={212}
-            color="#E30613"
-            fontWeight={900}
-            springPreset="snappy"
-            startFrame={8}
-          />
+          <div
+            style={{
+              fontFamily: '"Montserrat", sans-serif',
+              fontWeight: 900,
+              fontSize: 212,
+              color: "#E30613",
+              letterSpacing: "-0.02em",
+              lineHeight: 1,
+              textShadow: "0 0 48px rgba(227, 6, 19, 0.5), 0 6px 24px rgba(0,0,0,0.82)",
+              opacity: interpolate(frame, [8, 22], [0, 1], {
+                extrapolateLeft: "clamp",
+                extrapolateRight: "clamp",
+              }),
+            }}
+          >
+            {deEurStr} EUR
+          </div>
           <div
             style={{
               fontFamily: '"Inter", sans-serif',

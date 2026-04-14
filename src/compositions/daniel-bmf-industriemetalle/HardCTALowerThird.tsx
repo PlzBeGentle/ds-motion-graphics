@@ -228,7 +228,7 @@ export const HardCTALowerThird: React.FC = () => {
                 textTransform: "uppercase",
               }}
             >
-              Termine begrenzt · Schweiz · Zolllager
+              Termine begrenzt · Direkt von Daniel
             </div>
           </div>
         </div>

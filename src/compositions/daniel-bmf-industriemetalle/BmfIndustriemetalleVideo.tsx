@@ -407,7 +407,7 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
       {/* ovl-013 — Kinetic Counter 1/4 VIER DINGE (F.2 was ListicleCounterStatCard) */}
       <Sequence from={O["ovl-013"].start} durationInFrames={O["ovl-013"].end - O["ovl-013"].start}>
         <BmfKineticStack
-          position="center"
+          position="lower-third"
           counter={{ text: "1 / 4", startFrame: 0, color: "#f5d37a", size: 72 }}
           words={[
             { text: "VIER DINGE", startFrame: 10, size: 108, color: "#fff5e0", variant: "underline", accentColor: "#f5d37a", reveal: "scale" },
@@ -419,7 +419,7 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
       {/* ovl-014 — Kinetic Counter #1 DAS WORT DAS ALLES VERRÄT */}
       <Sequence from={O["ovl-014"].start} durationInFrames={O["ovl-014"].end - O["ovl-014"].start}>
         <BmfKineticStack
-          position="center"
+          position="lower-third"
           counter={{ text: "# 1", startFrame: 0, color: "#f5d37a", size: 64 }}
           words={[
             { text: "DAS WORT", startFrame: 12, size: 96, color: "#fff5e0", reveal: "scale" },
@@ -576,7 +576,7 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
       {/* ovl-003 — "22 JAHRE GESTOPPT" (ehem. km-01) */}
       <Sequence from={O["ovl-003"].start} durationInFrames={O["ovl-003"].end - O["ovl-003"].start} name="km-01">
         <BmfKineticStack
-          position="center"
+          position="lower-third"
           words={[
             { text: "22 JAHRE", startFrame: 0, size: 108, color: "#f5d37a", variant: "underline", accentColor: "#f5d37a", reveal: "scale" },
             { text: "GESTOPPT", startFrame: 123, size: 144, color: "#fff5e0", variant: "circle", accentColor: "#E30613", reveal: "scale" },
@@ -587,7 +587,7 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
       {/* ovl-010 — "AUFGEHOBEN" stamp-slam (ehem. km-02) */}
       <Sequence from={O["ovl-010"].start} durationInFrames={O["ovl-010"].end - O["ovl-010"].start} name="km-02">
         <BmfKineticStack
-          position="center"
+          position="lower-third"
           words={[
             { text: "AUFGEHOBEN", startFrame: 5, size: 132, color: "#E30613", variant: "both", accentColor: "#E30613", reveal: "scale" },
           ]}
@@ -597,7 +597,7 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
       {/* ovl-012 — "BRUCH NICHT UPDATE" (ehem. km-03) */}
       <Sequence from={O["ovl-012"].start} durationInFrames={O["ovl-012"].end - O["ovl-012"].start} name="km-03">
         <BmfKineticStack
-          position="center"
+          position="lower-third"
           words={[
             { text: "BRUCH", startFrame: 0, size: 160, color: "#E30613", variant: "circle", accentColor: "#E30613", reveal: "scale" },
             { text: "KEIN UPDATE", startFrame: 60, size: 56, color: "#fff5e0", reveal: "track" },
@@ -608,7 +608,7 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
       {/* ovl-017 — Counter #2 DIE VERBOTENE RÜCKWIRKUNG (ehem. km-05) */}
       <Sequence from={O["ovl-017"].start} durationInFrames={O["ovl-017"].end - O["ovl-017"].start} name="km-05">
         <BmfKineticStack
-          position="center"
+          position="lower-third"
           counter={{ text: "# 2", startFrame: 0, color: "#f5d37a", size: 64 }}
           words={[
             { text: "DIE VERBOTENE", startFrame: 12, size: 72, color: "#fff5e0", reveal: "scale" },
@@ -620,7 +620,7 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
       {/* ovl-019 — "STRAFZETTEL" (ehem. km-06) */}
       <Sequence from={O["ovl-019"].start} durationInFrames={O["ovl-019"].end - O["ovl-019"].start} name="km-06">
         <BmfKineticStack
-          position="center"
+          position="lower-third"
           words={[
             { text: "STRAFZETTEL", startFrame: 0, size: 128, color: "#E30613", variant: "circle", accentColor: "#E30613", reveal: "scale" },
             { text: "FÜR EIN SCHILD NÄCHSTE WOCHE", startFrame: 40, size: 38, color: "rgba(255,245,224,0.82)", reveal: "track" },
@@ -631,7 +631,7 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
       {/* ovl-020 — Counter #3 22 JAHRE GELÖSCHT (ehem. km-07) */}
       <Sequence from={O["ovl-020"].start} durationInFrames={O["ovl-020"].end - O["ovl-020"].start} name="km-07">
         <BmfKineticStack
-          position="center"
+          position="lower-third"
           counter={{ text: "# 3", startFrame: 0, color: "#f5d37a", size: 64 }}
           words={[
             { text: "22 JAHRE", startFrame: 12, size: 108, color: "#f5d37a", reveal: "scale" },
@@ -643,7 +643,7 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
       {/* ovl-022 — Counter #4 0 CENT NEUE STEUERN (ehem. km-08) */}
       <Sequence from={O["ovl-022"].start} durationInFrames={O["ovl-022"].end - O["ovl-022"].start} name="km-08">
         <BmfKineticStack
-          position="center"
+          position="lower-third"
           counter={{ text: "# 4", startFrame: 0, color: "#f5d37a", size: 64 }}
           words={[
             { text: "0 CENT", startFrame: 10, size: 180, color: "#E30613", variant: "circle", accentColor: "#E30613", reveal: "scale" },
@@ -655,7 +655,7 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
       {/* ovl-030 — "GENAU JETZT" glitch (ehem. km-09) */}
       <Sequence from={O["ovl-030"].start} durationInFrames={O["ovl-030"].end - O["ovl-030"].start} name="km-09">
         <BmfKineticStack
-          position="center"
+          position="lower-third"
           words={[
             { text: "GENAU JETZT", startFrame: 0, size: 132, color: "#E30613", variant: "circle", accentColor: "#E30613", reveal: "scale" },
             { text: "LETZTE INFRASTRUKTUR WEG", startFrame: 30, size: 40, color: "rgba(255,245,224,0.82)", reveal: "track" },

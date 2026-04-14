@@ -124,7 +124,7 @@ export const SchweizLocationCard: React.FC = () => {
             textTransform: "uppercase",
           }}
         >
-          Zolllager · Freihafen · Gold-Grade
+          Dein Zolllager
         </div>
       </div>
     </AbsoluteFill>

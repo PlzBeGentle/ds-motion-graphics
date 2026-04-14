@@ -7,7 +7,7 @@ import { AnimatedBulletList } from "../../components/library/remotion-coder/Anim
 
 export const OhneTriptychon: React.FC = () => (
   <AnimatedBulletList
-    title="DREI DINGE · FEHLEN"
+    title="DREI DINGE FEHLEN"
     subtitle="WIE DIE REGEL ABGESCHAFFT WURDE"
     items={[
       { title: "OHNE PARLAMENT", description: "Keine Gesetzesdebatte · keine Abstimmung" },

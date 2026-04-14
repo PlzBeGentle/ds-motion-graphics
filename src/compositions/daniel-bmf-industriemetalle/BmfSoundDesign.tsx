@@ -240,7 +240,7 @@ export const BmfSoundDesign: React.FC = () => (
         durationInFrames={bed.durationInFrames}
         name={`music-bed-${i}`}
       >
-        <Audio src={staticFile(bed.src)} volume={bed.volume} />
+        <Audio src={staticFile(`sfx/${bed.src}`)} volume={bed.volume} />
       </Sequence>
     ))}
 
@@ -251,7 +251,7 @@ export const BmfSoundDesign: React.FC = () => (
         durationInFrames={cue.durationInFrames ?? DEFAULT_DURATION}
         name={`sfx-${i}-${cue.note ?? ""}`}
       >
-        <Audio src={staticFile(cue.src)} volume={cue.volume} />
+        <Audio src={staticFile(`sfx/${cue.src}`)} volume={cue.volume} />
       </Sequence>
     ))}
   </>

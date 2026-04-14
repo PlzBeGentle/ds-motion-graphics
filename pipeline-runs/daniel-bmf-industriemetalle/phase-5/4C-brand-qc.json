@@ -1,0 +1,535 @@
+{
+  "agent": "4C-brand-consistency-qc",
+  "video_slug": "daniel-bmf-industriemetalle",
+  "audit_date": "2026-04-14",
+  "overall_status": "PASS_WITH_WARNINGS",
+  "brand_atoms_loaded": [
+    "atoms/video/color/locos-brand-color-language.md",
+    "atoms/video/mograph/daniel-finance-3d-design.md",
+    "atoms/video/mograph/daniel-talking-head-layout.md",
+    "atoms/video/skript/daniel-voice.md"
+  ],
+  "rules_loaded": [
+    "docs/rules/B-motion-graphics/B2-text-typografie.md",
+    "docs/rules/B-motion-graphics/B4-layout-komposition.md",
+    "docs/rules/D-color-grading/D1-emotionale-farbsteuerung.md",
+    "docs/agents/agent-4C-brand-consistency-qc.md"
+  ],
+  "files_scanned": [
+    "phase-4/mograph/mograph-overlay-specs.json",
+    "phase-4/color/color-segments.json",
+    "phase-4/text/captions-kinetic.json",
+    "phase-4/text/kinetic-moments.json",
+    "phase-4/text/lower-thirds.json",
+    "phase-4/text/title-cards.json"
+  ],
+
+  "color_audit": {
+    "files_scanned": [
+      "mograph-overlay-specs.json",
+      "color-segments.json",
+      "captions-kinetic.json",
+      "kinetic-moments.json",
+      "lower-thirds.json",
+      "title-cards.json"
+    ],
+    "total_hex_occurrences": 216,
+    "unique_hex_values_found": 22,
+    "unique_hex_list": [
+      "#000000",
+      "#00C62E",
+      "#00FFFF",
+      "#06E0FF",
+      "#0A0805",
+      "#0A0A14",
+      "#161514",
+      "#1A1918",
+      "#6A4AFF",
+      "#888888",
+      "#A68B2C",
+      "#C8A84C",
+      "#D4A017",
+      "#E30613",
+      "#E8DEC5",
+      "#F3ECDD",
+      "#F4D03F",
+      "#F5D37A",
+      "#F5EEDA",
+      "#FF4444",
+      "#FF4AA0",
+      "#FFF5E0"
+    ],
+    "forbidden_hex_mentions": {
+      "note": "Forbidden hex values appear ONLY in anti-pattern/forbidden_colors declarations or 'NOT pure X' explanatory notes. They are NEVER applied as styling to any overlay.",
+      "entries": [
+        {
+          "hex": "#06E0FF",
+          "usage": "mograph-overlay-specs.json line 29 — inside forbidden_colors[] array (anti-pattern marker)",
+          "applied_as_style": false,
+          "verdict": "safe"
+        },
+        {
+          "hex": "#00FFFF",
+          "usage": "mograph-overlay-specs.json line 29 — inside forbidden_colors[] array (cyan anti-pattern marker)",
+          "applied_as_style": false,
+          "verdict": "safe"
+        },
+        {
+          "hex": "#FF4AA0",
+          "usage": "mograph-overlay-specs.json line 29 — inside forbidden_colors[] array (magenta anti-pattern marker)",
+          "applied_as_style": false,
+          "verdict": "safe"
+        },
+        {
+          "hex": "#6A4AFF",
+          "usage": "mograph-overlay-specs.json line 29 — inside forbidden_colors[] array (violet anti-pattern marker)",
+          "applied_as_style": false,
+          "verdict": "safe"
+        },
+        {
+          "hex": "#000000",
+          "usage": "color-segments.json line 339 — inside note string 'Warm black (NOT pure #000000)'",
+          "applied_as_style": false,
+          "verdict": "safe"
+        }
+      ]
+    },
+    "teal_orange_violations": [],
+    "cyan_violations": [],
+    "magenta_violations": [],
+    "violet_violations": [],
+    "neon_violations": [],
+    "pure_black_violations": [],
+    "wrong_red_violations": [
+      {
+        "hex": "#FF4444",
+        "location": "mograph-overlay-specs.json line 27 — brand_constraints.palette.red_negative",
+        "issue": "Declared in palette as 'red_negative' but LOCOS brand red is #E30613 (locos-brand-color-language#locos-palette-gold-schwarz-rot). The #FF4444 value is coral/orange-red, not LOCOS brand red.",
+        "applied_as_style": false,
+        "severity": "WARN",
+        "impact": "Documentation/palette declaration inconsistency only. Never used in any actual overlay — all 39 overlays use #E30613 for red accents and #D4A017 or #F5D37A for gold. Does NOT block render.",
+        "recommendation": "Remove or rename the 'red_negative' entry to avoid future agents picking it up. Keep #E30613 as the single red accent."
+      },
+      {
+        "hex": "#00C62E",
+        "location": "mograph-overlay-specs.json line 26 — brand_constraints.palette.red_positive (sic, also OV032 accent_color)",
+        "issue": "Key 'red_positive' is a naming typo (should be 'green_positive'). Hex value itself (#00C62E) is the approved B3.4 semantic green for positive/trust elements and IS used in OV032 TrustCheckmarkStatCard for 'Altbestand Vertrauensschutz'.",
+        "applied_as_style": true,
+        "severity": "INFO",
+        "impact": "Valid semantic use (B3.4 positive = green). Not a brand violation, just a key-name typo in the declaration object.",
+        "recommendation": "Rename key from 'red_positive' to 'green_positive' in mograph-overlay-specs.json for clarity."
+      }
+    ],
+    "locos_palette_compliance": {
+      "gold_family_used": ["#A68B2C", "#C8A84C", "#D4A017", "#F5D37A", "#F4D03F (paper highlighter on OV018 only)"],
+      "red_accent_used": ["#E30613 (42 occurrences)"],
+      "warm_black_bg_used": ["#161514 (22 occurrences)", "#1A1918", "#0A0805 (vignette)", "#0A0A14 (vignette)"],
+      "warm_white_used": ["#FFF5E0 (30 occurrences)"],
+      "neutral_gray_used": ["#888888 (grid-line, chart only)"],
+      "paper_used": ["#F3ECDD", "#E8DEC5", "#F5EEDA (document card papers only)"],
+      "semantic_green_used": ["#00C62E (OV032 TrustCheckmark only, B3.4 compliant)"]
+    },
+    "teal_orange_segments_in_color_segments_json": 0,
+    "shock_red_accent_segments": 2,
+    "shock_red_accent_placements": ["col_004_kobalt_peak", "col_006_null_cent_peak"],
+    "warm_black_bg_enforced": true,
+    "verdict": "pass"
+  },
+
+  "typography_audit": {
+    "fonts_used": {
+      "Inter": "57 declarations (primary, correct)",
+      "Montserrat": "10 declarations (secondary, correct)",
+      "Orbitron": "3 declarations (OV005 0-CENT hero, OV023 19%, OV024 hero numbers — appropriate for display/numeric hero)",
+      "Playfair Display": "3 declarations (OV021 quote, OV033 Nicht-Beanstandungsklausel, OV038 Danke Deutschland — appropriate accent font)",
+      "DM Sans": "1 declaration (OV018 body text — allowed fallback)"
+    },
+    "non_brand_fonts": [],
+    "weight_400_violations": [
+      {
+        "location": "kinetic-moments.json — km-01 (OV003) words array — the '·' (bullet) separator character",
+        "weight_used": 400,
+        "severity": "WARN",
+        "impact": "Bullet separator character. daniel-finance-3d-design#typography-weights says NIE weight 400. However this is a decorative middot, not headline text. Low visual impact but technically violates the rule.",
+        "recommendation": "Raise to weight 700 or 800 for consistency, or render the separator as a styled div instead of text."
+      }
+    ],
+    "weight_500_violations": [
+      {
+        "location": "lower-thirds.json — global_style.font_weight_subtitle = 500",
+        "weight_used": 500,
+        "severity": "WARN",
+        "impact": "Lower-third SUBTITLE line is weight 500. daniel-finance-3d-design#typography-weights demands 600-900 minimum. Subtitle readability is fine but will feel 'web-UI thin' vs broadcast bold. Three lower-thirds affected (lt-001 NACHTSCHICHT, lt-002 BMF LINK, lt-003 CTA).",
+        "recommendation": "Raise subtitle font_weight to 600 (minimum) or 700 for broadcast feel. Title-cards.json already uses 600 — align them."
+      }
+    ],
+    "letter_spacing_audit": {
+      "headlines_04em_compliant": true,
+      "uppercase_labels_14_20em_compliant": true,
+      "numbers_negative_spacing_compliant": true,
+      "notes": "Kinetic moments use -0.02 / -0.03 for numbers, 0.04 for headlines, 0.14-0.20 for uppercase labels. All compliant with daniel-finance-3d-design#typography-weights-letter-spacing."
+    },
+    "text_shadow_audit": {
+      "applied_on_colored_bgs": true,
+      "shadow_pattern": "0 4px 20px rgba(0,0,0,0.6) or 0 6px 28-30px rgba(0,0,0,0.65-0.75)",
+      "gold_glow_missing_warning": {
+        "severity": "INFO",
+        "issue": "Gold-colored text moments (e.g. km-01 '22 JAHRE' in #f5d37a) do NOT have the recommended gold glow 'textShadow: 0 4px 20px rgba(255,180,30,0.5)'. Only the dark drop shadow is applied.",
+        "recommendation": "Optional polish — add gold glow to hero gold numerals for 3D-material feel. Not a blocker."
+      }
+    },
+    "emoji_audit": {
+      "total_emoji_occurrences": 0,
+      "verdict": "PASS — G10 remotion-gotcha respected, zero emojis in any text output (captions, kinetic, lower-thirds, title-cards, mograph specs)"
+    },
+    "forbidden_font_check": "PASS — no Comic Sans, Calibri, Arial, Georgia, or system fonts found",
+    "verdict": "pass_with_warnings"
+  },
+
+  "voice_audit": {
+    "source": "phase-4/text/captions-kinetic.json (176 segments, 11028 chars of transcript)",
+    "ihr_euch_count": 33,
+    "ihr_frequency_per_100_words": "~1.8 per 100 words (well within #ihr-konsistenz-150-200-worte signature claim)",
+    "sie_violations": [],
+    "sie_count": 0,
+    "du_violations": [
+      {
+        "context": "'...weil ich würde es wirklich gerne verstehen. Also wenn du einen Teil deiner Ersparnisse in krisenssichere Sachwerte i...'",
+        "severity": "WARN",
+        "claim_violated": "daniel-voice#direkte-ansprache-ihr (signature)",
+        "impact": "Single 'du einen Teil deiner Ersparnisse' drift in Akt 6 (Schweiz-Lösung/CTA-area). Not catastrophic but breaks the 'ihr'-flow. Daniel may correct live, but spec should be consistent.",
+        "recommendation": "Replace with 'wenn ihr einen Teil eurer Ersparnisse in krisensichere Sachwerte investieren wollt'"
+      },
+      {
+        "context": "'...in China unter schweren Exportkontrollen stehen, dann hast du, wie gesagt, die Möglichkeit, hier mit meinem Team...'",
+        "severity": "WARN",
+        "claim_violated": "daniel-voice#direkte-ansprache-ihr (signature)",
+        "impact": "Second drift in CTA area ('hast du, wie gesagt'). Same Akt as the first — voice drift concentrated in Schweiz-CTA section.",
+        "recommendation": "Replace with 'dann habt ihr, wie gesagt, die Möglichkeit' — keeps parasoziale Nähe konsistent bis zum Ende."
+      }
+    ],
+    "hero_numbers_covered_in_captions_or_overlays": [
+      "5 Stunden Nachtschicht (OV001 Lower-Third + kinetic captions)",
+      "9. April 2026 BMF (OV002 BMFDocumentCard + Lower-Third lt-001 + captions)",
+      "BMF 2004 (OV009 BMF2004DocumentCard + captions)",
+      "22 Jahre (km-01 kinetic + OV003 + ch-03 + captions)",
+      "0 Cent / keinen Cent (OV005 FullscreenTakeover + km-08 + OV022 kinetic + captions)",
+      "Kobalt (OV015 KobaltFullscreen centerpiece + ch-02 + captions)",
+      "19% Aufpreis (OV023 PercentDownStatCard + captions)",
+      "+365% Gallium (OV027 ChartBuild + captions via +400% Germanium)",
+      "+437% Antimon (OV028 HorizontalChronologyTimeline + captions)",
+      "Schweizer Lösung (OV034 SchweizLocationCard + ch-06 + captions)"
+    ],
+    "hero_numbers_missing_or_unclear": [
+      {
+        "number": "850 Tonnen",
+        "status": "not found in captions",
+        "note": "Not part of BMF-Skript scope — 850 Tonnen is a Bundesbank-Gold reference typically used in other videos. Absence is correct for BMF-Industriemetalle topic."
+      },
+      {
+        "number": "Null Cent (literal phrase)",
+        "status": "rendered as 'keinen Cent' in captions but '0 CENT' as kinetic/fullscreen hero",
+        "note": "OV005 FullscreenTakeover (0 CENT hero) + OV022 kinetic (0 CENT NEUE STEUERN) cover it visually. Captions use paraphrase 'keinen Cent'. OK."
+      }
+    ],
+    "sales_pitch_audit": {
+      "lower_thirds_cta_tone": "Viewer-benefit framing. lt-003 'LINK BMF-PDF · BESCHREIBUNG' + 'KOSTENFREIES ERSTGESPRÄCH · LOCOS.DE' — informational, not 'kauf jetzt'.",
+      "violations": [],
+      "verdict": "PASS"
+    },
+    "mandanten_story_opener_check": {
+      "first_300_frames_content": "OV001 '5 STUNDEN NACHTSCHICHT / BMF-SCHREIBEN · 9. APRIL 2026' + ch-01 'FÜNF STUNDEN NACHTSCHICHT' title card + captions 'Leute, ich bin absolut erschrocken.'",
+      "mandanten_story_as_opener": false,
+      "verdict": "PASS — cold open is personal Nachtschicht hook, not a Mandanten-Story"
+    },
+    "klare_position_check": {
+      "title_cards_positioning": "Title cards use positioned language: 'DIE VERBOTENE RÜCKWIRKUNG', 'DAS NULL-CENT-PARADOX', 'DANKE, DEUTSCHLAND.' — all editorial-opinion register, not neutral-analytical.",
+      "berater_jargon_found": false,
+      "verdict": "PASS"
+    },
+    "verdict": "pass_with_warnings"
+  },
+
+  "component_identity_audit": {
+    "kobalt_fullscreen_centerpiece": {
+      "present": true,
+      "polish_tier": "max",
+      "location": "ovl-015 frame 5838-6324",
+      "production_ready": true,
+      "source_file": "/Users/dario/remotion-coder-test/src/KobaltFullscreen.tsx",
+      "verdict": "PASS"
+    },
+    "handelsblatt_faz_newscard_deadzone_filler": {
+      "present": true,
+      "category": "fullscreen-pattern-interrupt (not counted against fullscreen budget)",
+      "location": "ovl-new-001 frame 19350-19980",
+      "production_ready": true,
+      "rotes_x_asset": "public/rotes-x.png (copy from remotion-coder-test noted in spec)",
+      "verdict": "PASS"
+    },
+    "locos_pipeline_component_convention": {
+      "all_other_overlays_follow_convention": true,
+      "gold_accents_consistent": true,
+      "red_accents_isolated_to_shock_elements": true,
+      "verdict": "PASS"
+    },
+    "stamp_slam_animation_type": {
+      "ovl-010_stamp_slam": "entrance:stamp-slam, duration_frames:10, impact_flash_frames:2, screen_shake_frames:3 — implies spring/impact physics not linear",
+      "ovl-020_stamp_slam": "entrance:stamp-slam, same pattern",
+      "ovl-new-001_stamp_slam_x_marks": "HandelsblattFAZNewsCard internal — uses rotes-x.png stamp assets, spring-physics per already-built component",
+      "linear_animation_risk": "none (stamp-slam entrance type contractually implies spring per component contract)",
+      "verdict": "PASS"
+    },
+    "face_safe_zone_compliance": {
+      "total_overlays": 39,
+      "face_safe_violations": 0,
+      "fullscreen_overlays_n_a": 4,
+      "verdict": "PASS"
+    },
+    "sharp_edge_vs_rounded_box": {
+      "document_cards_radius_0_to_8px": "OV002, OV009, OV018, OV026 — sharp edges for official documents (radius 0-8px) ✓",
+      "news_cards_radius_6px": "OV011, OV029, ovl-new-001 — sharp edges ✓",
+      "stat_card_dashboard_radius_8px": "OV001, OV007, OV013, OV023, OV032, OV035 — 8px (allowed for dashboard apps) ✓",
+      "quote_cards_radius_not_explicit": "OV021, OV033 — default QuoteCard.tsx component radius (internal)",
+      "verdict": "PASS — layout-content-first compliance"
+    },
+    "verdict": "pass"
+  },
+
+  "checks": [
+    {
+      "rule_id": "LOCOS_COLOR_PALETTE",
+      "description": "Only LOCOS gold/red/warm-white/warm-black variants used",
+      "status": "PASS",
+      "evidence": "22 unique hex values, all either LOCOS-palette-compliant, paper-colors (document cards), or in forbidden-list declarations"
+    },
+    {
+      "rule_id": "NO_TEAL_ORANGE",
+      "description": "Zero Teal-Orange (D1.3) segments per LOCOS brand override",
+      "status": "PASS",
+      "evidence": "color-segments.json.quality_checks.teal_orange_segments = 0; PEAK segments col_004/col_006 use locos-shock-red-accent instead"
+    },
+    {
+      "rule_id": "NO_CYAN",
+      "description": "Zero Cyan (#06e0ff, #00ffff) applied as style",
+      "status": "PASS",
+      "evidence": "Cyan hex values present only in forbidden_colors[] anti-pattern list, never as applied style"
+    },
+    {
+      "rule_id": "NO_MAGENTA",
+      "description": "Zero Magenta/Pink applied as style",
+      "status": "PASS",
+      "evidence": "#FF4AA0 only in forbidden_colors[] list"
+    },
+    {
+      "rule_id": "NO_VIOLET",
+      "description": "Zero Violet/Lila applied as style",
+      "status": "PASS",
+      "evidence": "#6A4AFF only in forbidden_colors[] list"
+    },
+    {
+      "rule_id": "NO_NEON",
+      "description": "Zero Neon-Green, Holographic, Iridescence, Rainbow-Gradients",
+      "status": "PASS",
+      "evidence": "Audit-scan confirmed no neon/holographic hex values or gradient strings"
+    },
+    {
+      "rule_id": "NO_PURE_BLACK",
+      "description": "No #000000 backgrounds — always warm black #161514",
+      "status": "PASS",
+      "evidence": "#000000 appears only in explanatory note 'Warm black (NOT pure #000000) via Shadow Lift'. Actual BGs use #161514, #1A1918, or dark vignette colors"
+    },
+    {
+      "rule_id": "LOCOS_GOLD_HEX_CORRECT",
+      "description": "LOCOS Gold family hex values correct (#A68B2C, #D4A017, #F5D37A etc.)",
+      "status": "PASS",
+      "evidence": "#D4A017 (33x) + #F5D37A (65x) + #A68B2C (2x) + #C8A84C (1x) + #F4D03F (1x paper highlight only)"
+    },
+    {
+      "rule_id": "LOCOS_RED_HEX_CORRECT",
+      "description": "LOCOS Red must be #E30613",
+      "status": "PASS",
+      "evidence": "#E30613 used 42x as the red accent across all red moments; #FF4444 declared in palette but NEVER applied (see wrong_red_violations)"
+    },
+    {
+      "rule_id": "BRAND_PALETTE_DECLARATION",
+      "description": "brand_constraints.palette object in mograph-overlay-specs.json should only list LOCOS-compliant values",
+      "status": "WARN",
+      "issue": "palette contains 'red_negative': '#FF4444' entry which is coral-red not LOCOS red; also key 'red_positive' is a typo for 'green_positive'",
+      "impact": "Documentation-level only — never applied to a style, all 39 overlays use #E30613",
+      "action": "Rename key + replace hex or remove entry"
+    },
+    {
+      "rule_id": "FONT_ALLOWLIST",
+      "description": "Only Inter, Montserrat, Playfair Display, Orbitron, DM Sans",
+      "status": "PASS",
+      "evidence": "Inter 57x, Montserrat 10x, Orbitron 3x, Playfair Display 3x, DM Sans 1x — all on allowlist"
+    },
+    {
+      "rule_id": "FONT_WEIGHT_MIN_600",
+      "description": "Font weights must be 600-900 (no 400, no 500) per daniel-finance-3d-design",
+      "status": "WARN",
+      "violations": [
+        "kinetic-moments.json km-01 bullet separator '·' weight=400",
+        "lower-thirds.json global_style.font_weight_subtitle=500 (affects lt-001, lt-002, lt-003)"
+      ],
+      "impact": "Decorative middot = negligible. Lower-third subtitles = slightly thin for broadcast feel.",
+      "action": "Raise lower-third subtitle weight to 600+ minimum"
+    },
+    {
+      "rule_id": "LETTER_SPACING_COMPLIANCE",
+      "description": "Headlines 0.04em, uppercase labels 0.14-0.20em, numbers -0.02 to -0.03em",
+      "status": "PASS",
+      "evidence": "All text specs match daniel-finance-3d-design#typography-weights-letter-spacing"
+    },
+    {
+      "rule_id": "TEXT_SHADOW_CONTRAST",
+      "description": "Text-shadow 0 4px 20px rgba(0,0,0,0.6) on colored BGs for readability",
+      "status": "PASS",
+      "evidence": "All overlay specs + kinetic + lower-third specs include drop-shadow patterns"
+    },
+    {
+      "rule_id": "GOLD_TEXT_GLOW_OPTIONAL",
+      "description": "Gold-text should have 0 4px 20px rgba(255,180,30,0.5) glow",
+      "status": "INFO",
+      "issue": "Gold text does not have explicit warm glow shadow — only dark drop shadow",
+      "impact": "Minor polish opportunity, not a blocker"
+    },
+    {
+      "rule_id": "NO_EMOJIS",
+      "description": "G10 remotion-gotcha — zero emojis in any text",
+      "status": "PASS",
+      "evidence": "Unicode category 'So' scan on captions-kinetic.json + other text files returned 0 emoji characters"
+    },
+    {
+      "rule_id": "DANIEL_VOICE_IHR",
+      "description": "Default address 'ihr/euch/euer' per daniel-voice#direkte-ansprache-ihr",
+      "status": "WARN",
+      "ihr_count": 33,
+      "sie_count": 0,
+      "du_violations": 2,
+      "issue": "Two 'du'-drifts in Akt 6 Schweiz-CTA area — breaks signature-level claim #direkte-ansprache-ihr. Zero 'Sie' violations.",
+      "action": "Replace both 'du' occurrences with 'ihr/euch' before render"
+    },
+    {
+      "rule_id": "HERO_NUMBERS_COVERED",
+      "description": "All skript hero numbers present in visual layer",
+      "status": "PASS",
+      "covered": [
+        "5 Stunden Nachtschicht",
+        "9. April 2026",
+        "BMF 2004 (22 Jahre)",
+        "0 Cent / keinen Cent",
+        "Kobalt (centerpiece)",
+        "19% Aufpreis",
+        "+365% / +400% / +437%",
+        "Schweizer Lösung"
+      ]
+    },
+    {
+      "rule_id": "NO_SALES_PITCH_CTA",
+      "description": "CTA must be viewer-benefit not 'kauf jetzt'",
+      "status": "PASS",
+      "evidence": "lt-003 informs about BMF-PDF link + kostenfreies Erstgespräch — viewer-benefit framing"
+    },
+    {
+      "rule_id": "NO_MANDANTEN_STORY_OPENER",
+      "description": "Mandanten-Story NICHT als Video-Opener (hard position rule)",
+      "status": "PASS",
+      "evidence": "Cold open is Nachtschicht-Bookend / personal reflection, not 'letzte Woche saß hier ein Mandant'"
+    },
+    {
+      "rule_id": "KLARE_POSITION",
+      "description": "Title cards use positioning language, not neutral berater-jargon",
+      "status": "PASS",
+      "evidence": "Chapter titles 'VERBOTENE RÜCKWIRKUNG' / 'NULL-CENT-PARADOX' / 'DANKE, DEUTSCHLAND' — all meinungsstarke Sprache"
+    },
+    {
+      "rule_id": "KOBALT_FULLSCREEN_CENTERPIECE",
+      "description": "KobaltFullscreen marked as max-polish centerpiece",
+      "status": "PASS",
+      "evidence": "ovl-015 polish_tier='max', production-ready from remotion-coder-test"
+    },
+    {
+      "rule_id": "HANDELSBLATT_FAZ_DEADZONE_FILLER",
+      "description": "HandelsblattFAZNewsCard marked as dead-zone pattern-interrupt",
+      "status": "PASS",
+      "evidence": "ovl-new-001 fullscreen-pattern-interrupt, does not count against fullscreen budget"
+    },
+    {
+      "rule_id": "STAMP_SLAM_NOT_LINEAR",
+      "description": "Stamp-slam animation must be spring/impact not linear",
+      "status": "PASS",
+      "evidence": "All 3 stamp-slam uses (ovl-010, ovl-020, ovl-new-001 X-marks) declare entrance type 'stamp-slam' with impact_flash_frames + screen_shake_frames — component contract enforces spring physics"
+    },
+    {
+      "rule_id": "FACE_SAFE_ZONE",
+      "description": "Panels respect Daniel face-safe zone x:760-1160 y:80-560",
+      "status": "PASS",
+      "evidence": "mograph-overlay-specs.json.totals.face_safe_zone_violations = 0"
+    },
+    {
+      "rule_id": "SHARP_EDGES_DOCUMENTS",
+      "description": "Sharp edges for official documents, RoundedBox only for dashboard apps",
+      "status": "PASS",
+      "evidence": "DocumentCards (OV002/009/018/026) use radius 0-8; StatCards use 8px; RoundedBox is not abused"
+    }
+  ],
+
+  "blockers_for_phase_6": [],
+
+  "warnings_for_phase_6": [
+    {
+      "id": "W1",
+      "rule": "DANIEL_VOICE_IHR (signature)",
+      "severity": "WARN",
+      "files_affected": ["phase-4/text/captions-kinetic.json"],
+      "issue": "2x 'du' drifts in Akt 6 Schweiz-CTA captions",
+      "action": "Replace 'wenn du einen Teil deiner Ersparnisse' → 'wenn ihr einen Teil eurer Ersparnisse'; 'hast du, wie gesagt' → 'habt ihr, wie gesagt'",
+      "blocks_render": false,
+      "fix_cost": "1 minute — direct string edit"
+    },
+    {
+      "id": "W2",
+      "rule": "FONT_WEIGHT_MIN_600",
+      "severity": "WARN",
+      "files_affected": ["phase-4/text/lower-thirds.json"],
+      "issue": "global_style.font_weight_subtitle = 500, should be 600+",
+      "action": "Raise to 600 minimum (title-cards.json already uses 600 — align)",
+      "blocks_render": false,
+      "fix_cost": "1 line edit"
+    },
+    {
+      "id": "W3",
+      "rule": "FONT_WEIGHT_MIN_600",
+      "severity": "WARN",
+      "files_affected": ["phase-4/text/kinetic-moments.json"],
+      "issue": "km-01 bullet separator '·' has weight=400",
+      "action": "Raise to 700 or 800 for consistency. Low visual impact.",
+      "blocks_render": false,
+      "fix_cost": "1 line edit"
+    },
+    {
+      "id": "W4",
+      "rule": "BRAND_PALETTE_DECLARATION",
+      "severity": "WARN",
+      "files_affected": ["phase-4/mograph/mograph-overlay-specs.json"],
+      "issue": "brand_constraints.palette has typo'd key 'red_positive' (should be 'green_positive') and stale 'red_negative': '#FF4444' (coral, not LOCOS red)",
+      "action": "Rename 'red_positive' → 'green_positive'; remove 'red_negative' entry or change hex to '#E30613'",
+      "blocks_render": false,
+      "fix_cost": "2 line edits. No functional impact — these declarations are never referenced downstream."
+    },
+    {
+      "id": "INFO1",
+      "rule": "GOLD_TEXT_GLOW",
+      "severity": "INFO",
+      "files_affected": ["phase-4/text/kinetic-moments.json", "phase-4/text/title-cards.json"],
+      "issue": "Gold text does not have the optional 'textShadow: 0 4px 20px rgba(255,180,30,0.5)' warm-glow recommended by daniel-finance-3d-design#typography-weights-letter-spacing",
+      "action": "Optional polish for 3D-material feel. Not a blocker.",
+      "blocks_render": false,
+      "fix_cost": "Optional"
+    }
+  ],
+
+  "summary": "PASS_WITH_WARNINGS. Zero Teal-Orange / zero Cyan / zero Magenta / zero Violet / zero Neon violations applied as style. All forbidden hex values (#06e0ff, #00ffff, #ff4aa0, #6a4aff) appear ONLY in forbidden_colors[] anti-pattern declarations, never rendered. Color-Segments uses LOCOS Premium Grade + shock-red-accent for the 2 PEAKs (col_004 Kobalt, col_006 Null-Cent) per user override. Fonts restricted to Inter/Montserrat/Playfair/Orbitron/DM Sans. Face-safe zone 0 violations. No emojis. Daniel voice: 33x ihr/euch (strong), 0x Sie, 0x mandanten-story-opener, klare Position in title-cards. 4 non-blocking warnings: (W1) 2x 'du'-drift in Schweiz-CTA captions — signature voice violation needs 1-minute fix; (W2) lower-third subtitle weight 500 — raise to 600; (W3) km-01 bullet separator weight 400; (W4) stale palette key naming typo with orphan '#FF4444' declaration (never applied). NONE of these block Phase-6 render. Phase-6 can proceed after optional fixes."
+}

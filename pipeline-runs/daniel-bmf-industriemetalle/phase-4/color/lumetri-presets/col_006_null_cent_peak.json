@@ -1,0 +1,86 @@
+{
+  "preset_name": "BMF_col_006_null_cent_peak_SHOCK_RED",
+  "target_segment": "col_006_null_cent_peak (9981-11208f / 332.7-373.6s)",
+  "format_version": "premiere-lumetri-2025",
+  "brand_override": "LOCOS shock red accent (NOT Teal-Orange)",
+  "base_correction": {
+    "input_lut": "LOCOS_Rec709_Neutral.cube",
+    "white_balance": { "temperature": 4, "tint": 3 },
+    "tone": {
+      "exposure": -0.14,
+      "contrast": 16,
+      "highlights": -9,
+      "shadows": -11,
+      "whites": -4,
+      "blacks": -7
+    },
+    "saturation": 90
+  },
+  "creative": {
+    "look": "LOCOS_Shock_RedAccent.cube",
+    "look_intensity": 42,
+    "adjustments": {
+      "faded_film": 5,
+      "sharpen": 26,
+      "vibrance": -12,
+      "saturation": 90,
+      "shadow_tint_hue": 25,
+      "shadow_tint_sat": 8,
+      "highlight_tint_hue": 30,
+      "highlight_tint_sat": 10,
+      "tint_balance": 3
+    }
+  },
+  "curves": {
+    "rgb_master": [[0,0.02],[0.25,0.17],[0.50,0.48],[0.75,0.81],[1.0,0.97]],
+    "red": [[0,1],[128,132],[255,254]],
+    "green": [[0,0],[128,127],[255,250]],
+    "blue": [[0,3],[128,124],[255,244]]
+  },
+  "color_wheels": {
+    "shadows": { "hue": 22, "saturation": 0.05, "luminance": -0.04 },
+    "midtones": { "hue": 0, "saturation": 0.0, "luminance": -0.01 },
+    "highlights": { "hue": 28, "saturation": 0.07, "luminance": 0.0 }
+  },
+  "hsl_secondary_red_boost": {
+    "enabled": true,
+    "name": "LOCOS_Shock_Red_Accent_NullCent",
+    "hue_range": [350, 12],
+    "sat_range": [40, 100],
+    "luma_range": [20, 80],
+    "refine_denoise": 15,
+    "refine_blur": 2,
+    "apply": {
+      "saturation_multiplier": 1.30,
+      "hue_shift": -2,
+      "luminance_delta": 0.04,
+      "target_hex": "#E30613"
+    }
+  },
+  "hsl_secondary_skin_protect": {
+    "enabled": true,
+    "hue_range": [15, 45],
+    "sat_range": [25, 85],
+    "luma_range": [30, 85]
+  },
+  "vignette": {
+    "amount": -0.80,
+    "midpoint": 50,
+    "roundness": 0,
+    "feather": 65,
+    "center_x": 0.50,
+    "center_y": 0.45
+  },
+  "effects": {
+    "chromatic_aberration": {
+      "enabled": true,
+      "red_offset_px": 1.2,
+      "blue_offset_px": -1.2,
+      "edge_only": true,
+      "inner_safe_zone_pct": 82,
+      "fade_in_frames": 5,
+      "fade_out_frames": 7,
+      "total_frames": 12
+    }
+  }
+}

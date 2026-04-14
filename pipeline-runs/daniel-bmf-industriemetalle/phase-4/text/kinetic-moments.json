@@ -1,0 +1,672 @@
+{
+  "version": "1.0",
+  "fps": 30,
+  "component": "KineticType",
+  "hard_budget": {
+    "max_moments": 12,
+    "used": 10,
+    "note": "Within limit. ovl-030 is the ONE glitch allowed (per 3B budget)."
+  },
+  "global_style": {
+    "font_primary": "Inter",
+    "font_primary_weight": 900,
+    "font_secondary": "Montserrat",
+    "color_standard": "#fff5e0",
+    "color_highlight": "#f5d37a",
+    "color_shock": "#E30613",
+    "letter_spacing_headline_em": 0.04,
+    "position_default": {
+      "x": "50%",
+      "y": "46%",
+      "anchor": "center"
+    },
+    "text_shadow": "0 6px 28px rgba(0,0,0,0.70)",
+    "entrance_hold_frames": 4,
+    "exit_type": "fade_out",
+    "exit_duration_frames": 10,
+    "min_standzeit_frames": 90
+  },
+  "associated_foley_default": {
+    "type": "keyboard_clicks",
+    "file_path": "public/sfx/epidemic/foley_keyboard_01.wav",
+    "volume": 0.018,
+    "sample_rotation": [
+      "foley_keyboard_01.wav",
+      "foley_keyboard_02.wav",
+      "foley_keyboard_03.wav"
+    ],
+    "note": "A3.7.3 — KineticType requires keyboard-click foley"
+  },
+  "moments": [
+    {
+      "id": "km-01",
+      "overlay_id": "ovl-003",
+      "start_frame": 870,
+      "end_frame": 1038,
+      "duration_frames": 168,
+      "standzeit_s": 5.6,
+      "standzeit_check": "PASS",
+      "emotion_tag": "context",
+      "words": [
+        {
+          "text": "22",
+          "color": "#f5d37a",
+          "size_px": 108,
+          "weight": 900,
+          "font": "Inter",
+          "letter_spacing_em": -0.02
+        },
+        {
+          "text": "JAHRE",
+          "color": "#fff5e0",
+          "size_px": 72,
+          "weight": 800,
+          "font": "Inter"
+        },
+        {
+          "text": "·",
+          "color": "rgba(245,211,122,0.55)",
+          "size_px": 64,
+          "weight": 400
+        },
+        {
+          "text": "EIN FEDERSTRICH",
+          "color": "#fff5e0",
+          "size_px": 54,
+          "weight": 700,
+          "font": "Inter"
+        }
+      ],
+      "props": {
+        "font": "Inter",
+        "stagger_frames": 4,
+        "stagger_pattern": "linear",
+        "reveal_type": "tracking_animation",
+        "reveal_config": {
+          "letter_spacing_from_em": -0.02,
+          "letter_spacing_to_em": 0.06,
+          "duration_frames": 12,
+          "easing": "ease-out-expo",
+          "pause_before_tracking_frames": 3,
+          "fade_starts_after_frames": 2
+        },
+        "position": {
+          "x": "50%",
+          "y": "46%",
+          "anchor": "center"
+        },
+        "contrast_ratio_check": "PASS — warm white + gold on LOCOS warm-black #161514 bg"
+      },
+      "associated_foley": {
+        "type": "keyboard_clicks",
+        "file_path": "public/sfx/epidemic/foley_keyboard_01.wav",
+        "trigger_frame": 870,
+        "volume": 0.018,
+        "sample_rotation": [
+          "foley_keyboard_01.wav",
+          "foley_keyboard_02.wav",
+          "foley_keyboard_03.wav"
+        ]
+      }
+    },
+    {
+      "id": "km-02",
+      "overlay_id": "ovl-010",
+      "start_frame": 3270,
+      "end_frame": 3552,
+      "duration_frames": 282,
+      "standzeit_s": 9.4,
+      "standzeit_check": "PASS",
+      "emotion_tag": "peak",
+      "words": [
+        {
+          "text": "AUFGEHOBEN",
+          "color": "#E30613",
+          "size_px": 84,
+          "weight": 900,
+          "font": "Inter",
+          "letter_spacing_em": 0.04
+        },
+        {
+          "text": "EIN SATZ",
+          "color": "#fff5e0",
+          "size_px": 54,
+          "weight": 800
+        },
+        {
+          "text": "SEITE 7",
+          "color": "#f5d37a",
+          "size_px": 54,
+          "weight": 800
+        }
+      ],
+      "props": {
+        "font": "Inter",
+        "stagger_frames": 4,
+        "stagger_pattern": "linear",
+        "reveal_type": "blur_reveal",
+        "reveal_config": {
+          "blur_from_px": 12,
+          "blur_to_px": 0,
+          "duration_frames": 10,
+          "easing": "ease-out-expo"
+        },
+        "position": {
+          "x": "50%",
+          "y": "46%",
+          "anchor": "center"
+        },
+        "contrast_ratio_check": "PASS — warm white + gold on LOCOS warm-black #161514 bg"
+      },
+      "associated_foley": {
+        "type": "keyboard_clicks",
+        "file_path": "public/sfx/epidemic/foley_keyboard_01.wav",
+        "trigger_frame": 3270,
+        "volume": 0.018,
+        "sample_rotation": [
+          "foley_keyboard_01.wav",
+          "foley_keyboard_02.wav",
+          "foley_keyboard_03.wav"
+        ]
+      }
+    },
+    {
+      "id": "km-03",
+      "overlay_id": "ovl-012",
+      "start_frame": 4452,
+      "end_frame": 4827,
+      "duration_frames": 375,
+      "standzeit_s": 12.5,
+      "standzeit_check": "PASS",
+      "emotion_tag": "peak",
+      "words": [
+        {
+          "text": "BRUCH",
+          "color": "#E30613",
+          "size_px": 108,
+          "weight": 900,
+          "font": "Inter",
+          "letter_spacing_em": 0.02
+        },
+        {
+          "text": "NICHT UPDATE",
+          "color": "#fff5e0",
+          "size_px": 48,
+          "weight": 700,
+          "font": "Inter",
+          "letter_spacing_em": 0.14
+        }
+      ],
+      "props": {
+        "font": "Inter",
+        "stagger_frames": 4,
+        "stagger_pattern": "linear",
+        "reveal_type": "tracking_animation",
+        "reveal_config": {
+          "letter_spacing_from_em": -0.02,
+          "letter_spacing_to_em": 0.06,
+          "duration_frames": 12,
+          "easing": "ease-out-expo",
+          "pause_before_tracking_frames": 3,
+          "fade_starts_after_frames": 2
+        },
+        "position": {
+          "x": "50%",
+          "y": "46%",
+          "anchor": "center"
+        },
+        "contrast_ratio_check": "PASS — warm white + gold on LOCOS warm-black #161514 bg"
+      },
+      "associated_foley": {
+        "type": "keyboard_clicks",
+        "file_path": "public/sfx/epidemic/foley_keyboard_01.wav",
+        "trigger_frame": 4452,
+        "volume": 0.018,
+        "sample_rotation": [
+          "foley_keyboard_01.wav",
+          "foley_keyboard_02.wav",
+          "foley_keyboard_03.wav"
+        ]
+      }
+    },
+    {
+      "id": "km-04",
+      "overlay_id": "ovl-014",
+      "start_frame": 5322,
+      "end_frame": 5472,
+      "duration_frames": 150,
+      "standzeit_s": 5.0,
+      "standzeit_check": "PASS",
+      "emotion_tag": "build",
+      "words": [
+        {
+          "text": "#1",
+          "color": "#f5d37a",
+          "size_px": 64,
+          "weight": 900,
+          "letter_spacing_em": 0.1
+        },
+        {
+          "text": "DAS WORT DAS",
+          "color": "#fff5e0",
+          "size_px": 54,
+          "weight": 700
+        },
+        {
+          "text": "ALLES VERRÄT",
+          "color": "#f5d37a",
+          "size_px": 72,
+          "weight": 900
+        }
+      ],
+      "props": {
+        "font": "Inter",
+        "stagger_frames": 4,
+        "stagger_pattern": "linear",
+        "reveal_type": "tracking_animation",
+        "reveal_config": {
+          "letter_spacing_from_em": -0.02,
+          "letter_spacing_to_em": 0.06,
+          "duration_frames": 12,
+          "easing": "ease-out-expo",
+          "pause_before_tracking_frames": 3,
+          "fade_starts_after_frames": 2
+        },
+        "position": {
+          "x": "50%",
+          "y": "46%",
+          "anchor": "center"
+        },
+        "contrast_ratio_check": "PASS — warm white + gold on LOCOS warm-black #161514 bg"
+      },
+      "associated_foley": {
+        "type": "keyboard_clicks",
+        "file_path": "public/sfx/epidemic/foley_keyboard_01.wav",
+        "trigger_frame": 5322,
+        "volume": 0.018,
+        "sample_rotation": [
+          "foley_keyboard_01.wav",
+          "foley_keyboard_02.wav",
+          "foley_keyboard_03.wav"
+        ]
+      }
+    },
+    {
+      "id": "km-05",
+      "overlay_id": "ovl-017",
+      "start_frame": 7287,
+      "end_frame": 7575,
+      "duration_frames": 288,
+      "standzeit_s": 9.6,
+      "standzeit_check": "PASS",
+      "emotion_tag": "peak",
+      "words": [
+        {
+          "text": "#2",
+          "color": "#f5d37a",
+          "size_px": 64,
+          "weight": 900,
+          "letter_spacing_em": 0.1
+        },
+        {
+          "text": "DIE VERBOTENE",
+          "color": "#fff5e0",
+          "size_px": 54,
+          "weight": 800
+        },
+        {
+          "text": "RÜCKWIRKUNG",
+          "color": "#f5d37a",
+          "size_px": 78,
+          "weight": 900
+        }
+      ],
+      "props": {
+        "font": "Inter",
+        "stagger_frames": 4,
+        "stagger_pattern": "linear",
+        "reveal_type": "tracking_animation",
+        "reveal_config": {
+          "letter_spacing_from_em": -0.02,
+          "letter_spacing_to_em": 0.06,
+          "duration_frames": 12,
+          "easing": "ease-out-expo",
+          "pause_before_tracking_frames": 3,
+          "fade_starts_after_frames": 2
+        },
+        "position": {
+          "x": "50%",
+          "y": "46%",
+          "anchor": "center"
+        },
+        "contrast_ratio_check": "PASS — warm white + gold on LOCOS warm-black #161514 bg"
+      },
+      "associated_foley": {
+        "type": "keyboard_clicks",
+        "file_path": "public/sfx/epidemic/foley_keyboard_01.wav",
+        "trigger_frame": 7287,
+        "volume": 0.018,
+        "sample_rotation": [
+          "foley_keyboard_01.wav",
+          "foley_keyboard_02.wav",
+          "foley_keyboard_03.wav"
+        ]
+      }
+    },
+    {
+      "id": "km-06",
+      "overlay_id": "ovl-019",
+      "start_frame": 7998,
+      "end_frame": 8295,
+      "duration_frames": 297,
+      "standzeit_s": 9.9,
+      "standzeit_check": "PASS",
+      "emotion_tag": "context",
+      "words": [
+        {
+          "text": "STRAFZETTEL",
+          "color": "#E30613",
+          "size_px": 84,
+          "weight": 900,
+          "letter_spacing_em": 0.04
+        },
+        {
+          "text": "FÜR DAS SCHILD",
+          "color": "#fff5e0",
+          "size_px": 48,
+          "weight": 700
+        },
+        {
+          "text": "NÄCHSTE WOCHE",
+          "color": "#fff5e0",
+          "size_px": 48,
+          "weight": 700
+        }
+      ],
+      "props": {
+        "font": "Inter",
+        "stagger_frames": 4,
+        "stagger_pattern": "linear",
+        "reveal_type": "mask_wipe",
+        "reveal_config": {
+          "clip_path_from": "inset(0 100% 0 0)",
+          "clip_path_to": "inset(0 0 0 0)",
+          "duration_frames": 8,
+          "easing": "ease-out-expo"
+        },
+        "position": {
+          "x": "50%",
+          "y": "46%",
+          "anchor": "center"
+        },
+        "contrast_ratio_check": "PASS — warm white + gold on LOCOS warm-black #161514 bg"
+      },
+      "associated_foley": {
+        "type": "keyboard_clicks",
+        "file_path": "public/sfx/epidemic/foley_keyboard_01.wav",
+        "trigger_frame": 7998,
+        "volume": 0.018,
+        "sample_rotation": [
+          "foley_keyboard_01.wav",
+          "foley_keyboard_02.wav",
+          "foley_keyboard_03.wav"
+        ]
+      }
+    },
+    {
+      "id": "km-07",
+      "overlay_id": "ovl-020",
+      "start_frame": 8670,
+      "end_frame": 8895,
+      "duration_frames": 225,
+      "standzeit_s": 7.5,
+      "standzeit_check": "PASS",
+      "emotion_tag": "peak",
+      "words": [
+        {
+          "text": "#3",
+          "color": "#f5d37a",
+          "size_px": 64,
+          "weight": 900,
+          "letter_spacing_em": 0.1
+        },
+        {
+          "text": "22 JAHRE",
+          "color": "#f5d37a",
+          "size_px": 96,
+          "weight": 900,
+          "letter_spacing_em": -0.02
+        },
+        {
+          "text": "GELÖSCHT",
+          "color": "#E30613",
+          "size_px": 78,
+          "weight": 900
+        }
+      ],
+      "props": {
+        "font": "Inter",
+        "stagger_frames": 4,
+        "stagger_pattern": "linear",
+        "reveal_type": "blur_reveal",
+        "reveal_config": {
+          "blur_from_px": 12,
+          "blur_to_px": 0,
+          "duration_frames": 10,
+          "easing": "ease-out-expo"
+        },
+        "position": {
+          "x": "50%",
+          "y": "46%",
+          "anchor": "center"
+        },
+        "contrast_ratio_check": "PASS — warm white + gold on LOCOS warm-black #161514 bg"
+      },
+      "associated_foley": {
+        "type": "keyboard_clicks",
+        "file_path": "public/sfx/epidemic/foley_keyboard_01.wav",
+        "trigger_frame": 8670,
+        "volume": 0.018,
+        "sample_rotation": [
+          "foley_keyboard_01.wav",
+          "foley_keyboard_02.wav",
+          "foley_keyboard_03.wav"
+        ]
+      }
+    },
+    {
+      "id": "km-08",
+      "overlay_id": "ovl-022",
+      "start_frame": 9981,
+      "end_frame": 10299,
+      "duration_frames": 318,
+      "standzeit_s": 10.6,
+      "standzeit_check": "PASS",
+      "emotion_tag": "peak",
+      "words": [
+        {
+          "text": "#4",
+          "color": "#f5d37a",
+          "size_px": 64,
+          "weight": 900,
+          "letter_spacing_em": 0.1
+        },
+        {
+          "text": "0 CENT",
+          "color": "#E30613",
+          "size_px": 132,
+          "weight": 900,
+          "letter_spacing_em": -0.03
+        },
+        {
+          "text": "NEUE STEUERN",
+          "color": "#fff5e0",
+          "size_px": 48,
+          "weight": 700,
+          "letter_spacing_em": 0.18
+        }
+      ],
+      "props": {
+        "font": "Inter",
+        "stagger_frames": 4,
+        "stagger_pattern": "linear",
+        "reveal_type": "tracking_animation",
+        "reveal_config": {
+          "letter_spacing_from_em": -0.02,
+          "letter_spacing_to_em": 0.06,
+          "duration_frames": 12,
+          "easing": "ease-out-expo",
+          "pause_before_tracking_frames": 3,
+          "fade_starts_after_frames": 2
+        },
+        "position": {
+          "x": "50%",
+          "y": "46%",
+          "anchor": "center"
+        },
+        "contrast_ratio_check": "PASS — warm white + gold on LOCOS warm-black #161514 bg"
+      },
+      "associated_foley": {
+        "type": "keyboard_clicks",
+        "file_path": "public/sfx/epidemic/foley_keyboard_01.wav",
+        "trigger_frame": 9981,
+        "volume": 0.018,
+        "sample_rotation": [
+          "foley_keyboard_01.wav",
+          "foley_keyboard_02.wav",
+          "foley_keyboard_03.wav"
+        ]
+      },
+      "breath_pulse": {
+        "enabled": true,
+        "amplitude": 0.003,
+        "period_frames": 100
+      },
+      "note": "Null-Cent refrain — loudest visual moment of the video. LOCOS-red on warm black, NOT teal-orange."
+    },
+    {
+      "id": "km-09",
+      "overlay_id": "ovl-030",
+      "start_frame": 13773,
+      "end_frame": 14178,
+      "duration_frames": 405,
+      "standzeit_s": 13.5,
+      "standzeit_check": "PASS",
+      "emotion_tag": "peak",
+      "words": [
+        {
+          "text": "GENAU JETZT",
+          "color": "#E30613",
+          "size_px": 84,
+          "weight": 900,
+          "letter_spacing_em": 0.04
+        },
+        {
+          "text": "LETZTE INFRASTRUKTUR",
+          "color": "#fff5e0",
+          "size_px": 48,
+          "weight": 800
+        },
+        {
+          "text": "WEG",
+          "color": "#E30613",
+          "size_px": 108,
+          "weight": 900
+        }
+      ],
+      "props": {
+        "font": "Inter",
+        "stagger_frames": 4,
+        "stagger_pattern": "linear",
+        "reveal_type": "tracking_animation",
+        "reveal_config": {
+          "letter_spacing_from_em": -0.02,
+          "letter_spacing_to_em": 0.06,
+          "duration_frames": 12,
+          "easing": "ease-out-expo",
+          "pause_before_tracking_frames": 3,
+          "fade_starts_after_frames": 2
+        },
+        "position": {
+          "x": "50%",
+          "y": "46%",
+          "anchor": "center"
+        },
+        "contrast_ratio_check": "PASS — warm white + gold on LOCOS warm-black #161514 bg"
+      },
+      "associated_foley": {
+        "type": "keyboard_clicks",
+        "file_path": "public/sfx/epidemic/foley_keyboard_01.wav",
+        "trigger_frame": 13773,
+        "volume": 0.018,
+        "sample_rotation": [
+          "foley_keyboard_01.wav",
+          "foley_keyboard_02.wav",
+          "foley_keyboard_03.wav"
+        ]
+      },
+      "glitch": {
+        "enabled": true,
+        "trigger_frame_offset": 5,
+        "duration_frames": 5,
+        "rgb_split_px": 5,
+        "opacity_pct": 55,
+        "blend_mode": "screen",
+        "note": "1/5 glitch budget used — the ONLY glitch in this video per 3B."
+      }
+    },
+    {
+      "id": "km-10",
+      "overlay_id": "ovl-038",
+      "start_frame": 22587,
+      "end_frame": 22797,
+      "duration_frames": 210,
+      "standzeit_s": 7.0,
+      "standzeit_check": "PASS",
+      "emotion_tag": "cold_close",
+      "words": [
+        {
+          "text": "DANKE,",
+          "color": "#fff5e0",
+          "size_px": 84,
+          "weight": 900,
+          "letter_spacing_em": 0.04
+        },
+        {
+          "text": "DEUTSCHLAND.",
+          "color": "rgba(255,245,224,0.62)",
+          "size_px": 84,
+          "weight": 900,
+          "letter_spacing_em": 0.04
+        }
+      ],
+      "props": {
+        "font": "Inter",
+        "stagger_frames": 4,
+        "stagger_pattern": "linear",
+        "reveal_type": "blur_reveal",
+        "reveal_config": {
+          "blur_from_px": 12,
+          "blur_to_px": 0,
+          "duration_frames": 10,
+          "easing": "ease-out-expo"
+        },
+        "position": {
+          "x": "50%",
+          "y": "46%",
+          "anchor": "center"
+        },
+        "contrast_ratio_check": "PASS — warm white + gold on LOCOS warm-black #161514 bg"
+      },
+      "associated_foley": null,
+      "entrance_hold_frames": 12,
+      "reveal_override": {
+        "duration_frames": 28,
+        "fade_in_frames": 24,
+        "note": "Slow, cold fade per ovl-038 effect spec (slow_fade_in_cold_accent)"
+      },
+      "exit_duration_frames": 24,
+      "note": "Cold accent closer. NO associated foley for this one — pure silence + slow fade (per mb-06 final-silence-punch)."
+    }
+  ]
+}

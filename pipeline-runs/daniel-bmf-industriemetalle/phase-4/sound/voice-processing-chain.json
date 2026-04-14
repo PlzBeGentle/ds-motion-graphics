@@ -1,0 +1,191 @@
+{
+  "video_slug": "daniel-bmf-industriemetalle",
+  "fps": 30,
+  "target_speaker": "Daniel Sauer",
+  "speaker_profile": {
+    "fundamental_freq_hz_range": [85, 180],
+    "typical_mean_hz": 120,
+    "character": "baritone, close-mic, light room reverb, occasional plosives on hard consonants, slight breath noise between phrases, some mouth-clicks"
+  },
+  "lufs_target": -14,
+  "true_peak_ceiling_dbtp": -1.0,
+  "noise_floor_dbfs_target": -60,
+  "raw_captions_source": "src/compositions/daniel-bmf-industriemetalle/captions.ts (182 segments)",
+
+  "plugin_chain_order": [
+    "1_high_pass",
+    "2_parametric_eq",
+    "3_compressor_stage_1_gentle",
+    "4_compressor_stage_2_medium",
+    "5_compressor_stage_3_control",
+    "6_de_esser",
+    "7_reverb_send_aux",
+    "8_limiter"
+  ],
+
+  "noise_gate_optional": {
+    "enabled": false,
+    "reason": "Daniels Studio-Aufnahme hat Noise-Floor < -55 dB. Gate nur aktivieren falls lauter als -35 dB — macht Atempausen sonst unnatuerlich.",
+    "fallback_if_enabled": {
+      "threshold_dbfs": -40,
+      "range_db": -22,
+      "attack_ms": 1.0,
+      "hold_ms": 80,
+      "release_ms": 180
+    }
+  },
+
+  "1_high_pass": {
+    "type": "HPF",
+    "frequency_hz": 90,
+    "slope_db_oct": 12,
+    "rationale": "Daniels Grundfrequenz ~85-180 Hz, mittlerer Bass 120. 90 Hz entfernt Rumble/HVAC/Proximity-Boom ohne das Fundament (dass bei 110-140 Hz sitzt) anzugreifen. A4.2 rule: 80-100 Hz optimal fuer Daniel."
+  },
+
+  "2_parametric_eq": {
+    "type": "4-band parametric",
+    "bands": [
+      {
+        "id": "band_1_boxiness",
+        "frequency_hz": 200,
+        "gain_db": -3.5,
+        "q": 1.2,
+        "shape": "bell",
+        "rationale": "Boxiness-Cut 150-250 Hz (A4.3.1). Daniel hat leichte Nasen-Box bei ca. 200 Hz."
+      },
+      {
+        "id": "band_2_mud",
+        "frequency_hz": 380,
+        "gain_db": -5,
+        "q": 1.6,
+        "shape": "bell",
+        "rationale": "Mud Zone 300-500 Hz (A4.3.2). -5 dB ist Mittelpunkt der Range -4..-8 dB."
+      },
+      {
+        "id": "band_3_presence",
+        "frequency_hz": 3000,
+        "gain_db": 2.5,
+        "q": 0.9,
+        "shape": "bell",
+        "rationale": "Presence-Boost 2-4 kHz: HIER sitzt Verstaendlichkeit (A5.3: 60% Intelligibility). WICHTIG: A4.3.3 sagt CUT -6..-12 dB — das gilt nur wenn Stimme bereits aufgeblasen ist. Daniel braucht BOOST +2..+4 dB weil ihm Praesenz fehlt. Ueberschrieben per Speaker-Analysis."
+      },
+      {
+        "id": "band_4_air",
+        "frequency_hz": 11000,
+        "gain_db": 1.5,
+        "q": 0.7,
+        "shape": "high_shelf",
+        "rationale": "Sanfter Air-Shelf +1.5 dB fuer Brillanz (A5.3.3 5-8 kHz Brillanz-Band). Sehr subtil, nicht aggressiv."
+      }
+    ]
+  },
+
+  "3_compressor_stage_1_gentle": {
+    "type": "VCA (variable bias)",
+    "ratio": "2.5:1",
+    "threshold_dbfs": -18,
+    "attack_ms": 8,
+    "release_ms": 120,
+    "knee_db": 6,
+    "makeup_gain": "auto",
+    "target_gain_reduction_db": "-2..-4",
+    "rationale": "A4.4 Stage 1 gentle. Faengt Peaks ab ohne Charakter zu aendern."
+  },
+
+  "4_compressor_stage_2_medium": {
+    "type": "Opto (soft)",
+    "ratio": "3.5:1",
+    "threshold_dbfs": -15,
+    "attack_ms": 10,
+    "release_ms": 150,
+    "knee_db": 4,
+    "makeup_gain": "auto",
+    "target_gain_reduction_db": "-3..-5",
+    "rationale": "A4.4 Stage 2 medium. Gleicht Daniels dynamisches Schwanken zwischen ruhig und emphatisch aus."
+  },
+
+  "5_compressor_stage_3_control": {
+    "type": "FET (fast)",
+    "ratio": "2:1",
+    "threshold_dbfs": -12,
+    "attack_ms": 12,
+    "release_ms": 180,
+    "knee_db": 3,
+    "makeup_gain": "auto",
+    "target_gain_reduction_db": "-1..-2",
+    "rationale": "A4.4 Stage 3 light control. Faengt was noch durch kommt. Serielle Kompression statt aggressiv — natuerlicher Sound."
+  },
+
+  "6_de_esser": {
+    "type": "split-band de-esser",
+    "center_frequency_hz": 6500,
+    "bandwidth_hz": 2500,
+    "threshold_dbfs": -20,
+    "reduction_db_max": -4,
+    "attack_ms": 2,
+    "release_ms": 150,
+    "rationale": "A4.5: -3..-6 dB, nie ueber -8. 6.5 kHz Zentrum fuer Daniels 'S' und 'Z'. Deutscher Sprecher brauchen meist weniger als englische."
+  },
+
+  "7_reverb_send_aux": {
+    "type": "send/aux bus (not insert)",
+    "reverb_algo": "room",
+    "wet_dry_mix_pct": 8,
+    "decay_s": 0.8,
+    "pre_delay_ms": 25,
+    "high_cut_hz": 6000,
+    "low_cut_hz": 200,
+    "rationale": "A3.14.3 Room reverb fuer Intimitaet (0.5-1.0s Decay). SEND bus damit sich Dry-Signal nicht vermatscht. Pre-Delay 25ms haelt Stimme vorne. High-Cut 6 kHz verhindert scharfe Echos. Wet 8% sehr subtil — Daniel sitzt auf dem Zuschauer und soll nicht 'in der Halle' klingen."
+  },
+
+  "8_limiter": {
+    "type": "brickwall (true peak)",
+    "ceiling_dbtp": -1.0,
+    "release_ms": 50,
+    "lookahead_ms": 1.5,
+    "target_gain_reduction_db_max": -2,
+    "rationale": "A5.2: -1.0 dBTP hard. True-Peak fuer YouTube-AAC/Opus Re-Encoding Puffer. Sollte rein als Schutz wirken, nicht als Loudness-Tool — das uebernimmt der Mix-Master."
+  },
+
+  "post_chain_master_loudness": {
+    "integrated_lufs_target": -14,
+    "short_term_max_lufs": -9,
+    "momentary_max_lufs": -7,
+    "measurement_standard": "ITU-R BS.1770-4 / EBU R128",
+    "speech_only_lufs": -15,
+    "music_only_lufs": -18,
+    "room_tone_lufs": -48
+  },
+
+  "room_tone": {
+    "enabled": true,
+    "source": "Daniels Aufnahme-Raum — 3s Raumton aus Caption-Pausen samplen, loopen",
+    "file_path_target": "public/sfx/daniel-bmf/room_tone_daniel_studio_3s_loop.wav",
+    "volume": 0.004,
+    "volume_dbfs": -48,
+    "loop_start_frame": 0,
+    "loop_end_frame": 22800,
+    "rationale": "A5.4: kontinuierlich unter Timeline. Verhindert dass Schnitte zwischen Caption-Pausen hoerbar werden (digitale Stille klingt unnatuerlich)."
+  },
+
+  "segment_overrides": [
+    {
+      "id": "override_breath_pauses",
+      "applies_to_frames": [[15075, 15300], [19050, 19200]],
+      "description": "BREATHING_PAUSE_1 (ts_015) + BREATHING_PAUSE_2 (ts_019). Voice-Chain bleibt, aber Room-Tone hochfahren auf 0.006 (-44 dBFS) fuer 'atmende Stille' statt Tot-Stille."
+    },
+    {
+      "id": "override_outro_silence",
+      "applies_to_frames": [[22603, 22649]],
+      "description": "Music-duck vor Deep-Boom #3. Voice-Chain unveraendert, aber KEINE Reverb-Tail von Daniel darf in die Stille bluten — Reverb-Aux vor 22603f um 0.5s fade-out automatisieren."
+    }
+  ],
+
+  "qc_checks": {
+    "integrated_lufs_in_range": "-14 +/- 0.5",
+    "true_peak_never_over": -1.0,
+    "silence_before_impacts_match_sfx_sheet": "VERIFY against sfx-cue-sheet.json silence_blocks",
+    "reverb_does_not_bleed_into_silence": "VERIFY at frames 22603-22649 (pre-deep-boom-3)",
+    "no_pumping_in_serial_compression": "Stage-1 GR + Stage-2 GR + Stage-3 GR total <= -9 dB"
+  }
+}

@@ -1,0 +1,197 @@
+{
+  "transition_spec": {
+    "version": "1.0",
+    "fps": 30,
+    "default_easing": "cubic-bezier(0.4, 0.0, 0.2, 1.0)",
+    "standard_duration_f": 60,
+    "interpolated_lumetri_parameters": [
+      "exposure",
+      "contrast",
+      "highlights",
+      "shadows",
+      "whites",
+      "blacks",
+      "saturation",
+      "white_balance_temp",
+      "white_balance_tint",
+      "vignette_opacity",
+      "color_wheel_rgb_deltas",
+      "hue_saturation_curve_mults"
+    ],
+    "transitions": [
+      {
+        "id": "trn_01",
+        "at_frame": 1521,
+        "timestamp_s": 50.7,
+        "from": "col_001_hook",
+        "to": "col_002_context",
+        "duration_f": 60,
+        "type": "standard_cross_grade",
+        "easing": "cubic-bezier(0.4, 0.0, 0.2, 1.0)",
+        "keyframes": [
+          { "offset_f": 0,  "offset_pct": 0,   "exposure": -0.15, "contrast": 12, "saturation": 75, "wb_temp": -12, "vignette_opacity": 0.18 },
+          { "offset_f": 30, "offset_pct": 50,  "exposure": -0.075, "contrast": 10, "saturation": 83, "wb_temp": -2, "vignette_opacity": 0.14 },
+          { "offset_f": 60, "offset_pct": 100, "exposure": 0.0, "contrast": 8, "saturation": 92, "wb_temp": 8, "vignette_opacity": 0.10 }
+        ],
+        "note": "Daniel aus Erschoepfung in Erklaerungs-Modus. Standard cross-grade."
+      },
+      {
+        "id": "trn_02",
+        "at_frame": 4860,
+        "timestamp_s": 162.0,
+        "from": "col_002_context",
+        "to": "col_003_rising",
+        "duration_f": 40,
+        "type": "standard_faster",
+        "easing": "cubic-bezier(0.4, 0.0, 0.2, 1.0)",
+        "keyframes": [
+          { "offset_f": 0,  "offset_pct": 0,   "exposure": 0.0, "contrast": 8, "saturation": 92, "wb_temp": 8, "vignette_opacity": 0.10 },
+          { "offset_f": 20, "offset_pct": 50,  "exposure": -0.05, "contrast": 11, "saturation": 90, "wb_temp": 1, "vignette_opacity": 0.12 },
+          { "offset_f": 40, "offset_pct": 100, "exposure": -0.10, "contrast": 14, "saturation": 88, "wb_temp": -6, "vignette_opacity": 0.14 }
+        ]
+      },
+      {
+        "id": "trn_03",
+        "at_frame": 5838,
+        "timestamp_s": 194.6,
+        "from": "col_003_rising",
+        "to": "col_004_kobalt_peak",
+        "duration_f": 20,
+        "type": "shock_red_in_fast_asymmetric",
+        "easing": "cubic-bezier(0.7, 0.0, 0.84, 0.0)",
+        "keyframes": [
+          { "offset_f": 0,  "offset_pct": 0,   "exposure": -0.10, "contrast": 14, "saturation": 88, "wb_temp": -6, "vignette_opacity": 0.14 },
+          { "offset_f": 10, "offset_pct": 50,  "exposure": -0.11, "contrast": 16, "saturation": 90, "wb_temp": 0, "vignette_opacity": 0.28 },
+          { "offset_f": 20, "offset_pct": 100, "exposure": -0.12, "contrast": 18, "saturation": 92, "wb_temp": 6, "vignette_opacity": 0.42 }
+        ],
+        "chromatic_aberration_trigger_f": 5838,
+        "note": "PEAK 1 entry. Fast-in ease-in weil Shock sein soll. Vignette zieht sich zu. Selective Red Boost schaltet on bei 5838."
+      },
+      {
+        "id": "trn_04",
+        "at_frame": 7278,
+        "timestamp_s": 242.9,
+        "from": "col_004_kobalt_peak",
+        "to": "col_005_post_kobalt_cool",
+        "duration_f": 40,
+        "type": "shock_red_out_asymmetric",
+        "easing": "cubic-bezier(0.22, 1.0, 0.36, 1.0)",
+        "keyframes": [
+          { "offset_f": 0,  "offset_pct": 0,   "exposure": -0.12, "contrast": 18, "saturation": 92, "wb_temp": 6, "vignette_opacity": 0.42 },
+          { "offset_f": 20, "offset_pct": 50,  "exposure": -0.12, "contrast": 16, "saturation": 88, "wb_temp": -1, "vignette_opacity": 0.30 },
+          { "offset_f": 40, "offset_pct": 100, "exposure": -0.12, "contrast": 15, "saturation": 85, "wb_temp": -8, "vignette_opacity": 0.18 }
+        ],
+        "selective_red_boost_fade_off": true,
+        "note": "Asymmetric out — langsamer zurueck aus dem Shock damit Ueberhang bleibt. Red boost faded in den ersten 20f."
+      },
+      {
+        "id": "trn_05",
+        "at_frame": 9981,
+        "timestamp_s": 332.7,
+        "from": "col_005_post_kobalt_cool",
+        "to": "col_006_null_cent_peak",
+        "duration_f": 20,
+        "type": "shock_red_in_fast_asymmetric",
+        "easing": "cubic-bezier(0.7, 0.0, 0.84, 0.0)",
+        "keyframes": [
+          { "offset_f": 0,  "offset_pct": 0,   "exposure": -0.12, "contrast": 15, "saturation": 85, "wb_temp": -8, "vignette_opacity": 0.18 },
+          { "offset_f": 10, "offset_pct": 50,  "exposure": -0.13, "contrast": 15, "saturation": 87, "wb_temp": -2, "vignette_opacity": 0.29 },
+          { "offset_f": 20, "offset_pct": 100, "exposure": -0.14, "contrast": 16, "saturation": 90, "wb_temp": 4, "vignette_opacity": 0.40 }
+        ],
+        "chromatic_aberration_trigger_f": 9981,
+        "note": "PEAK 2 entry. Null-Cent-Refrain."
+      },
+      {
+        "id": "trn_06",
+        "at_frame": 11208,
+        "timestamp_s": 373.6,
+        "from": "col_006_null_cent_peak",
+        "to": "col_007_kein_zufall_valley",
+        "duration_f": 40,
+        "type": "shock_red_out_into_valley",
+        "easing": "cubic-bezier(0.22, 1.0, 0.36, 1.0)",
+        "keyframes": [
+          { "offset_f": 0,  "offset_pct": 0,   "exposure": -0.14, "contrast": 16, "saturation": 90, "wb_temp": 4, "vignette_opacity": 0.40 },
+          { "offset_f": 20, "offset_pct": 50,  "exposure": -0.16, "contrast": 16, "saturation": 80, "wb_temp": -5, "vignette_opacity": 0.30 },
+          { "offset_f": 40, "offset_pct": 100, "exposure": -0.18, "contrast": 16, "saturation": 70, "wb_temp": -14, "vignette_opacity": 0.20 }
+        ],
+        "selective_red_boost_fade_off": true,
+        "note": "Aus dem Peak in den tiefsten Valley des Videos. Linearer Cool-Drop mit Ease-out."
+      },
+      {
+        "id": "trn_07",
+        "at_frame": 15117,
+        "timestamp_s": 503.9,
+        "from": "col_007_kein_zufall_valley",
+        "to": "col_008_breathing_options",
+        "duration_f": 60,
+        "type": "valley_to_neutral_decompression",
+        "easing": "cubic-bezier(0.4, 0.0, 0.2, 1.0)",
+        "keyframes": [
+          { "offset_f": 0,  "offset_pct": 0,   "exposure": -0.18, "contrast": 16, "saturation": 70, "wb_temp": -14, "vignette_opacity": 0.20 },
+          { "offset_f": 30, "offset_pct": 50,  "exposure": -0.12, "contrast": 13, "saturation": 82, "wb_temp": -7, "vignette_opacity": 0.16 },
+          { "offset_f": 60, "offset_pct": 100, "exposure": -0.05, "contrast": 10, "saturation": 95, "wb_temp": 0, "vignette_opacity": 0.12 }
+        ]
+      },
+      {
+        "id": "trn_08",
+        "at_frame": 16467,
+        "timestamp_s": 548.9,
+        "from": "col_008_breathing_options",
+        "to": "col_009_schweiz_gold",
+        "duration_f": 60,
+        "type": "neutral_to_gold_payoff",
+        "easing": "cubic-bezier(0.0, 0.0, 0.2, 1.0)",
+        "keyframes": [
+          { "offset_f": 0,  "offset_pct": 0,   "exposure": -0.05, "contrast": 10, "saturation": 95, "wb_temp": 0, "vignette_opacity": 0.12 },
+          { "offset_f": 30, "offset_pct": 50,  "exposure": 0.035, "contrast": 10, "saturation": 104, "wb_temp": 7, "vignette_opacity": 0.11 },
+          { "offset_f": 60, "offset_pct": 100, "exposure": 0.12, "contrast": 10, "saturation": 112, "wb_temp": 14, "vignette_opacity": 0.10 }
+        ],
+        "halation_fade_on_start_f": 16497,
+        "halation_fade_on_duration_f": 30,
+        "note": "Warmster Uebergang des Videos. Halation schaltet 30f nach Trans-Start on."
+      },
+      {
+        "id": "trn_09",
+        "at_frame": 19050,
+        "timestamp_s": 635.0,
+        "from": "col_009_schweiz_gold",
+        "to": "col_010_cta_bittersweet",
+        "duration_f": 60,
+        "type": "gold_to_neutral_warm",
+        "easing": "cubic-bezier(0.4, 0.0, 0.2, 1.0)",
+        "keyframes": [
+          { "offset_f": 0,  "offset_pct": 0,   "exposure": 0.12, "contrast": 10, "saturation": 112, "wb_temp": 14, "vignette_opacity": 0.10 },
+          { "offset_f": 30, "offset_pct": 50,  "exposure": 0.08, "contrast": 10, "saturation": 108, "wb_temp": 10, "vignette_opacity": 0.11 },
+          { "offset_f": 60, "offset_pct": 100, "exposure": 0.04, "contrast": 9, "saturation": 103, "wb_temp": 6, "vignette_opacity": 0.12 }
+        ],
+        "halation_fade_off": true
+      },
+      {
+        "id": "trn_10",
+        "at_frame": 22500,
+        "timestamp_s": 750.0,
+        "from": "col_010_cta_bittersweet",
+        "to": "col_011_closer_cold_accent",
+        "duration_f": 40,
+        "type": "accent_shift_to_cool_closer",
+        "easing": "cubic-bezier(0.4, 0.0, 0.2, 1.0)",
+        "keyframes": [
+          { "offset_f": 0,  "offset_pct": 0,   "exposure": 0.04, "contrast": 9, "saturation": 103, "wb_temp": 6, "vignette_opacity": 0.12 },
+          { "offset_f": 20, "offset_pct": 50,  "exposure": -0.02, "contrast": 12, "saturation": 92, "wb_temp": -2, "vignette_opacity": 0.14 },
+          { "offset_f": 40, "offset_pct": 100, "exposure": -0.08, "contrast": 14, "saturation": 80, "wb_temp": -10, "vignette_opacity": 0.16 }
+        ],
+        "note": "Kippmoment. Endet auf hard cut (closer transition_out 0f)."
+      }
+    ],
+    "audit": {
+      "standard_transitions_60f": 4,
+      "shock_red_asymmetric_20f_40f_pairs": 2,
+      "fast_40f_transitions": 4,
+      "total_transitions": 10,
+      "all_have_keyframes": true,
+      "shock_red_uses_asymmetric_easing": true,
+      "no_abrupt_cuts_except_closer_end": true
+    }
+  }
+}

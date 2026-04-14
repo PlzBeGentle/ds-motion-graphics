@@ -1,0 +1,119 @@
+{
+  "version": "1.0",
+  "fps": 30,
+  "component": "ChapterMarker",
+  "global_style": {
+    "font_primary": "Inter",
+    "font_weight_title": 900,
+    "font_weight_subtitle": 600,
+    "title_size_px": 78,
+    "subtitle_size_px": 28,
+    "letter_spacing_title_em": 0.04,
+    "letter_spacing_sub_em": 0.2,
+    "color_title": "#f5d37a",
+    "color_subtitle": "rgba(255,245,224,0.70)",
+    "text_shadow": "0 6px 30px rgba(0,0,0,0.75)",
+    "position": {
+      "x": "50%",
+      "y": "50%",
+      "anchor": "center"
+    },
+    "max_width_pct": 80,
+    "reveal_type": "blur_reveal",
+    "reveal_config": {
+      "blur_from_px": 12,
+      "blur_to_px": 0,
+      "duration_frames": 12,
+      "easing": "ease-out-expo",
+      "fade_in_frames": 14
+    },
+    "hold_frames": 54,
+    "exit_type": "fade_out",
+    "exit_duration_frames": 12,
+    "chapter_number_style": {
+      "font_weight": 800,
+      "size_px": 22,
+      "letter_spacing_em": 0.3,
+      "color": "#d4a017"
+    }
+  },
+  "chapters": [
+    {
+      "id": "ch-01",
+      "chapter_number": "KAPITEL 01",
+      "start_frame": 0,
+      "end_frame": 78,
+      "duration_frames": 78,
+      "standzeit_s": 2.6,
+      "title": "FÜNF STUNDEN NACHTSCHICHT",
+      "subtitle": "WAS MIR GESTERN KLAR GEWORDEN IST",
+      "note": "Hook / Cold open — placed before first Lower-Third enters. Short standzeit ok for title card."
+    },
+    {
+      "id": "ch-02",
+      "chapter_number": "KAPITEL 02",
+      "start_frame": 4650,
+      "end_frame": 4830,
+      "duration_frames": 180,
+      "standzeit_s": 6.0,
+      "title": "DAS WORT DAS ALLES VERRÄT",
+      "subtitle": "#1 · KOBALT · DIE SMOKING GUN",
+      "note": "Entry into Kobalt-Reveal peak — sets up centerpiece"
+    },
+    {
+      "id": "ch-03",
+      "chapter_number": "KAPITEL 03",
+      "start_frame": 7287,
+      "end_frame": 7467,
+      "duration_frames": 180,
+      "standzeit_s": 6.0,
+      "title": "DIE VERBOTENE RÜCKWIRKUNG",
+      "subtitle": "#2 · 22 JAHRE · EIN FEDERSTRICH",
+      "note": "Post-Kobalt empoerung. Already in 1B as ovl-017 kinetic moment — this chapter card reinforces."
+    },
+    {
+      "id": "ch-04",
+      "chapter_number": "KAPITEL 04",
+      "start_frame": 8670,
+      "end_frame": 8850,
+      "duration_frames": 180,
+      "standzeit_s": 6.0,
+      "title": "DAS NULL-CENT-PARADOX",
+      "subtitle": "#3 · DEUTSCHLAND BEKOMMT GAR NICHTS",
+      "note": "Null-Cent refrain setup."
+    },
+    {
+      "id": "ch-05",
+      "chapter_number": "KAPITEL 05",
+      "start_frame": 11100,
+      "end_frame": 11280,
+      "duration_frames": 180,
+      "standzeit_s": 6.0,
+      "title": "DAS MUSTER",
+      "subtitle": "#4 · KEIN ZUFALL · EINE KETTE",
+      "note": "China-Chronology into pattern reveal."
+    },
+    {
+      "id": "ch-06",
+      "chapter_number": "KAPITEL 06",
+      "start_frame": 16380,
+      "end_frame": 16560,
+      "duration_frames": 180,
+      "standzeit_s": 6.0,
+      "title": "DIE LÖSUNG",
+      "subtitle": "SCHWEIZ · GOLD-GRADE · WARMER PAYOFF",
+      "note": "Schweiz resolution chapter — gold grade, NOT teal-orange. Per C005 resolution."
+    },
+    {
+      "id": "ch-07",
+      "chapter_number": "KAPITEL 07",
+      "start_frame": 22587,
+      "end_frame": 22797,
+      "duration_frames": 210,
+      "standzeit_s": 7.0,
+      "title": "DANKE, DEUTSCHLAND.",
+      "subtitle": "FINAL · COLD ACCENT · SLOW FADE",
+      "note": "Closer — cold accent per ovl-038 spec, slow fade in."
+    }
+  ]
+}

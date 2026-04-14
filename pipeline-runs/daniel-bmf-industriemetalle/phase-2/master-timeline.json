@@ -1,0 +1,1080 @@
+{
+  "video_slug": "daniel-bmf-industriemetalle",
+  "duration_seconds": 760,
+  "duration_frames": 22800,
+  "fps": 30,
+  "meta": {
+    "pipeline_phase": "2A_orchestrator",
+    "generator": "agent-2A-orchestrator",
+    "generated_at": "2026-04-14",
+    "inputs_consumed": [
+      "phase-1/1A-emotional-beats.json",
+      "phase-1/1B-overlay-candidates.json",
+      "phase-1/1C-sound-cues.json",
+      "phase-1/1D-pacing-plan.json",
+      "phase-1/1E-color-plan.json"
+    ],
+    "note_fps": "All Phase-1 reports use fps=30 (22800 frames total). The user-supplied template suggested fps=25, but that would conflict with every upstream artifact; fps=30 is authoritative.",
+    "note_script_vs_real": "Script planned 570s, Daniel improvised to 760s. Kobalt-Reveal (194.6-242.9s) is NOT in script but is the REAL emotional climax (Intensity 10). Schweiz-Loesung (548.9-602.6s) is scripted climax but acts as warm payoff (Intensity 9) per Daniel's actual pacing. CTA drifted from scripted 55-75% to real 83.9%."
+  },
+  "story_arc": {
+    "shape": "man-in-a-hole",
+    "fall_pct": 20,
+    "hole_pct": 50,
+    "rise_pct": 30,
+    "real_climax": {
+      "id": "kobalt-reveal",
+      "start_s": 194.6,
+      "end_s": 242.9,
+      "intensity": 10,
+      "treatment": "CENTERPIECE — highest polish investment: Fullscreen takeover + Deep Boom #2 + Teal-Orange shift + 2.7s riser + post-reveal EU-Critical StatCard"
+    },
+    "scripted_climax": {
+      "id": "schweiz-loesung",
+      "start_s": 548.9,
+      "end_s": 602.6,
+      "intensity": 9,
+      "treatment": "Warm payoff after the storm — Gold grade, warm-bass-hit (NOT deep boom), KenBurns Schweiz BG, tonal whoosh. Calming, not building."
+    },
+    "deviation_note": "Daniel improvised +190s vs script. Kobalt is real peak (not in script). Schweiz repositioned from climax to resolution. CTA drift 55-75% -> 83.9% is accepted (not fixable without re-take); compensated by early soft-CTA visibility at 47s (ovl-006).",
+    "open_loops_registry": {
+      "L1_was_ist_passiert": { "open_frame": 0, "close_frame": 22371 },
+      "L2_null_cent_paradox": { "open_frame": 645, "close_frame": 9981 },
+      "L3_handelspartner_stopp": { "open_frame": 3552, "close_frame": 16467 },
+      "L4_kobalt_wort": { "open_frame": 4860, "close_frame": 5838 },
+      "L5_china_muster": { "open_frame": 11208, "close_frame": 14178 }
+    }
+  },
+
+  "conflicts_resolved": [
+    {
+      "conflict_id": "C001_1A_vs_1E_hook_tag",
+      "description": "1E pre-computed color plan without 1A output; estimated Hook tag as 'cool-desaturated-exhaustion' overriding D1.1 warm-hook rule. 1A now confirms seg_001 is 'pain' hook (Intensity 8) and seg_002 is 'shock/anchor' peak (Intensity 9).",
+      "winner": "BOTH_ALIGN",
+      "resolution": "1E col_001 (cool, 0-40s) is correct — both pain-hook (0-21.5s) and shock-peak anchor (21.5-50.7s) benefit from cool-desaturated grade. No change. 1E's hook-override was a lucky correct call."
+    },
+    {
+      "conflict_id": "C002_teal_orange_placement",
+      "description": "1E assigned single Teal-Orange window to col_004 'est_seg_004_peak_null_cent' (320-360s) based on script estimation. 1A reveals Kobalt (194.6-242.9s) is REAL Peak 1 at Intensity 10, higher than Null-Cent (Intensity 9).",
+      "winner": "1A",
+      "resolution": "MOVE primary Teal-Orange window to Kobalt (5838-7278f / 194.6-242.9s). Keep a SECOND shorter Teal-Orange window on Null-Cent refrain (9981-11208f / 332.7-373.6s). Budget used: 2 of 3 T&O allowed. Schweiz (col_007) stays Gold — never Teal-Orange in resolution per D1.3 rule 8."
+    },
+    {
+      "conflict_id": "C003_1B_dead_zone_vs_1D_pacing",
+      "description": "1B flags CRITICAL 48s dead zone 618.1-666s (between ovl-035 and ovl-036). 1D's talking-head table shows 607-635s = 28s OK, then breathing pause 635-640s, then CTA fullscreen PI at 645s. 1D's plan already partly covers the gap but leaves 618.1-635s as clean talking-head before the intended breath pause.",
+      "winner": "1B_with_1D_compromise",
+      "resolution": "ACCEPT 1B's NewsCard fill ('HANDELSBLATT · FAZ · NICHTS GEFUNDEN · LINK BMF-PDF') starting at 645s and running through 666s — this IS the CTA PI from 1D, unified. The 618.1-635s segment (Daniels Reflexions-Phase) is accepted as talking-head because it sits immediately BEFORE the scheduled breath pause and is bookended by ovl-035 which runs until 618.1s. Effective clean talking-head window: 618.1-635s = 16.9s (well within 45s budget). Breath pause 635-640s preserved."
+    },
+    {
+      "conflict_id": "C004_cta_timing_drift",
+      "description": "Script plan: CTA at 55-75% (418-570s). Real: Hard CTA at 638s (83.9%). Soft BMF-link mention already at ~47s. Options: (a) accept, (b) cut CTA block, (c) cut outro.",
+      "winner": "OPTION_A_WITH_COMPENSATION",
+      "resolution": "ACCEPT real timing (option a). Rationale: the China-Chronology + Kein-Zufall-Kette are narratively load-bearing, cannot be cut. Compensation: reinforce SOFT-CTA visibility at ovl-006 (1410-1695f / 47-56.5s) by running it a full 9.5s as a Lower-Third so viewers have already seen the BMF-PDF link visually by the 7% mark. The HARD-CTA at 638s is non-negotiable (real)."
+    },
+    {
+      "conflict_id": "C005_kobalt_vs_schweiz_peak_hierarchy",
+      "description": "Script staged Schweiz-Loesung as emotional climax. Daniel delivered Kobalt-Reveal as actual climax (Intensity 10 vs 9). Polish-investment asymmetry must be resolved.",
+      "winner": "1A",
+      "resolution": "Kobalt (5838-7278f) = CENTERPIECE: Fullscreen Takeover (ovl-015), Deep Boom #2, 2.73s Riser, Teal-Orange grade shift, post-reveal EU-Critical StatCard (ovl-016), max Polish. Schweiz (16467-18078f) = WARM PAYOFF: LocationCard (ovl-034) with Schweiz KenBurns BG, Gold grade (col_007), Tonal Whoosh + Warm Bass Hit (NOT deep boom), calming piano/strings music bed mb-04. Schweiz receives RESOLUTION polish, not climax polish."
+    },
+    {
+      "conflict_id": "C006_peak_cluster_007_008_no_valley",
+      "description": "1A notes seg_007 (Kobalt Peak 10) is directly followed by seg_008 (Rueckwirkungs-Rant Peak 8) without a valley between them — narratively intended empoerungs-block but technically violates E2 'after HIGH MUSS LOW'.",
+      "winner": "1A_with_mograph_compensation",
+      "resolution": "ACCEPT narrative cluster. Technical compensation: after ovl-015 Fullscreen (Kobalt end 6324f / 210.8s) insert a 20-frame visual silence (col_003 cool hold, no overlay) 210.8-230.3s (5850-6909f = 19.5s) before ovl-016 StatCard comes in. This is the micro-valley. Audio: mb-02 music bed stays at 0.034 ambient, no new SFX, light breath pause. It's not a full valley but it's a decompression pocket."
+    },
+    {
+      "conflict_id": "C007_1D_pattern_interrupt_count_vs_special_fx_limits",
+      "description": "1D proposes 17 Pattern Interrupts including 5 fullscreen-takeovers. B5 caps fullscreen-takeovers at 2-3 per video. 1B also proposes 3 fullscreens (ovl-005, ovl-015, ovl-024).",
+      "winner": "1B",
+      "resolution": "1B's 3 fullscreens (ovl-005 at 39.1s '0 CENT', ovl-015 at 194.6s 'KOBALT', ovl-024 at 362.4s '0,00 EUR MEHR') are APPROVED as the canonical 3. Of 1D's proposed fullscreens, only the ones matching 1B are kept; the others are DOWNGRADED: 1D PI at 28s (9. APRIL 2026 SCHLUSSSTRICH) becomes a KineticText overlay (not fullscreen); 1D PI at 246.5s (Zweitens #2) becomes chapter-marker KineticText (ovl-017); 1D PI at 293.58s (Drittens #3) becomes chapter-marker KineticText (ovl-020); 1D PI at 645s (CTA Takeover) becomes NewsCard + LowerThird (not fullscreen). Fullscreen budget: 3/3. Letterbox budget 2/3 (339.4s, 743s). Color-shift budget: 2 T&O (Kobalt, Null-Cent) + 1 warm-accent (Danke Berlin). Glitch: 1 (ovl-030). All within limits."
+    },
+    {
+      "conflict_id": "C008_dead_zone_56_66s_optional",
+      "description": "1B flags 56.6-66.7s = 10.1s gap between ovl-006 (CTA link) and ovl-007 (Indium chip). Suggested: optional micro-bounce.",
+      "winner": "ACCEPT_AS_CLEAN",
+      "resolution": "Accept as clean-phase. 10.1s is within 15-25s overlay frequency target (C2.2). MicroBounce on Daniel only, no new overlay. Zoom-Change B-Roll PI at 62s (1D) covers the midpoint."
+    }
+  ],
+
+  "phase_3_assignments": {
+
+    "3A_sound": {
+      "music_beds": [
+        { "bed_id": "mb-01", "start_s": 0, "end_s": 155, "mood": "tense-investigation", "tonality": "E-Moll", "bpm": "85-100", "under_voice_amp": 0.032, "source": "1C" },
+        { "bed_id": "mb-02", "start_s": 155, "end_s": 345, "mood": "rising-outrage", "tonality": "C-Moll", "bpm": "90-105", "under_voice_amp": 0.034, "source": "1C" },
+        { "bed_id": "mb-03", "start_s": 345, "end_s": 500, "mood": "cold-pattern-reveal", "tonality": "F-Moll", "bpm": "95-110", "under_voice_amp": 0.033, "source": "1C" },
+        { "bed_id": "mb-04", "start_s": 500, "end_s": 640, "mood": "resolute-solution", "tonality": "G-Dur", "bpm": "85-95", "under_voice_amp": 0.033, "source": "1C" },
+        { "bed_id": "mb-05", "start_s": 640, "end_s": 755, "mood": "cta-resolve", "tonality": "B-Dur", "bpm": "90-100", "under_voice_amp": 0.034, "source": "1C" },
+        { "bed_id": "mb-06", "start_s": 755, "end_s": 760, "mood": "final-silence-punch", "tonality": "A-Moll", "bpm": 0, "under_voice_amp": 0.0, "source": "1C" }
+      ],
+      "sfx_cues_approved": 70,
+      "sfx_cues_rejected": 2,
+      "rejected_ids": ["sfx-018", "sfx-019"],
+      "rejection_reasons": {
+        "sfx-018": "Soft-click tick on 'Privatanleger' at 67.6s is redundant — the keyword overlay already triggers visual attention. Remove to thin the tick-cluster in seg_003 (context). Keeps seg_003 audio sparser per C2 breathing-cadence.",
+        "sfx-019": "Soft-click tick on 'Indium' at 71.14s — same rationale as sfx-018. Keeping only sfx-020 'Renium' and sfx-021 as the listicle-click rhythm. Net: 1 tick per 3 keywords instead of 3 ticks per 3 keywords."
+      },
+      "budget_usage": {
+        "deep_booms": { "used": 3, "limit": 3, "placements": ["sfx-007 @ 667f (9. April)", "sfx-kobalt @ 5868f (Kobalt Smoking Gun)", "sfx-end @ 22649f (Danke Deutschland)"] },
+        "risers": { "used": 3, "limit": 4, "placements": ["sfx-005 @ 630f (1.23s to 9. April)", "sfx-riser-kobalt @ 5323f (2.73s to Kobalt)", "sfx-riser-drei-mal @ 14370f (8s major to Drei mal duerft ihr raten)"] },
+        "silences": { "used": 11, "limit": "unconstrained", "critical": 4, "note": "4 of 11 silences are the 15f pre-high-impact silences required by A1." }
+      },
+      "voice_target_lufs": -14,
+      "music_ducking_policy": "Sidechain duck -6dB under voice; full 0 during the 11 silence cues; swell +3dB during breath pauses at 503.9-510s and 635-640s (mb-04 ambient)."
+    },
+
+    "3B_mograph": {
+      "approved_overlays": [
+        { "id": "ovl-001", "start_f": 72, "end_f": 258, "type": "StatCard", "content": "5 STUNDEN NACHTSCHICHT", "priority": "must" },
+        { "id": "ovl-002", "start_f": 648, "end_f": 870, "type": "DocumentCard", "content": "BMF-SCHREIBEN · 9. APRIL 2026", "priority": "must" },
+        { "id": "ovl-003", "start_f": 870, "end_f": 1038, "type": "KineticText", "content": "22 JAHRE · EIN FEDERSTRICH", "priority": "must" },
+        { "id": "ovl-004", "start_f": 1041, "end_f": 1158, "type": "Triptychon", "content": "OHNE PARLAMENT · OHNE VORWARNUNG · OHNE UEBERGANG", "priority": "must" },
+        { "id": "ovl-005", "start_f": 1173, "end_f": 1395, "type": "FullscreenTakeover", "content": "0 CENT MEHR STEUERN", "priority": "must", "fullscreen_budget_slot": 1 },
+        { "id": "ovl-006", "start_f": 1410, "end_f": 1695, "type": "LowerThird", "content": "LINK BMF-SCHREIBEN · BESCHREIBUNG", "priority": "must_promoted_from_should", "note": "Promoted to MUST per C004 resolution — early soft-CTA visibility compensation" },
+        { "id": "ovl-007", "start_f": 2001, "end_f": 2193, "type": "StatCard", "content": "INDIUM · GALLIUM · GERMANIUM", "priority": "should" },
+        { "id": "ovl-008", "start_f": 2280, "end_f": 2544, "type": "SplitScreen", "content": "ZOLLFREILAGER · NICHT EINGEFUEHRT", "priority": "should" },
+        { "id": "ovl-009", "start_f": 2670, "end_f": 3165, "type": "DocumentCard", "content": "BMF 2004 · SEIT 22 JAHREN GUELTIG", "priority": "must" },
+        { "id": "ovl-010", "start_f": 3270, "end_f": 3552, "type": "KineticText", "content": "AUFGEHOBEN · EIN SATZ · SEITE 7", "priority": "must" },
+        { "id": "ovl-011", "start_f": 3750, "end_f": 4104, "type": "NewsCard", "content": "DONNERSTAG · 20 UHR · INOFFIZIELL", "priority": "should" },
+        { "id": "ovl-012", "start_f": 4452, "end_f": 4827, "type": "KineticText", "content": "BRUCH · NICHT UPDATE", "priority": "should" },
+        { "id": "ovl-013", "start_f": 4890, "end_f": 5205, "type": "StatCard", "content": "VIER DINGE · JEDES ABSURD", "priority": "must" },
+        { "id": "ovl-014", "start_f": 5322, "end_f": 5472, "type": "KineticText", "content": "#1 · DAS WORT DAS ALLES VERRAET", "priority": "must" },
+        { "id": "ovl-015", "start_f": 5838, "end_f": 6324, "type": "FullscreenTakeover", "content": "KOBALT", "priority": "must", "fullscreen_budget_slot": 2, "centerpiece": true, "polish_tier": "max" },
+        { "id": "ovl-016", "start_f": 6909, "end_f": 7278, "type": "StatCard", "content": "EU CRITICAL · BATTERIE · E-AUTO", "priority": "must" },
+        { "id": "ovl-017", "start_f": 7287, "end_f": 7575, "type": "KineticText", "content": "#2 · DIE VERBOTENE RUECKWIRKUNG", "priority": "must" },
+        { "id": "ovl-018", "start_f": 7584, "end_f": 7974, "type": "DocumentCard", "content": "WIRD VEROEFFENTLICHT · ZUKUNFTSFORM", "priority": "must" },
+        { "id": "ovl-019", "start_f": 7998, "end_f": 8295, "type": "KineticText", "content": "STRAFZETTEL · FUER SCHILD NAECHSTE WOCHE", "priority": "should" },
+        { "id": "ovl-020", "start_f": 8670, "end_f": 8895, "type": "KineticText", "content": "#3 · 22 JAHRE GELOESCHT", "priority": "must" },
+        { "id": "ovl-021", "start_f": 9501, "end_f": 9954, "type": "QuoteCard", "content": "BMF 2004 WIRD AUFGEHOBEN", "priority": "must" },
+        { "id": "ovl-022", "start_f": 9981, "end_f": 10299, "type": "KineticText", "content": "#4 · 0 CENT NEUE STEUERN", "priority": "must" },
+        { "id": "ovl-023", "start_f": 10464, "end_f": 10704, "type": "StatCard", "content": "19% AUFPREIS · NIEMAND KAUFT", "priority": "must" },
+        { "id": "ovl-024", "start_f": 10872, "end_f": 11205, "type": "FullscreenTakeover", "content": "0,00 EUR MEHR · VERLUST: RESERVEN", "priority": "must", "fullscreen_budget_slot": 3 },
+        { "id": "ovl-025", "start_f": 11259, "end_f": 11535, "type": "Timeline", "content": "9. APRIL 26  vs  4. FEB 25", "priority": "must" },
+        { "id": "ovl-026", "start_f": 11535, "end_f": 12012, "type": "DocumentCard", "content": "CHINA BEKANNTMACHUNG NR 10", "priority": "should" },
+        { "id": "ovl-027", "start_f": 12213, "end_f": 12570, "type": "BarChart", "content": "GALLIUM +365% · GERMANIUM +400%", "priority": "must" },
+        { "id": "ovl-028", "start_f": 12669, "end_f": 13317, "type": "Timeline", "content": "CHRONOLOGIE CHINA EXPORTSTOPPS", "priority": "must" },
+        { "id": "ovl-029", "start_f": 13434, "end_f": 13767, "type": "NewsCard", "content": "OKT 2025 · EU KRISENDIALOG BRUESSEL", "priority": "should" },
+        { "id": "ovl-030", "start_f": 13773, "end_f": 14178, "type": "KineticText", "content": "GENAU JETZT · LETZTE INFRASTRUKTUR WEG", "priority": "must", "effect": "glitch_reveal_4_6_frames" },
+        { "id": "ovl-031", "start_f": 14649, "end_f": 15075, "type": "SplitScreen", "content": "CHINA · RUSSLAND  vs  DEUTSCHLAND", "priority": "must" },
+        { "id": "ovl-032", "start_f": 15315, "end_f": 15888, "type": "StatCard", "content": "ALTBESTAND · VERTRAUENSSCHUTZ · SICHER", "priority": "must" },
+        { "id": "ovl-033", "start_f": 15888, "end_f": 16467, "type": "QuoteCard", "content": "NICHT-BEANSTANDUNGSKLAUSEL", "priority": "should" },
+        { "id": "ovl-034", "start_f": 17079, "end_f": 17643, "type": "LocationCard", "content": "LOESUNG · SCHWEIZ LAGERUNG", "priority": "must", "note": "Warm payoff, NOT climax polish. Gold grade, tonal whoosh only." },
+        { "id": "ovl-035", "start_f": 18078, "end_f": 18543, "type": "StatCard", "content": "ANTIZYKLISCH · PHYSISCHE SUBSTANZ", "priority": "should" },
+        { "id": "ovl-036", "start_f": 19980, "end_f": 20697, "type": "LowerThird", "content": "LINK BMF-PDF + KOSTENFREIES ERSTGESPRAECH", "priority": "must" },
+        { "id": "ovl-037", "start_f": 21243, "end_f": 21786, "type": "Timeline", "content": "20 JAHRE FINANZBRANCHE · 2008 · EURO-KRISE", "priority": "should" },
+        { "id": "ovl-038", "start_f": 22587, "end_f": 22797, "type": "KineticText", "content": "DANKE, DEUTSCHLAND.", "priority": "must" },
+        { "id": "ovl-new-001", "start_f": 19350, "end_f": 19980, "type": "NewsCard", "content": "HANDELSBLATT · FAZ · NICHTS GEFUNDEN", "priority": "must", "source": "C003_dead_zone_fill", "note": "NEW overlay to fill 1B critical dead zone 618.1-666s. 4 Presse-Logos with red X-marks. Slides in from right at end of breath pause."}
+      ],
+      "rejected_overlays": [],
+      "rejection_reasons": {},
+      "new_components_to_build": [
+        { "name": "HandelsblattFAZNewsCard", "base": "NewsCard", "for_overlay": "ovl-new-001", "description": "4 Presse-Logos (Handelsblatt, FAZ, Manager Magazin, Bloomberg DE) stagger-reveal with red X-mark stamps overlaid. 3D-rotate entrance, 60-75% screen width." },
+        { "name": "KobaltFullscreen", "base": "FullscreenTakeover", "for_overlay": "ovl-015", "description": "CENTERPIECE component. Large 'KOBALT' title (200pt Orbitron 900), Element-Symbol 'Co' chip, Atomic Number 27, teal-orange gradient BG, screen-shake 8f on impact, deep-boom sync. Max polish tier — human design review required." }
+      ],
+      "use_existing_components": [
+        "StatCard", "DocumentCard", "KineticText", "Triptychon", "FullscreenTakeover", "LowerThird", "SplitScreen", "NewsCard", "QuoteCard", "Timeline", "BarChart", "LocationCard"
+      ],
+      "cognitive_load_constraint": "Max 4 elements on screen (Daniel counts as 1). Overlays ovl-007 (cognitive_load_after 2), ovl-008 (3), ovl-016 (3), ovl-019 (3), ovl-025 (3), ovl-028 (3), ovl-031 (3), ovl-034 (3), ovl-037 (3) are at the 3-of-4 threshold — Phase 3B must not stack any additional element on top.",
+      "face_safe_zone": "x:760-1160 y:80-560 (no overlays in this box — all positions reserved for Daniel's face)"
+    },
+
+    "3C_zoom_edit": {
+      "cut_points_approved": 71,
+      "cut_points_rejected": 0,
+      "cut_points_source": "1D cut_points array (71 snapped to real captions.ts sentence boundaries)",
+      "j_cuts_count": 10,
+      "l_cuts_count": 9,
+      "hard_cuts_count": 52,
+      "target_avg_cpm": 5.4,
+      "zoom_keyframes": [
+        { "frame": 0, "type": "push-in", "scale_start": 1.0, "scale_end": 1.12, "duration_f": 60, "note": "Hook slow push-in on Daniel" },
+        { "frame": 1159, "type": "static", "scale": 1.05, "note": "Context: pull back to medium" },
+        { "frame": 3746, "type": "push-in", "scale_start": 1.05, "scale_end": 1.15, "duration_f": 45, "note": "Rising pacing: closer on Daniel" },
+        { "frame": 4470, "type": "snap-zoom", "scale_start": 1.15, "scale_end": 1.18, "duration_f": 8, "note": "PI at 149s: 'kein kleines Update' — snap zoom" },
+        { "frame": 5820, "type": "crash-zoom", "scale_start": 1.18, "scale_end": 1.25, "duration_f": 6, "note": "Pre-Kobalt crash zoom before fullscreen takeover" },
+        { "frame": 6324, "type": "pull-out", "scale_start": 1.25, "scale_end": 1.10, "duration_f": 20, "note": "Post-Kobalt decompression" },
+        { "frame": 8400, "type": "ken-burns-push", "scale_start": 1.10, "scale_end": 1.15, "duration_f": 300, "note": "Peak block sustained push-in (drift left 2%)" },
+        { "frame": 9981, "type": "snap-cut", "note": "Hard cut to Daniel #4 reveal" },
+        { "frame": 10872, "type": "crash-zoom", "scale_start": 1.15, "scale_end": 1.22, "duration_f": 8, "note": "Pre-Null-Cent FullscreenTakeover crash" },
+        { "frame": 11205, "type": "pull-out", "scale_start": 1.22, "scale_end": 1.08, "duration_f": 20, "note": "Post-FT decompression" },
+        { "frame": 14400, "type": "ken-burns-push", "scale_start": 1.08, "scale_end": 1.14, "duration_f": 500, "note": "Kein-Zufall Peak ramp" },
+        { "frame": 15117, "type": "static", "scale": 1.05, "duration_f": 183, "note": "BREATHING PAUSE 503.9-510s: no zoom, clean" },
+        { "frame": 15300, "type": "ken-burns-warm-push", "scale_start": 1.05, "scale_end": 1.08, "duration_f": 1200, "note": "Options→Solution slow warm push-in" },
+        { "frame": 17079, "type": "ken-burns-schweiz-bg", "note": "KenBurns on Schweiz location photo BG (ovl-034). Drift up-left to mountain." },
+        { "frame": 19050, "type": "static", "scale": 1.06, "duration_f": 150, "note": "BREATHING PAUSE 635-640s: clean" },
+        { "frame": 19200, "type": "static", "scale": 1.05, "duration_f": 1500, "note": "CTA: calm, static medium shot" },
+        { "frame": 22200, "type": "slow-push", "scale_start": 1.05, "scale_end": 1.10, "duration_f": 500, "note": "Closer: slow push-in for intimacy on 'Danke, Deutschland'" },
+        { "frame": 22649, "type": "static-freeze", "note": "Freeze micro-moment on Deep Boom #3" }
+      ],
+      "transitions": [
+        { "frame": 258, "from_overlay": "ovl-001", "type": "whoosh-cut" },
+        { "frame": 1905, "from_seg": "hook", "to_seg": "context", "type": "soft-swoosh-j-cut", "overlap_f": 10 },
+        { "frame": 6324, "from_overlay": "ovl-015", "type": "decompress-pullout" },
+        { "frame": 11205, "from_overlay": "ovl-024", "type": "decompress-pullout" },
+        { "frame": 15000, "from_bed": "mb-03", "to_bed": "mb-04", "type": "crossfade-4s" },
+        { "frame": 17293, "type": "tonal-whoosh", "note": "Schweiz reveal warm transition" },
+        { "frame": 19200, "from_bed": "mb-04", "to_bed": "mb-05", "type": "crossfade-3s" }
+      ],
+      "pattern_interrupts_approved": [
+        { "frame": 840, "timestamp_s": 28.0, "type": "kinetic_text_overlay", "note": "Downgraded from 1D fullscreen. Covered by ovl-002/003 sequence." },
+        { "frame": 1860, "timestamp_s": 62.0, "type": "b-roll", "topic": "Zollfreilager Frankfurt" },
+        { "frame": 3150, "timestamp_s": 105.0, "type": "freeze-annotation", "note": "Freeze + red '2004' stamp on BMF-PDF" },
+        { "frame": 4470, "timestamp_s": 149.0, "type": "snap-zoom" },
+        { "frame": 5895, "timestamp_s": 196.5, "type": "fullscreen_takeover", "note": "ovl-015 KOBALT" },
+        { "frame": 7395, "timestamp_s": 246.5, "type": "kinetic_text_overlay", "note": "Downgraded from 1D fullscreen. ovl-017." },
+        { "frame": 8808, "timestamp_s": 293.58, "type": "kinetic_text_overlay", "note": "Downgraded. ovl-020." },
+        { "frame": 10182, "timestamp_s": 339.4, "type": "letterbox", "note": "Letterbox 1/3 — 'keinen einzigen Cent'" },
+        { "frame": 10872, "timestamp_s": 362.4, "type": "fullscreen_takeover", "note": "ovl-024 0,00 EUR" },
+        { "frame": 11440, "timestamp_s": 381.34, "type": "split_screen" },
+        { "frame": 12300, "timestamp_s": 410.0, "type": "freeze-annotation", "note": "China Chronology Timeline build" },
+        { "frame": 13765, "timestamp_s": 458.86, "type": "b-roll", "topic": "Chipfabrik TSMC/Intel" },
+        { "frame": 15074, "timestamp_s": 502.46, "type": "color_shift_peak", "note": "Teal-Orange out + drei mal refrain" },
+        { "frame": 16440, "timestamp_s": 548.0, "type": "zoom_change" },
+        { "frame": 17850, "timestamp_s": 595.0, "type": "b-roll", "topic": "Schweiz Alpen + Tresor" },
+        { "frame": 19350, "timestamp_s": 645.0, "type": "newscard_slide_in", "note": "Downgraded from fullscreen — ovl-new-001" },
+        { "frame": 20700, "timestamp_s": 690.0, "type": "zoom_change" },
+        { "frame": 22290, "timestamp_s": 743.0, "type": "letterbox", "note": "Letterbox 2/3" }
+      ],
+      "pattern_interrupt_budget": {
+        "fullscreen_takeovers": { "used": 3, "limit": 3 },
+        "letterbox": { "used": 2, "limit": 3 },
+        "glitch": { "used": 1, "limit": 5, "note": "ovl-030 glitch_reveal" },
+        "color_shift_peak": { "used": 3, "limit": 3, "note": "Kobalt T&O, Null-Cent T&O, Drei-mal color-shift" }
+      }
+    },
+
+    "3D_color": {
+      "color_segments": [
+        {
+          "color_id": "col_001_hook",
+          "start_f": 0,
+          "end_f": 1521,
+          "start_s": 0,
+          "end_s": 50.7,
+          "emotion_tag": "pain_hook + shock_anchor",
+          "intensity": 8,
+          "temperature": "cool",
+          "saturation_delta_pct": -25,
+          "vignette_opacity": 0.18,
+          "css_filter": "contrast(1.06) saturate(0.75) brightness(0.97)",
+          "teal_orange": false,
+          "transition_in_f": 0,
+          "transition_out_f": 60,
+          "source_1E_id": "col_001",
+          "note": "Extended from 1E's 0-40s to 0-50.7s to cover seg_002 BMF-shock-anchor. 1E's cool-hook override aligns with 1A pain-tag."
+        },
+        {
+          "color_id": "col_002_context",
+          "start_f": 1521,
+          "end_f": 4860,
+          "start_s": 50.7,
+          "end_s": 162.0,
+          "emotion_tag": "context_explanation",
+          "intensity": 5,
+          "temperature": "neutral",
+          "saturation_delta_pct": 0,
+          "vignette_opacity": 0.10,
+          "css_filter": "contrast(1.02) saturate(1.0) brightness(1.0)",
+          "teal_orange": false,
+          "transition_in_f": 60,
+          "transition_out_f": 40,
+          "source_1E_id": "col_002"
+        },
+        {
+          "color_id": "col_003_rising",
+          "start_f": 4860,
+          "end_f": 5838,
+          "start_s": 162.0,
+          "end_s": 194.6,
+          "emotion_tag": "valley_rising_vier_dinge",
+          "intensity": 4,
+          "temperature": "cool",
+          "saturation_delta_pct": -10,
+          "vignette_opacity": 0.14,
+          "css_filter": "contrast(1.08) saturate(0.90) brightness(0.98)",
+          "teal_orange": false,
+          "transition_in_f": 40,
+          "transition_out_f": 20,
+          "source_1E_id": "col_003_partial",
+          "note": "Short cool ramp before Kobalt T&O peak. Transition_out 20f is asymmetric fast-in for Kobalt."
+        },
+        {
+          "color_id": "col_004_kobalt_peak",
+          "start_f": 5838,
+          "end_f": 7278,
+          "start_s": 194.6,
+          "end_s": 242.9,
+          "emotion_tag": "PEAK_1_kobalt_reveal",
+          "intensity": 10,
+          "temperature": "locos-shock-red-accent",
+          "base_grade": "locos-premium",
+          "shock_red_accent_hsl": { "hue": 355, "saturation": 88, "lightness": 47 },
+          "shock_red_hex": "#E30613",
+          "background_hex": "#161514",
+          "saturation_delta_pct": -8,
+          "selective_red_boost": true,
+          "vignette_opacity": 0.42,
+          "contrast": 1.12,
+          "css_filter": "contrast(1.12) saturate(0.92) brightness(0.96)",
+          "teal_orange": false,
+          "transition_in_f": 20,
+          "transition_out_f": 40,
+          "source": "C002_conflict_resolution + USER_OVERRIDE_2026-04-14",
+          "note": "USER OVERRIDE: Teal-Orange ist NICHT LOCOS-Brand (das ist Frechdachs-Look + generischer Hollywood). Daniels Schock-Look = LOCOS Premium Grade als Basis (Kontrast 1.12, Saettigung -8%, warm Gold-Tint) + selektiver Rot-Akzent (#E30613 LOCOS Rot) auf Kobalt-Element/Element-Symbol. Hintergrund warmes Schwarz #161514. Vignette stark (0.42). Tentative — nach erstem Render anpassen."
+        },
+        {
+          "color_id": "col_005_post_kobalt_cool",
+          "start_f": 7278,
+          "end_f": 9981,
+          "start_s": 242.9,
+          "end_s": 332.7,
+          "emotion_tag": "rueckwirkungs_rant_rising",
+          "intensity": 8,
+          "temperature": "cool",
+          "saturation_delta_pct": -15,
+          "vignette_opacity": 0.18,
+          "css_filter": "contrast(1.09) saturate(0.85) brightness(0.97)",
+          "teal_orange": false,
+          "transition_in_f": 40,
+          "transition_out_f": 20,
+          "note": "Post-Kobalt sustained cool peak. Rueckwirkungs-Rant + Drittens chapter. Non-T&O to preserve budget."
+        },
+        {
+          "color_id": "col_006_null_cent_peak",
+          "start_f": 9981,
+          "end_f": 11208,
+          "start_s": 332.7,
+          "end_s": 373.6,
+          "emotion_tag": "PEAK_null_cent_refrain",
+          "intensity": 9,
+          "temperature": "locos-shock-red-accent",
+          "base_grade": "locos-premium",
+          "shock_red_accent_hsl": { "hue": 355, "saturation": 88, "lightness": 47 },
+          "shock_red_hex": "#E30613",
+          "background_hex": "#161514",
+          "saturation_delta_pct": -10,
+          "selective_red_boost": true,
+          "vignette_opacity": 0.40,
+          "contrast": 1.10,
+          "css_filter": "contrast(1.10) saturate(0.90) brightness(0.96)",
+          "teal_orange": false,
+          "transition_in_f": 20,
+          "transition_out_f": 40,
+          "source": "1E_col_004_modified + USER_OVERRIDE_2026-04-14",
+          "note": "USER OVERRIDE: identisch zu col_004 Logik. LOCOS-Premium-Base + Rot-Akzent auf 'Null Cent'-Zahlen (selektiv via mask). Tentative."
+        },
+        {
+          "color_id": "col_007_kein_zufall_valley",
+          "start_f": 11208,
+          "end_f": 15117,
+          "start_s": 373.6,
+          "end_s": 503.9,
+          "emotion_tag": "valley_kein_zufall_cold_pattern",
+          "intensity": 8,
+          "temperature": "cool",
+          "saturation_delta_pct": -30,
+          "vignette_opacity": 0.20,
+          "css_filter": "contrast(1.10) saturate(0.70) brightness(0.96)",
+          "teal_orange": false,
+          "transition_in_f": 40,
+          "transition_out_f": 60,
+          "source_1E_id": "col_005"
+        },
+        {
+          "color_id": "col_008_breathing_options",
+          "start_f": 15117,
+          "end_f": 16467,
+          "start_s": 503.9,
+          "end_s": 548.9,
+          "emotion_tag": "breathing_options_transition",
+          "intensity": 5,
+          "temperature": "neutral",
+          "saturation_delta_pct": -5,
+          "vignette_opacity": 0.12,
+          "css_filter": "contrast(1.04) saturate(0.95) brightness(0.99)",
+          "teal_orange": false,
+          "transition_in_f": 60,
+          "transition_out_f": 60,
+          "source_1E_id": "col_006",
+          "note": "Includes breath pause 503.9-510s (no effect motion). Clean neutral bridge."
+        },
+        {
+          "color_id": "col_009_schweiz_gold",
+          "start_f": 16467,
+          "end_f": 19050,
+          "start_s": 548.9,
+          "end_s": 635.0,
+          "emotion_tag": "resolution_schweiz_WARM_PAYOFF",
+          "intensity": 9,
+          "temperature": "gold",
+          "temperature_delta_highlights_deg": 10,
+          "temperature_delta_shadows_deg": 4,
+          "saturation_delta_pct": 12,
+          "vignette_opacity": 0.10,
+          "css_filter": "contrast(1.05) saturate(1.12) brightness(1.03)",
+          "teal_orange": false,
+          "transition_in_f": 60,
+          "transition_out_f": 60,
+          "source_1E_id": "col_007",
+          "note": "WARM PAYOFF not climax. Gold-temperature per D1 rule. NO Teal-Orange (D1.3 Rule 8 forbids T&O in resolution). Daniels Schweiz-Zitat + antizyklisch core-message."
+        },
+        {
+          "color_id": "col_010_cta_bittersweet",
+          "start_f": 19050,
+          "end_f": 22500,
+          "start_s": 635.0,
+          "end_s": 750.0,
+          "emotion_tag": "cta_warm",
+          "intensity": 6,
+          "temperature": "neutral_warm",
+          "saturation_delta_pct": 3,
+          "vignette_opacity": 0.12,
+          "css_filter": "contrast(1.03) saturate(1.03) brightness(1.01)",
+          "teal_orange": false,
+          "transition_in_f": 60,
+          "transition_out_f": 40,
+          "source_1E_id": "col_008",
+          "note": "Includes breath pause 635-640s. CTA warm per D1.1 rule."
+        },
+        {
+          "color_id": "col_011_closer_cold_accent",
+          "start_f": 22500,
+          "end_f": 22800,
+          "start_s": 750.0,
+          "end_s": 760.0,
+          "emotion_tag": "closer_danke_deutschland_bitter",
+          "intensity": 8,
+          "temperature": "cool",
+          "saturation_delta_pct": -20,
+          "vignette_opacity": 0.16,
+          "css_filter": "contrast(1.08) saturate(0.80) brightness(0.97)",
+          "teal_orange": false,
+          "transition_in_f": 40,
+          "transition_out_f": 0,
+          "source_1E_id": "col_009"
+        }
+      ],
+      "transition_keyframes": [
+        { "at_frame": 1521, "from": "col_001_hook", "to": "col_002_context", "duration_f": 60, "type": "standard" },
+        { "at_frame": 4860, "from": "col_002_context", "to": "col_003_rising", "duration_f": 40, "type": "standard" },
+        { "at_frame": 5838, "from": "col_003_rising", "to": "col_004_kobalt_peak", "duration_f": 20, "type": "teal_orange_in_fast" },
+        { "at_frame": 7278, "from": "col_004_kobalt_peak", "to": "col_005_post_kobalt_cool", "duration_f": 40, "type": "teal_orange_out" },
+        { "at_frame": 9981, "from": "col_005_post_kobalt_cool", "to": "col_006_null_cent_peak", "duration_f": 20, "type": "teal_orange_in_fast" },
+        { "at_frame": 11208, "from": "col_006_null_cent_peak", "to": "col_007_kein_zufall_valley", "duration_f": 40, "type": "teal_orange_out" },
+        { "at_frame": 15117, "from": "col_007_kein_zufall_valley", "to": "col_008_breathing_options", "duration_f": 60, "type": "standard" },
+        { "at_frame": 16467, "from": "col_008_breathing_options", "to": "col_009_schweiz_gold", "duration_f": 60, "type": "standard_to_gold" },
+        { "at_frame": 19050, "from": "col_009_schweiz_gold", "to": "col_010_cta_bittersweet", "duration_f": 60, "type": "gold_to_warm" },
+        { "at_frame": 22500, "from": "col_010_cta_bittersweet", "to": "col_011_closer_cold_accent", "duration_f": 40, "type": "accent_shift" }
+      ],
+      "stylization": {
+        "halation_opacity": 0.18,
+        "film_grain_opacity": 0.12,
+        "chromatic_aberration_max_px": 1.5,
+        "skin_tone_protection": true,
+        "skin_tone_hue_deg": 123,
+        "bleach_bypass": false
+      },
+      "budget_usage": {
+        "teal_orange": { "used": 2, "limit": 3, "placements": ["col_004 Kobalt 194.6-242.9s", "col_006 Null-Cent 332.7-373.6s"] },
+        "saturation_floor": "Min -30% (col_007), well above -90% floor",
+        "min_transition_spacing_frames": 978,
+        "min_transition_spacing_ok": true
+      }
+    },
+
+    "3E_text": {
+      "captions_burned_in": false,
+      "captions_source": "src/compositions/daniel-bmf-industriemetalle/captions.ts (182 segments, 1814 words)",
+      "caption_strategy": "YouTube-native CC (not burned in). Overlays are the visual emphasis layer.",
+      "lower_thirds": [
+        { "overlay_id": "ovl-001", "content": "5 STUNDEN NACHTSCHICHT", "frame_range": "72-258" },
+        { "overlay_id": "ovl-006", "content": "LINK BMF-SCHREIBEN · BESCHREIBUNG", "frame_range": "1410-1695", "note": "Early soft-CTA per C004" },
+        { "overlay_id": "ovl-036", "content": "LINK BMF-PDF + KOSTENFREIES ERSTGESPRAECH", "frame_range": "19980-20697", "note": "Hard CTA" }
+      ],
+      "kinetic_text_moments": [
+        { "overlay_id": "ovl-003", "content": "22 JAHRE · EIN FEDERSTRICH", "frame_range": "870-1038" },
+        { "overlay_id": "ovl-010", "content": "AUFGEHOBEN · EIN SATZ · SEITE 7", "frame_range": "3270-3552" },
+        { "overlay_id": "ovl-012", "content": "BRUCH · NICHT UPDATE", "frame_range": "4452-4827" },
+        { "overlay_id": "ovl-014", "content": "#1 · DAS WORT DAS ALLES VERRAET", "frame_range": "5322-5472" },
+        { "overlay_id": "ovl-017", "content": "#2 · DIE VERBOTENE RUECKWIRKUNG", "frame_range": "7287-7575" },
+        { "overlay_id": "ovl-019", "content": "STRAFZETTEL · FUER SCHILD NAECHSTE WOCHE", "frame_range": "7998-8295" },
+        { "overlay_id": "ovl-020", "content": "#3 · 22 JAHRE GELOESCHT", "frame_range": "8670-8895" },
+        { "overlay_id": "ovl-022", "content": "#4 · 0 CENT NEUE STEUERN", "frame_range": "9981-10299" },
+        { "overlay_id": "ovl-030", "content": "GENAU JETZT · LETZTE INFRASTRUKTUR WEG", "frame_range": "13773-14178", "effect": "glitch_reveal_4_6f" },
+        { "overlay_id": "ovl-038", "content": "DANKE, DEUTSCHLAND.", "frame_range": "22587-22797", "effect": "slow_fade_in_cold_accent" }
+      ],
+      "font_policy": {
+        "hero_numbers": "Orbitron 900",
+        "kinetic_text": "Montserrat 800-900",
+        "body_overlays": "DM Sans 600-700",
+        "min_size_px_1080p": 24,
+        "caption_duplication_check": "Overlays ERGAENZEN captions, duplicate NEVER. Redundancy-check flagged 0 fails in 1B."
+      }
+    }
+  },
+
+  "master_timeline": [
+    {
+      "seg_id": "ts_001",
+      "time_range_s": "0-21.5",
+      "frame_range": "0-645",
+      "section": "HOOK_PAIN",
+      "source_1A_seg": "seg_001",
+      "emotion_tag": "pain-exhaustion",
+      "intensity": 8,
+      "music_bed": "mb-01",
+      "color_grade": "col_001_hook (cool, desaturated)",
+      "active_overlays": ["ovl-001"],
+      "active_sound_cues": ["sfx-001 music-start", "sfx-002 breath-in", "sfx-003 silence-pre-5h", "sfx-004 bass-hit-5"],
+      "cuts": [
+        { "frame": 68, "type": "hard", "reason": "erschrocken" },
+        { "frame": 258, "type": "j-cut", "reason": "5 Stunden impact bass boom", "overlap_f": 12 }
+      ],
+      "zoom_state": "push-in 1.0 -> 1.12 (60f)",
+      "pattern_interrupt": null,
+      "notes": "Cold open. 'Leute, ich bin absolut erschrocken'. Pain-hook, NO warm welcome. Daniel is tired, not friendly."
+    },
+    {
+      "seg_id": "ts_002",
+      "time_range_s": "21.5-50.7",
+      "frame_range": "645-1521",
+      "section": "SHOCK_ANCHOR",
+      "source_1A_seg": "seg_002",
+      "emotion_tag": "shock-anchor",
+      "intensity": 9,
+      "music_bed": "mb-01",
+      "color_grade": "col_001_hook (continues cool)",
+      "active_overlays": ["ovl-002", "ovl-003", "ovl-004", "ovl-005"],
+      "active_sound_cues": ["sfx-005 riser-9april", "sfx-006 silence", "sfx-007 DEEP_BOOM_1", "sfx-008-009 22jahre", "sfx-010-012 staccato-trinity", "sfx-013 silence", "sfx-014 impact-Cent", "sfx-015 emphasis"],
+      "cuts": [
+        { "frame": 652, "type": "l-cut", "reason": "muss euch ehrlich sagen", "overlap_f": 10 },
+        { "frame": 870, "type": "hard", "reason": "rausgeschickt PI start" },
+        { "frame": 1038, "type": "hard", "reason": "gestoppt impact" },
+        { "frame": 1159, "type": "hard", "reason": "tri-impact ende" },
+        { "frame": 1394, "type": "l-cut", "reason": "nicht einen null-cent reveal", "overlap_f": 15 },
+        { "frame": 1521, "type": "hard", "reason": "was drin steht satz ende" }
+      ],
+      "zoom_state": "hold 1.05",
+      "pattern_interrupt": { "frame": 840, "type": "kinetic_text_overlay_as_PI", "note": "Downgraded from 1D fullscreen to KineticText (C007). Covered by ovl-003." },
+      "notes": "Hero anchor dump + first FullscreenTakeover (ovl-005 '0 CENT MEHR STEUERN'). DEEP BOOM #1 on '9. April'. Triple staccato rhythm on 'ohne Parlament/Vorwarnung/Uebergangsfristen'."
+    },
+    {
+      "seg_id": "ts_003",
+      "time_range_s": "50.7-88.5",
+      "frame_range": "1521-2655",
+      "section": "CONTEXT_VALLEY_1",
+      "source_1A_seg": "seg_003",
+      "emotion_tag": "context-explanation",
+      "intensity": 4,
+      "music_bed": "mb-01",
+      "color_grade": "col_002_context (neutral)",
+      "active_overlays": ["ovl-006", "ovl-007", "ovl-008"],
+      "active_sound_cues": ["sfx-016 paper-rustle", "sfx-017 section-whoosh", "sfx-020 tick-Renium", "sfx-021 tick"],
+      "cuts": [
+        { "frame": 1807, "type": "j-cut", "reason": "lesen koennt uebergang", "overlap_f": 10 },
+        { "frame": 1913, "type": "hard", "reason": "worum es geht" },
+        { "frame": 2192, "type": "hard", "reason": "Indium/Renium cue" },
+        { "frame": 2545, "type": "l-cut", "reason": "zollfreilager eingefuehrt", "overlap_f": 12 }
+      ],
+      "zoom_state": "pull-back 1.12 -> 1.05",
+      "pattern_interrupt": { "frame": 1860, "type": "b-roll", "topic": "Zollfreilager Frankfurt", "duration_s": 7 },
+      "notes": "Valley after Peak-Shock. Necessary E2 LOW after HIGH. Includes early Soft-CTA (ovl-006 LINK BMF)."
+    },
+    {
+      "seg_id": "ts_004",
+      "time_range_s": "88.5-118.4",
+      "frame_range": "2655-3552",
+      "section": "RISING_BMF_2004",
+      "source_1A_seg": "seg_004",
+      "emotion_tag": "rising-anchoring",
+      "intensity": 6,
+      "music_bed": "mb-01",
+      "color_grade": "col_002_context (neutral ending)",
+      "active_overlays": ["ovl-009", "ovl-010"],
+      "active_sound_cues": ["sfx-paperrustle-2004", "sfx-freeze-annotation-2004"],
+      "cuts": [
+        { "frame": 2655, "type": "hard", "reason": "fiel keine Umsatzsteuer an" },
+        { "frame": 3126, "type": "hard", "reason": "seit 2004 belegt hat" },
+        { "frame": 3458, "type": "l-cut", "reason": "auf Seite 7 teaser", "overlap_f": 15 }
+      ],
+      "zoom_state": "hold 1.05",
+      "pattern_interrupt": { "frame": 3150, "type": "freeze-annotation", "note": "Red '2004' stamp on BMF-PDF" },
+      "notes": "22 Jahre anchor build-up. 'Aufgehoben, ein Satz, Seite 7'. Transitions out to cool rising grade."
+    },
+    {
+      "seg_id": "ts_005",
+      "time_range_s": "118.4-162.0",
+      "frame_range": "3552-4860",
+      "section": "HANDELSPARTNER_PEAK",
+      "source_1A_seg": "seg_005",
+      "emotion_tag": "peak-credibility",
+      "intensity": 8,
+      "music_bed": "mb-02 (155s crossfade)",
+      "color_grade": "col_003_rising (cool -10%)",
+      "active_overlays": ["ovl-011", "ovl-012"],
+      "active_sound_cues": ["music-change mb-02 @155s", "sfx-zoom-change"],
+      "cuts": [
+        { "frame": 3746, "type": "hard", "reason": "Kanal bekommen" },
+        { "frame": 4103, "type": "hard", "reason": "rausgeschickt hat" },
+        { "frame": 4451, "type": "j-cut", "reason": "was jetzt die Regel ist", "overlap_f": 12 },
+        { "frame": 4826, "type": "hard", "reason": "kein kleines Update" }
+      ],
+      "zoom_state": "push-in 1.05 -> 1.18 (snap-zoom PI at 4470f)",
+      "pattern_interrupt": { "frame": 4470, "type": "snap-zoom", "scale": 1.18, "note": "Kein kleines Update snap" },
+      "notes": "Loop L3 opens. 'Bruch nicht Update' kinetic-text peak."
+    },
+    {
+      "seg_id": "ts_006",
+      "time_range_s": "162.0-194.6",
+      "frame_range": "4860-5838",
+      "section": "VALLEY_SETUP_VIER_DINGE",
+      "source_1A_seg": "seg_006",
+      "emotion_tag": "valley-setup",
+      "intensity": 4,
+      "music_bed": "mb-02",
+      "color_grade": "col_003_rising (cool)",
+      "active_overlays": ["ovl-013", "ovl-014"],
+      "active_sound_cues": ["sfx-005-riser-kobalt-build @ 5323f"],
+      "cuts": [
+        { "frame": 5014, "type": "hard", "reason": "fuer sich schon absurd" },
+        { "frame": 5323, "type": "hard", "reason": "Erstens listicle-start" },
+        { "frame": 5672, "type": "l-cut", "reason": "drei Beispiele Seite 5", "overlap_f": 10 }
+      ],
+      "zoom_state": "hold 1.08 pre-crash",
+      "pattern_interrupt": null,
+      "notes": "L4 opens (Kobalt cliffhanger). 2.73s riser builds under 'Erstens... das eine Wort...'. Silence at 5823f."
+    },
+    {
+      "seg_id": "ts_007",
+      "time_range_s": "194.6-210.8",
+      "frame_range": "5838-6324",
+      "section": "KOBALT_PEAK_CENTERPIECE",
+      "source_1A_seg": "seg_007_part1",
+      "emotion_tag": "PEAK_1_shock_reveal",
+      "intensity": 10,
+      "music_bed": "mb-02 (duck to 0 briefly)",
+      "color_grade": "col_004_kobalt_peak (TEAL-ORANGE)",
+      "active_overlays": ["ovl-015"],
+      "active_sound_cues": ["silence-pre-kobalt @ 5823f", "DEEP_BOOM_2 @ 5868f", "crash-zoom sfx"],
+      "cuts": [
+        { "frame": 5883, "type": "hard", "reason": "Dieses Wort ist Kobalt reveal peak" },
+        { "frame": 6324, "type": "hard", "reason": "zitat ende" }
+      ],
+      "zoom_state": "crash-zoom 1.18 -> 1.25 (6f) then hold",
+      "pattern_interrupt": { "frame": 5895, "type": "FULLSCREEN_TAKEOVER", "note": "ovl-015 KOBALT centerpiece" },
+      "notes": "CENTERPIECE. Fullscreen Takeover 2/3. Deep Boom #2. Teal-Orange shift. Screen-shake 8f. MAX POLISH INVESTMENT. Phase 3B human-review required."
+    },
+    {
+      "seg_id": "ts_008",
+      "time_range_s": "210.8-242.9",
+      "frame_range": "6324-7287",
+      "section": "POST_KOBALT_DECOMPRESS",
+      "source_1A_seg": "seg_007_part2",
+      "emotion_tag": "peak_sustained",
+      "intensity": 8,
+      "music_bed": "mb-02",
+      "color_grade": "col_004 -> col_005 transition at 7278f (40f out)",
+      "active_overlays": ["ovl-016"],
+      "active_sound_cues": ["sfx-echo-impact @ 6909f"],
+      "cuts": [
+        { "frame": 6612, "type": "hard", "reason": "Merkt ihr was hier passiert" },
+        { "frame": 7097, "type": "l-cut", "reason": "in jeder Batterie steckt", "overlap_f": 15 }
+      ],
+      "zoom_state": "pull-out 1.25 -> 1.10 (20f) then hold",
+      "pattern_interrupt": null,
+      "notes": "Micro-valley compensation for C006 (Kobalt->Rueckwirkung cluster). 19.5s decompression before ovl-016 StatCard. EU-Critical/Batterie/E-Auto supporting card."
+    },
+    {
+      "seg_id": "ts_009",
+      "time_range_s": "242.9-289.0",
+      "frame_range": "7287-8670",
+      "section": "RUECKWIRKUNGS_RANT",
+      "source_1A_seg": "seg_008",
+      "emotion_tag": "peak_rant",
+      "intensity": 8,
+      "music_bed": "mb-02",
+      "color_grade": "col_005_post_kobalt_cool",
+      "active_overlays": ["ovl-017", "ovl-018", "ovl-019"],
+      "active_sound_cues": ["sfx-impact-zweitens", "sfx-highlight-wird-veroeffentlicht"],
+      "cuts": [
+        { "frame": 7395, "type": "hard", "reason": "Zweitens Rueckwirkung" },
+        { "frame": 7715, "type": "hard", "reason": "wird veroeffentlicht reveal" },
+        { "frame": 7991, "type": "hard", "reason": "das ist so punch" },
+        { "frame": 8294, "type": "j-cut", "reason": "Verkehrsschild-Metapher", "overlap_f": 10 }
+      ],
+      "zoom_state": "ken-burns push 1.10 -> 1.15",
+      "pattern_interrupt": { "frame": 7395, "type": "kinetic_text_chapter_marker", "note": "Downgraded from 1D FT per C007" },
+      "notes": "Zweitens chapter. Strafzettel-Metapher. Sustained peak without valley (C006 compensation is the pre-valley micro-decompression)."
+    },
+    {
+      "seg_id": "ts_010",
+      "time_range_s": "289.0-332.7",
+      "frame_range": "8670-9981",
+      "section": "DRITTENS_22_JAHRE",
+      "source_1A_seg": "seg_009",
+      "emotion_tag": "rising_outrage",
+      "intensity": 7,
+      "music_bed": "mb-02 -> mb-03 @345s",
+      "color_grade": "col_005_cool",
+      "active_overlays": ["ovl-020", "ovl-021"],
+      "active_sound_cues": ["sfx-stamp-slam-drittens", "music-change mb-03 @345s"],
+      "cuts": [
+        { "frame": 8663, "type": "hard", "reason": "rueckwirkend Umsatzsteuer" },
+        { "frame": 8808, "type": "hard", "reason": "Drittens 22 Jahre" },
+        { "frame": 9030, "type": "hard", "reason": "Zolllagermarkt" },
+        { "frame": 9171, "type": "hard", "reason": "Gerichte haben Bezug" },
+        { "frame": 9339, "type": "hard", "reason": "Teil der Rechtsstruktur" },
+        { "frame": 9692, "type": "hard", "reason": "wird damit aufgehoben" },
+        { "frame": 9953, "type": "l-cut", "reason": "mit einem Nebensatz", "overlap_f": 12 }
+      ],
+      "zoom_state": "sustained ken-burns 1.15",
+      "pattern_interrupt": { "frame": 8808, "type": "kinetic_text_chapter", "note": "Downgraded from 1D FT" },
+      "notes": "Drittens chapter + BMF 2004 wird aufgehoben quote. Transition to mb-03 cold-pattern at 345s / 10350f."
+    },
+    {
+      "seg_id": "ts_011",
+      "time_range_s": "332.7-373.6",
+      "frame_range": "9981-11208",
+      "section": "NULL_CENT_PEAK_REFRAIN",
+      "source_1A_seg": "seg_010",
+      "emotion_tag": "PEAK_null_cent",
+      "intensity": 9,
+      "music_bed": "mb-03",
+      "color_grade": "col_006_null_cent_peak (TEAL-ORANGE 2/3)",
+      "active_overlays": ["ovl-022", "ovl-023", "ovl-024"],
+      "active_sound_cues": ["sfx-peak-viertens", "sfx-19-aufpreis", "silence-pre-FT", "sfx-impact-0-00-EUR"],
+      "cuts": [
+        { "frame": 10182, "type": "hard", "reason": "keinen einzigen Cent" },
+        { "frame": 10298, "type": "hard", "reason": "Warum? rhetorical" },
+        { "frame": 10603, "type": "hard", "reason": "jedes Kind weiss" },
+        { "frame": 10870, "type": "hard", "reason": "tatsaechliche Rechnung" },
+        { "frame": 11206, "type": "j-cut", "reason": "0 Cent mehr Einnahmen", "overlap_f": 15 }
+      ],
+      "zoom_state": "snap-cut -> crash-zoom 1.15 -> 1.22 -> pull-out 1.08",
+      "pattern_interrupt": { "frame": 10182, "type": "LETTERBOX", "note": "Letterbox 1/3 on 'keinen einzigen Cent'. Fullscreen Takeover 3/3 at 10872f (ovl-024)." },
+      "notes": "L2 closes. Fullscreen Takeover ovl-024 '0,00 EUR · VERLUST RESERVEN'. T&O peak 2/3."
+    },
+    {
+      "seg_id": "ts_012",
+      "time_range_s": "373.6-422.3",
+      "frame_range": "11208-12669",
+      "section": "CHINA_CHRONOLOGIE_SETUP",
+      "source_1A_seg": "seg_011",
+      "emotion_tag": "valley_pivot_didactic",
+      "intensity": 5,
+      "music_bed": "mb-03",
+      "color_grade": "col_007_kein_zufall_valley (cool -30%)",
+      "active_overlays": ["ovl-025", "ovl-026"],
+      "active_sound_cues": [],
+      "cuts": [
+        { "frame": 11440, "type": "hard", "reason": "4. Februar 25 datum" },
+        { "frame": 11873, "type": "hard", "reason": "Exportkontrollen Wolfram" },
+        { "frame": 12062, "type": "hard", "reason": "nicht erste Schritt" }
+      ],
+      "zoom_state": "ken-burns-push 1.08 -> 1.14 (500f)",
+      "pattern_interrupt": { "frame": 11440, "type": "split_screen", "note": "9. April 26 vs 4. Feb 25" },
+      "notes": "L5 opens. China pattern setup. Didactic-cold valley."
+    },
+    {
+      "seg_id": "ts_013",
+      "time_range_s": "422.3-472.6",
+      "frame_range": "12669-14178",
+      "section": "CHINA_PRICE_CASCADE",
+      "source_1A_seg": "seg_012",
+      "emotion_tag": "rising_data_kaskade",
+      "intensity": 8,
+      "music_bed": "mb-03",
+      "color_grade": "col_007_valley",
+      "active_overlays": ["ovl-027", "ovl-028", "ovl-029", "ovl-030"],
+      "active_sound_cues": ["sfx-number-count-365", "sfx-number-count-400", "sfx-number-count-437", "major-riser-drei-mal @ 14370f"],
+      "cuts": [
+        { "frame": 12335, "type": "hard", "reason": "Galliumpreise +365%" },
+        { "frame": 12670, "type": "hard", "reason": "Germanium +400" },
+        { "frame": 12863, "type": "hard", "reason": "Sept24 Antimon" },
+        { "frame": 13025, "type": "hard", "reason": "+437%" },
+        { "frame": 13318, "type": "hard", "reason": "April25 seltene Erden" },
+        { "frame": 13766, "type": "l-cut", "reason": "Chipfabriken", "overlap_f": 12 }
+      ],
+      "zoom_state": "ken-burns-push 1.08 -> 1.14",
+      "pattern_interrupt": [
+        { "frame": 12300, "type": "freeze-annotation", "note": "China Timeline build" },
+        { "frame": 13765, "type": "b-roll", "topic": "Chipfabrik TSMC/Intel" }
+      ],
+      "notes": "Chronology data-kaskade. Glitch-reveal on ovl-030 'GENAU JETZT · LETZTE INFRASTRUKTUR WEG' (Glitch budget 1/5)."
+    },
+    {
+      "seg_id": "ts_014",
+      "time_range_s": "472.6-502.5",
+      "frame_range": "14178-15075",
+      "section": "PAYOFF_DREI_MAL_DUERFT",
+      "source_1A_seg": "seg_013",
+      "emotion_tag": "PEAK_hole_tiefpunkt",
+      "intensity": 9,
+      "music_bed": "mb-03",
+      "color_grade": "col_007_valley (cool peak)",
+      "active_overlays": ["ovl-031"],
+      "active_sound_cues": ["major-riser @ 14370f (8s)", "silence-pre @ 14594f", "high-impact @ 14609f"],
+      "cuts": [
+        { "frame": 14130, "type": "hard", "reason": "letzte private Infrastruktur peak" },
+        { "frame": 14218, "type": "hard", "reason": "unglaublich staccato" },
+        { "frame": 14843, "type": "hard", "reason": "strategische Reserven" },
+        { "frame": 15073, "type": "hard", "reason": "dreimal duerft ihr raten" }
+      ],
+      "zoom_state": "ken-burns sustained",
+      "pattern_interrupt": { "frame": 15074, "type": "color_shift", "note": "Begin cool -> neutral transition at color_shift PI" },
+      "notes": "L5 closes. 8-second major riser. Hole-tiefpunkt. China vs Russland vs DE split screen."
+    },
+    {
+      "seg_id": "ts_015",
+      "time_range_s": "502.5-510.0",
+      "frame_range": "15075-15300",
+      "section": "BREATHING_PAUSE_1",
+      "source_1A_seg": "seg_014_partial",
+      "emotion_tag": "breathing_hedonic_reset",
+      "intensity": 2,
+      "music_bed": "mb-04 crossfade from mb-03 @500s (start), ambient-low during pause",
+      "color_grade": "col_008_breathing_options (neutral)",
+      "active_overlays": [],
+      "active_sound_cues": ["music-change mb-04 @500s", "music-swell-down"],
+      "cuts": [],
+      "zoom_state": "STATIC 1.05 (no movement)",
+      "pattern_interrupt": null,
+      "notes": "BREATH PAUSE 6.1s. NO overlays (C2 rule). NO zoom. Music ambient-low. Required after Peak-cluster for hedonic reset."
+    },
+    {
+      "seg_id": "ts_016",
+      "time_range_s": "510.0-548.9",
+      "frame_range": "15300-16467",
+      "section": "OPTIONS_BESTANDSSCHUTZ",
+      "source_1A_seg": "seg_014",
+      "emotion_tag": "gain_transition_hope",
+      "intensity": 5,
+      "music_bed": "mb-04",
+      "color_grade": "col_008_breathing_options (neutral)",
+      "active_overlays": ["ovl-032", "ovl-033"],
+      "active_sound_cues": [],
+      "cuts": [
+        { "frame": 15495, "type": "j-cut", "reason": "Bestandsschutz options-start", "overlap_f": 10 },
+        { "frame": 16296, "type": "hard", "reason": "9. April datum" }
+      ],
+      "zoom_state": "ken-burns-warm-push 1.05 -> 1.08 (1200f slow)",
+      "pattern_interrupt": { "frame": 16440, "type": "zoom_change", "note": "Frontal angle at 1.15x" },
+      "notes": "First gain-frame moment. Grade transitions neutral -> warm over 60f. 'Altbestand sicher' beruhigung."
+    },
+    {
+      "seg_id": "ts_017",
+      "time_range_s": "548.9-602.6",
+      "frame_range": "16467-18078",
+      "section": "SCHWEIZ_WARM_PAYOFF",
+      "source_1A_seg": "seg_015",
+      "emotion_tag": "resolution_warm_payoff",
+      "intensity": 9,
+      "music_bed": "mb-04 (warm piano + strings)",
+      "color_grade": "col_009_schweiz_gold",
+      "active_overlays": ["ovl-034"],
+      "active_sound_cues": ["tonal-whoosh @ 17278f (solution reveal)", "warm-bass-hit @ 17293f"],
+      "cuts": [
+        { "frame": 17277, "type": "hard", "reason": "morgen uebermorgen bestellen" },
+        { "frame": 17644, "type": "hard", "reason": "vier Tage nach BMF Alternative" }
+      ],
+      "zoom_state": "ken-burns-schweiz-bg (drift up-left to mountain)",
+      "pattern_interrupt": { "frame": 17850, "type": "b-roll", "topic": "Schweizer Alpen + Tresorraum", "duration_s": 7 },
+      "notes": "WARM PAYOFF — NOT climax polish. Gold grade. Tonal whoosh + warm bass hit (NOT deep boom). Calming, resolving. L3 closes."
+    },
+    {
+      "seg_id": "ts_018",
+      "time_range_s": "602.6-635.0",
+      "frame_range": "18078-19050",
+      "section": "ANTIZYKLISCH_CORE_MESSAGE",
+      "source_1A_seg": "seg_016",
+      "emotion_tag": "resolution_reflection",
+      "intensity": 7,
+      "music_bed": "mb-04",
+      "color_grade": "col_009_schweiz_gold",
+      "active_overlays": ["ovl-035"],
+      "active_sound_cues": [],
+      "cuts": [
+        { "frame": 18258, "type": "l-cut", "reason": "ich bin froh darueber", "overlap_f": 15 },
+        { "frame": 18543, "type": "hard", "reason": "Position immer schief geht" },
+        { "frame": 18792, "type": "hard", "reason": "echte Substanz" }
+      ],
+      "zoom_state": "warm hold 1.08",
+      "pattern_interrupt": null,
+      "notes": "Bookend-reference to seg_001 '5 Stunden'. Daniels core message + stolz-frame."
+    },
+    {
+      "seg_id": "ts_019",
+      "time_range_s": "635.0-640.0",
+      "frame_range": "19050-19200",
+      "section": "BREATHING_PAUSE_2",
+      "source_1A_seg": null,
+      "emotion_tag": "breathing_pre_cta",
+      "intensity": 2,
+      "music_bed": "mb-04 ambient-low",
+      "color_grade": "col_010_cta_bittersweet (neutral-warm) begin",
+      "active_overlays": [],
+      "active_sound_cues": ["music-swell-down"],
+      "cuts": [],
+      "zoom_state": "STATIC 1.06",
+      "pattern_interrupt": null,
+      "notes": "BREATH PAUSE 5s. Pre-CTA reset. No overlays, no zoom."
+    },
+    {
+      "seg_id": "ts_020",
+      "time_range_s": "640.0-689.9",
+      "frame_range": "19200-20697",
+      "section": "CTA_SOFT_HARD",
+      "source_1A_seg": "seg_017",
+      "emotion_tag": "cta_viewer_benefit_first",
+      "intensity": 6,
+      "music_bed": "mb-05 cta-resolve",
+      "color_grade": "col_010_cta_bittersweet",
+      "active_overlays": ["ovl-new-001", "ovl-036"],
+      "active_sound_cues": ["music-change mb-05 @640s"],
+      "cuts": [
+        { "frame": 19737, "type": "hard", "reason": "Handelsblatt FAZ CTA-frage" },
+        { "frame": 19967, "type": "hard", "reason": "nichts gefunden Kommentare" },
+        { "frame": 20224, "type": "hard", "reason": "Link unter Video" },
+        { "frame": 20336, "type": "hard", "reason": "lest selbst bildet euch" },
+        { "frame": 20699, "type": "hard", "reason": "eigene Meinung + Beratung" }
+      ],
+      "zoom_state": "STATIC 1.05 calm medium",
+      "pattern_interrupt": { "frame": 19350, "type": "newscard_slide_in", "note": "ovl-new-001 Handelsblatt/FAZ fills 1B critical dead zone. Downgraded from 1D FT per C007." },
+      "notes": "C003 resolution: NEW overlay ovl-new-001 fills the 618-666s dead zone at 645s. Hard-CTA ovl-036 at 666s (BMF-PDF + Erstgespraech)."
+    },
+    {
+      "seg_id": "ts_021",
+      "time_range_s": "689.9-718.4",
+      "frame_range": "20697-21552",
+      "section": "AUTHORITY_ANCHOR",
+      "source_1A_seg": "seg_018",
+      "emotion_tag": "credibility_anchor",
+      "intensity": 7,
+      "music_bed": "mb-05",
+      "color_grade": "col_010_cta_bittersweet",
+      "active_overlays": ["ovl-037"],
+      "active_sound_cues": [],
+      "cuts": [
+        { "frame": 21237, "type": "hard", "reason": "mit meinem Team soft-close" },
+        { "frame": 21546, "type": "hard", "reason": "Euro-Krise Corona" }
+      ],
+      "zoom_state": "STATIC 1.05",
+      "pattern_interrupt": { "frame": 20700, "type": "zoom_change", "note": "Icons overlay + zoom to 1.07" },
+      "notes": "20 Jahre Finanzbranche authority-anchor."
+    },
+    {
+      "seg_id": "ts_022",
+      "time_range_s": "718.4-745.7",
+      "frame_range": "21552-22371",
+      "section": "FINALE_REFRAIN",
+      "source_1A_seg": "seg_019",
+      "emotion_tag": "finale_loss_refrain",
+      "intensity": 8,
+      "music_bed": "mb-05",
+      "color_grade": "col_010_cta_bittersweet",
+      "active_overlays": [],
+      "active_sound_cues": [],
+      "cuts": [
+        { "frame": 22294, "type": "l-cut", "reason": "keinen Cent Refrain", "overlap_f": 12 }
+      ],
+      "zoom_state": "slow-push 1.05 -> 1.10 (500f)",
+      "pattern_interrupt": { "frame": 22290, "type": "LETTERBOX", "note": "Letterbox 2/3. 'keinen Cent Refrain' pre-staccato" },
+      "notes": "Bookend refrain. L1 closes at end of segment."
+    },
+    {
+      "seg_id": "ts_023",
+      "time_range_s": "745.7-760.0",
+      "frame_range": "22371-22800",
+      "section": "OUTRO_DANKE_DEUTSCHLAND",
+      "source_1A_seg": "seg_020",
+      "emotion_tag": "closer_bitter_cold_accent",
+      "intensity": 8,
+      "music_bed": "mb-06 final-silence-punch (music OFF @755s)",
+      "color_grade": "col_011_closer_cold_accent",
+      "active_overlays": ["ovl-038"],
+      "active_sound_cues": ["silence @ 22634f", "DEEP_BOOM_3 @ 22649f", "outro-stinger @ 22691f", "music-swell-outro @ 22700f", "music-fade-final @ 22760f"],
+      "cuts": [
+        { "frame": 22635, "type": "hard", "reason": "wirklich bitter pre-staccato" },
+        { "frame": 22691, "type": "hard", "reason": "Danke Deutschland staccato-peak" }
+      ],
+      "zoom_state": "slow-push then freeze at 22649f",
+      "pattern_interrupt": { "frame": 22649, "type": "freeze_frame_deep_boom", "note": "Deep Boom #3 + freeze micro-moment" },
+      "notes": "Closer punch. Deep Boom #3 on 'Danke, Deutschland'. Cold accent over warm base per script vorgabe. 'Euer Daniel Sauer' signature."
+    }
+  ],
+
+  "review_gates": [
+    {
+      "gate": "design-review-phase3",
+      "blockers_human_approval": [
+        "ovl-015 KOBALT FullscreenTakeover — centerpiece component needs human visual design approval (centerpiece polish tier, element-symbol chip, teal-orange gradient BG, screen-shake calibration)",
+        "ovl-new-001 Handelsblatt/FAZ NewsCard — NEW component, needs real press logos sourced and design approval",
+        "Teal-Orange LUT calibration — 2 T&O windows need real render preview vs target HSL values",
+        "Color grade transitions col_004->col_005 and col_006->col_007 — asymmetric 20f/40f needs render preview to verify no jank"
+      ],
+      "auto_approve_count": 35,
+      "human_approve_count": 3,
+      "total_overlays": 39
+    },
+    {
+      "gate": "sound-review-phase3",
+      "blockers_human_approval": [
+        "Deep Boom #2 Kobalt — needs sub-bass calibration + silence-before timing test render",
+        "Music bed crossfade mb-03->mb-04 at 500s — 4s crossfade must land cleanly on drei-mal-refrain"
+      ],
+      "auto_approve_count": 68,
+      "human_approve_count": 2,
+      "total_cues": 70
+    },
+    {
+      "gate": "pacing-review-phase3",
+      "blockers_human_approval": [
+        "Cut at 10872f (ovl-024 FullscreenTakeover entry) — crash-zoom timing needs frame-accurate preview"
+      ],
+      "auto_approve_count": 70,
+      "human_approve_count": 1,
+      "total_cuts": 71
+    }
+  ],
+
+  "validation": {
+    "all_constraints_ok": true,
+    "checks": {
+      "density_no_60f_window_over_3_effects": "PASS",
+      "no_segment_over_1800f_without_visual_change": "PASS (longest TH 45s / 1350f per 1D validation)",
+      "cognitive_load_max_4_elements": "PASS (max observed 3+Daniel=4)",
+      "no_overlay_during_breathing": "PASS (ts_015 and ts_019 are overlay-free)",
+      "no_overlay_redundancy": "PASS (1B redundancy_check 0 fails)",
+      "hook_cold_desaturated": "PASS (col_001 overrides D1.1 warm-hook rule deliberately per Daniel pain-emotion)",
+      "crisis_cool_grade": "PASS (col_005, col_007)",
+      "breath_pause_after_peak": "PASS (ts_015 after ts_014, ts_019 before CTA)",
+      "cta_timing": "ACCEPTED_DRIFT (real 83.9% vs target 55-75%; compensated via ovl-006 early soft-CTA at 7%)",
+      "peak_valley_rhythm": "PASS_WITH_EXCEPTIONS (seg_007->seg_008 peak-cluster compensated by ts_008 micro-valley; max peak-to-peak gap 99s = 9s over 90s limit, 1A approved)",
+      "glitch_budget": "PASS (1/5)",
+      "teal_orange_budget": "PASS (2/3)",
+      "letterbox_budget": "PASS (2/3)",
+      "fullscreen_takeover_budget": "PASS (3/3 — at limit)",
+      "animated_divider_budget": "PASS (0/4, available if needed)",
+      "all_frame_collisions_resolved": "PASS"
+    },
+    "violations": [],
+    "warnings": [
+      { "id": "W001", "desc": "Fullscreen takeover budget at MAX (3/3). No more fullscreens can be added in Phase 3B.", "severity": "info" },
+      { "id": "W002", "desc": "CTA drift accepted (83.9% vs target 55-75%). Retention risk if viewers leave before 638s. Mitigated via early soft-CTA at 47s.", "severity": "medium" },
+      { "id": "W003", "desc": "Peak-cluster ts_007->ts_009 technically violates E2 'HIGH must have LOW after 45-90s'. Compensated by ts_008 19.5s micro-valley, but not a full valley. Phase 4 QC should monitor retention curve here.", "severity": "medium" },
+      { "id": "W004", "desc": "Max talking-head stretch at Phase 3C is 45s (698-743s segment). At 45-60s target boundary per 1D. No PI possible without breaking pacing narrative.", "severity": "low" },
+      { "id": "W005", "desc": "ovl-new-001 is a NEW component not in the existing library. Requires build + design approval before render.", "severity": "high_for_phase_3B" }
+    ]
+  },
+
+  "phase_3_ready": true,
+  "phase_3_unblockers": [
+    "Human design review for ovl-015 KOBALT centerpiece",
+    "Human design review for ovl-new-001 Handelsblatt/FAZ NewsCard (NEW)",
+    "Source real press-logo assets (Handelsblatt, FAZ, Manager Magazin, Bloomberg DE)",
+    "Source real Kobalt visual assets (Co-element chip, atomic number 27 graphic)",
+    "Source Schweiz B-Roll (Alpen + Tresorraum) for ts_017 PI",
+    "Source Chipfabrik B-Roll (TSMC/Intel) for ts_013 PI"
+  ]
+}

@@ -1,0 +1,72 @@
+Marker Name,Description,In,Out,Duration,Marker Type
+CUT-001,hook-satzende 'erschrocken' emotions-peak,00:00:02:08,00:00:02:08,00:00:00:00,Comment
+CUT-002 J12f,'5 Stunden' impact audio lead in bass boom (J-cut 12f),00:00:08:18,00:00:08:18,00:00:00:00,Comment
+CUT-003,satzende 'persoenlich',00:00:17:12,00:00:17:12,00:00:00:00,Comment
+CUT-004 L10f,'muss euch ehrlich sagen' video cut frueher (L-cut 10f),00:00:21:14,00:00:21:14,00:00:00:00,Comment
+CUT-005,'rausgeschickt' Pattern Interrupt Start,00:00:29:00,00:00:29:00,00:00:00:00,Comment
+CUT-006,'gestoppt' impact on verb,00:00:34:18,00:00:34:18,00:00:00:00,Comment
+CUT-007,'ohne Uebergangsfriste' tri-impact ende,00:00:38:18,00:00:38:18,00:00:00:00,Comment
+CUT-008 L15f,'nicht einen' Null-Cent Reveal (L-cut 15f),00:00:46:14,00:00:46:14,00:00:00:00,Comment
+CUT-009,'was drin steht' ende satz,00:00:50:21,00:00:50:21,00:00:00:00,Comment
+CUT-010 J10f,'lesen koennt' uebergang auf context-BG (J-cut 10f),00:01:00:06,00:01:00:06,00:00:00:00,Comment
+CUT-011,'worum es geht' uebergang zu erklaerung,00:01:03:23,00:01:03:23,00:00:00:00,Comment
+CUT-012,'Indium oder Renium' Industriemetall-Cue,00:01:13:02,00:01:13:02,00:00:00:00,Comment
+CUT-013 L12f,'zollweglich nicht eingefuehrt' Konzept-Erklaerung (L-cut 12f),00:01:24:25,00:01:24:25,00:00:00:00,Comment
+CUT-014,'fiel keine Umsatzsteuer an' Regel-Punch,00:01:28:16,00:01:28:16,00:00:00:00,Comment
+CUT-015,'seit 2004 belegt hat',00:01:44:06,00:01:44:06,00:00:00:00,Comment
+CUT-016 L15f,'auf Seite 7' Satz-Teaser (L-cut 15f),00:01:55:08,00:01:55:08,00:00:00:00,Comment
+CUT-017,'Kanal bekommen' Handelspartner-Geschichte Start,00:02:04:26,00:02:04:26,00:00:00:00,Comment
+CUT-018,'rausgeschickt hat' Timing-Detail ende,00:02:16:23,00:02:16:23,00:00:00:00,Comment
+CUT-019 J12f,'was jetzt die Regel ist' uebergang (J-cut 12f),00:02:28:11,00:02:28:11,00:00:00:00,Comment
+CUT-020,'kein kleines Update' kritisch werdend,00:02:40:26,00:02:40:26,00:00:00:00,Comment
+CUT-021,'fuer sich schon absurd',00:02:47:04,00:02:47:04,00:00:00:00,Comment
+CUT-022,'Erstens.' listicle start,00:02:57:13,00:02:57:13,00:00:00:00,Comment
+CUT-023 L10f,'drei Beispiele auf Seite 5' (L-cut 10f),00:03:09:02,00:03:09:02,00:00:00:00,Comment
+CUT-024,'Dieses Wort ist Kobalt' REVEAL PEAK,00:03:16:04,00:03:16:04,00:00:00:00,Comment
+CUT-025,zitat-ende,00:03:30:25,00:03:30:25,00:00:00:00,Comment
+CUT-026,'Merkt ihr was hier passiert' direkte ansprache,00:03:40:12,00:03:40:12,00:00:00:00,Comment
+CUT-027 L15f,'in jeder Batterie steckt' kontext-brueck (L-cut 15f),00:03:56:17,00:03:56:17,00:00:00:00,Comment
+CUT-028,'Zweitens Rueckwirkung' neuer punkt,00:04:06:15,00:04:06:15,00:00:00:00,Comment
+CUT-029,'wird veroeffentlicht' zukunftsform-reveal,00:04:17:05,00:04:17:05,00:00:00:00,Comment
+CUT-030,'das ist so' punch,00:04:26:11,00:04:26:11,00:00:00:00,Comment
+CUT-031 J10f,'Verkehrsschild' Metapher (J-cut 10f),00:04:36:14,00:04:36:14,00:00:00:00,Comment
+CUT-032,'rueckwirkend Umsatzsteuer kosten' peak start,00:04:48:23,00:04:48:23,00:00:00:00,Comment
+CUT-033,'Drittens 22 Jahre geloescht' neuer peak punkt,00:04:53:17,00:04:53:17,00:00:00:00,Comment
+CUT-034,'Zolllagermarkt',00:05:01:00,00:05:01:00,00:00:00:00,Comment
+CUT-035,'Gerichte haben Bezug genommen',00:05:05:22,00:05:05:22,00:00:00:00,Comment
+CUT-036,'Teil der deutschen Rechtsstruktur' evidenz-kette,00:05:11:10,00:05:11:10,00:00:00:00,Comment
+CUT-037,'wird damit aufgehoben' zitat-punch,00:05:23:02,00:05:23:02,00:00:00:00,Comment
+CUT-038 L12f,'mit einem Nebensatz' (L-cut 12f),00:05:31:23,00:05:31:23,00:00:00:00,Comment
+CUT-039,'keinen einzigen Cent' peak-refrain,00:05:39:12,00:05:39:12,00:00:00:00,Comment
+CUT-040,'Warum?' rhetorische frage,00:05:43:08,00:05:43:08,00:00:00:00,Comment
+CUT-041,'jedes Kind weiss das' punch,00:05:53:13,00:05:53:13,00:00:00:00,Comment
+CUT-042,'die tatsaechliche Rechnung',00:06:02:10,00:06:02:10,00:00:00:00,Comment
+CUT-043 J15f,'0 Cent mehr Einnahmen' impact (J-cut 15f),00:06:13:16,00:06:13:16,00:00:00:00,Comment
+CUT-044,'4. Februar 25' datum-reveal,00:06:21:10,00:06:21:10,00:00:00:00,Comment
+CUT-045,'Exportkontrollen Wolfram' new datapoint,00:06:35:23,00:06:35:23,00:00:00:00,Comment
+CUT-046,'nicht der erste Schritt',00:06:42:02,00:06:42:02,00:00:00:00,Comment
+CUT-047,'Galliumpreise nur runter' price reveal,00:06:54:15,00:06:54:15,00:00:00:00,Comment
+CUT-048,'Germanium plus 400',00:07:02:10,00:07:02:10,00:00:00:00,Comment
+CUT-049,'September 24 Antimon',00:07:08:23,00:07:08:23,00:00:00:00,Comment
+CUT-050,'plus 437 Prozent',00:07:14:05,00:07:14:05,00:00:00:00,Comment
+CUT-051,'April 25 sieben seltene Erden',00:07:23:28,00:07:23:28,00:00:00:00,Comment
+CUT-052 L12f,'Chipfabriken nicht mehr weiss' (L-cut 12f),00:07:38:26,00:07:38:26,00:00:00:00,Comment
+CUT-053,'letzte private Infrastruktur' punch-peak,00:07:51:01,00:07:51:01,00:00:00:00,Comment
+CUT-054,'Es ist unglaublich' staccato repeat,00:07:53:29,00:07:53:29,00:00:00:00,Comment
+CUT-055,'strategischen Reserven',00:08:14:23,00:08:14:23,00:00:00:00,Comment
+CUT-056,'dreimal duerft ihr raten' refrain punch,00:08:22:14,00:08:22:14,00:00:00:00,Comment
+CUT-057 J10f,'wichtigste Teil Bestandsschutz' options start (J-cut 10f),00:08:36:15,00:08:36:15,00:00:00:00,Comment
+CUT-058,'9. April' neukauf datum,00:09:03:06,00:09:03:06,00:00:00:00,Comment
+CUT-059,'morgen uebermorgen bestellen' solution hint,00:09:35:27,00:09:35:27,00:00:00:00,Comment
+CUT-060,'vier Tage nach BMF Alternative' solution reveal,00:09:48:04,00:09:48:04,00:00:00:00,Comment
+CUT-061 L15f,'ich bin froh darueber' (L-cut 15f),00:10:08:18,00:10:08:18,00:00:00:00,Comment
+CUT-062,'Position immer schief geht',00:10:18:04,00:10:18:04,00:00:00:00,Comment
+CUT-063,'echte Substanz',00:10:26:13,00:10:26:13,00:00:00:00,Comment
+CUT-064,'Handelsblatt FAZ irgendwo' CTA-frage,00:10:57:27,00:10:57:27,00:00:00:00,Comment
+CUT-065,'nichts gefunden Kommentare',00:11:05:17,00:11:05:17,00:00:00:00,Comment
+CUT-066,'Link unter das Video',00:11:14:04,00:11:14:04,00:00:00:00,Comment
+CUT-067,'lest selbst bildet euch',00:11:17:26,00:11:17:26,00:00:00:00,Comment
+CUT-068,'eigene Meinung + Beratung',00:11:29:29,00:11:29:29,00:00:00:00,Comment
+CUT-069,'mit meinem Team' CTA soft-close,00:11:47:28,00:11:47:28,00:00:00:00,Comment
+CUT-070,'Euro-Krise Corona' expertise anchor,00:11:58:06,00:11:58:06,00:00:00:00,Comment
+CUT-071 L12f,'keinen Cent Refrain' (L-cut 12f),00:12:23:04,00:12:23:04,00:00:00:00,Comment

@@ -1,0 +1,552 @@
+{
+  "video_slug": "daniel-bmf-industriemetalle",
+  "fps": 30,
+  "total_frames": 22800,
+  "voice_target_lufs": -14,
+  "music_under_voice_target": "0.032-0.034 (A2.5)",
+
+  "beds": [
+    {
+      "bed_id": "mb-01",
+      "section": "HOOK_PAIN + SHOCK_ANCHOR + CONTEXT_VALLEY_1 + RISING_BMF_2004",
+      "start_s": 0,
+      "end_s": 155,
+      "start_frame": 0,
+      "end_frame": 4650,
+      "mood": "tense-investigation",
+      "tonality": "E-Moll",
+      "bpm_range": [85, 100],
+      "bpm_target": 92,
+      "intensity": 0.7,
+      "under_voice_amp": 0.032,
+      "under_voice_dbfs": -30,
+      "solo_amp": 0.09,
+      "solo_dbfs": -21,
+
+      "epidemic_search": {
+        "primary_query": "dark pulse investigative suspense sub-bass",
+        "alt_queries": [
+          "tense investigation drone e minor",
+          "cold open finance exposé",
+          "investigative journalism underscore"
+        ],
+        "mood_tags": ["dark", "suspense", "tension", "investigative", "dystopian"],
+        "tonality": "E-Minor",
+        "bpm_min": 85,
+        "bpm_max": 100,
+        "vocals": false,
+        "duration_min_s": 160,
+        "instrumentation_required": ["sub-bass drone", "dark synth pad", "pulse bass", "subtle tension ticks"],
+        "instrumentation_forbidden": ["drums kit", "lead melody", "piano solo", "brass"],
+        "energy_curve": "flat-low (ambient, no buildups — Daniel builds his own tension)",
+        "reference_tracks": [
+          "ES_MUSIC.TRACKER (90 BPM, investigative)",
+          "ES_MUSIC.PARTICLE_EMISSION (73 BPM, dark)"
+        ]
+      },
+
+      "file_path_target": "public/sfx/daniel-bmf/mb01_tense_investigation.wav",
+      "format": "WAV 48kHz 24-bit stereo",
+      "stem_type": "FULL (stems preferred if available)",
+
+      "stems_active": ["pads", "sub_bass", "ambience"],
+      "stems_muted": ["drums", "melody", "percussion"],
+      "stems_active_notes": "Sprecher dominiert 80% Zeit (A2.2.1). Nur Pads + Sub-Bass + Ambience — keine Drums bis mb-02 rising-outrage.",
+
+      "crossfade_in": {
+        "start_frame": 0,
+        "end_frame": 60,
+        "curve": "s-curve",
+        "from_silence": true,
+        "duration_s": 2.0
+      },
+      "crossfade_out": {
+        "start_frame": 4560,
+        "end_frame": 4740,
+        "curve": "s-curve",
+        "to_bed": "mb-02",
+        "duration_s": 3.0,
+        "overlap_frames": 90
+      },
+
+      "volume_automation": [
+        { "frame": 0, "volume": 0.0, "note": "silent start" },
+        { "frame": 60, "volume": 0.032, "note": "fade-in complete (2s)" },
+        { "frame": 154, "volume": 0.0, "note": "silence-pre bass-hit 5 Stunden (sfx-003)" },
+        { "frame": 163, "volume": 0.0, "note": "bass-hit frame" },
+        { "frame": 180, "volume": 0.032, "note": "recover under voice" },
+        { "frame": 637, "volume": 0.0, "note": "silence-pre deep-boom-1 9.April (sfx-006)" },
+        { "frame": 667, "volume": 0.0, "note": "DEEP_BOOM_1 — music still silent" },
+        { "frame": 700, "volume": 0.032, "note": "recover post boom" },
+        { "frame": 894, "volume": 0.0, "note": "micro-pause pre 22 jahre" },
+        { "frame": 928, "volume": 0.032, "note": "recover" },
+        { "frame": 1284, "volume": 0.0, "note": "silence-pre keinen Cent impact" },
+        { "frame": 1330, "volume": 0.032, "note": "recover" },
+        { "frame": 4560, "volume": 0.032, "note": "crossfade out begin" },
+        { "frame": 4740, "volume": 0.0, "note": "crossfade out end" }
+      ],
+
+      "ducking": {
+        "mode": "sidechain_from_voice_track",
+        "threshold_dbfs": -18,
+        "ratio": "6:1",
+        "attack_ms": 10,
+        "release_ms": 150,
+        "range_db": -6,
+        "multiband": true,
+        "multiband_target_hz_range": [1000, 8000],
+        "notes": "A2.5.5. Nur Sprach-Frequenzen ducken (A5.3.4), nicht den ganzen Bed."
+      }
+    },
+
+    {
+      "bed_id": "mb-02",
+      "section": "HANDELSPARTNER_PEAK + VALLEY_SETUP_VIER_DINGE + KOBALT_PEAK + POST_KOBALT + RUECKWIRKUNGS_RANT + DRITTENS_22_JAHRE",
+      "start_s": 155,
+      "end_s": 345,
+      "start_frame": 4650,
+      "end_frame": 10350,
+      "mood": "rising-outrage",
+      "tonality": "C-Moll",
+      "bpm_range": [90, 105],
+      "bpm_target": 96,
+      "intensity": 0.8,
+      "under_voice_amp": 0.034,
+      "under_voice_dbfs": -29.5,
+      "solo_amp": 0.10,
+      "solo_dbfs": -20,
+
+      "epidemic_search": {
+        "primary_query": "rising tension outrage strings tremolo c minor",
+        "alt_queries": [
+          "legal exposé build-up",
+          "financial scandal underscore",
+          "orchestral tension investigation",
+          "rising political drama"
+        ],
+        "mood_tags": ["outrage", "build-up", "tension-rising", "dramatic"],
+        "tonality": "C-Minor",
+        "bpm_min": 90,
+        "bpm_max": 105,
+        "vocals": false,
+        "duration_min_s": 200,
+        "instrumentation_required": ["string tremolo", "pulsing bass", "dark pad", "optional light orchestral hits"],
+        "instrumentation_forbidden": ["vocal leads", "electric guitar lead", "brass melody"],
+        "energy_curve": "rising ramp from 0.6 to 0.85 through 4 listicle peaks",
+        "key_match_with_previous": "Em -> Cm = half-step-down (close enough for 3s crossfade, A2.3.7 Halbton erzeugt Dringlichkeit — but here we use 'relative' approach via Cm which shares notes with Em-phrygian, dissonance minimal at 0.03 volume)"
+      },
+
+      "file_path_target": "public/sfx/daniel-bmf/mb02_rising_outrage.wav",
+      "format": "WAV 48kHz 24-bit stereo",
+      "stem_type": "FULL",
+
+      "stems_active": ["pads", "strings_tremolo", "sub_bass"],
+      "stems_muted": ["full_drums", "lead_melody"],
+      "stems_drums_partial": {
+        "active_from_frame": 5323,
+        "active_until_frame": 5838,
+        "note": "Drum-Entry 2-4 Takte VOR Kobalt-Reveal (A2.4). Bei 96 BPM ist 1 Takt ~75 Frames. Drum entry 515f vor Reveal = ~7 Takte. Downbeat landet auf Fullscreen-Frame 5838."
+      },
+
+      "crossfade_in": {
+        "start_frame": 4560,
+        "end_frame": 4740,
+        "curve": "s-curve",
+        "from_bed": "mb-01",
+        "duration_s": 3.0
+      },
+      "crossfade_out": {
+        "start_frame": 10260,
+        "end_frame": 10440,
+        "curve": "s-curve",
+        "to_bed": "mb-03",
+        "duration_s": 3.0,
+        "overlap_frames": 90
+      },
+
+      "volume_automation": [
+        { "frame": 4560, "volume": 0.0, "note": "crossfade in begin" },
+        { "frame": 4740, "volume": 0.034, "note": "fade-in complete" },
+        { "frame": 5292, "volume": 0.0, "note": "silence-pre Erstens (sfx-027)" },
+        { "frame": 5308, "volume": 0.0, "note": "Erstens ding-impact" },
+        { "frame": 5340, "volume": 0.034, "note": "recover, riser starts (sfx-029)" },
+        { "frame": 5823, "volume": 0.0, "note": "CRITICAL silence-pre deep-boom-2 Kobalt (sfx-031)" },
+        { "frame": 5868, "volume": 0.0, "note": "DEEP_BOOM_2 Kobalt — 0 volume" },
+        { "frame": 5900, "volume": 0.0, "note": "hold silent through Fullscreen reveal" },
+        { "frame": 5970, "volume": 0.034, "note": "slow recover post-Kobalt" },
+        { "frame": 7271, "volume": 0.0, "note": "silence-pre Zweitens (sfx-035)" },
+        { "frame": 7286, "volume": 0.0, "note": "Zweitens ding-impact" },
+        { "frame": 7310, "volume": 0.034, "note": "recover" },
+        { "frame": 8655, "volume": 0.0, "note": "silence-pre Drittens (sfx-038)" },
+        { "frame": 8670, "volume": 0.0, "note": "Drittens ding-impact" },
+        { "frame": 8695, "volume": 0.034, "note": "recover" },
+        { "frame": 9966, "volume": 0.0, "note": "silence-pre Und viertens (sfx-042)" },
+        { "frame": 9981, "volume": 0.0, "note": "Viertens ding-impact" },
+        { "frame": 10005, "volume": 0.034, "note": "recover" },
+        { "frame": 10260, "volume": 0.034, "note": "crossfade out begin" },
+        { "frame": 10440, "volume": 0.0, "note": "crossfade out end" }
+      ],
+
+      "ducking": {
+        "mode": "sidechain_from_voice_track",
+        "threshold_dbfs": -18,
+        "ratio": "6:1",
+        "attack_ms": 10,
+        "release_ms": 150,
+        "range_db": -8,
+        "multiband": true,
+        "multiband_target_hz_range": [1000, 8000]
+      }
+    },
+
+    {
+      "bed_id": "mb-03",
+      "section": "NULL_CENT_PEAK + CHINA_CHRONOLOGIE + CHINA_PRICE_CASCADE + PAYOFF_DREI_MAL_DUERFT",
+      "start_s": 345,
+      "end_s": 500,
+      "start_frame": 10350,
+      "end_frame": 15000,
+      "mood": "cold-pattern-reveal",
+      "tonality": "F-Moll",
+      "bpm_range": [95, 110],
+      "bpm_target": 100,
+      "intensity": 0.85,
+      "under_voice_amp": 0.033,
+      "under_voice_dbfs": -29.7,
+      "solo_amp": 0.10,
+      "solo_dbfs": -20,
+
+      "epidemic_search": {
+        "primary_query": "cold pattern reveal funereal f minor investigative drone",
+        "alt_queries": [
+          "dystopian finance cold discovery",
+          "geopolitical chess investigative underscore",
+          "bitter pattern reveal orchestral"
+        ],
+        "mood_tags": ["cold", "funereal", "bitter", "pattern-reveal", "geopolitical"],
+        "tonality": "F-Minor",
+        "bpm_min": 95,
+        "bpm_max": 110,
+        "vocals": false,
+        "duration_min_s": 160,
+        "instrumentation_required": ["cold strings", "low brass swell", "metronomic pulse", "tension pad"],
+        "instrumentation_forbidden": ["warm piano", "happy lead", "major chord progressions"],
+        "energy_curve": "flat-mid then slow crescendo through 8s major-riser (sfx-052) from 479s to 486.98s",
+        "key_match_with_previous": "Cm -> Fm = Quinte-Wechsel (A2.3.6 klassischer Auflösungs-Wechsel). 3s crossfade safe."
+      },
+
+      "file_path_target": "public/sfx/daniel-bmf/mb03_cold_pattern.wav",
+      "format": "WAV 48kHz 24-bit stereo",
+      "stem_type": "FULL",
+
+      "stems_active": ["cold_strings", "low_brass", "pulse_bass"],
+      "stems_muted": ["full_drums", "lead_piano"],
+      "stems_drums_partial": {
+        "active_from_frame": 14100,
+        "active_until_frame": 14594,
+        "note": "Drum-Entry nur waehrend 8s major-riser (sfx-052) building to 'drei Mal duerft ihr raten'. Drums entry 270f (~2.5 Takte @100 BPM) vor Impact. Mute exakt auf silence-pre frame 14594."
+      },
+
+      "crossfade_in": {
+        "start_frame": 10260,
+        "end_frame": 10440,
+        "curve": "s-curve",
+        "from_bed": "mb-02",
+        "duration_s": 3.0
+      },
+      "crossfade_out": {
+        "start_frame": 14940,
+        "end_frame": 15180,
+        "curve": "s-curve",
+        "to_bed": "mb-04",
+        "duration_s": 4.0,
+        "overlap_frames": 120,
+        "note": "4s crossfade (A1.5.5) weil Moll->Dur Stimmungs-Wechsel ist ein bewusster, groesserer Shift"
+      },
+
+      "volume_automation": [
+        { "frame": 10260, "volume": 0.0, "note": "crossfade in begin" },
+        { "frame": 10440, "volume": 0.033, "note": "fade-in complete" },
+        { "frame": 10855, "volume": 0.0, "note": "silence-pre 0,00 EUR FT (ovl-024 @10872f)" },
+        { "frame": 10872, "volume": 0.0, "note": "FullscreenTakeover impact" },
+        { "frame": 10920, "volume": 0.033, "note": "recover post-FT" },
+        { "frame": 14130, "volume": 0.040, "note": "swell UP start for major-riser lead-in" },
+        { "frame": 14594, "volume": 0.0, "note": "CRITICAL silence-pre drei-mal (sfx-053)" },
+        { "frame": 14609, "volume": 0.0, "note": "high-impact drei-mal — music silent" },
+        { "frame": 14700, "volume": 0.033, "note": "slow recover" },
+        { "frame": 14940, "volume": 0.033, "note": "crossfade out begin (4s)" },
+        { "frame": 15180, "volume": 0.0, "note": "crossfade out end" }
+      ],
+
+      "ducking": {
+        "mode": "sidechain_from_voice_track",
+        "threshold_dbfs": -18,
+        "ratio": "6:1",
+        "attack_ms": 10,
+        "release_ms": 150,
+        "range_db": -8,
+        "multiband": true
+      }
+    },
+
+    {
+      "bed_id": "mb-04",
+      "section": "BREATHING_PAUSE_1 + OPTIONS_BESTANDSSCHUTZ + SCHWEIZ_WARM_PAYOFF + ANTIZYKLISCH_CORE + BREATHING_PAUSE_2",
+      "start_s": 500,
+      "end_s": 640,
+      "start_frame": 15000,
+      "end_frame": 19200,
+      "mood": "resolute-solution",
+      "tonality": "G-Dur",
+      "bpm_range": [85, 95],
+      "bpm_target": 88,
+      "intensity": 0.65,
+      "under_voice_amp": 0.033,
+      "under_voice_dbfs": -29.7,
+      "solo_amp": 0.08,
+      "solo_dbfs": -22,
+
+      "epidemic_search": {
+        "primary_query": "resolute solution warm piano strings g major hopeful",
+        "alt_queries": [
+          "piano legato hopeful underscore",
+          "warm resolution finance documentary",
+          "emotional resolution strings piano"
+        ],
+        "mood_tags": ["warm", "hopeful", "resolute", "solution", "uplifting-subtle"],
+        "tonality": "G-Major",
+        "bpm_min": 85,
+        "bpm_max": 95,
+        "vocals": false,
+        "duration_min_s": 145,
+        "instrumentation_required": ["solo piano (intimate)", "string legato", "warm sub-pad"],
+        "instrumentation_forbidden": ["celebratory brass", "pop beat", "electronic drums"],
+        "energy_curve": "slow warm swell, hedonic-reset during breath pause (ts_015 503.9-510s), peak warmth during Schweiz-reveal (548.9-602.6s), decompression into pre-CTA pause (ts_019 635-640s)",
+        "key_match_with_previous": "Fm -> GM = relative approach via Ab (Fm's relative major). Actual key distance is major 2nd up — 4s crossfade notwendig um Moll->Dur-Bruch zu weichen."
+      },
+
+      "file_path_target": "public/sfx/daniel-bmf/mb04_resolute_solution.wav",
+      "format": "WAV 48kHz 24-bit stereo",
+      "stem_type": "FULL",
+
+      "stems_active": ["piano", "strings_legato", "warm_pad"],
+      "stems_muted": ["drums", "bass_synth"],
+      "stems_notes": "A1.2.1 Piano solo (leise) = Intimitaet. Plus Strings Legato fuer warme Emotion. KEINE Drums — sollte sich nach 'atmen' anfuehlen nach dem Peak-Cluster.",
+
+      "crossfade_in": {
+        "start_frame": 14940,
+        "end_frame": 15180,
+        "curve": "logarithmic",
+        "from_bed": "mb-03",
+        "duration_s": 4.0,
+        "note": "logarithmisch wegen Moll->Dur Swell (A2.5.6)"
+      },
+      "crossfade_out": {
+        "start_frame": 19110,
+        "end_frame": 19290,
+        "curve": "s-curve",
+        "to_bed": "mb-05",
+        "duration_s": 3.0,
+        "overlap_frames": 90
+      },
+
+      "volume_automation": [
+        { "frame": 14940, "volume": 0.0, "note": "crossfade in begin" },
+        { "frame": 15075, "volume": 0.024, "note": "breath pause — swell DOWN to ambient-low (A2.5.3)" },
+        { "frame": 15180, "volume": 0.024, "note": "fade-in complete at low during breath pause" },
+        { "frame": 15300, "volume": 0.033, "note": "breath pause ends, recover normal" },
+        { "frame": 17263, "volume": 0.0, "note": "micro-pre-silence for tonal whoosh Schweiz (sfx-059)" },
+        { "frame": 17293, "volume": 0.045, "note": "Schweiz reveal swell +3dB (A2.2.4 emotional Hoehepunkt)" },
+        { "frame": 17500, "volume": 0.033, "note": "back to normal under voice" },
+        { "frame": 18823, "volume": 0.040, "note": "swell-up on 'antizyklisch' warm-hit (sfx-061)" },
+        { "frame": 18900, "volume": 0.033, "note": "back to normal" },
+        { "frame": 19050, "volume": 0.024, "note": "swell-down for breath pause ts_019" },
+        { "frame": 19110, "volume": 0.024, "note": "crossfade out begin at ambient-low" },
+        { "frame": 19290, "volume": 0.0, "note": "crossfade out end" }
+      ],
+
+      "ducking": {
+        "mode": "sidechain_from_voice_track",
+        "threshold_dbfs": -20,
+        "ratio": "4:1",
+        "attack_ms": 12,
+        "release_ms": 180,
+        "range_db": -6,
+        "multiband": true,
+        "notes": "Lighter ducking (4:1) than mb-01/02/03 weil warm resolution — Stimme muss zentral bleiben, aber Musik darf emotional atmen"
+      }
+    },
+
+    {
+      "bed_id": "mb-05",
+      "section": "CTA_SOFT_HARD + AUTHORITY_ANCHOR + FINALE_REFRAIN",
+      "start_s": 640,
+      "end_s": 755,
+      "start_frame": 19200,
+      "end_frame": 22650,
+      "mood": "cta-resolve",
+      "tonality": "B-Dur",
+      "bpm_range": [90, 100],
+      "bpm_target": 94,
+      "intensity": 0.70,
+      "under_voice_amp": 0.034,
+      "under_voice_dbfs": -29.3,
+      "solo_amp": 0.09,
+      "solo_dbfs": -21,
+
+      "epidemic_search": {
+        "primary_query": "cta resolve motivational piano strings light percussion b major",
+        "alt_queries": [
+          "decisive resolve finance call to action",
+          "entschlossen motivational underscore",
+          "reflective piano strings conclusion"
+        ],
+        "mood_tags": ["resolute", "decisive", "motivational", "trust", "reflective"],
+        "tonality": "B-Major",
+        "bpm_min": 90,
+        "bpm_max": 100,
+        "vocals": false,
+        "duration_min_s": 115,
+        "instrumentation_required": ["piano", "strings legato", "light percussion (soft kick or low brush)"],
+        "instrumentation_forbidden": ["big drum build", "rock band", "EDM drops"],
+        "energy_curve": "steady mid-energy, slow build through authority-anchor, subtle lift at finale-refrain",
+        "key_match_with_previous": "GM -> BM = major 3rd up. Leichter Shift aber positiv-eskalierend. 3s crossfade ausreichend."
+      },
+
+      "file_path_target": "public/sfx/daniel-bmf/mb05_cta_resolve.wav",
+      "format": "WAV 48kHz 24-bit stereo",
+      "stem_type": "FULL",
+
+      "stems_active": ["piano", "strings_legato", "soft_percussion", "warm_pad"],
+      "stems_muted": ["lead_melody"],
+      "stems_percussion_partial": {
+        "active_from_frame": 19200,
+        "active_until_frame": 22572,
+        "note": "Soft percussion laeuft durch den ganzen Bed — subtile Motivation. Mute NUR vor finalem Music-Duck (sfx-067 @22603f)."
+      },
+
+      "crossfade_in": {
+        "start_frame": 19110,
+        "end_frame": 19290,
+        "curve": "s-curve",
+        "from_bed": "mb-04",
+        "duration_s": 3.0
+      },
+      "crossfade_out": {
+        "start_frame": 22603,
+        "end_frame": 22634,
+        "curve": "hard_duck_to_silence",
+        "to_bed": "mb-06",
+        "duration_s": 1.0,
+        "note": "sfx-067 music-change: full duck zu 0 in 30f (1s) — A2.1.3 Hard Mood-Break"
+      },
+
+      "volume_automation": [
+        { "frame": 19110, "volume": 0.0, "note": "crossfade in begin" },
+        { "frame": 19290, "volume": 0.034, "note": "fade-in complete" },
+        { "frame": 22144, "volume": 0.040, "note": "swell on personal-witness impact (sfx-065)" },
+        { "frame": 22220, "volume": 0.034, "note": "back to normal" },
+        { "frame": 22572, "volume": 0.040, "note": "swell on 'bitter' (sfx-066)" },
+        { "frame": 22603, "volume": 0.034, "note": "full music-duck start (sfx-067)" },
+        { "frame": 22634, "volume": 0.0, "note": "complete silence — dramatic pause before deep-boom-3" }
+      ],
+
+      "ducking": {
+        "mode": "sidechain_from_voice_track",
+        "threshold_dbfs": -18,
+        "ratio": "5:1",
+        "attack_ms": 10,
+        "release_ms": 150,
+        "range_db": -7,
+        "multiband": true
+      }
+    },
+
+    {
+      "bed_id": "mb-06",
+      "section": "OUTRO_DANKE_DEUTSCHLAND",
+      "start_s": 755,
+      "end_s": 760,
+      "start_frame": 22650,
+      "end_frame": 22800,
+      "mood": "final-silence-punch + outro-swell + fadeout",
+      "tonality": "A-Moll -> B-Dur (via Outro-Stinger)",
+      "bpm_range": [0, 85],
+      "bpm_target": 85,
+      "intensity": 0.0,
+      "under_voice_amp": 0.0,
+      "under_voice_dbfs": -60,
+      "solo_amp": 0.034,
+      "solo_dbfs": -29.3,
+
+      "epidemic_search": {
+        "primary_query": "warm outro stinger soft resolve strings piano 2-3 seconds",
+        "alt_queries": [
+          "soft outro reveal warm pad",
+          "reflective closer underscore",
+          "warm end-of-episode underscore"
+        ],
+        "mood_tags": ["warm", "reflective", "closer", "intimate"],
+        "tonality": "B-Major",
+        "bpm_min": 85,
+        "bpm_max": 95,
+        "vocals": false,
+        "duration_min_s": 10,
+        "instrumentation_required": ["warm pad", "piano note", "subtle string sustain"],
+        "instrumentation_forbidden": ["drums", "build-up", "intro-like energy"]
+      },
+
+      "file_path_target": "public/sfx/daniel-bmf/mb06_outro_swell.wav",
+      "format": "WAV 48kHz 24-bit stereo",
+
+      "stems_active": ["warm_pad", "piano"],
+      "stems_muted": ["drums", "strings_tremolo"],
+
+      "crossfade_in": {
+        "start_frame": 22691,
+        "end_frame": 22700,
+        "curve": "s-curve",
+        "from_silence": true,
+        "duration_s": 0.3,
+        "note": "Stinger entry on 'In diesem Sinn' — bed itself swells 9f later at 22700"
+      },
+      "crossfade_out": {
+        "start_frame": 22760,
+        "end_frame": 22800,
+        "curve": "logarithmic",
+        "to_silence": true,
+        "duration_s": 1.3
+      },
+
+      "volume_automation": [
+        { "frame": 22650, "volume": 0.0, "note": "hard silence through Deep Boom #3" },
+        { "frame": 22691, "volume": 0.04, "note": "stinger entry (sfx-070)" },
+        { "frame": 22700, "volume": 0.034, "note": "music-swell outro (sfx-071)" },
+        { "frame": 22760, "volume": 0.034, "note": "music-fade final (sfx-072) begin" },
+        { "frame": 22800, "volume": 0.0, "note": "end of video" }
+      ],
+
+      "ducking": {
+        "mode": "none",
+        "notes": "Daniel's 'euer Daniel Sauer' is already past the peak — music is the emotional closer, no ducking needed."
+      }
+    }
+  ],
+
+  "mood_changes_summary": [
+    { "at_frame": 4650, "at_s": 155, "from_mood": "tense-investigation", "to_mood": "rising-outrage", "shift": "Em->Cm, intensity +0.1, drums stay muted until Kobalt build", "type": "section_change_s_curve_3s" },
+    { "at_frame": 10350, "at_s": 345, "from_mood": "rising-outrage", "to_mood": "cold-pattern-reveal", "shift": "Cm->Fm (Quinte), intensity +0.05, instrumentation cold strings", "type": "section_change_s_curve_3s" },
+    { "at_frame": 15000, "at_s": 500, "from_mood": "cold-pattern-reveal", "to_mood": "resolute-solution", "shift": "Fm->GM (MOLL->DUR), intensity -0.2, piano+strings warm", "type": "deliberate_stimmungs_shift_log_4s" },
+    { "at_frame": 19200, "at_s": 640, "from_mood": "resolute-solution", "to_mood": "cta-resolve", "shift": "GM->BM (major 3rd up), intensity +0.05, light percussion in", "type": "section_change_s_curve_3s" },
+    { "at_frame": 22603, "at_s": 753.46, "from_mood": "cta-resolve", "to_mood": "final-silence-punch", "shift": "BM->silence, hard duck 1s, dramatic pause", "type": "hard_cut_to_silence" },
+    { "at_frame": 22691, "at_s": 756.38, "from_mood": "silence", "to_mood": "outro-resolve", "shift": "silence->BM swell, warm stinger", "type": "stinger_entry_s_curve_0.3s" }
+  ],
+
+  "global_rules_applied": {
+    "A2.5_basis_volume_under_voice": "0.032-0.034 (all beds compliant)",
+    "A2.5.4_silence_15f_before_impact": "All high-impact cues have corresponding volume_automation drops (see volume curves)",
+    "A2.2.1_speaker_dominates": "Drums/melody stems muted during voice-dominant sections",
+    "A2.4_drum_entry_2_4_bars_before_transition": "Applied at mb-02 (Kobalt entry 5323-5838f) and mb-03 (drei-mal riser 14100-14594f)",
+    "A2.3_key_matching": "All cross-fades > 1s use relative/quinte/half-step compatible keys"
+  }
+}

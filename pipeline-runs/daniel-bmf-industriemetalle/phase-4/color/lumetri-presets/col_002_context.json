@@ -1,0 +1,61 @@
+{
+  "preset_name": "BMF_col_002_context",
+  "target_segment": "col_002_context (1521-4860f / 50.7-162.0s)",
+  "format_version": "premiere-lumetri-2025",
+  "base_correction": {
+    "input_lut": "LOCOS_Rec709_Neutral.cube",
+    "white_balance": { "temperature": 8, "tint": 2 },
+    "tone": {
+      "exposure": 0.0,
+      "contrast": 8,
+      "highlights": 0,
+      "shadows": 0,
+      "whites": 2,
+      "blacks": -2
+    },
+    "saturation": 92
+  },
+  "creative": {
+    "look": "LOCOS_Premium_Base.cube",
+    "look_intensity": 40,
+    "adjustments": {
+      "faded_film": 6,
+      "sharpen": 22,
+      "vibrance": 0,
+      "saturation": 92,
+      "shadow_tint_hue": 200,
+      "shadow_tint_sat": 10,
+      "highlight_tint_hue": 30,
+      "highlight_tint_sat": 14,
+      "tint_balance": 10
+    }
+  },
+  "curves": {
+    "rgb_master": [[0,0.02],[0.25,0.19],[0.50,0.50],[0.75,0.81],[1.0,0.98]],
+    "red": [[0,2],[128,130],[255,253]],
+    "green": [[0,1],[128,129],[255,253]],
+    "blue": [[0,3],[128,127],[255,249]],
+    "hue_vs_sat": [[30,1.02],[45,1.0],[123,1.0],[200,0.95]]
+  },
+  "color_wheels": {
+    "shadows": { "hue": 200, "saturation": 0.08, "luminance": -0.01 },
+    "midtones": { "hue": 28, "saturation": 0.04, "luminance": 0.0 },
+    "highlights": { "hue": 30, "saturation": 0.10, "luminance": 0.01 }
+  },
+  "hsl_secondary_skin_protect": {
+    "enabled": true,
+    "hue_range": [15, 45],
+    "sat_range": [25, 85],
+    "luma_range": [30, 85],
+    "refine_denoise": 10,
+    "refine_blur": 3
+  },
+  "vignette": {
+    "amount": -0.30,
+    "midpoint": 65,
+    "roundness": 0,
+    "feather": 60,
+    "center_x": 0.50,
+    "center_y": 0.45
+  }
+}

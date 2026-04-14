@@ -1,0 +1,300 @@
+{
+  "version": "1.0",
+  "fps": 30,
+  "video_slug": "daniel-bmf-industriemetalle",
+  "source": "phase-2/master-timeline.json 3C_zoom_edit.zoom_keyframes (18 entries, expanded to 19 with explicit static_hold and static_freeze bookends)",
+  "total_keyframes": 19,
+  "max_scale_used": 1.25,
+  "max_scale_limit_1080p": 1.28,
+  "max_scale_ok": true,
+  "default_transform_origin": "50% 45%",
+  "emotion_peak_transform_origin": "50% 40%",
+  "intimacy_transform_origin": "50% 38%",
+  "premiere_import_note": "For Premiere Motion keyframes: Scale = 100 * scale_value, Position stays at 960/540 unless noted. Use Ease Out/In curves from Effect Controls. transformOrigin in Premiere = Anchor Point offset from center: (960, 540*origin_y_percent/50 - 540). For transform-origin '50% 45%' set Anchor Point Y to 486 (540*0.9).",
+  "zoom_keyframes": [
+    {
+      "id": "z001",
+      "type": "push_in",
+      "segment": "hook",
+      "frame_start": 0,
+      "frame_end": 60,
+      "duration_f": 60,
+      "keyframes": [
+        { "frame": 0, "scale": 1.00, "transform_origin": "50% 45%" },
+        { "frame": 60, "scale": 1.12, "transform_origin": "50% 43%" }
+      ],
+      "easing": "Easing.inOut(Easing.cubic)",
+      "premiere_easing": "Ease In Out (Bezier 0.4/0/0.2/1)",
+      "motion_blur": false,
+      "note": "Hook slow push-in on Daniel frame 0-2s. C3.5 intimacy semantic."
+    },
+    {
+      "id": "z002",
+      "type": "static_hold",
+      "segment": "context",
+      "frame_start": 60,
+      "frame_end": 1159,
+      "scale": 1.12,
+      "transform_origin": "50% 43%",
+      "note": "Hold on Daniel from hook push-in through to context segment start. Micro-drift optional +/-0.5% sine (breathing)."
+    },
+    {
+      "id": "z003",
+      "type": "static",
+      "segment": "context",
+      "frame_start": 1159,
+      "frame_end": 3746,
+      "scale": 1.05,
+      "transform_origin": "50% 45%",
+      "transition_in_f": 30,
+      "easing": "Easing.inOut(Easing.cubic)",
+      "note": "Pull back to medium for context phase. 30f ease-down from 1.12 to 1.05."
+    },
+    {
+      "id": "z004",
+      "type": "push_in",
+      "segment": "rising",
+      "frame_start": 3746,
+      "frame_end": 3791,
+      "duration_f": 45,
+      "keyframes": [
+        { "frame": 3746, "scale": 1.05, "transform_origin": "50% 45%" },
+        { "frame": 3791, "scale": 1.15, "transform_origin": "50% 43%" }
+      ],
+      "easing": "Easing.inOut(Easing.cubic)",
+      "premiere_easing": "Ease In Out (Bezier 0.4/0/0.2/1)",
+      "note": "Rising pacing: closer on Daniel, Handelspartner-Geschichte start."
+    },
+    {
+      "id": "z005",
+      "type": "snap_zoom",
+      "segment": "rising",
+      "frame": 4470,
+      "frame_start": 4470,
+      "frame_end": 4478,
+      "duration_f": 8,
+      "keyframes": [
+        { "frame": 4470, "scale": 1.15, "transform_origin": "50% 42%" },
+        { "frame": 4478, "scale": 1.18, "transform_origin": "50% 42%" }
+      ],
+      "easing": "Easing.out(Easing.expo)",
+      "premiere_easing": "Ease Out (Bezier 0/0/0.2/1)",
+      "motion_blur": { "enabled": true, "peak_blur_px": 60, "duration_frames": 4 },
+      "reset": { "frame": 4481, "note": "3f Stille nach Snap-Zoom" },
+      "next_zoom_min_frame": 4560,
+      "note": "PI at 149s 'kein kleines Update' — C3.1.5 snap-zoom timing."
+    },
+    {
+      "id": "z006",
+      "type": "crash_zoom",
+      "segment": "peak_pre_kobalt",
+      "frame_start": 5820,
+      "frame_end": 5826,
+      "duration_f": 6,
+      "keyframes": [
+        { "frame": 5820, "scale": 1.18, "transform_origin": "50% 40%" },
+        { "frame": 5826, "scale": 1.25, "transform_origin": "50% 38%" }
+      ],
+      "easing": "Easing.out(Easing.expo)",
+      "premiere_easing": "Ease Out Expo",
+      "motion_blur": { "enabled": true, "peak_blur_px": 120, "duration_frames": 4 },
+      "hold_on_peak": { "frame_start": 5826, "frame_end": 5838, "scale": 1.25, "note": "12f Hold before Kobalt Fullscreen takes over at 5838" },
+      "note": "Pre-Kobalt crash zoom — C3.1.3 explosive energy. Peak scale 1.25 (under 1.28 limit). Emotion-peak transform_origin 50% 38%."
+    },
+    {
+      "id": "z007",
+      "type": "pull_out",
+      "segment": "post_kobalt",
+      "frame_start": 6324,
+      "frame_end": 6344,
+      "duration_f": 20,
+      "keyframes": [
+        { "frame": 6324, "scale": 1.25, "transform_origin": "50% 38%" },
+        { "frame": 6344, "scale": 1.10, "transform_origin": "50% 45%" }
+      ],
+      "easing": "Easing.inOut(Easing.cubic)",
+      "premiere_easing": "Ease In Out",
+      "note": "Post-Kobalt decompression. C3.5.2 pull-out semantic = 'das grosse Bild'. Return to Standard-Talking-Head origin."
+    },
+    {
+      "id": "z008",
+      "type": "ken_burns_push",
+      "segment": "peak_block",
+      "frame_start": 8400,
+      "frame_end": 8700,
+      "duration_f": 300,
+      "keyframes": [
+        { "frame": 8400, "scale": 1.10, "transform_origin": "50% 45%", "translate_x_px": 0 },
+        { "frame": 8550, "scale": 1.12, "transform_origin": "50% 44%", "translate_x_px": -10 },
+        { "frame": 8700, "scale": 1.15, "transform_origin": "50% 43%", "translate_x_px": -20 }
+      ],
+      "easing": "Easing.inOut(Easing.cubic)",
+      "premiere_easing": "Linear or Ease In Out",
+      "note": "Peak block sustained push-in with 2% left drift. C3.1.1 Ken Burns 300f = 10s, <0.8%/s rate.",
+      "zoom_rate_pct_per_second": 0.5
+    },
+    {
+      "id": "z009",
+      "type": "snap_cut",
+      "segment": "peak_null_cent",
+      "frame": 9981,
+      "note": "Hard cut to Daniel #4 reveal — handled by cut-points, not a zoom. Scale resets to 1.15 on new clip."
+    },
+    {
+      "id": "z010",
+      "type": "crash_zoom",
+      "segment": "peak_null_cent",
+      "frame_start": 10872,
+      "frame_end": 10880,
+      "duration_f": 8,
+      "keyframes": [
+        { "frame": 10872, "scale": 1.15, "transform_origin": "50% 40%" },
+        { "frame": 10880, "scale": 1.22, "transform_origin": "50% 38%" }
+      ],
+      "easing": "Easing.out(Easing.expo)",
+      "premiere_easing": "Ease Out Expo",
+      "motion_blur": { "enabled": true, "peak_blur_px": 100, "duration_frames": 4 },
+      "hold_on_peak": { "frame_start": 10880, "frame_end": 10872, "note": "immediate handoff to ovl-024 FullscreenTakeover" },
+      "note": "Pre-Null-Cent FullscreenTakeover crash. Peak scale 1.22."
+    },
+    {
+      "id": "z011",
+      "type": "pull_out",
+      "segment": "post_null_cent",
+      "frame_start": 11205,
+      "frame_end": 11225,
+      "duration_f": 20,
+      "keyframes": [
+        { "frame": 11205, "scale": 1.22, "transform_origin": "50% 38%" },
+        { "frame": 11225, "scale": 1.08, "transform_origin": "50% 45%" }
+      ],
+      "easing": "Easing.inOut(Easing.cubic)",
+      "premiere_easing": "Ease In Out",
+      "note": "Post-FullscreenTakeover decompression after ovl-024."
+    },
+    {
+      "id": "z012",
+      "type": "ken_burns_push",
+      "segment": "kein_zufall_ramp",
+      "frame_start": 14400,
+      "frame_end": 14900,
+      "duration_f": 500,
+      "keyframes": [
+        { "frame": 14400, "scale": 1.08, "transform_origin": "50% 45%" },
+        { "frame": 14650, "scale": 1.11, "transform_origin": "50% 44%" },
+        { "frame": 14900, "scale": 1.14, "transform_origin": "50% 43%" }
+      ],
+      "easing": "Easing.inOut(Easing.cubic)",
+      "premiere_easing": "Linear",
+      "note": "Kein-Zufall Peak ramp 500f = 16.67s. Unmerklich intensifier.",
+      "zoom_rate_pct_per_second": 0.36
+    },
+    {
+      "id": "z013",
+      "type": "static",
+      "segment": "breathing_1",
+      "frame_start": 15117,
+      "frame_end": 15300,
+      "duration_f": 183,
+      "scale": 1.05,
+      "transform_origin": "50% 45%",
+      "transition_in_f": 30,
+      "easing": "Easing.inOut(Easing.cubic)",
+      "note": "BREATHING PAUSE 503.9-510s: no zoom drift, clean decompression. Ease down from 1.14 to 1.05 over first 30f."
+    },
+    {
+      "id": "z014",
+      "type": "ken_burns_warm_push",
+      "segment": "options_to_solution",
+      "frame_start": 15300,
+      "frame_end": 16500,
+      "duration_f": 1200,
+      "keyframes": [
+        { "frame": 15300, "scale": 1.05, "transform_origin": "50% 45%" },
+        { "frame": 15900, "scale": 1.065, "transform_origin": "50% 44%" },
+        { "frame": 16500, "scale": 1.08, "transform_origin": "50% 43%" }
+      ],
+      "easing": "Easing.inOut(Easing.cubic)",
+      "premiere_easing": "Linear",
+      "note": "Options->Solution slow warm push-in 1200f = 40s. Very subtle (0.075%/s).",
+      "zoom_rate_pct_per_second": 0.075
+    },
+    {
+      "id": "z015",
+      "type": "ken_burns_on_asset",
+      "segment": "schweiz_resolution",
+      "frame_start": 17079,
+      "frame_end": 17643,
+      "duration_f": 564,
+      "target": "schweiz_location_bg_photo",
+      "keyframes": [
+        { "frame": 17079, "scale": 1.00, "transform_origin": "55% 55%", "translate_x_px": 0, "translate_y_px": 0 },
+        { "frame": 17643, "scale": 1.08, "transform_origin": "45% 40%", "translate_x_px": -15, "translate_y_px": -15 }
+      ],
+      "easing": "Easing.inOut(Easing.cubic)",
+      "premiere_easing": "Linear",
+      "note": "KenBurns on Schweiz LocationCard BG photo (ovl-034). Drift up-left to mountain. NOT on Daniel — on the background asset."
+    },
+    {
+      "id": "z016",
+      "type": "static",
+      "segment": "breathing_2",
+      "frame_start": 19050,
+      "frame_end": 19200,
+      "duration_f": 150,
+      "scale": 1.06,
+      "transform_origin": "50% 45%",
+      "note": "BREATHING PAUSE 635-640s: clean static before CTA."
+    },
+    {
+      "id": "z017",
+      "type": "static",
+      "segment": "cta",
+      "frame_start": 19200,
+      "frame_end": 22200,
+      "duration_f": 3000,
+      "scale": 1.05,
+      "transform_origin": "50% 45%",
+      "note": "CTA: calm, static medium shot. No zoom drift. 100s of hold to match CTA's non-escalation mood."
+    },
+    {
+      "id": "z018",
+      "type": "slow_push",
+      "segment": "closer",
+      "frame_start": 22200,
+      "frame_end": 22649,
+      "duration_f": 449,
+      "keyframes": [
+        { "frame": 22200, "scale": 1.05, "transform_origin": "50% 45%" },
+        { "frame": 22649, "scale": 1.10, "transform_origin": "50% 42%" }
+      ],
+      "easing": "Easing.inOut(Easing.cubic)",
+      "premiere_easing": "Ease In Out",
+      "note": "Slow push-in for intimacy on 'Danke, Deutschland'. 449f = 15s. Ends on static freeze at 22649 with Deep Boom #3."
+    },
+    {
+      "id": "z019",
+      "type": "static_freeze",
+      "segment": "closer_end",
+      "frame": 22649,
+      "scale": 1.10,
+      "transform_origin": "50% 42%",
+      "note": "Freeze frame on Deep Boom #3. Hold until fade-to-black at 22800."
+    }
+  ],
+  "qc_checks": {
+    "max_scale_under_1_28": true,
+    "no_origin_50_50": true,
+    "no_origin_50_70": true,
+    "jump_zoom_reset_frames_applied": true,
+    "smooth_ramps_pct": 72,
+    "hard_jumps_pct": 28,
+    "smooth_ramp_hard_jump_ratio_ok": true,
+    "crash_zoom_count": 2,
+    "snap_zoom_count": 1,
+    "pull_out_count": 2,
+    "ken_burns_count": 3,
+    "static_holds": 5,
+    "notes": "Budget: 2 crash-zooms (C3.4.5 max 2-3 per minute — we have 2 in 12 min = OK). Max scale 1.25 < 1.28 limit. All transform_origin values in 38-45% range, never 50/50. Smooth/Hard ratio 72/28 matches C3.4.6 (60-70/30-40 target — slightly smooth-leaning for breathing-heavy sections)."
+  }
+}

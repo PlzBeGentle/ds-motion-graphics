@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xmeml>
+<xmeml version="5">
+  <sequence id="daniel-bmf-industriemetalle-markers">
+    <name>Daniel BMF Industriemetalle — Edit Markers</name>
+    <duration>22800</duration>
+    <rate>
+      <timebase>30</timebase>
+      <ntsc>FALSE</ntsc>
+    </rate>
+    <timecode>
+      <rate>
+        <timebase>30</timebase>
+        <ntsc>FALSE</ntsc>
+      </rate>
+      <string>00:00:00:00</string>
+      <frame>0</frame>
+      <displayformat>NDF</displayformat>
+    </timecode>
+    <media>
+      <video>
+        <format>
+          <samplecharacteristics>
+            <width>1920</width>
+            <height>1080</height>
+            <pixelaspectratio>square</pixelaspectratio>
+            <rate>
+              <timebase>30</timebase>
+              <ntsc>FALSE</ntsc>
+            </rate>
+          </samplecharacteristics>
+        </format>
+      </video>
+    </media>
+
+    <!-- CUT POINTS (71) -->
+    <marker><comment>hook-satzende erschrocken</comment><name>CUT-001</name><in>68</in><out>68</out></marker>
+    <marker><comment>5 Stunden impact J-cut 12f</comment><name>CUT-002 J12f</name><in>258</in><out>258</out></marker>
+    <marker><comment>satzende persoenlich</comment><name>CUT-003</name><in>522</in><out>522</out></marker>
+    <marker><comment>muss euch ehrlich sagen L-cut 10f</comment><name>CUT-004 L10f</name><in>644</in><out>644</out></marker>
+    <marker><comment>rausgeschickt PI Start</comment><name>CUT-005</name><in>870</in><out>870</out></marker>
+    <marker><comment>gestoppt impact on verb</comment><name>CUT-006</name><in>1038</in><out>1038</out></marker>
+    <marker><comment>ohne Uebergangsfriste tri-impact</comment><name>CUT-007</name><in>1158</in><out>1158</out></marker>
+    <marker><comment>nicht einen Null-Cent Reveal L-cut 15f</comment><name>CUT-008 L15f</name><in>1394</in><out>1394</out></marker>
+    <marker><comment>was drin steht ende satz</comment><name>CUT-009</name><in>1521</in><out>1521</out></marker>
+    <marker><comment>lesen koennt J-cut 10f</comment><name>CUT-010 J10f</name><in>1806</in><out>1806</out></marker>
+    <marker><comment>worum es geht</comment><name>CUT-011</name><in>1913</in><out>1913</out></marker>
+    <marker><comment>Indium Renium kaufen wolltet</comment><name>CUT-012</name><in>2192</in><out>2192</out></marker>
+    <marker><comment>zollweglich nicht eingefuehrt L-cut 12f</comment><name>CUT-013 L12f</name><in>2545</in><out>2545</out></marker>
+    <marker><comment>fiel keine Umsatzsteuer an</comment><name>CUT-014</name><in>2656</in><out>2656</out></marker>
+    <marker><comment>seit 2004 belegt hat</comment><name>CUT-015</name><in>3126</in><out>3126</out></marker>
+    <marker><comment>auf Seite 7 Teaser L-cut 15f</comment><name>CUT-016 L15f</name><in>3458</in><out>3458</out></marker>
+    <marker><comment>Kanal bekommen Handelspartner Start</comment><name>CUT-017</name><in>3746</in><out>3746</out></marker>
+    <marker><comment>rausgeschickt hat</comment><name>CUT-018</name><in>4103</in><out>4103</out></marker>
+    <marker><comment>was jetzt die Regel ist J-cut 12f</comment><name>CUT-019 J12f</name><in>4451</in><out>4451</out></marker>
+    <marker><comment>kein kleines Update kritisch</comment><name>CUT-020</name><in>4826</in><out>4826</out></marker>
+    <marker><comment>fuer sich schon absurd</comment><name>CUT-021</name><in>5014</in><out>5014</out></marker>
+    <marker><comment>Erstens listicle start</comment><name>CUT-022</name><in>5323</in><out>5323</out></marker>
+    <marker><comment>drei Beispiele Seite 5 L-cut 10f</comment><name>CUT-023 L10f</name><in>5672</in><out>5672</out></marker>
+    <marker><comment>KOBALT reveal peak</comment><name>CUT-024</name><in>5884</in><out>5884</out></marker>
+    <marker><comment>zitat-ende</comment><name>CUT-025</name><in>6325</in><out>6325</out></marker>
+    <marker><comment>Merkt ihr was hier passiert</comment><name>CUT-026</name><in>6612</in><out>6612</out></marker>
+    <marker><comment>in jeder Batterie steckt L-cut 15f</comment><name>CUT-027 L15f</name><in>7097</in><out>7097</out></marker>
+    <marker><comment>Zweitens Rueckwirkung</comment><name>CUT-028</name><in>7395</in><out>7395</out></marker>
+    <marker><comment>wird veroeffentlicht</comment><name>CUT-029</name><in>7715</in><out>7715</out></marker>
+    <marker><comment>das ist so punch</comment><name>CUT-030</name><in>7991</in><out>7991</out></marker>
+    <marker><comment>Verkehrsschild-Metapher J-cut 10f</comment><name>CUT-031 J10f</name><in>8294</in><out>8294</out></marker>
+    <marker><comment>rueckwirkend Umsatzsteuer kosten peak</comment><name>CUT-032</name><in>8663</in><out>8663</out></marker>
+    <marker><comment>Drittens 22 Jahre geloescht</comment><name>CUT-033</name><in>8807</in><out>8807</out></marker>
+    <marker><comment>Zolllagermarkt</comment><name>CUT-034</name><in>9030</in><out>9030</out></marker>
+    <marker><comment>Gerichte Bezug genommen</comment><name>CUT-035</name><in>9172</in><out>9172</out></marker>
+    <marker><comment>Teil der Rechtsstruktur</comment><name>CUT-036</name><in>9340</in><out>9340</out></marker>
+    <marker><comment>wird damit aufgehoben</comment><name>CUT-037</name><in>9692</in><out>9692</out></marker>
+    <marker><comment>mit einem Nebensatz L-cut 12f</comment><name>CUT-038 L12f</name><in>9953</in><out>9953</out></marker>
+    <marker><comment>keinen einzigen Cent peak-refrain</comment><name>CUT-039</name><in>10182</in><out>10182</out></marker>
+    <marker><comment>Warum rhetorisch</comment><name>CUT-040</name><in>10298</in><out>10298</out></marker>
+    <marker><comment>jedes Kind weiss das</comment><name>CUT-041</name><in>10603</in><out>10603</out></marker>
+    <marker><comment>die tatsaechliche Rechnung</comment><name>CUT-042</name><in>10870</in><out>10870</out></marker>
+    <marker><comment>0 Cent mehr Einnahmen J-cut 15f</comment><name>CUT-043 J15f</name><in>11206</in><out>11206</out></marker>
+    <marker><comment>4 Februar 25 datum-reveal</comment><name>CUT-044</name><in>11440</in><out>11440</out></marker>
+    <marker><comment>Exportkontrollen Wolfram</comment><name>CUT-045</name><in>11873</in><out>11873</out></marker>
+    <marker><comment>nicht der erste Schritt</comment><name>CUT-046</name><in>12062</in><out>12062</out></marker>
+    <marker><comment>Galliumpreise nur runter</comment><name>CUT-047</name><in>12435</in><out>12435</out></marker>
+    <marker><comment>Germanium plus 400</comment><name>CUT-048</name><in>12670</in><out>12670</out></marker>
+    <marker><comment>September 24 Antimon</comment><name>CUT-049</name><in>12863</in><out>12863</out></marker>
+    <marker><comment>plus 437 Prozent</comment><name>CUT-050</name><in>13025</in><out>13025</out></marker>
+    <marker><comment>April 25 sieben seltene Erden</comment><name>CUT-051</name><in>13318</in><out>13318</out></marker>
+    <marker><comment>Chipfabriken nicht mehr weiss L-cut 12f</comment><name>CUT-052 L12f</name><in>13766</in><out>13766</out></marker>
+    <marker><comment>letzte private Infrastruktur punch-peak</comment><name>CUT-053</name><in>14131</in><out>14131</out></marker>
+    <marker><comment>Es ist unglaublich staccato</comment><name>CUT-054</name><in>14219</in><out>14219</out></marker>
+    <marker><comment>strategischen Reserven</comment><name>CUT-055</name><in>14843</in><out>14843</out></marker>
+    <marker><comment>dreimal duerft ihr raten refrain</comment><name>CUT-056</name><in>15074</in><out>15074</out></marker>
+    <marker><comment>wichtigste Teil Bestandsschutz J-cut 10f</comment><name>CUT-057 J10f</name><in>15495</in><out>15495</out></marker>
+    <marker><comment>9 April neukauf datum</comment><name>CUT-058</name><in>16296</in><out>16296</out></marker>
+    <marker><comment>morgen uebermorgen bestellen</comment><name>CUT-059</name><in>17277</in><out>17277</out></marker>
+    <marker><comment>vier Tage nach BMF Alternative</comment><name>CUT-060</name><in>17644</in><out>17644</out></marker>
+    <marker><comment>ich bin froh darueber L-cut 15f</comment><name>CUT-061 L15f</name><in>18258</in><out>18258</out></marker>
+    <marker><comment>Position immer schief geht</comment><name>CUT-062</name><in>18544</in><out>18544</out></marker>
+    <marker><comment>echte Substanz</comment><name>CUT-063</name><in>18793</in><out>18793</out></marker>
+    <marker><comment>Handelsblatt FAZ irgendwo CTA-frage</comment><name>CUT-064</name><in>19737</in><out>19737</out></marker>
+    <marker><comment>nichts gefunden Kommentare</comment><name>CUT-065</name><in>19967</in><out>19967</out></marker>
+    <marker><comment>Link unter das Video</comment><name>CUT-066</name><in>20224</in><out>20224</out></marker>
+    <marker><comment>lest selbst bildet euch</comment><name>CUT-067</name><in>20336</in><out>20336</out></marker>
+    <marker><comment>eigene Meinung + Beratung</comment><name>CUT-068</name><in>20699</in><out>20699</out></marker>
+    <marker><comment>mit meinem Team CTA soft-close</comment><name>CUT-069</name><in>21238</in><out>21238</out></marker>
+    <marker><comment>Euro-Krise Corona expertise</comment><name>CUT-070</name><in>21546</in><out>21546</out></marker>
+    <marker><comment>keinen Cent Refrain L-cut 12f</comment><name>CUT-071 L12f</name><in>22294</in><out>22294</out></marker>
+
+    <!-- ZOOM KEYFRAMES (18) -->
+    <marker><comment>Hook push-in 1.0 to 1.12 60f origin 50/45</comment><name>ZOOM-01 push-in</name><in>0</in><out>60</out></marker>
+    <marker><comment>Static hold 1.12 context start</comment><name>ZOOM-02 hold</name><in>60</in><out>1159</out></marker>
+    <marker><comment>Pull back 1.05 context medium</comment><name>ZOOM-03 static 1.05</name><in>1159</in><out>3746</out></marker>
+    <marker><comment>Push-in 1.05 to 1.15 45f rising</comment><name>ZOOM-04 push-in</name><in>3746</in><out>3791</out></marker>
+    <marker><comment>Snap-zoom 1.15 to 1.18 8f kein kleines Update</comment><name>ZOOM-05 snap</name><in>4470</in><out>4478</out></marker>
+    <marker><comment>Crash-zoom 1.18 to 1.25 6f pre-Kobalt</comment><name>ZOOM-06 crash</name><in>5820</in><out>5826</out></marker>
+    <marker><comment>Pull-out 1.25 to 1.10 20f post-Kobalt</comment><name>ZOOM-07 pull-out</name><in>6324</in><out>6344</out></marker>
+    <marker><comment>Ken Burns push 1.10 to 1.15 300f peak</comment><name>ZOOM-08 ken-burns</name><in>8400</in><out>8700</out></marker>
+    <marker><comment>Snap-cut hard cut Daniel 4 reveal</comment><name>ZOOM-09 snap-cut</name><in>9981</in><out>9981</out></marker>
+    <marker><comment>Crash-zoom 1.15 to 1.22 8f pre-Null-Cent FT</comment><name>ZOOM-10 crash</name><in>10872</in><out>10880</out></marker>
+    <marker><comment>Pull-out 1.22 to 1.08 20f post-FT</comment><name>ZOOM-11 pull-out</name><in>11205</in><out>11225</out></marker>
+    <marker><comment>Ken Burns push 1.08 to 1.14 500f Kein-Zufall</comment><name>ZOOM-12 ken-burns</name><in>14400</in><out>14900</out></marker>
+    <marker><comment>Static 1.05 breathing pause 1</comment><name>ZOOM-13 breath-1</name><in>15117</in><out>15300</out></marker>
+    <marker><comment>Ken Burns warm 1.05 to 1.08 1200f options</comment><name>ZOOM-14 warm-push</name><in>15300</in><out>16500</out></marker>
+    <marker><comment>Ken Burns Schweiz BG 1.0 to 1.08 drift</comment><name>ZOOM-15 schweiz-bg</name><in>17079</in><out>17643</out></marker>
+    <marker><comment>Static 1.06 breathing pause 2</comment><name>ZOOM-16 breath-2</name><in>19050</in><out>19200</out></marker>
+    <marker><comment>Static 1.05 CTA hold</comment><name>ZOOM-17 cta-hold</name><in>19200</in><out>22200</out></marker>
+    <marker><comment>Slow push 1.05 to 1.10 Danke Deutschland</comment><name>ZOOM-18 slow-push</name><in>22200</in><out>22649</out></marker>
+
+    <!-- PATTERN INTERRUPTS (18) -->
+    <marker><comment>Kinetic text overlay BMF-Schreiben</comment><name>PI-01 kinetic</name><in>840</in><out>840</out></marker>
+    <marker><comment>B-Roll Zollfreilager Frankfurt 7s</comment><name>PI-02 b-roll</name><in>1860</in><out>2070</out></marker>
+    <marker><comment>Freeze annotation 2004 stamp</comment><name>PI-03 freeze</name><in>3150</in><out>3240</out></marker>
+    <marker><comment>Snap-zoom kein kleines Update</comment><name>PI-04 snap</name><in>4470</in><out>4478</out></marker>
+    <marker><comment>FullscreenTakeover KOBALT centerpiece</comment><name>PI-05 FT-kobalt</name><in>5895</in><out>6381</out></marker>
+    <marker><comment>Kinetic text 2 Rueckwirkung</comment><name>PI-06 kinetic</name><in>7395</in><out>7395</out></marker>
+    <marker><comment>Kinetic text 3 22 Jahre</comment><name>PI-07 kinetic</name><in>8808</in><out>8808</out></marker>
+    <marker><comment>Letterbox 1/3 keinen einzigen Cent 120f</comment><name>PI-08 letterbox</name><in>10182</in><out>10302</out></marker>
+    <marker><comment>FullscreenTakeover 0 EUR MEHR</comment><name>PI-09 FT-null-cent</name><in>10872</in><out>11205</out></marker>
+    <marker><comment>Split-screen 9 April vs 4 Februar</comment><name>PI-10 split</name><in>11440</in><out>11440</out></marker>
+    <marker><comment>Freeze annotation China Timeline</comment><name>PI-11 freeze</name><in>12300</in><out>12390</out></marker>
+    <marker><comment>B-Roll Chipfabrik TSMC 7s</comment><name>PI-12 b-roll</name><in>13765</in><out>13975</out></marker>
+    <marker><comment>Color shift peak Drei mal raten T&amp;O out</comment><name>PI-13 color</name><in>15074</in><out>15074</out></marker>
+    <marker><comment>Zoom change options Bestandsschutz</comment><name>PI-14 zoom</name><in>16440</in><out>16440</out></marker>
+    <marker><comment>B-Roll Schweiz Alpen Tresor 7s</comment><name>PI-15 b-roll</name><in>17850</in><out>18060</out></marker>
+    <marker><comment>NewsCard Handelsblatt FAZ slide-in</comment><name>PI-16 newscard</name><in>19350</in><out>19350</out></marker>
+    <marker><comment>Zoom change icons Halbleiter</comment><name>PI-17 zoom</name><in>20700</in><out>20700</out></marker>
+    <marker><comment>Letterbox 2/3 keinen Cent Refrain 90f</comment><name>PI-18 letterbox</name><in>22290</in><out>22380</out></marker>
+
+    <!-- B-ROLL SLOTS (11) -->
+    <marker><comment>BMF Berlin Exterior 7s</comment><name>BROLL-01</name><in>1170</in><out>1380</out></marker>
+    <marker><comment>PDF BMF-Schreiben Close-Up 7s</comment><name>BROLL-02</name><in>1800</in><out>2010</out></marker>
+    <marker><comment>Zollfreilager Industriemetall 6s</comment><name>BROLL-03</name><in>2280</in><out>2460</out></marker>
+    <marker><comment>Telefon Steuerberater 7s</comment><name>BROLL-04</name><in>3750</in><out>3960</out></marker>
+    <marker><comment>EV Batterie Kobalt 7s</comment><name>BROLL-05</name><in>6750</in><out>6960</out></marker>
+    <marker><comment>Verkehrsschild Metapher 6s</comment><name>BROLL-06</name><in>7860</in><out>8040</out></marker>
+    <marker><comment>China Exportkontrollen Hafen 7s</comment><name>BROLL-07</name><in>12210</in><out>12420</out></marker>
+    <marker><comment>Chipfabrik TSMC 7s</comment><name>BROLL-08</name><in>13650</in><out>13860</out></marker>
+    <marker><comment>China Bunker Russland 7s</comment><name>BROLL-09</name><in>14790</in><out>15000</out></marker>
+    <marker><comment>Schweiz Alpen Tresor 7s</comment><name>BROLL-10</name><in>17850</in><out>18060</out></marker>
+    <marker><comment>Branchen-Icons Collage 6s</comment><name>BROLL-11</name><in>20640</in><out>20820</out></marker>
+  </sequence>
+</xmeml>

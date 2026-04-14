@@ -1,0 +1,856 @@
+{
+  "color_spec": {
+    "version": "1.0",
+    "video_slug": "daniel-bmf-industriemetalle",
+    "fps": 30,
+    "duration_f": 22800,
+    "duration_s": 760,
+    "base_grade": "LOCOS Premium Grade (atoms/video/color/locos-brand-color-language.md#locos-premium-grade-base)",
+    "brand_override_source": "user_correction:bmf-skript-2026-04-14",
+    "anti_patterns_enforced": [
+      "NO Teal-Orange (Hue 180-220 + 20-40)",
+      "NO Cyan / Magenta / Violet / Neon-Green / Holographic",
+      "NO full-saturation push",
+      "Skin tone I-Line protected at 123 deg +/- 3"
+    ],
+    "global": {
+      "skin_tone_protection": {
+        "hue_range_deg": [15, 45],
+        "sat_range_pct": [30, 80],
+        "luma_range_pct": [30, 80],
+        "i_line_target_deg": 123,
+        "i_line_tolerance_deg": 3
+      },
+      "memory_colors_checked": ["skin_tone_daniel"],
+      "film_grain_base_pct": 10,
+      "halation_enabled_when": "resolution_gold_segments_only",
+      "chromatic_aberration_max_px": 1.5,
+      "bleach_bypass": false,
+      "skin_tone_preservation_hsl_qualifier": {
+        "hue_deg": [15, 45],
+        "saturation_pct": [25, 85],
+        "luminance_pct": [30, 85],
+        "desaturation_fallback_floor_pct": 45
+      }
+    },
+    "grades": [
+      {
+        "id": "col_001_hook",
+        "frame_start": 0,
+        "frame_end": 1521,
+        "section": "hook_pain_anchor",
+        "source_1E": "col_001",
+        "transition_in_frames": 0,
+        "transition_out_frames": 60,
+        "temperature": "cool",
+        "intent": "Daniel ist erschoepft + ungeglaeubig nach 5h Nachtschicht. Kuehl entsaettigt UEBERSCHREIBT D1.1-warm-hook-Default bewusst.",
+        "lumetri_basic": {
+          "exposure": -0.15,
+          "contrast": 12,
+          "highlights": -8,
+          "shadows": -6,
+          "whites": -4,
+          "blacks": -6,
+          "saturation": 75,
+          "white_balance_temp": -12,
+          "white_balance_tint": 4
+        },
+        "lumetri_creative": {
+          "look": "LOCOS_Premium_Base",
+          "intensity_pct": 85,
+          "faded_film": 12,
+          "sharpen": 18,
+          "vibrance": -8,
+          "saturation": 75,
+          "tint_shadows_hsl": { "h": 210, "s": 18 },
+          "tint_highlights_hsl": { "h": 32, "s": 8 },
+          "tint_balance": -15
+        },
+        "lumetri_curves": {
+          "master_s_curve": [
+            { "input": 0.0, "output": 0.03 },
+            { "input": 0.25, "output": 0.18 },
+            { "input": 0.50, "output": 0.48 },
+            { "input": 0.75, "output": 0.80 },
+            { "input": 1.0, "output": 0.97 }
+          ],
+          "red_channel": [
+            { "input": 0, "output": 4 },
+            { "input": 128, "output": 126 },
+            { "input": 255, "output": 250 }
+          ],
+          "green_channel": [
+            { "input": 0, "output": 2 },
+            { "input": 128, "output": 128 },
+            { "input": 255, "output": 254 }
+          ],
+          "blue_channel": [
+            { "input": 0, "output": 10 },
+            { "input": 128, "output": 132 },
+            { "input": 255, "output": 244 }
+          ],
+          "hue_saturation_curve": [
+            { "hue_deg": 15, "sat_mult": 1.0 },
+            { "hue_deg": 30, "sat_mult": 1.0 },
+            { "hue_deg": 45, "sat_mult": 0.98 },
+            { "hue_deg": 123, "sat_mult": 0.98 },
+            { "hue_deg": 210, "sat_mult": 0.72 }
+          ]
+        },
+        "lumetri_color_wheels": {
+          "shadows": { "hue_deg": 210, "sat": 0.20, "lum": -0.04, "rgb_delta": { "r": -0.03, "g": 0.01, "b": 0.03 } },
+          "midtones": { "hue_deg": 0, "sat": 0.0, "lum": -0.02, "rgb_delta": { "r": -0.01, "g": 0.0, "b": 0.01 } },
+          "highlights": { "hue_deg": 215, "sat": 0.10, "lum": -0.02, "rgb_delta": { "r": -0.01, "g": 0.005, "b": 0.01 } }
+        },
+        "vignette": {
+          "opacity_pct": 18,
+          "center": "50% 45%",
+          "inner_radius_pct": 60,
+          "outer_radius_pct": 98,
+          "feather": 0.55,
+          "color": "#0a0a14"
+        },
+        "film_grain": {
+          "opacity_pct": 12,
+          "blend_mode": "overlay",
+          "fine_mix_pct": 25,
+          "coarse_mix_pct": 75
+        },
+        "lut": {
+          "technical": { "name": "LOCOS_Rec709_Neutral.cube", "opacity_pct": 100 },
+          "creative": { "name": "LOCOS_Premium_CoolDesaturate.cube", "opacity_pct": 35 }
+        },
+        "halation": false,
+        "chromatic_aberration": false,
+        "css_filter": "contrast(1.06) saturate(0.75) brightness(0.97)"
+      },
+      {
+        "id": "col_002_context",
+        "frame_start": 1521,
+        "frame_end": 4860,
+        "section": "context_explanation",
+        "source_1E": "col_002",
+        "transition_in_frames": 60,
+        "transition_out_frames": 40,
+        "temperature": "neutral_locos_premium_pure",
+        "intent": "15 Jahre Lager + China/Gallium Kontext. Sachlich. LOCOS Premium Grade pure.",
+        "lumetri_basic": {
+          "exposure": 0.0,
+          "contrast": 8,
+          "highlights": 0,
+          "shadows": 0,
+          "whites": 2,
+          "blacks": -2,
+          "saturation": 92,
+          "white_balance_temp": 8,
+          "white_balance_tint": 2
+        },
+        "lumetri_creative": {
+          "look": "LOCOS_Premium_Base",
+          "intensity_pct": 100,
+          "faded_film": 6,
+          "sharpen": 22,
+          "vibrance": 0,
+          "saturation": 92,
+          "tint_shadows_hsl": { "h": 200, "s": 10 },
+          "tint_highlights_hsl": { "h": 30, "s": 14 },
+          "tint_balance": 10
+        },
+        "lumetri_curves": {
+          "master_s_curve": [
+            { "input": 0.0, "output": 0.02 },
+            { "input": 0.25, "output": 0.19 },
+            { "input": 0.50, "output": 0.50 },
+            { "input": 0.75, "output": 0.81 },
+            { "input": 1.0, "output": 0.98 }
+          ],
+          "red_channel": [
+            { "input": 0, "output": 2 },
+            { "input": 128, "output": 130 },
+            { "input": 255, "output": 253 }
+          ],
+          "green_channel": [
+            { "input": 0, "output": 1 },
+            { "input": 128, "output": 129 },
+            { "input": 255, "output": 253 }
+          ],
+          "blue_channel": [
+            { "input": 0, "output": 3 },
+            { "input": 128, "output": 127 },
+            { "input": 255, "output": 249 }
+          ],
+          "hue_saturation_curve": [
+            { "hue_deg": 30, "sat_mult": 1.02 },
+            { "hue_deg": 45, "sat_mult": 1.0 },
+            { "hue_deg": 123, "sat_mult": 1.0 },
+            { "hue_deg": 200, "sat_mult": 0.95 }
+          ]
+        },
+        "lumetri_color_wheels": {
+          "shadows": { "hue_deg": 200, "sat": 0.08, "lum": -0.01, "rgb_delta": { "r": 0.0, "g": 0.0, "b": 0.0 } },
+          "midtones": { "hue_deg": 28, "sat": 0.04, "lum": 0.0, "rgb_delta": { "r": 0.005, "g": 0.002, "b": -0.003 } },
+          "highlights": { "hue_deg": 30, "sat": 0.10, "lum": 0.01, "rgb_delta": { "r": 0.008, "g": 0.003, "b": -0.008 } }
+        },
+        "vignette": {
+          "opacity_pct": 10,
+          "center": "50% 45%",
+          "inner_radius_pct": 65,
+          "outer_radius_pct": 97,
+          "feather": 0.60,
+          "color": "#0a0a14"
+        },
+        "film_grain": { "opacity_pct": 10, "blend_mode": "overlay", "fine_mix_pct": 25, "coarse_mix_pct": 75 },
+        "lut": {
+          "technical": { "name": "LOCOS_Rec709_Neutral.cube", "opacity_pct": 100 },
+          "creative": { "name": "LOCOS_Premium_Base.cube", "opacity_pct": 40 }
+        },
+        "halation": false,
+        "chromatic_aberration": false,
+        "css_filter": "contrast(1.02) saturate(1.0) brightness(1.0)"
+      },
+      {
+        "id": "col_003_rising",
+        "frame_start": 4860,
+        "frame_end": 5838,
+        "section": "valley_rising_vier_dinge",
+        "source_1E": "col_003_partial",
+        "transition_in_frames": 40,
+        "transition_out_frames": 20,
+        "temperature": "cool",
+        "intent": "Problem-Aufbau § 4 Nr 4a + 4b. Empoerung baut sich auf. Fast-out 20f = prep fuer Kobalt Shock-Red Peak.",
+        "lumetri_basic": {
+          "exposure": -0.10,
+          "contrast": 14,
+          "highlights": -6,
+          "shadows": -8,
+          "whites": -3,
+          "blacks": -5,
+          "saturation": 88,
+          "white_balance_temp": -6,
+          "white_balance_tint": 3
+        },
+        "lumetri_creative": {
+          "look": "LOCOS_Premium_CoolLean",
+          "intensity_pct": 90,
+          "faded_film": 8,
+          "sharpen": 24,
+          "vibrance": -5,
+          "saturation": 88,
+          "tint_shadows_hsl": { "h": 205, "s": 15 },
+          "tint_highlights_hsl": { "h": 30, "s": 6 },
+          "tint_balance": -8
+        },
+        "lumetri_curves": {
+          "master_s_curve": [
+            { "input": 0.0, "output": 0.03 },
+            { "input": 0.25, "output": 0.18 },
+            { "input": 0.50, "output": 0.49 },
+            { "input": 0.75, "output": 0.80 },
+            { "input": 1.0, "output": 0.97 }
+          ],
+          "red_channel": [{ "input": 0, "output": 3 }, { "input": 128, "output": 126 }, { "input": 255, "output": 250 }],
+          "green_channel": [{ "input": 0, "output": 2 }, { "input": 128, "output": 128 }, { "input": 255, "output": 253 }],
+          "blue_channel": [{ "input": 0, "output": 8 }, { "input": 128, "output": 130 }, { "input": 255, "output": 246 }]
+        },
+        "lumetri_color_wheels": {
+          "shadows": { "hue_deg": 205, "sat": 0.16, "lum": -0.03, "rgb_delta": { "r": -0.04, "g": 0.015, "b": 0.035 } },
+          "midtones": { "hue_deg": 0, "sat": 0.0, "lum": -0.01, "rgb_delta": { "r": -0.005, "g": 0.0, "b": 0.005 } },
+          "highlights": { "hue_deg": 30, "sat": 0.05, "lum": -0.01, "rgb_delta": { "r": -0.012, "g": 0.004, "b": 0.012 } }
+        },
+        "vignette": { "opacity_pct": 14, "center": "50% 45%", "inner_radius_pct": 62, "outer_radius_pct": 97, "feather": 0.55 },
+        "film_grain": { "opacity_pct": 11, "blend_mode": "overlay", "fine_mix_pct": 25, "coarse_mix_pct": 75 },
+        "lut": {
+          "technical": { "name": "LOCOS_Rec709_Neutral.cube", "opacity_pct": 100 },
+          "creative": { "name": "LOCOS_Premium_CoolDesaturate.cube", "opacity_pct": 30 }
+        },
+        "halation": false,
+        "chromatic_aberration": false,
+        "css_filter": "contrast(1.08) saturate(0.90) brightness(0.98)"
+      },
+      {
+        "id": "col_004_kobalt_peak",
+        "frame_start": 5838,
+        "frame_end": 7278,
+        "section": "PEAK_1_kobalt_reveal",
+        "source_1E": "C002_conflict_resolution + USER_OVERRIDE_2026-04-14",
+        "transition_in_frames": 20,
+        "transition_out_frames": 40,
+        "transition_asymmetric": true,
+        "temperature": "locos-shock-red-accent",
+        "brand_override": true,
+        "base_grade": "LOCOS_Premium_Grade",
+        "intent": "PEAK 1 — Kobalt Reveal. LOCOS-Premium-Base (Kontrast 1.12, Sat -8) + selektiver Rot-Akzent #E30613 auf Kobalt-Symbol + warm-schwarzer Hintergrund #161514 + verstaerkte Vignette 0.42. NICHT Teal-Orange.",
+        "lumetri_basic": {
+          "exposure": -0.12,
+          "contrast": 18,
+          "highlights": -10,
+          "shadows": -12,
+          "whites": -4,
+          "blacks": -8,
+          "saturation": 92,
+          "white_balance_temp": 6,
+          "white_balance_tint": 3
+        },
+        "lumetri_creative": {
+          "look": "LOCOS_Premium_Base",
+          "intensity_pct": 100,
+          "faded_film": 4,
+          "sharpen": 28,
+          "vibrance": -10,
+          "saturation": 92,
+          "tint_shadows_hsl": { "h": 30, "s": 8 },
+          "tint_highlights_hsl": { "h": 30, "s": 12 },
+          "tint_balance": 5
+        },
+        "lumetri_curves": {
+          "master_s_curve": [
+            { "input": 0.0, "output": 0.01 },
+            { "input": 0.25, "output": 0.16 },
+            { "input": 0.50, "output": 0.48 },
+            { "input": 0.75, "output": 0.82 },
+            { "input": 1.0, "output": 0.98 }
+          ],
+          "red_channel": [{ "input": 0, "output": 0 }, { "input": 128, "output": 134 }, { "input": 255, "output": 255 }],
+          "green_channel": [{ "input": 0, "output": 0 }, { "input": 128, "output": 127 }, { "input": 255, "output": 250 }],
+          "blue_channel": [{ "input": 0, "output": 2 }, { "input": 128, "output": 124 }, { "input": 255, "output": 245 }]
+        },
+        "lumetri_color_wheels": {
+          "shadows": { "hue_deg": 20, "sat": 0.06, "lum": -0.04, "rgb_delta": { "r": 0.01, "g": -0.005, "b": -0.01 } },
+          "midtones": { "hue_deg": 0, "sat": 0.0, "lum": -0.01, "rgb_delta": { "r": 0.0, "g": 0.0, "b": 0.0 } },
+          "highlights": { "hue_deg": 28, "sat": 0.08, "lum": 0.0, "rgb_delta": { "r": 0.02, "g": 0.005, "b": -0.015 } }
+        },
+        "selective_red_boost": {
+          "enabled": true,
+          "mask_target": "kobalt_symbol_and_numbers",
+          "qualifier_hsl": {
+            "hue_range_deg": [350, 12],
+            "sat_range_pct": [40, 100],
+            "luma_range_pct": [20, 80]
+          },
+          "target_hex": "#E30613",
+          "target_hsl": { "h": 355, "s": 88, "l": 47 },
+          "saturation_multiplier": 1.35,
+          "hue_shift_deg": -2,
+          "luminance_delta": 0.05,
+          "note": "Isolated via Lumetri Curves > Hue Saturation Curve (Hue vs Sat). Raise reds only. Alternative: Secondary Color Correction with HSL Qualifier."
+        },
+        "background_color_target": {
+          "hex": "#161514",
+          "note": "Warm black (NOT pure #000000) via Shadow Lift toward orange 20 deg."
+        },
+        "vignette": {
+          "opacity_pct": 42,
+          "center": "50% 45%",
+          "inner_radius_pct": 48,
+          "outer_radius_pct": 95,
+          "feather": 0.65,
+          "color": "#0a0805"
+        },
+        "film_grain": { "opacity_pct": 14, "blend_mode": "overlay", "fine_mix_pct": 20, "coarse_mix_pct": 80 },
+        "lut": {
+          "technical": { "name": "LOCOS_Rec709_Neutral.cube", "opacity_pct": 100 },
+          "creative": { "name": "LOCOS_Shock_RedAccent.cube", "opacity_pct": 45 }
+        },
+        "halation": false,
+        "chromatic_aberration": {
+          "enabled": true,
+          "red_offset_px": 1.5,
+          "blue_offset_px": -1.5,
+          "green_offset_px": 0,
+          "edge_only": true,
+          "inner_safe_zone_pct": 80,
+          "fade_in_frames": 6,
+          "fade_out_frames": 8,
+          "total_frames": 14,
+          "trigger_frame_offset_from_start": 0
+        },
+        "css_filter": "contrast(1.12) saturate(0.92) brightness(0.96)"
+      },
+      {
+        "id": "col_005_post_kobalt_cool",
+        "frame_start": 7278,
+        "frame_end": 9981,
+        "section": "rueckwirkungs_rant_rising",
+        "transition_in_frames": 40,
+        "transition_out_frames": 20,
+        "temperature": "cool_sustained",
+        "intent": "Post-Kobalt sustained cool peak. Rueckwirkungs-Rant + 'Drittens'. Budget-schonend ohne Shock-Red.",
+        "lumetri_basic": {
+          "exposure": -0.12,
+          "contrast": 15,
+          "highlights": -7,
+          "shadows": -9,
+          "whites": -3,
+          "blacks": -6,
+          "saturation": 85,
+          "white_balance_temp": -8,
+          "white_balance_tint": 3
+        },
+        "lumetri_creative": {
+          "look": "LOCOS_Premium_CoolLean",
+          "intensity_pct": 95,
+          "faded_film": 10,
+          "sharpen": 22,
+          "vibrance": -8,
+          "saturation": 85,
+          "tint_shadows_hsl": { "h": 208, "s": 17 },
+          "tint_highlights_hsl": { "h": 30, "s": 6 },
+          "tint_balance": -10
+        },
+        "lumetri_curves": {
+          "master_s_curve": [
+            { "input": 0.0, "output": 0.03 },
+            { "input": 0.25, "output": 0.17 },
+            { "input": 0.50, "output": 0.48 },
+            { "input": 0.75, "output": 0.80 },
+            { "input": 1.0, "output": 0.96 }
+          ],
+          "red_channel": [{ "input": 0, "output": 3 }, { "input": 128, "output": 126 }, { "input": 255, "output": 249 }],
+          "green_channel": [{ "input": 0, "output": 2 }, { "input": 128, "output": 128 }, { "input": 255, "output": 252 }],
+          "blue_channel": [{ "input": 0, "output": 9 }, { "input": 128, "output": 131 }, { "input": 255, "output": 245 }]
+        },
+        "lumetri_color_wheels": {
+          "shadows": { "hue_deg": 208, "sat": 0.17, "lum": -0.035, "rgb_delta": { "r": -0.04, "g": 0.015, "b": 0.035 } },
+          "midtones": { "hue_deg": 0, "sat": 0.0, "lum": -0.015, "rgb_delta": { "r": -0.008, "g": 0.0, "b": 0.006 } },
+          "highlights": { "hue_deg": 30, "sat": 0.05, "lum": -0.01, "rgb_delta": { "r": -0.01, "g": 0.004, "b": 0.01 } }
+        },
+        "vignette": { "opacity_pct": 18, "center": "50% 45%", "inner_radius_pct": 60, "outer_radius_pct": 97, "feather": 0.55 },
+        "film_grain": { "opacity_pct": 12, "blend_mode": "overlay", "fine_mix_pct": 25, "coarse_mix_pct": 75 },
+        "lut": {
+          "technical": { "name": "LOCOS_Rec709_Neutral.cube", "opacity_pct": 100 },
+          "creative": { "name": "LOCOS_Premium_CoolDesaturate.cube", "opacity_pct": 38 }
+        },
+        "halation": false,
+        "chromatic_aberration": false,
+        "css_filter": "contrast(1.09) saturate(0.85) brightness(0.97)"
+      },
+      {
+        "id": "col_006_null_cent_peak",
+        "frame_start": 9981,
+        "frame_end": 11208,
+        "section": "PEAK_null_cent_refrain",
+        "source_1E": "1E_col_004_modified + USER_OVERRIDE_2026-04-14",
+        "transition_in_frames": 20,
+        "transition_out_frames": 40,
+        "transition_asymmetric": true,
+        "temperature": "locos-shock-red-accent",
+        "brand_override": true,
+        "base_grade": "LOCOS_Premium_Grade",
+        "intent": "PEAK 2 — Null Cent Refrain. Identisch zu col_004: LOCOS Premium + selektiver Rot-Akzent auf Null-Cent-Zahlen + warm-schwarzer BG #161514 + Vignette 0.40. NICHT Teal-Orange.",
+        "lumetri_basic": {
+          "exposure": -0.14,
+          "contrast": 16,
+          "highlights": -9,
+          "shadows": -11,
+          "whites": -4,
+          "blacks": -7,
+          "saturation": 90,
+          "white_balance_temp": 4,
+          "white_balance_tint": 3
+        },
+        "lumetri_creative": {
+          "look": "LOCOS_Premium_Base",
+          "intensity_pct": 100,
+          "faded_film": 5,
+          "sharpen": 26,
+          "vibrance": -12,
+          "saturation": 90,
+          "tint_shadows_hsl": { "h": 25, "s": 8 },
+          "tint_highlights_hsl": { "h": 30, "s": 10 },
+          "tint_balance": 3
+        },
+        "lumetri_curves": {
+          "master_s_curve": [
+            { "input": 0.0, "output": 0.02 },
+            { "input": 0.25, "output": 0.17 },
+            { "input": 0.50, "output": 0.48 },
+            { "input": 0.75, "output": 0.81 },
+            { "input": 1.0, "output": 0.97 }
+          ],
+          "red_channel": [{ "input": 0, "output": 1 }, { "input": 128, "output": 132 }, { "input": 255, "output": 254 }],
+          "green_channel": [{ "input": 0, "output": 0 }, { "input": 128, "output": 127 }, { "input": 255, "output": 250 }],
+          "blue_channel": [{ "input": 0, "output": 3 }, { "input": 128, "output": 124 }, { "input": 255, "output": 244 }]
+        },
+        "lumetri_color_wheels": {
+          "shadows": { "hue_deg": 22, "sat": 0.05, "lum": -0.04, "rgb_delta": { "r": 0.008, "g": -0.004, "b": -0.008 } },
+          "midtones": { "hue_deg": 0, "sat": 0.0, "lum": -0.01, "rgb_delta": { "r": 0.0, "g": 0.0, "b": 0.0 } },
+          "highlights": { "hue_deg": 28, "sat": 0.07, "lum": 0.0, "rgb_delta": { "r": 0.018, "g": 0.005, "b": -0.013 } }
+        },
+        "selective_red_boost": {
+          "enabled": true,
+          "mask_target": "null_cent_number_and_title",
+          "qualifier_hsl": {
+            "hue_range_deg": [350, 12],
+            "sat_range_pct": [40, 100],
+            "luma_range_pct": [20, 80]
+          },
+          "target_hex": "#E30613",
+          "target_hsl": { "h": 355, "s": 88, "l": 47 },
+          "saturation_multiplier": 1.30,
+          "hue_shift_deg": -2,
+          "luminance_delta": 0.04,
+          "note": "Same Lumetri approach as col_004. Optional: separate adjustment layer with Secondary HSL Qualifier for cleaner isolation if numbers are not hex-locked."
+        },
+        "background_color_target": { "hex": "#161514", "note": "Warm black via shadow lift to 22 deg orange" },
+        "vignette": {
+          "opacity_pct": 40,
+          "center": "50% 45%",
+          "inner_radius_pct": 50,
+          "outer_radius_pct": 95,
+          "feather": 0.65,
+          "color": "#0a0805"
+        },
+        "film_grain": { "opacity_pct": 13, "blend_mode": "overlay", "fine_mix_pct": 20, "coarse_mix_pct": 80 },
+        "lut": {
+          "technical": { "name": "LOCOS_Rec709_Neutral.cube", "opacity_pct": 100 },
+          "creative": { "name": "LOCOS_Shock_RedAccent.cube", "opacity_pct": 42 }
+        },
+        "halation": false,
+        "chromatic_aberration": {
+          "enabled": true,
+          "red_offset_px": 1.2,
+          "blue_offset_px": -1.2,
+          "green_offset_px": 0,
+          "edge_only": true,
+          "inner_safe_zone_pct": 82,
+          "fade_in_frames": 5,
+          "fade_out_frames": 7,
+          "total_frames": 12
+        },
+        "css_filter": "contrast(1.10) saturate(0.90) brightness(0.96)"
+      },
+      {
+        "id": "col_007_kein_zufall_valley",
+        "frame_start": 11208,
+        "frame_end": 15117,
+        "section": "valley_kein_zufall_cold_pattern",
+        "source_1E": "col_005",
+        "transition_in_frames": 40,
+        "transition_out_frames": 60,
+        "temperature": "cool_deep",
+        "intent": "Akt 4 Kein-Zufall-Kette: 2020 -> 2024 -> 2026 -> 2027. Bittere Klarheit. Saettigung -30% aber ueber Skin-Tone-Floor.",
+        "lumetri_basic": {
+          "exposure": -0.18,
+          "contrast": 16,
+          "highlights": -10,
+          "shadows": -12,
+          "whites": -5,
+          "blacks": -8,
+          "saturation": 70,
+          "white_balance_temp": -14,
+          "white_balance_tint": 5
+        },
+        "lumetri_creative": {
+          "look": "LOCOS_Premium_ValleyDeep",
+          "intensity_pct": 95,
+          "faded_film": 16,
+          "sharpen": 20,
+          "vibrance": -12,
+          "saturation": 70,
+          "tint_shadows_hsl": { "h": 210, "s": 20 },
+          "tint_highlights_hsl": { "h": 30, "s": 5 },
+          "tint_balance": -18
+        },
+        "lumetri_curves": {
+          "master_s_curve": [
+            { "input": 0.0, "output": 0.04 },
+            { "input": 0.25, "output": 0.17 },
+            { "input": 0.50, "output": 0.47 },
+            { "input": 0.75, "output": 0.79 },
+            { "input": 1.0, "output": 0.95 }
+          ],
+          "red_channel": [{ "input": 0, "output": 4 }, { "input": 128, "output": 124 }, { "input": 255, "output": 247 }],
+          "green_channel": [{ "input": 0, "output": 3 }, { "input": 128, "output": 128 }, { "input": 255, "output": 252 }],
+          "blue_channel": [{ "input": 0, "output": 12 }, { "input": 128, "output": 133 }, { "input": 255, "output": 244 }],
+          "hue_saturation_curve": [
+            { "hue_deg": 15, "sat_mult": 0.82 },
+            { "hue_deg": 30, "sat_mult": 0.85 },
+            { "hue_deg": 45, "sat_mult": 0.80 },
+            { "hue_deg": 123, "sat_mult": 0.78 },
+            { "hue_deg": 210, "sat_mult": 0.62 }
+          ],
+          "skin_tone_sat_preservation_note": "Hue 15-45 drops to 0.80-0.85 only (NOT below 0.45 floor). Skin remains identifiable."
+        },
+        "lumetri_color_wheels": {
+          "shadows": { "hue_deg": 210, "sat": 0.22, "lum": -0.05, "rgb_delta": { "r": -0.05, "g": 0.02, "b": 0.04 } },
+          "midtones": { "hue_deg": 205, "sat": 0.08, "lum": -0.025, "rgb_delta": { "r": -0.015, "g": 0.005, "b": 0.012 } },
+          "highlights": { "hue_deg": 30, "sat": 0.04, "lum": -0.02, "rgb_delta": { "r": -0.015, "g": 0.005, "b": 0.015 } }
+        },
+        "vignette": { "opacity_pct": 20, "center": "50% 45%", "inner_radius_pct": 58, "outer_radius_pct": 96, "feather": 0.58 },
+        "film_grain": { "opacity_pct": 14, "blend_mode": "overlay", "fine_mix_pct": 25, "coarse_mix_pct": 75 },
+        "lut": {
+          "technical": { "name": "LOCOS_Rec709_Neutral.cube", "opacity_pct": 100 },
+          "creative": { "name": "LOCOS_Premium_ValleyDeep.cube", "opacity_pct": 45 }
+        },
+        "halation": false,
+        "chromatic_aberration": false,
+        "css_filter": "contrast(1.10) saturate(0.70) brightness(0.96)"
+      },
+      {
+        "id": "col_008_breathing_options",
+        "frame_start": 15117,
+        "frame_end": 16467,
+        "section": "breathing_options_transition",
+        "source_1E": "col_006",
+        "transition_in_frames": 60,
+        "transition_out_frames": 60,
+        "temperature": "neutral_bridge",
+        "intent": "Breathing-Pause + Options-Bridge. Clean neutral LOCOS Premium. Uebergang zu Gold.",
+        "lumetri_basic": {
+          "exposure": -0.05,
+          "contrast": 10,
+          "highlights": -2,
+          "shadows": -3,
+          "whites": 0,
+          "blacks": -3,
+          "saturation": 95,
+          "white_balance_temp": 0,
+          "white_balance_tint": 2
+        },
+        "lumetri_creative": {
+          "look": "LOCOS_Premium_Base",
+          "intensity_pct": 98,
+          "faded_film": 8,
+          "sharpen": 22,
+          "vibrance": -3,
+          "saturation": 95,
+          "tint_shadows_hsl": { "h": 200, "s": 12 },
+          "tint_highlights_hsl": { "h": 30, "s": 10 },
+          "tint_balance": 2
+        },
+        "lumetri_curves": {
+          "master_s_curve": [
+            { "input": 0.0, "output": 0.03 },
+            { "input": 0.25, "output": 0.19 },
+            { "input": 0.50, "output": 0.50 },
+            { "input": 0.75, "output": 0.81 },
+            { "input": 1.0, "output": 0.97 }
+          ],
+          "red_channel": [{ "input": 0, "output": 2 }, { "input": 128, "output": 128 }, { "input": 255, "output": 252 }],
+          "green_channel": [{ "input": 0, "output": 1 }, { "input": 128, "output": 128 }, { "input": 255, "output": 253 }],
+          "blue_channel": [{ "input": 0, "output": 5 }, { "input": 128, "output": 128 }, { "input": 255, "output": 248 }]
+        },
+        "lumetri_color_wheels": {
+          "shadows": { "hue_deg": 200, "sat": 0.10, "lum": -0.015, "rgb_delta": { "r": -0.015, "g": 0.008, "b": 0.012 } },
+          "midtones": { "hue_deg": 0, "sat": 0.0, "lum": 0.0, "rgb_delta": { "r": 0.0, "g": 0.0, "b": 0.0 } },
+          "highlights": { "hue_deg": 30, "sat": 0.08, "lum": 0.005, "rgb_delta": { "r": 0.005, "g": 0.002, "b": -0.004 } }
+        },
+        "vignette": { "opacity_pct": 12, "center": "50% 45%", "inner_radius_pct": 63, "outer_radius_pct": 97, "feather": 0.60 },
+        "film_grain": { "opacity_pct": 10, "blend_mode": "overlay", "fine_mix_pct": 25, "coarse_mix_pct": 75 },
+        "lut": {
+          "technical": { "name": "LOCOS_Rec709_Neutral.cube", "opacity_pct": 100 },
+          "creative": { "name": "LOCOS_Premium_Base.cube", "opacity_pct": 35 }
+        },
+        "halation": false,
+        "chromatic_aberration": false,
+        "css_filter": "contrast(1.04) saturate(0.95) brightness(0.99)"
+      },
+      {
+        "id": "col_009_schweiz_gold",
+        "frame_start": 16467,
+        "frame_end": 19050,
+        "section": "resolution_schweiz_WARM_PAYOFF",
+        "source_1E": "col_007",
+        "transition_in_frames": 60,
+        "transition_out_frames": 60,
+        "temperature": "gold_warm_payoff",
+        "intent": "Akt 6 Solution: Schweizer Zollfreilager. Waermster Grade des Videos. Halation erlaubt auf Gold-Highlights. KEIN Teal-Orange.",
+        "lumetri_basic": {
+          "exposure": 0.12,
+          "contrast": 10,
+          "highlights": 4,
+          "shadows": 6,
+          "whites": 4,
+          "blacks": 2,
+          "saturation": 112,
+          "white_balance_temp": 14,
+          "white_balance_tint": 3
+        },
+        "lumetri_creative": {
+          "look": "LOCOS_Premium_GoldPayoff",
+          "intensity_pct": 100,
+          "faded_film": 4,
+          "sharpen": 20,
+          "vibrance": 10,
+          "saturation": 112,
+          "tint_shadows_hsl": { "h": 30, "s": 12 },
+          "tint_highlights_hsl": { "h": 38, "s": 22 },
+          "tint_balance": 18
+        },
+        "lumetri_curves": {
+          "master_s_curve": [
+            { "input": 0.0, "output": 0.04 },
+            { "input": 0.25, "output": 0.20 },
+            { "input": 0.50, "output": 0.51 },
+            { "input": 0.75, "output": 0.82 },
+            { "input": 1.0, "output": 0.99 }
+          ],
+          "red_channel": [{ "input": 0, "output": 6 }, { "input": 128, "output": 133 }, { "input": 255, "output": 254 }],
+          "green_channel": [{ "input": 0, "output": 3 }, { "input": 128, "output": 130 }, { "input": 255, "output": 252 }],
+          "blue_channel": [{ "input": 0, "output": 1 }, { "input": 128, "output": 122 }, { "input": 255, "output": 240 }],
+          "hue_saturation_curve": [
+            { "hue_deg": 30, "sat_mult": 1.20 },
+            { "hue_deg": 45, "sat_mult": 1.15 },
+            { "hue_deg": 60, "sat_mult": 1.10 },
+            { "hue_deg": 123, "sat_mult": 1.02 }
+          ]
+        },
+        "lumetri_color_wheels": {
+          "shadows": { "hue_deg": 28, "sat": 0.12, "lum": 0.02, "rgb_delta": { "r": 0.01, "g": 0.005, "b": -0.005 } },
+          "midtones": { "hue_deg": 32, "sat": 0.08, "lum": 0.01, "rgb_delta": { "r": 0.012, "g": 0.004, "b": -0.010 } },
+          "highlights": { "hue_deg": 38, "sat": 0.18, "lum": 0.025, "rgb_delta": { "r": 0.035, "g": 0.012, "b": -0.025 } }
+        },
+        "vignette": { "opacity_pct": 10, "center": "50% 45%", "inner_radius_pct": 68, "outer_radius_pct": 98, "feather": 0.60 },
+        "film_grain": { "opacity_pct": 9, "blend_mode": "overlay", "fine_mix_pct": 25, "coarse_mix_pct": 75 },
+        "lut": {
+          "technical": { "name": "LOCOS_Rec709_Neutral.cube", "opacity_pct": 100 },
+          "creative": { "name": "LOCOS_Gold_Payoff.cube", "opacity_pct": 40 }
+        },
+        "halation": {
+          "enabled": true,
+          "blur_px": 3,
+          "opacity_pct": 20,
+          "blend_mode": "screen",
+          "hue_deg": 35,
+          "luminance_key": true,
+          "luminance_threshold": 0.72,
+          "note": "Only on Gold bars / sun highlights over Schweizer-Berge KenBurns."
+        },
+        "chromatic_aberration": false,
+        "css_filter": "contrast(1.05) saturate(1.12) brightness(1.03)"
+      },
+      {
+        "id": "col_010_cta_bittersweet",
+        "frame_start": 19050,
+        "frame_end": 22500,
+        "section": "cta_warm",
+        "source_1E": "col_008",
+        "transition_in_frames": 60,
+        "transition_out_frames": 40,
+        "temperature": "neutral_warm_cta",
+        "intent": "Akt 7 CTA: Kommentar-Frage. Neutral-warm, vertrauenswuerdig. Setup fuer Closer.",
+        "lumetri_basic": {
+          "exposure": 0.04,
+          "contrast": 9,
+          "highlights": 1,
+          "shadows": 2,
+          "whites": 2,
+          "blacks": -1,
+          "saturation": 103,
+          "white_balance_temp": 6,
+          "white_balance_tint": 2
+        },
+        "lumetri_creative": {
+          "look": "LOCOS_Premium_NeutralWarm",
+          "intensity_pct": 100,
+          "faded_film": 6,
+          "sharpen": 22,
+          "vibrance": 3,
+          "saturation": 103,
+          "tint_shadows_hsl": { "h": 30, "s": 6 },
+          "tint_highlights_hsl": { "h": 32, "s": 14 },
+          "tint_balance": 8
+        },
+        "lumetri_curves": {
+          "master_s_curve": [
+            { "input": 0.0, "output": 0.03 },
+            { "input": 0.25, "output": 0.19 },
+            { "input": 0.50, "output": 0.50 },
+            { "input": 0.75, "output": 0.81 },
+            { "input": 1.0, "output": 0.98 }
+          ],
+          "red_channel": [{ "input": 0, "output": 3 }, { "input": 128, "output": 130 }, { "input": 255, "output": 254 }],
+          "green_channel": [{ "input": 0, "output": 2 }, { "input": 128, "output": 129 }, { "input": 255, "output": 253 }],
+          "blue_channel": [{ "input": 0, "output": 2 }, { "input": 128, "output": 126 }, { "input": 255, "output": 247 }]
+        },
+        "lumetri_color_wheels": {
+          "shadows": { "hue_deg": 30, "sat": 0.06, "lum": 0.005, "rgb_delta": { "r": 0.005, "g": 0.002, "b": -0.002 } },
+          "midtones": { "hue_deg": 30, "sat": 0.04, "lum": 0.005, "rgb_delta": { "r": 0.008, "g": 0.003, "b": -0.005 } },
+          "highlights": { "hue_deg": 32, "sat": 0.10, "lum": 0.01, "rgb_delta": { "r": 0.012, "g": 0.004, "b": -0.008 } }
+        },
+        "vignette": { "opacity_pct": 12, "center": "50% 45%", "inner_radius_pct": 64, "outer_radius_pct": 97, "feather": 0.58 },
+        "film_grain": { "opacity_pct": 10, "blend_mode": "overlay", "fine_mix_pct": 25, "coarse_mix_pct": 75 },
+        "lut": {
+          "technical": { "name": "LOCOS_Rec709_Neutral.cube", "opacity_pct": 100 },
+          "creative": { "name": "LOCOS_Premium_Base.cube", "opacity_pct": 38 }
+        },
+        "halation": false,
+        "chromatic_aberration": false,
+        "css_filter": "contrast(1.03) saturate(1.03) brightness(1.01)"
+      },
+      {
+        "id": "col_011_closer_cold_accent",
+        "frame_start": 22500,
+        "frame_end": 22800,
+        "section": "closer_danke_deutschland_bitter",
+        "source_1E": "col_009",
+        "transition_in_frames": 40,
+        "transition_out_frames": 0,
+        "temperature": "cool_bitter_accent",
+        "intent": "Staccato 'Danke, Berlin.' + 'Euer Daniel.' Bitterkeit. Kalter Akzent auf warmer Basis. Intensity 7 aber NICHT Shock-Red (bitter, nicht schockierend).",
+        "lumetri_basic": {
+          "exposure": -0.08,
+          "contrast": 14,
+          "highlights": -5,
+          "shadows": -6,
+          "whites": -2,
+          "blacks": -5,
+          "saturation": 80,
+          "white_balance_temp": -10,
+          "white_balance_tint": 4
+        },
+        "lumetri_creative": {
+          "look": "LOCOS_Premium_CoolAccent",
+          "intensity_pct": 95,
+          "faded_film": 12,
+          "sharpen": 22,
+          "vibrance": -8,
+          "saturation": 80,
+          "tint_shadows_hsl": { "h": 208, "s": 16 },
+          "tint_highlights_hsl": { "h": 30, "s": 6 },
+          "tint_balance": -12
+        },
+        "lumetri_curves": {
+          "master_s_curve": [
+            { "input": 0.0, "output": 0.03 },
+            { "input": 0.25, "output": 0.18 },
+            { "input": 0.50, "output": 0.48 },
+            { "input": 0.75, "output": 0.80 },
+            { "input": 1.0, "output": 0.97 }
+          ],
+          "red_channel": [{ "input": 0, "output": 3 }, { "input": 128, "output": 126 }, { "input": 255, "output": 249 }],
+          "green_channel": [{ "input": 0, "output": 2 }, { "input": 128, "output": 128 }, { "input": 255, "output": 253 }],
+          "blue_channel": [{ "input": 0, "output": 9 }, { "input": 128, "output": 131 }, { "input": 255, "output": 246 }]
+        },
+        "lumetri_color_wheels": {
+          "shadows": { "hue_deg": 208, "sat": 0.16, "lum": -0.035, "rgb_delta": { "r": -0.035, "g": 0.012, "b": 0.03 } },
+          "midtones": { "hue_deg": 0, "sat": 0.0, "lum": -0.015, "rgb_delta": { "r": -0.008, "g": 0.0, "b": 0.006 } },
+          "highlights": { "hue_deg": 30, "sat": 0.04, "lum": -0.01, "rgb_delta": { "r": -0.012, "g": 0.004, "b": 0.012 } }
+        },
+        "vignette": { "opacity_pct": 16, "center": "50% 45%", "inner_radius_pct": 60, "outer_radius_pct": 97, "feather": 0.56 },
+        "film_grain": { "opacity_pct": 11, "blend_mode": "overlay", "fine_mix_pct": 25, "coarse_mix_pct": 75 },
+        "lut": {
+          "technical": { "name": "LOCOS_Rec709_Neutral.cube", "opacity_pct": 100 },
+          "creative": { "name": "LOCOS_Premium_CoolDesaturate.cube", "opacity_pct": 35 }
+        },
+        "halation": false,
+        "chromatic_aberration": false,
+        "css_filter": "contrast(1.08) saturate(0.80) brightness(0.97)"
+      }
+    ],
+    "quality_checks": {
+      "teal_orange_segments": 0,
+      "teal_orange_limit": 3,
+      "teal_orange_ok": true,
+      "shock_red_accent_segments": 2,
+      "shock_red_accent_placements": ["col_004_kobalt_peak", "col_006_null_cent_peak"],
+      "bleach_bypass_segments": 0,
+      "cyan_magenta_violet_forbidden_present": false,
+      "skin_tone_preservation_all_segments": true,
+      "lift_gamma_gain_magnitude_within_limit": true,
+      "vignette_all_segments": true,
+      "transition_minimum_distance_frames": 978,
+      "anti_pattern_audit_passed": true
+    }
+  }
+}

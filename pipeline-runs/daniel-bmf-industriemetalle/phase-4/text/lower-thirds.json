@@ -1,0 +1,81 @@
+{
+  "version": "1.0",
+  "fps": 30,
+  "component": "LowerThird",
+  "global_style": {
+    "font_primary": "Inter",
+    "font_weight_name": 800,
+    "font_weight_subtitle": 500,
+    "name_size_px": 42,
+    "subtitle_size_px": 22,
+    "letter_spacing_name_em": 0.04,
+    "letter_spacing_sub_em": 0.14,
+    "color_name": "#fff5e0",
+    "color_subtitle": "rgba(255,245,224,0.72)",
+    "accent_bar": {
+      "color": "#d4a017",
+      "width_px": 4,
+      "height_match": "full"
+    },
+    "background": {
+      "enabled": false,
+      "note": "B4.2.4 — 0% backdrop"
+    },
+    "position": {
+      "x": "5.5%",
+      "y": "82%",
+      "anchor": "left bottom"
+    },
+    "entrance": {
+      "type": "slide_in_left",
+      "duration_frames": 14,
+      "easing": "ease-out-expo",
+      "stagger_subtitle_frames": 5
+    },
+    "exit": {
+      "type": "fade_out",
+      "duration_frames": 10
+    }
+  },
+  "elements": [
+    {
+      "id": "lt-001",
+      "overlay_id": "ovl-001",
+      "start_frame": 72,
+      "end_frame": 258,
+      "duration_frames": 186,
+      "standzeit_s": 6.2,
+      "name": "5 STUNDEN NACHTSCHICHT",
+      "subtitle": "BMF-SCHREIBEN · 9. APRIL 2026",
+      "accent_color": "#d4a017",
+      "note": "Bookend-Anker. Daniels Nachtschicht als persönlicher Hook.",
+      "contrast_check": "PASS — warm-white on dark bg, accent bar gold"
+    },
+    {
+      "id": "lt-002",
+      "overlay_id": "ovl-006",
+      "start_frame": 1410,
+      "end_frame": 1695,
+      "duration_frames": 285,
+      "standzeit_s": 9.5,
+      "name": "BMF-SCHREIBEN · 9. APRIL 2026",
+      "subtitle": "LINK IN DER BESCHREIBUNG · VOLLTEXT ZUM NACHLESEN",
+      "accent_color": "#d4a017",
+      "note": "Early soft-CTA per C004 — gives viewer 9.5s to visually register BMF-PDF link",
+      "contrast_check": "PASS"
+    },
+    {
+      "id": "lt-003",
+      "overlay_id": "ovl-036",
+      "start_frame": 19980,
+      "end_frame": 20697,
+      "duration_frames": 717,
+      "standzeit_s": 23.9,
+      "name": "LINK BMF-PDF · BESCHREIBUNG",
+      "subtitle": "KOSTENFREIES ERSTGESPRÄCH · LOCOS.DE",
+      "accent_color": "#d4a017",
+      "note": "Hard CTA block. Extended standzeit for click decision.",
+      "contrast_check": "PASS"
+    }
+  ]
+}

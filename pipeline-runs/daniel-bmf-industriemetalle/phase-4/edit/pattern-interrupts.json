@@ -1,0 +1,44 @@
+{
+  "version": "1.0",
+  "fps": 30,
+  "video_slug": "daniel-bmf-industriemetalle",
+  "source": "phase-2/master-timeline.json 3C_zoom_edit.pattern_interrupts_approved (18 entries)",
+  "total": 18,
+  "type_distribution": {
+    "fullscreen_takeover": 3,
+    "b_roll": 3,
+    "kinetic_text_overlay": 3,
+    "freeze_annotation": 2,
+    "letterbox": 2,
+    "snap_zoom": 1,
+    "split_screen": 1,
+    "color_shift_peak": 1,
+    "zoom_change": 2
+  },
+  "budget_status": {
+    "fullscreen_takeovers": { "used": 3, "limit": 3, "ok": true },
+    "letterbox": { "used": 2, "limit": 3, "ok": true },
+    "color_shift_peak": { "used": 1, "limit": 3, "ok": true, "note": "Drei-mal-Color-Shift counted; Kobalt/Null-Cent T&O are color-grade not PIs" },
+    "glitch": { "used": 0, "limit": 5, "ok": true, "note": "ovl-030 glitch_reveal is overlay effect, not PI" }
+  },
+  "pattern_interrupts": [
+    { "idx": 1, "frame": 840, "tc": "00:00:28:00", "timestamp_s": 28.0, "type": "kinetic_text_overlay", "segment": "hook", "linked_overlay_ids": ["ovl-002", "ovl-003"], "note": "Downgraded from 1D fullscreen to kinetic text. BMF-Schreiben + 22 Jahre sequence." },
+    { "idx": 2, "frame": 1860, "tc": "00:01:02:00", "timestamp_s": 62.0, "type": "b_roll", "segment": "context", "topic": "Zollfreilager Frankfurt", "duration_s": 7, "note": "B-Roll clip with VO continuing. Hard-Cut in, cross-dissolve 12f out." },
+    { "idx": 3, "frame": 3150, "tc": "00:01:45:00", "timestamp_s": 105.0, "type": "freeze_annotation", "segment": "context", "duration_s": 3, "annotation": "Red '2004' stamp on BMF-PDF", "note": "Freeze Daniel + red stamp overlay. C4 pattern interrupt." },
+    { "idx": 4, "frame": 4470, "tc": "00:02:29:00", "timestamp_s": 149.0, "type": "snap_zoom", "segment": "rising", "linked_zoom_id": "z005", "scale_to": 1.18, "transform_origin": "50% 42%", "note": "Snap-zoom on 'kein kleines Update'. See zoom-keyframes z005." },
+    { "idx": 5, "frame": 5895, "tc": "00:03:16:15", "timestamp_s": 196.5, "type": "fullscreen_takeover", "segment": "peak_kobalt", "linked_overlay_id": "ovl-015", "content": "KOBALT", "duration_f": 486, "budget_slot": "2/3", "centerpiece": true, "note": "CENTERPIECE. Deep Boom #2 + T&O color + screen-shake." },
+    { "idx": 6, "frame": 7395, "tc": "00:04:06:15", "timestamp_s": 246.5, "type": "kinetic_text_overlay", "segment": "rueckwirkung", "linked_overlay_id": "ovl-017", "content": "#2 DIE VERBOTENE RUECKWIRKUNG", "note": "Downgraded from 1D fullscreen." },
+    { "idx": 7, "frame": 8808, "tc": "00:04:53:18", "timestamp_s": 293.58, "type": "kinetic_text_overlay", "segment": "drittens", "linked_overlay_id": "ovl-020", "content": "#3 22 JAHRE GELOESCHT", "note": "Downgraded from 1D fullscreen." },
+    { "idx": 8, "frame": 10182, "tc": "00:05:39:12", "timestamp_s": 339.4, "type": "letterbox", "segment": "peak", "duration_f": 120, "bar_height_px": 108, "aspect": "2.39:1", "budget_slot": "1/3", "hold_text": "'keinen einzigen Cent'", "entrance_f": 12, "exit_f": 12, "note": "Cinematic letterbox during peak refrain." },
+    { "idx": 9, "frame": 10872, "tc": "00:06:02:12", "timestamp_s": 362.4, "type": "fullscreen_takeover", "segment": "null_cent_peak", "linked_overlay_id": "ovl-024", "content": "0,00 EUR MEHR", "duration_f": 333, "budget_slot": "3/3", "note": "Third and final fullscreen." },
+    { "idx": 10, "frame": 11440, "tc": "00:06:21:10", "timestamp_s": 381.34, "type": "split_screen", "segment": "china_chronology", "linked_overlay_id": "ovl-025", "content": "9. APRIL 26 vs 4. FEB 25", "note": "Timeline split-screen for comparison." },
+    { "idx": 11, "frame": 12300, "tc": "00:06:50:00", "timestamp_s": 410.0, "type": "freeze_annotation", "segment": "china_chronology", "linked_overlay_id": "ovl-028", "note": "China Chronology Timeline builds live with Gallium/Germanium arrows annotation." },
+    { "idx": 12, "frame": 13765, "tc": "00:07:38:25", "timestamp_s": 458.86, "type": "b_roll", "segment": "china_chronology", "topic": "Chipfabrik TSMC/Intel", "duration_s": 7, "note": "B-Roll with VO 'Chipfabriken wissen nicht mehr'." },
+    { "idx": 13, "frame": 15074, "tc": "00:08:22:14", "timestamp_s": 502.46, "type": "color_shift_peak", "segment": "kein_zufall_peak", "from_temperature": "cool_t_and_o", "to_temperature": "peak_cool", "note": "Drei mal duerft ihr raten refrain. T&O OUT + peak cold shift." },
+    { "idx": 14, "frame": 16440, "tc": "00:09:08:00", "timestamp_s": 548.0, "type": "zoom_change", "segment": "options", "scale_to": 1.15, "note": "Kamerawinkel-Wechsel frontal, 1.15x on 'Bestandsschutz bis 2029'." },
+    { "idx": 15, "frame": 17850, "tc": "00:09:55:00", "timestamp_s": 595.0, "type": "b_roll", "segment": "solution_schweiz", "topic": "Schweiz Alpen + Tresor", "duration_s": 7, "note": "Warm payoff B-Roll. Sync with ovl-034 LocationCard." },
+    { "idx": 16, "frame": 19350, "tc": "00:10:45:00", "timestamp_s": 645.0, "type": "newscard_slide_in", "segment": "cta", "linked_overlay_id": "ovl-new-001", "content": "HANDELSBLATT · FAZ · NICHTS GEFUNDEN", "note": "Downgraded from 1D fullscreen. Fills 48s CTA dead zone." },
+    { "idx": 17, "frame": 20700, "tc": "00:11:30:00", "timestamp_s": 690.0, "type": "zoom_change", "segment": "cta", "scale_to": 1.08, "note": "Icons overlay + zoom-change on Halbleiter/Maschinenbau/PV/Medizintechnik." },
+    { "idx": 18, "frame": 22290, "tc": "00:12:23:00", "timestamp_s": 743.0, "type": "letterbox", "segment": "closer", "duration_f": 90, "bar_height_px": 108, "budget_slot": "2/3", "hold_text": "'keinen Cent Refrain' pre-Staccato Danke-Deutschland", "note": "Final letterbox." }
+  ]
+}

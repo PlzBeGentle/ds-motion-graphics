@@ -1,0 +1,65 @@
+{
+  "preset_name": "BMF_col_009_schweiz_gold",
+  "target_segment": "col_009_schweiz_gold (16467-19050f / 548.9-635.0s)",
+  "format_version": "premiere-lumetri-2025",
+  "base_correction": {
+    "input_lut": "LOCOS_Rec709_Neutral.cube",
+    "white_balance": { "temperature": 14, "tint": 3 },
+    "tone": {
+      "exposure": 0.12,
+      "contrast": 10,
+      "highlights": 4,
+      "shadows": 6,
+      "whites": 4,
+      "blacks": 2
+    },
+    "saturation": 112
+  },
+  "creative": {
+    "look": "LOCOS_Gold_Payoff.cube",
+    "look_intensity": 40,
+    "adjustments": {
+      "faded_film": 4,
+      "sharpen": 20,
+      "vibrance": 10,
+      "saturation": 112,
+      "shadow_tint_hue": 30,
+      "shadow_tint_sat": 12,
+      "highlight_tint_hue": 38,
+      "highlight_tint_sat": 22,
+      "tint_balance": 18
+    }
+  },
+  "curves": {
+    "rgb_master": [[0,0.04],[0.25,0.20],[0.50,0.51],[0.75,0.82],[1.0,0.99]],
+    "red": [[0,6],[128,133],[255,254]],
+    "green": [[0,3],[128,130],[255,252]],
+    "blue": [[0,1],[128,122],[255,240]],
+    "hue_vs_sat": [[30,1.20],[45,1.15],[60,1.10],[123,1.02]]
+  },
+  "color_wheels": {
+    "shadows": { "hue": 28, "saturation": 0.12, "luminance": 0.02 },
+    "midtones": { "hue": 32, "saturation": 0.08, "luminance": 0.01 },
+    "highlights": { "hue": 38, "saturation": 0.18, "luminance": 0.025 }
+  },
+  "hsl_secondary_skin_protect": { "enabled": true, "hue_range": [15, 45], "sat_range": [25, 85], "luma_range": [30, 85] },
+  "vignette": {
+    "amount": -0.30,
+    "midpoint": 68,
+    "roundness": 0,
+    "feather": 60,
+    "center_x": 0.50,
+    "center_y": 0.45
+  },
+  "effects": {
+    "halation": {
+      "enabled": true,
+      "blur_px": 3,
+      "opacity": 0.20,
+      "blend_mode": "screen",
+      "hue": 35,
+      "luminance_key": true,
+      "luminance_threshold": 0.72
+    }
+  }
+}

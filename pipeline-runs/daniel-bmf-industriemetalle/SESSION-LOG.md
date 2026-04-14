@@ -1426,7 +1426,7 @@ Unused `BRollPlaceholder` import entfernt (file bleibt bestehen fuer future use)
 
 **Commits Phase B:**
 - `22c2923` feat(bmf): Phase B start - BROLL_SLOTS fix + slot-11 icons collage
-- (pending — kommt jetzt)
+- `1cf6e25` feat(bmf): Phase B complete - B-roll assets + refactor + loop bugfix
 
 ### 25i) Late-Session Bugfix: Remotion Studio draw-peaks IndexSizeError
 

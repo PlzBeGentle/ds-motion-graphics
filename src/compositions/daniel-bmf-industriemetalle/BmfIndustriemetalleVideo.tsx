@@ -527,11 +527,11 @@ export const BmfIndustriemetalleVideo: React.FC = () => {
         <TrustCheckmarkStatCard />
       </Sequence>
 
-      {/* ovl-033 — BigQuoteCard3D Nicht-Beanstandungsklausel (F.6) */}
+      {/* ovl-033 — BigQuoteCard3D Nicht-Beanstandungsklausel (Iter2.2 shorter quote) */}
       <Sequence from={O["ovl-033"].start} durationInFrames={O["ovl-033"].end - O["ovl-033"].start}>
         <BigQuoteCard3D
-          quote="Die Nicht-Beanstandungsklausel schützt alle Altbestände. Ihre Reserven bleiben umsatzsteuerfrei."
-          author="BMF § 4 Nr. 4b UStG"
+          quote="Altbestände bleiben umsatzsteuerfrei."
+          author="BMF § 4 Nr. 4b"
           authorRole="Übergangsregelung"
           authorDate="9. April 2026"
           variant="overlay"

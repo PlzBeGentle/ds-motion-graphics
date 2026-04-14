@@ -16,7 +16,7 @@ const EVENTS = [
   { label: "AUG 23", desc: "Gallium · Germanium", color: "#f5d37a" },
   { label: "DEZ 23", desc: "Graphit", color: "#f5d37a" },
   { label: "SEP 24", desc: "Antimon", color: "#f5d37a" },
-  { label: "APR 25", desc: "Rare Earths", color: "#E30613" },
+  { label: "APR 25", desc: "Seltene Erden", color: "#E30613" },
   { label: "OKT 25", desc: "EU Krisendialog", color: "#E30613" },
 ];
 
@@ -120,12 +120,12 @@ export const HorizontalChronologyTimeline: React.FC = () => {
 
         {/* Timeline bar */}
         <div style={{ position: "relative", height: 120 }}>
-          {/* Gold line */}
+          {/* Gold line — Iter2.10: narrower track (12-88) matches node positions */}
           <div
             style={{
               position: "absolute",
-              left: "7%",
-              right: "7%",
+              left: "12%",
+              right: "12%",
               top: 48,
               height: 4,
               background: "rgba(245, 211, 122, 0.16)",
@@ -135,8 +135,8 @@ export const HorizontalChronologyTimeline: React.FC = () => {
           <div
             style={{
               position: "absolute",
-              left: "7%",
-              width: `${lineProgress * 86}%`,
+              left: "12%",
+              width: `${lineProgress * 76}%`,
               top: 48,
               height: 4,
               background: "linear-gradient(90deg, #d4a017, #f5d37a, #E30613)",
@@ -145,17 +145,22 @@ export const HorizontalChronologyTimeline: React.FC = () => {
             }}
           />
 
-          {/* Event nodes */}
+          {/* Event nodes — reveal as the gold line passes their position.
+              Iter2.10: clamp to [max(0, p-0.05), min(1, p+0.01)] so the 5th
+              node at p=1.0 reaches full opacity when lineProgress=1.0. */}
           {EVENTS.map((evt, i) => {
             const progressAtNode = i * EVENT_SPACING;
-            // Node appears when the line has reached it
+            const revealStart = Math.max(0, progressAtNode - 0.05);
+            const revealEnd = Math.min(1, progressAtNode + 0.01);
             const nodeReveal = interpolate(
               lineProgress,
-              [progressAtNode - 0.02, progressAtNode + 0.04],
+              [revealStart, revealEnd],
               [0, 1],
               { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
             );
-            const leftPercent = 7 + progressAtNode * 86;
+            // Iter2.10: narrower track (9-91 → 12-88) so the last node
+            // (at p=1.0) stays inside the container, not clipped at the edge.
+            const leftPercent = 12 + progressAtNode * 76;
             return (
               <div
                 key={i}

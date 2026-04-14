@@ -90,18 +90,6 @@ export const SchweizLocationCard: React.FC = () => {
         >
           SCHWEIZ
         </div>
-        <div
-          style={{
-            fontFamily: '"Inter", sans-serif',
-            fontWeight: 700,
-            fontSize: 26,
-            color: "#fff5e0",
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-          }}
-        >
-          Dein Zolllager
-        </div>
       </div>
     </AbsoluteFill>
   );

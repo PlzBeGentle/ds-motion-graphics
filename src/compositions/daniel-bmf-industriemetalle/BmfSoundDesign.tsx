@@ -385,12 +385,23 @@ const MusicBedPlayer: React.FC<{ bed: BmfBed }> = ({ bed }) => {
   );
 };
 
+// NOTE: `MIN_SEQUENCE_FRAMES` guard added 2026-04-15 — Remotion Studio's
+// draw-peaks.js drawBars() reads `canvas.width` from the DOM waveform
+// canvas, which collapses to 0 px when an Audio Sequence is so short that
+// at the user's current timeline zoom the clip renders at <1 px wide. That
+// triggers `createImageData(0, height)` IndexSizeError.
+// Fix: pad every SFX Sequence to at least 30 frames. Audible duration is
+// unchanged because the volume envelope still uses `cue.durationFrames` —
+// the extra tail frames just play silence (envelope returns 0 after fadeOut).
+const MIN_SEQUENCE_FRAMES = 30;
+
 const SfxHitPlayer: React.FC<{ cue: BmfCue }> = ({ cue }) => {
   if (!cue.src) return null;
   const fadeIn = cue.fadeIn ?? 0;
   const fadeOut = cue.fadeOut ?? Math.min(15, cue.durationFrames);
+  const seqFrames = Math.max(cue.durationFrames, MIN_SEQUENCE_FRAMES);
   return (
-    <Sequence from={cue.frame} durationInFrames={cue.durationFrames}>
+    <Sequence from={cue.frame} durationInFrames={seqFrames}>
       <Audio
         src={staticFile(`sfx/${cue.src}`)}
         volume={(f) => sfxEnvelope(f, cue.durationFrames, cue.volume, fadeIn, fadeOut)}

@@ -116,7 +116,7 @@ const O = {
   "ovl-033": { start: 15950, end: 16400 },    // BigQuoteCard3D Nicht-Beanstandung (F.6)
   "ovl-034": { start: 17278, end: 17550 },    // SchweizLocationCard (F.7 word-sync "Schweiz")
   "ovl-035": { start: 18200, end: 18540 },    // CoreMessageStatCard → GlareCard3D (F.5)
-  "ovl-036": { start: 19980, end: 20697 },    // HardCTALowerThird
+  "ovl-036": { start: 19980, end: 20690 },    // HardCTALowerThird 3-phase + BorderBeam (F.9)
   "ovl-037": { start: 21262, end: 21790 },    // AuthorityTimeline → GlareCard3D (F.3 word-sync "20")
   "ovl-038": { start: 22620, end: 22800 },    // Kinetic DANKE DEUTSCHLAND via AuroraTextEffect (F.2)
   "ovl-new-001": { start: 19350, end: 19980 }, // HandelsblattFAZNewsCard

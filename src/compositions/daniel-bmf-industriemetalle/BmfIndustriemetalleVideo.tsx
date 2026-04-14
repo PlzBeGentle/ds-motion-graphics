@@ -36,6 +36,7 @@ import ChapterCard from "./ChapterCard";
 import KineticMoment from "./KineticMoment";
 import BRollPlaceholder from "./BRollPlaceholder";
 import LocosColorGrade from "./LocosColorGrade";
+import BmfSoundDesign from "./BmfSoundDesign";
 // import BmfCaptions from "./BmfCaptions"; // DISABLED 2026-04-14 per user request
 
 // Shared library components
@@ -248,6 +249,13 @@ const KINETIC_MOMENTS = [
 export const BmfIndustriemetalleVideo: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: "#000000" }}>
+      {/* ═══════════════════════════════════════════════════════════════════
+          LAYER 0 — Sound Design (6 music beds + 70 SFX cues)
+          Phase A Session 2 — epidemic library placeholders, signature
+          samples arrive in Phase B
+          ═══════════════════════════════════════════════════════════════════ */}
+      <BmfSoundDesign />
+
       {/* ═══════════════════════════════════════════════════════════════════
           LAYER 1 — Daniel Master Footage mit Zoom-Layer
           19 Zoom-Keyframes aus phase-4/edit/zoom-keyframes.json

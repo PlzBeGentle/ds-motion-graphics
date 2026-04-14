@@ -1163,4 +1163,84 @@ Post-Phase-4-Session-Log + ds-motion-graphics commits kommen noch (diese Session
 
 ---
 
+## 24. Session 2 — 2026-04-15 (Phase A Sound-Design)
+
+**Operator:** Dario + Claude Opus 4.6
+**Goal:** Phase A abschließen — `BmfSoundDesign.tsx` bauen (70 SFX-Cues + 6 Music-Beds), in Master-Composition als Layer 0 einhängen, epidemic library als Placeholder-Quelle.
+
+### 24a) Pflicht-Lesung + Studio-Sanity
+
+- CONTINUATION-PLAN.md (426 Zeilen) komplett gelesen
+- SESSION-LOG Section 17-20 (Phase 6 + Post-Iter + Current State + Costs)
+- Studio läuft noch auf `localhost:3006` (HTTP 200, Daemon aus Session 1 überlebt)
+- `src/Root.tsx` Zeilen 38, 867-870 verifiziert — `BMF-Industriemetalle` Composition-Registration intakt
+- `phase-4/sound/sfx-cue-sheet.json` (1619 Zeilen, 72 cue slots, 70 approved, 2 rejected sfx-018/019)
+- `phase-4/sound/music-bed-plan.json` (552 Zeilen, 6 beds mit volume_automation + crossfade keypoints)
+- `phase-4/sound/voice-processing-chain.json` (191 Zeilen — nicht applied, embedded OffthreadVideo audio wird 1:1 übernommen)
+- `src/components/EpidemicSoundLibrary.ts` + `src/components/SoundDesign.tsx` als API-Referenz
+- `src/compositions/spritpreis/SpritpreisVideo.tsx` Zeilen 11-12, 707-741 als Wiring-Pattern-Referenz
+- `public/sfx/epidemic/` gelistet — 42 verfügbare wav/mp3 Files (kein `public/sfx/daniel-bmf/` Ordner, alle target paths aus Phase 4 sind leer)
+
+### 24b) `BmfSoundDesign.tsx` gebaut
+
+- **File:** `src/compositions/daniel-bmf-industriemetalle/BmfSoundDesign.tsx` (354 Zeilen)
+- **Struktur:**
+  - `CUES: BmfCue[]` — 51 audio-playing cues (von 70 approved SFX-Cues aus sfx-cue-sheet.json). Die 19 Non-Audio Cues sind `silence` (11×, drive nur music automation) + `music-change` (8×, drive nur bed transitions) und werden durch BEDS.automation abgedeckt.
+  - `BEDS: BmfBed[]` — 6 music beds (mb-01 bis mb-06) mit absoluten [frame, volume] Automation-Keyframes, 1:1 übernommen aus music-bed-plan.json volume_automation arrays (inkl. aller silence-before-impact drops auf 0)
+  - `interpolateAutomation()` — lineare Interpolation zwischen absoluten Automation-Keypoints
+  - `sfxEnvelope()` — fade-in / peak / fade-out envelope, erwartet frame-in-sequence
+  - `MusicBedPlayer` — wrappt `<Audio loop>` in `<Sequence from={bed.from}>`, volume function addiert `bed.from + f` zum absolute-frame für automation lookup
+  - `SfxHitPlayer` — `<Audio>` in `<Sequence>`, nullable src rendert `null` (silent TODO)
+- **Asset-Mapping (epidemic library placeholders):**
+  - deep-boom ×3 (sfx-007/032/069) → `ES_SFX.BOOM_ULTRA_LOW` (boom-ultra-low.wav, 3-layer sub/body/top aus Spec kollabiert zu single hit — signature layering kommt in Phase B)
+  - high-impact ×2 (sfx-014/054) → `ES_SFX.IMPACT_DEEP_HIT`
+  - bass-hit ×11 → `ES_SFX.IMPACT_CINEMATIC`
+  - warm-bass-hit (gold) ×2 (sfx-060/061) → `ES_SFX.BOOM_LOW` (warmer als IMPACT_CINEMATIC)
+  - metallic-hit / dry-stinger / ding-impact / glitch ×10 → `ES_SFX.GLITCH_HIT`
+  - soft/ding-click / glass ×8 → `ES_SFX.GLASS_CLINK`
+  - paper-rustle ×4 → `ES_SFX.PAPER_RUSTLE`
+  - soft-swoosh / tonal-whoosh ×3 → `ES_SFX.WHOOSH_SPACEY`
+  - hard-whip ×3 → `ES_SFX.WHOOSH_DEEP`
+  - riser short (sfx-005) → `ES_SFX.RISER_SHARP`
+  - riser medium 2.73s (sfx-029) → `ES_SFX.RISER_GRITTY`
+  - riser long 8s (sfx-052) → `ES_SFX.RISER_LONG_TRAILER`
+- **Music-Bed Mapping:**
+  - mb-01 E-Moll tense-investigation → `ES_MUSIC.TRACKER`
+  - mb-02 C-Moll rising-outrage → `ES_MUSIC.PARTICLE_EMISSION`
+  - mb-03 F-Moll cold-pattern-reveal → `ES_MUSIC.CONFIDENTIALITY`
+  - mb-04 G-Dur resolute-solution → `ES_MUSIC.CURTAINS_FALL`
+  - mb-05 B-Dur cta-resolve → `ES_MUSIC.CURTAINS_FALL` (reuse warm bed)
+  - mb-06 Outro swell → `ES_MUSIC.CURTAINS_FALL` (reuse)
+  - Alle beds mit `loop` prop weil einige Library-Tracks kürzer sind als die Section (mb-02 5880f / PARTICLE_EMISSION ~4890f)
+- **TODO-Cues (src: null, silent placeholder):**
+  - sfx-002 breath-in @ Leute (no library match)
+  - sfx-058 phone-line subtle @ zitiere wörtlich (no library match)
+  - sfx-070 soft-outro-stinger @ euer Daniel Sauer (covered by mb-06 swell instead)
+
+### 24c) Wire in Master-Composition
+
+- `BmfIndustriemetalleVideo.tsx` Import-Block (Zeile 39): `import BmfSoundDesign from "./BmfSoundDesign";`
+- Layer-Stack Einfügung **vor Layer 1 DanielZoomLayer** als neuer **Layer 0** mit Kommentar-Header
+- Audio-Stack-Reihenfolge: OffthreadVideo embedded audio (Daniel voice, mit Master-Footage) + BmfSoundDesign Music-Beds + BmfSoundDesign SFX-Cues — Remotion mixt additiv
+- TypeScript: `npx tsc --noEmit` → 0 Errors in `daniel-bmf-industriemetalle/`. Pre-existing Errors aus `KW15-Master`, `Root.tsx`, `fonts.ts`, `spritpreis/SP18-LaenderGrid`, `examples/*` unberührt
+- Remotion Studio `localhost:3006` → HTTP 200 überlebt, Watch-Mode sollte automatisch rebundeln
+
+### 24d) Phase A Status
+
+- ✅ Phase A komplett
+- ⚠ **Placeholder-Quality:** Alle SFX/Musik kommen aus der epidemic library. Die Signature-Samples (3-layer phase-aligned deep-boom, warm-gold hall reverb auf Schweiz-Hit, 8s major-riser mit orchestral build, 3s hall-tail auf Danke-Deutschland-Closer) fehlen bis Phase B
+- **Voice-Chain** (HPF 90 / EQ 4-band / 3-stage comp / de-esser / reverb / limiter → -14 LUFS) wird NICHT auf den embedded OffthreadVideo audio angewandt — das müsste via external audio pre-processing passieren, nicht im Remotion Render. Out-of-scope für Phase A
+- **Nicht getestet (Studio-Scrub):** Audio-Playback + Music-Ducking bei den kritischen Frames (5868 Kobalt, 22649 Danke Deutschland, 14609 drei-mal). Dario muss via Studio-Scrub validieren
+
+**Commits:**
+- (pending — kommt direkt nach dieser Log-Section)
+
+### 24z) Session 2 End-State
+
+**Fertig:** Phase A — BmfSoundDesign.tsx (354 Zeilen) + Layer-0 Wiring + TS clean + Studio HTTP 200
+**Offen:** Phase B (B-Roll Orchestration, 3-4h + $11-16), Phase C (Schweiz-Alpen Asset, piggyback in B), Phase D (ovl-003 Face-Safe-Zone, 5 min), Phase E (4C Brand-Warnings, 10 min), Phase F (22 Components Frame-by-Frame Review, 3-5h mit Dario), Phase G (Chapter-Cards Rework optional), Phase H (Final Render)
+**Next:** Studio-Scrub-Test durch Dario auf kritische Frames (5868, 22649, 14609) um Music-Ducking + SFX-Timing zu validieren. Dann Entscheidung ob Phase B oder Phase F zuerst
+
+---
+
 **Letzte Update:** 2026-04-14 post-Phase-6-Iteration (Zoom-Layer + Bug-Fixes live in Studio)
